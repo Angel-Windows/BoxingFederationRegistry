@@ -1,0 +1,23 @@
+*{
+    margin: 0;
+    padding: 0;
+    font: inherit;
+    box-sizing: border-box;
+}
+button{
+    border: none;
+    outline: none;
+}
+ul, ol{
+    list-style: none;
+}
+.img {
+    height: 50px;
+    width: 50px;
+}
+
+.img img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}

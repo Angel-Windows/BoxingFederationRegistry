@@ -1,0 +1,65 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    p {
+        font-size: 14px;
+        font-weight: 400;
+
+    }
+
+    i {
+        font-size: 25px;
+        font-weight: 900;
+    }
+
+    .burger {
+        display: none;
+    }
+
+    & > * {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+    }
+
+    & > div:first-child {
+        display: flex;
+        align-items: center;
+
+        p{
+            max-width: 170px;
+        }
+        .logo {
+            max-width: 100px;
+            height: auto;
+
+            img {
+                object-fit: contain;
+            }
+        }
+    }
+
+    & > div:last-child {
+
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    header {
+        .burger {
+            display: block;
+        }
+    }
+}
+
+@media screen and (max-width: 540px) {
+    header {
+        & > div:last-child {
+            p {
+                display: none;
+            }
+        }
+    }
+}
