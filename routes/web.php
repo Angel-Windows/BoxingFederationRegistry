@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\EmailController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/send-welcome-email', [EmailController::class, 'sendWelcomeEmail']);
+
 Route::name('page.')->group(function () {
     Route::get('/', static function () {
         return view('page.home');
