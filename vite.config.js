@@ -13,6 +13,7 @@ export default defineConfig({
 
                 //JS
                 'resources/js/app.js',
+                'resources/js/function_interface.js',
             ],
             refresh: true,
         }),

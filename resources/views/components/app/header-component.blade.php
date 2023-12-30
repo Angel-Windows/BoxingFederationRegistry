@@ -1,4 +1,4 @@
-<header>
+<header class="header content-wrapper">
     <div>
         <div class="logo img">
             <img src="{{ asset('img/logo.svg') }}" alt="FBU Logo">

@@ -10,12 +10,18 @@
     <title>@yield('title' ?? 'Boxes')</title>
 </head>
 <body class="@yield('class_body')">
+<x-app.header-component/>
 <div class="content-wrapper">
-    <x-app.header-component/>
+    @if(trim($__env->yieldContent('class_body')) !== 'home')
+    <x-app.bread-crumbs-component />
+    @endif
     <div class="content">
         @yield('content')
     </div>
+
 </div>
-Initial project
+<x-app.footer-component/>
+@vite('resources/js/function_interface.js')
+@yield('scripts')
 </body>
 </html>

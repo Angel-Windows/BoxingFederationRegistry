@@ -1,3 +1,191 @@
-.home{
+$card-about-list--padding: 30px;
+.header > *:last-child p{
+    color: var(--white, #FFF);
+}
+
+.home {
     background-image: url("../../img/home_bg.png");
+    background-size: cover;
+    position: relative;
+
+    &:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(5px);
+        z-index: -1;
+    }
+
+    .header {
+        color: var(--white, #FFFFFF);
+    }
+
+    .card-about-list {
+
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+        gap: 20px;
+        align-items: flex-start;
+        .card {
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.20);
+            backdrop-filter: blur(12.5px);
+
+            position: relative;
+            height: calc(324px + ($card-about-list--padding * 2));
+
+            p,
+            em {
+                color: var(--grey, #AAA8B8);
+                font-size: 16px;
+                font-weight: 400;
+                line-height: 18px;
+            }
+
+
+            .carl_logo {
+                height: 72px;
+                width: 72px;
+            }
+
+            h2 {
+                color: var(--white, #FFF);
+                font-size: 20px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: 18px;
+                margin: 20px 0 14px;
+            }
+
+            p {
+                display: -webkit-box;
+                -webkit-line-clamp: 4;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+
+            em {
+                font-style: italic;
+            }
+            .buttons-content{
+                cursor: pointer;
+                position: absolute;
+                bottom: $card-about-list--padding;
+                left: $card-about-list--padding;
+                right: $card-about-list--padding;
+
+            }
+            .button_open {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                img{
+                    transform: translateX(0);
+                    transition-duration: .3s;
+                }
+                &:hover {
+                    img {
+                        transform: translateX(10px);
+                        left: 20px;
+                    }
+                }
+            }
+
+            .buttons {
+                .button {
+                    text-decoration: none;
+                    display: flex;
+                    padding: 12px 20px;
+                    align-items: center;
+                    gap: 8px;
+                    align-self: stretch;
+                    width: 100%;
+                    border-radius: 6px;
+                    background: var(--text_bg, #36363D);
+                    color: var(--white, #FFF);
+                    font-size: 16px;
+                    font-style: normal;
+                    font-weight: 600;
+                    line-height: normal;
+                    margin-top: 12px;
+                }
+            }
+
+            .card_content {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                right: 0;
+                left: 0;
+                padding: $card-about-list--padding;
+                backface-visibility: hidden;
+                transition: transform 0.7s ease;
+            }
+
+            .back {
+                transform: rotateY(-180deg);
+            }
+
+            &.active {
+                .front {
+                    transform: rotateY(180deg);
+                }
+
+                .back {
+                    transform: rotateY(0deg);
+                }
+            }
+        }
+    }
+    .sponsor-block{
+        margin: 85px 0 63px;
+        h2{
+            margin-bottom: 24px;
+            text-align: center;
+            color: var(--white, #FFF);
+            font-family: Oswald, sans-serif;
+            font-size: 36px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+        }
+    }
+    .sponsor-list{
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 10px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        .card{
+            padding: 27px 49px;
+            border-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.20);
+            backdrop-filter: blur(2.5px);
+            &.hidden{
+                //display:none
+                visibility: hidden;
+            }
+        }
+        h3{
+            margin-top: 3px;
+            color: var(--white, #FFF);
+            text-align: center;
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 18px;
+            white-space: nowrap;
+        }
+        .img{
+            width: 100%;
+            height: 57px;
+            img{
+                object-fit: contain;
+            }
+        }
+    }
+
 }
