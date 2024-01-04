@@ -5,6 +5,8 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="ajax-link" content="{{route('ajax.link')}}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     @vite(['resources/scss/components.scss'])
     @yield('styles')
     <title>@yield('title' ?? 'Boxes')</title>
@@ -13,7 +15,7 @@
 <x-app.header-component/>
 <div class="content-wrapper">
     @if(trim($__env->yieldContent('class_body')) !== 'home')
-    <x-app.bread-crumbs-component />
+        <x-app.bread-crumbs-component/>
     @endif
     <div class="content">
         @yield('content')
@@ -23,6 +25,12 @@
 @if(trim($__env->yieldContent('class_body')) === 'home')
     <x-app.footer-component/>
 @endif
+<div class="modal_wrapper">
+    <div class="bg"></div>
+    <div class="modal_content">
+
+    </div>
+</div>
 @vite('resources/js/function_interface.js')
 @yield('scripts')
 </body>

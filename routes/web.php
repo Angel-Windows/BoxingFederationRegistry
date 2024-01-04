@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmailController;
+use App\Http\Controllers\Component\AjaxController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,4 +33,8 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+});
+Route::name('ajax.')->prefix('ajax/')->group(function () {
+    Route::get('/')->name('link');
+    Route::post('/open-modal', [AjaxController::class, 'open_modal'])->name('open-modal');
 });
