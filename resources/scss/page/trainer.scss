@@ -1,0 +1,60 @@
+
+.big_img {
+    width: 100%;
+}
+
+.big_img .img {
+    $min-width: 333px;
+    $max-width: 370px;
+    width: 100%;
+    max-width: $max-width;
+    height: 500px;
+
+    img {
+        object-position: calc(50% - 82px) -20px;
+    }
+}
+
+.trainer {
+    --background-body: var(--grey-white, #F9F9F9);
+    background: var(--background-body);
+
+    .table-auto_fool {
+        gap: 40px;
+    }
+
+    .button {
+        margin-right: 16px;
+    }
+
+    .history-work {
+        tbody td {
+            position: relative;
+
+            &:last-child:before {
+                position: absolute;
+                left: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                //content: '-';
+            }
+        }
+    }
+
+    .no-wrap {
+        th, td {
+            &:nth-child(2) {
+                text-align: right;
+                @media (max-width: 736px) {
+                    text-align: left;
+                }
+            }
+        }
+    }
+   @media (max-width: 736px) {
+       .buttons{
+           display: none;
+       }
+   }
+
+}

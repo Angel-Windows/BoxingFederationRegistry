@@ -1,14 +1,23 @@
-header {
+.header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 0;
-    border-bottom: 1px solid #494955;
-    margin-bottom: 54px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-bottom:  1px solid var(--grey-middle, #E9E8EE);
+    margin-bottom: 30px;
+
     p {
         font-size: 14px;
         font-weight: 400;
 
+    }
+    h1 {
+        color: var(--text, #36363D);
+        font-family: Roboto, sans-serif;
+        width: 170px;
+        font-size: 14px;
+        font-weight: 400;
     }
 
     i {
@@ -30,9 +39,10 @@ header {
         display: flex;
         align-items: center;
 
-        p{
+        p {
             max-width: 170px;
         }
+
         .logo {
             max-width: 100px;
             height: auto;
@@ -44,7 +54,7 @@ header {
     }
 
     & > div:last-child {
-        p{
+        p {
             color: var(--text, #36363D);
             text-align: right;
             font-family: Roboto, sans-serif;
@@ -52,7 +62,8 @@ header {
             font-style: normal;
             font-weight: 400;
             line-height: 18px;
-            a{
+
+            a {
                 font: inherit;
                 color: inherit;
             }

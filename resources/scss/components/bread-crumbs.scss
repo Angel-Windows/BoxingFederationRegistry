@@ -1,0 +1,21 @@
+.bread-crumbs {
+    li {
+        display: inline-block;
+
+        a {
+            font-size: 14px;
+            color: var(--text, #36363D);
+            text-decoration: none;
+        }
+
+        &:before {
+            content: '/';
+            color: var(--grey-middle, #E9E8EE);
+            margin: 12px;
+        }
+
+        &:first-child:before {
+            display: none;
+        }
+    }
+}

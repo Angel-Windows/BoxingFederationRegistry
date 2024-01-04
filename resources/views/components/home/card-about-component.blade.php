@@ -20,8 +20,8 @@
                 <h2>Федерації боксу</h2>
                 <p>Тут ви знайдете інформацію щодо всіх існуючих в Україні федерацій боксу та їх працівників</p>
                 <div class="buttons buttons-content">
-                    <a href="{{route('page.trainer')}}" class="button"><img src="{{asset('img/search.svg')}}" alt="search">Пошук</a>
-                    <button class="button"><img src="{{asset('img/homeAbout/register.svg')}}" alt="register">Реєстрація</button>
+                    <a href="{{route('page.trainer')}}" class="button"><img src="{{asset('img/search.svg')}}" alt="search"><span>Пошук</span></a>
+                    <button class="button"><img src="{{asset('img/homeAbout/register.svg')}}" alt="register"><span>Реєстрація</span></button>
                 </div>
             </div>
         </div>

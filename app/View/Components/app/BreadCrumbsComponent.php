@@ -4,6 +4,7 @@ namespace App\View\Components\app;
 
 use Closure;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Route;
 use Illuminate\View\Component;
 
 class BreadCrumbsComponent extends Component
@@ -21,6 +22,24 @@ class BreadCrumbsComponent extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.app.bread-crumbs-component');
+        $current_name = Route::current()->getName();
+        $page_name = str_replace('page.', '', $current_name);
+        $arr_bread = [[
+            'route' => 'page.home',
+            'text' => 'Головна',
+        ]
+        ];
+        switch ($page_name) {
+            case 'trainer':
+                $arr_bread[] = [
+                    'route' => 'page.trainer',
+                    'text' => 'Тренери',
+                ];
+                break;
+            case '':
+                break;
+        }
+
+        return view('components.app.bread-crumbs-component', compact('arr_bread'));
     }
 }

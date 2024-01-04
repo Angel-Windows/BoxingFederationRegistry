@@ -20,7 +20,9 @@
     </div>
 
 </div>
-<x-app.footer-component/>
+@if(trim($__env->yieldContent('class_body')) === 'home')
+    <x-app.footer-component/>
+@endif
 @vite('resources/js/function_interface.js')
 @yield('scripts')
 </body>

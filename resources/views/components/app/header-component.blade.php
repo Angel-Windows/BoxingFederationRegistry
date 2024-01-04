@@ -3,7 +3,7 @@
         <div class="logo img">
             <img src="{{ asset('img/logo.svg') }}" alt="FBU Logo">
         </div>
-        <p>Інформаційний портал федерації боксу України</p>
+        <h1>Інформаційний портал федерації боксу України</h1>
     </div>
     <div>
         <p>Технічна підтримка: <a href="mailto:www@gmail.com">www@gmail.com</a></p>

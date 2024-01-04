@@ -12,6 +12,9 @@ button{
 ul, ol{
     list-style: none;
 }
+li{
+    display: inline-block;
+}
 .img {
     height: 50px;
     width: 50px;
@@ -21,4 +24,25 @@ ul, ol{
     height: 100%;
     width: 100%;
     object-fit: cover;
+}
+
+
+
+.info-wrapper{
+    padding: 20px 40px;
+    border-radius: 5px;
+    background: var(--white, #FFF);
+    margin-bottom: 29px;
+}
+h2{
+    font-family: Oswald, sans-serif;
+    font-size: 42px;
+    margin-bottom: 42px;
+}
+h3{
+    color: var(--text, #36363D);
+    /* h2 */
+    font-family: Oswald, sans-serif;
+    font-size: 24px;
+    margin-bottom: 14px;
 }

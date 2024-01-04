@@ -1,0 +1,129 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+
+    tr {
+        border-bottom: 1px dashed var(--grey, #AAA8B8);
+
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+
+    thead {
+        border-bottom: 2px solid var(--grey-middle, #E9E8EE);
+    }
+
+    td, th {
+        padding: 16px 20px;
+        min-width: 195px + 20px;
+        max-width: 400px;
+
+        &:first-child {
+            padding-left: 0;
+        }
+
+        &:last-child {
+            padding-right: 0;
+        }
+    }
+
+    th {
+        text-align: left;
+        color: var(--grey, #AAA8B8);
+        text-transform: uppercase;
+        letter-spacing: 1.12px;
+    }
+
+    tr {
+        vertical-align: top;
+    }
+
+
+    &.no-wrap {
+        td, th {
+            white-space: nowrap;
+            padding-left: 40px;
+            padding-right: 40px;
+            min-width: 1px;
+
+            &:first-child {
+                padding-left: 0;
+                padding-right: 0;
+                width: 100%;
+            }
+        }
+
+        tr {
+            vertical-align: center;
+        }
+
+    }
+    th, td{
+        &.no_size{
+            padding-left: 0;
+            padding-right: 0;
+            margin: 0;
+            width: 1em;
+            max-width: 1em;
+            min-width: 1em;
+            text-align: center;
+        }
+    }
+    @media screen and (max-width: 1030px) {
+        &.no-wrap {
+            td, th {
+                padding-left: 30px;
+                padding-right: 30px;
+            }
+
+        }
+    }
+    @media screen and (max-width: 1000px){
+        &.no-wrap {
+            td, th {
+                padding-left: 30px;
+                padding-right: 30px;
+            }
+
+        }
+    }
+    @media screen and (max-width: 768px){
+        *{
+            display: block;
+        }
+        thead{
+            display: none;
+        }
+        tr, &.no-wrap td{
+            padding: 8px 0;
+        }
+        td, th {
+            width: 100%;
+            max-width: 100%;
+            padding: 8px 0;
+            grid-column: span 10;
+            &:first-child{
+                color: var(--grey, #AAA8B8);
+            }
+            &.m-span-1{
+                grid-column: span 1;
+                width: auto;
+                //width: 100%;
+                max-width: none;
+            }
+        }
+
+        &.m-grid-3{
+            tr{
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                //display: grid;
+                //grid-template-columns: 1fr 1fr auto;
+            }
+        }
+
+    }
+
+}

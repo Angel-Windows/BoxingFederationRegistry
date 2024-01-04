@@ -1,0 +1,33 @@
+    .button {
+        text-decoration: none;
+        display: inline-flex;
+        padding: 12px 20px;
+        align-items: center;
+        gap: 8px;
+        align-self: stretch;
+        border-radius: 6px;
+        background: var(--text_bg, #36363D);
+        color: var(--white, #FFF);
+
+
+        cursor: pointer;
+        img{
+            height: 24px;
+            width: 24px;
+        }
+        span{
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+        }
+        &.white{
+            color: var(--text, #36363D);
+
+            background: none;
+            border: 1px solid var(--grey-middle, #E9E8EE);
+            span{
+                font-weight: 400;
+            }
+        }
+    }
