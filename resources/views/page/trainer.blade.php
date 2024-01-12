@@ -12,8 +12,17 @@
     </script>
 @endsection
 @section('content')
-    <h2>Кравчук Віталій Вікторович</h2>
-    <div class="table-auto_fool">
+
+    <section class="nav">
+        <h2>Кравчук Віталій Вікторович</h2>
+        @if(Auth::check())
+            <div class="buttons">
+                <a href="{{route(Route::current()->getName(), ['edit'])}}" class="button"><img src="{{asset('img/homeAbout/register.svg')}}" alt="register-icon">Редагувати</a>
+            </div>
+{{--            <button class="button"><img src="{{asset('img/homeAbout/register.svg')}}" alt="register-icon">Зберегти</button>--}}
+        @endif
+    </section>
+    <section class="table-auto_fool">
         <div class="big_img">
             <div class="img"><img src="{{asset('img/users_img/9284da0c7ca70f123c97200aa73fa3dc.png')}}" alt=""></div>
         </div>
@@ -27,17 +36,6 @@
                 </ul>
                 <table>
                     <tbody>
-                    @php
-                        $temp__info_list = [
-                                'Кваліфікація' => 'Lorem ipsum dolor sit amet consectetur. ',
-                                'Моя федерація' => 'Назва федерації',
-                                'Адреса проживання' => 'м. Львів, Київська 34, кв. 5',
-                                'Державні, почесні звання, спортивні звання та розряди' => 'Lorem ipsum dolor sit amet consectetur. ',
-                                'Державні заохочення' => 'Lorem ipsum dolor sit amet consectetur. ',
-                                'Мої навчальні заклади' => 'Lorem ipsum dolor sit amet consectetur. ',
-                                'Мої спортсмени' => 'Кравчук Віталій, Кравчук Віталій, Кравчук Віталій, Кравчук Віталій, Кравчук Віталій, Кравчук Віталій,Кравчук ВіталійКравчук ВіталійКравчук ВіталійКравчук ВіталійКравчук ВіталійКравчук ВіталійКравчук ВіталійКравчук Віталій',
-                                ];
-                    @endphp
                     @foreach($temp__info_list as $key=>$item)
                         <tr>
                             <td>{{$key}}</td>
@@ -61,22 +59,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @php
-                            $monthsUkrainian = [
-                              'Січень',
-                              'Лютий',
-                              'Березень',
-                              'Квітень',
-                              'Травень',
-                              'Червень',
-                              'Липень',
-                              'Серпень',
-                              'Вересень',
-                              'Жовтень',
-                              'Листопад',
-                              'Грудень'
-                            ];
-                        @endphp
+
                         @for($i=0;$i<4;$i++)
                             @php
                                 $start_year = random_int(2016, 2022);
@@ -94,8 +77,38 @@
                         </tbody>
                     </table>
                 </div>
+
+            </div>
+
+        </div>
+        <div class="fool todo_table">
+            <div class="info-wrapper">
+                <table class="no-wrap m-grid-2">
+                    <thead>
+                    <tr>
+                        <th>ПІП</th>
+                        <th class="m-span-1">Посада</th>
+                        <th class="m-span-1">Телефон</th>
+                        <th class="m-span-1">Пошта</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @for($i=0;$i<4;$i++)
+                        <tr>
+                            <td class="m-span-1 img_wrapper">
+                                <div class="img"><img src="{{asset('img/users_img/9284da0c7ca70f123c97200aa73fa3dc.png')}}" alt=""></div>
+                                <span>Кравчук Віталій</span>
+                            </td>
+                            <td class="m-span-1">Назва посади</td>
+                            <td class="m-span-1">097 777-77-77</td>
+                            <td class="m-span-1">email@gmail.com</td>
+                        </tr>
+                    @endfor
+                    </tbody>
+                </table>
             </div>
         </div>
-    </div>
+
+    </section>
 
 @endsection

@@ -21,6 +21,9 @@
 
     .table-auto_fool {
         gap: 40px;
+        &.edit{
+            gap: 30px;
+        }
     }
 
     .button {

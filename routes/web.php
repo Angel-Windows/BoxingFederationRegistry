@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\Component\AjaxController;
+use App\Http\Controllers\PhoneVerificationController;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Page\TrainerController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,9 +22,7 @@ Route::name('page.')->group(function () {
     Route::get('/', static function () {
         return view('page.home');
     })->name('home');
-    Route::get('/trainer', static function () {
-        return view('page.trainer');
-    })->name('trainer');
+    Route::get('/trainer', [TrainerController::class, 'index'])->name('trainer');
 });
 
 
@@ -37,4 +38,9 @@ Route::middleware([
 Route::name('ajax.')->prefix('ajax/')->group(function () {
     Route::get('/')->name('link');
     Route::post('/open-modal', [AjaxController::class, 'open_modal'])->name('open-modal');
+});
+
+Route::name('auth.')->prefix('auth/')->group(function () {
+    Route::post('/login', [AuthController::class, 'login'])->name('login');
+    Route::post('/get_code', [PhoneVerificationController::class, 'get_code'])->name('get_code');
 });

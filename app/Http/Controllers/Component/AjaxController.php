@@ -17,4 +17,7 @@ class AjaxController extends Controller
             ['data' => $menuMarkButtonsView]
         );
     }
+    public function search_in_tag(Request $request){
+
+    }
 }

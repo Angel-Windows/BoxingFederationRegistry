@@ -17,16 +17,15 @@
     @if(trim($__env->yieldContent('class_body')) !== 'home')
         <x-app.bread-crumbs-component/>
     @endif
-    <div class="content">
+    <main class="content">
         @yield('content')
-    </div>
-
+    </main>
 </div>
 @if(trim($__env->yieldContent('class_body')) === 'home')
     <x-app.footer-component/>
 @endif
 <div class="modal_wrapper">
-    <div class="bg"></div>
+    <div class="bg" onclick="functionsArray['toggle_parent_active'](this, 'modal_wrapper', 'open')"></div>
     <div class="modal_content">
 
     </div>
