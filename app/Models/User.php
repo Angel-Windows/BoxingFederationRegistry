@@ -14,6 +14,9 @@ use Laravel\Sanctum\HasApiTokens;
  * @property mixed $qualifications_name
  * @property mixed $federations_name
  * @property mixed $address
+ * @property mixed $rewards
+ * @property mixed $education_place
+ * @property mixed $honors_and_awards
  */
 class User extends Authenticatable
 {

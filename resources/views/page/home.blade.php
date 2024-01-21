@@ -12,6 +12,6 @@
     </script>
 @endsection
 @section('content')
-    <x-home.card-about-component/>
+    <x-home.card-about-component :card-data="$card_data"/>
     <x-home.sponsor-list-component/>
 @endsection

@@ -18,11 +18,15 @@ class UserFactory extends Factory
      *
      * @return array<string, mixed>
      */
+    public static int $ids = 0;
     public function definition(): array
     {
+        $new_login = 'user_' . self::$ids;
+        $new_email = $new_login . "@gmail.com";
+        self::$ids++;
         return [
-            'login' => $this->faker->name(),
-            'email' => $this->faker->unique()->safeEmail(),
+            'login' => $new_login,
+            'email' => $new_email,
             'email_verified_at' => '2024-01-07 21:11:36',
             'password' =>  \Hash::make('qwerty123'),
             'two_factor_secret' => null,

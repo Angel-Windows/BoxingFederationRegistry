@@ -11,9 +11,9 @@ class CardAboutComponent extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct(public $cardData)
     {
-        //
+
     }
 
     /**
@@ -21,6 +21,8 @@ class CardAboutComponent extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.home.card-about-component');
+
+        return view('components.home.card-about-component')
+            ->with('card_data', $this->cardData);
     }
 }

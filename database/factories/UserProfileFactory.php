@@ -29,9 +29,9 @@ class UserProfileFactory extends Factory
             'federation_id' => $federation->id,
             'qualification_id' => $qualification->id,
 
-            'first_name' => $this->faker->name(1),
-            'last_name' => $this->faker->name(1),
-            'surname' => $this->faker->name(1),
+            'first_name' => $this->faker->firstName,
+            'last_name' => $this->faker->lastName,
+            'surname' => $this->faker->firstName . "s",
 
             'phone' => $this->faker->phoneNumber(),
             'address' => $this->faker->address(),

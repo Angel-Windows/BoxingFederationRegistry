@@ -17,9 +17,10 @@
         <h2>Кравчук Віталій Вікторович</h2>
         @if(Auth::check())
             <div class="buttons">
-                <a href="{{route(Route::current()->getName(), ['edit'])}}" class="button"><img src="{{asset('img/homeAbout/register.svg')}}" alt="register-icon">Редагувати</a>
+                <a href="{{route(Route::current()->getName(), ['edit'])}}" class="button"><img
+                            src="{{asset('img/homeAbout/register.svg')}}" alt="register-icon">Редагувати</a>
             </div>
-{{--            <button class="button"><img src="{{asset('img/homeAbout/register.svg')}}" alt="register-icon">Зберегти</button>--}}
+            {{--            <button class="button"><img src="{{asset('img/homeAbout/register.svg')}}" alt="register-icon">Зберегти</button>--}}
         @endif
     </section>
     <section class="table-auto_fool">
@@ -39,7 +40,15 @@
                     @foreach($temp__info_list as $key=>$item)
                         <tr>
                             <td>{{$key}}</td>
-                            <td>{{$item}}</td>
+                            <td>
+                                @if(!is_array($item))
+                                    <span>{{$item}}</span>
+                                @else
+                                    @foreach($item as $key =>$item_child)
+                                        <span>{{($key ? ", " : "") . $item_child}}</span>
+                                    @endforeach
+                                @endif
+                            </td>
                         </tr>
                     @endforeach
                     </tbody>
@@ -54,7 +63,7 @@
                         <tr>
                             <th>Назва закладу</th>
                             <th class="m-span-1">Початок</th>
-                            <th  class="no_size m-span-1"></th>
+                            <th class="no_size m-span-1"></th>
                             <th class="m-span-1">Кінець</th>
                         </tr>
                         </thead>
@@ -96,7 +105,10 @@
                     @for($i=0;$i<4;$i++)
                         <tr>
                             <td class="m-span-1 img_wrapper">
-                                <div class="img"><img src="{{asset('img/users_img/9284da0c7ca70f123c97200aa73fa3dc.png')}}" alt=""></div>
+                                <div class="img"><img
+                                            src="{{asset('img/users_img/9284da0c7ca70f123c97200aa73fa3dc.png')}}"
+                                            alt="">
+                                </div>
                                 <span>Кравчук Віталій</span>
                             </td>
                             <td class="m-span-1">Назва посади</td>

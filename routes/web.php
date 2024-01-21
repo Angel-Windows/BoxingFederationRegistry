@@ -6,6 +6,7 @@ use App\Http\Controllers\Component\AjaxController;
 use App\Http\Controllers\PhoneVerificationController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Page\TrainerController;
+use App\Http\Controllers\Page\HomeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,9 +20,7 @@ use App\Http\Controllers\Page\TrainerController;
 Route::get('/send-welcome-email', [EmailController::class, 'sendWelcomeEmail']);
 
 Route::name('page.')->group(function () {
-    Route::get('/', static function () {
-        return view('page.home');
-    })->name('home');
+    Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/trainer', [TrainerController::class, 'index'])->name('trainer');
 });
 
