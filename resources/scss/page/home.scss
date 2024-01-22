@@ -5,9 +5,10 @@ body {
 
 .header {
     margin-bottom: 54px;
+    border-bottom-color: #494955;
 }
 
-.header > *:last-child p {
+.header > div:last-child p, .header h1 {
     color: var(--white, #FFF);
 }
 
@@ -49,9 +50,9 @@ body {
         align-items: flex-start;
 
         .card {
+            overflow: hidden;
             border-radius: 5px;
-            background: rgba(255, 255, 255, 0.20);
-            backdrop-filter: blur(12.5px);
+
 
             position: relative;
             height: calc(324px + ($card-about-list--padding * 2));
@@ -71,12 +72,15 @@ body {
             }
 
             h2 {
+
                 color: var(--white, #FFF);
+                font-family: Manrope, sans-serif;
                 font-size: 20px;
                 font-style: normal;
                 font-weight: 700;
                 line-height: 18px;
                 margin: 20px 0 14px;
+
             }
 
             p {
@@ -120,7 +124,7 @@ body {
             .buttons {
                 .button {
                     margin-top: 12px;
-
+                    width: 100%;
                 }
             }
 
@@ -135,8 +139,17 @@ body {
                 transition: transform 0.7s ease;
             }
 
+            .front {
+                background: rgba(255, 255, 255, 0.20);
+                backdrop-filter: blur(12.5px);
+            }
+
             .back {
                 transform: rotateY(-180deg);
+                background: white;
+                h2{
+                    color: var(--text, #36363D);
+                }
             }
 
             &.active {

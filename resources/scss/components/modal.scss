@@ -5,9 +5,11 @@
     bottom: 0;
     left: 0;
     display: none;
-    &.open{
+
+    &.open {
         display: block;
     }
+
     .bg {
         content: "";
         display: block;
@@ -30,10 +32,12 @@
         width: 494px;
         background: var(--white, #FFF);
     }
-h2{
-    margin: 0;
-    margin-bottom: 10px;
-}
+
+    h2 {
+        margin: 0;
+        margin-bottom: 10px;
+    }
+
     input {
         display: block;
         width: 100%;
@@ -42,15 +46,37 @@ h2{
         padding: 16px;
         margin-top: 10px;
         background: var(--white, #FFF);
-        &::placeholder{
+
+        &::placeholder {
             color: var(--grey, #AAA8B8);
         }
     }
 
 
-
     .button {
         margin-top: 12px;
         width: 100%;
+    }
+}
+
+.modal-search-form {
+    .result-list {
+
+        padding: 12px 19px;
+
+        li {
+            color: var(--text, #36363D);
+            font-family: Roboto, sans-serif;
+            font-size: 14px;
+            line-height: 18px;
+            display: block;
+        }
+
+        a {
+            font: inherit;
+            color: inherit;
+            text-decoration: none;
+        }
+
     }
 }

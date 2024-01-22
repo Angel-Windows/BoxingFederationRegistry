@@ -1,8 +1,12 @@
-<form action="">
+<form action="{{route('ajax.search-in-class')}}" method="post" class="modal_form modal-search-form">
     @csrf
-    <h2>Поиск</h2>
+    <input type="hidden" name="class_types" value="{{$class_types->id}}">
+    <h2>Пошук {{$class_types->genitive}}</h2>
     <label>
-        <input type="text" name="phone" placeholder="Номер телефону">
+        <input type="text" name="search_value" placeholder="Номер телефону" id="search_input">
     </label>
-    <button class="button">Отримати код з смс</button>
+    <ul id="search_result_list" class="result-list">
+
+    </ul>
 </form>
+

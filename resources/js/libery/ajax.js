@@ -1,17 +1,17 @@
-import search_scripts from "./ajaxs/search.js";
-import modal_open from "./ajaxs/search.js";
+import * as  search from "./ajaxs/search.js";
 
-let timers;
-let postData = {};
+let CsrfToken = null;
+const getCsrfToken = () => {
+    return CsrfToken ||
+        (CsrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
+}
 
-
-
-export  function SendPostNoForm(url, data, function_name = "") {
+export function SendPostNoForm(url, data, function_name = "") {
     return fetch(url, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            'X-CSRF-TOKEN': getCsrfToken()
         },
         body: JSON.stringify(data)
     })
@@ -22,20 +22,17 @@ export  function SendPostNoForm(url, data, function_name = "") {
         })
         .catch(error => {
             console.error('Ошибка', error);
-            throw error;
         });
 }
-export function Post(form, event, function_name = "") {
+
+export function Post(form, function_name = "") {
     event.preventDefault();
     const url = form.action;
     const formData = new FormData(form);
 
     getResource(url, formData)
         .then(data => {
-            const selectedFunction = find_db_func(function_name);
-            if (selectedFunction) {
-                selectedFunction(data);
-            }
+            functionsArray[function_name](data);
         })
         .catch(error => {
             console.error("Ошибка при отправке данных:", error);
@@ -59,7 +56,16 @@ export function Post(form, event, function_name = "") {
     }
 }
 
-
+export const FindPostForm = (element, function_name = "") => {
+    let parentElement = null;
+    do {
+        if (!parentElement) {
+            parentElement = element;
+        }
+        parentElement = parentElement.parentNode;
+    } while ((parentElement.tagName.toLowerCase() !== 'form'));
+    Post(parentElement, function_name)
+}
 const functionsArray = {
-    'modal_open': modal_open,
+    ...search,
 };

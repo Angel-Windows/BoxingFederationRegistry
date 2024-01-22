@@ -2,9 +2,11 @@ import * as  ajax_scripts from './libery/ajax.js';
 import * as  home_scripts from './home_scripts.js';
 import * as  modals_scripts from './components/modal.js';
 
+
 window.functionsArray = {
     'ajax_post': ajax_scripts.Post,
     'ajax_postNoForm': ajax_scripts.SendPostNoForm,
+    'ajax_findPostForm': ajax_scripts.FindPostForm,
     'remove_old_active': home_scripts.removeOldActive,
     'toggle_parent_active': home_scripts.toggleParentActive,
     'hideOverflowingElements_start': home_scripts.hideOverflowingElements_start,

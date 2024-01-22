@@ -30,13 +30,14 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
+    Route::get('/dashboard', static function () {
         return view('dashboard');
     })->name('dashboard');
 });
 Route::name('ajax.')->prefix('ajax/')->group(function () {
     Route::get('/')->name('link');
     Route::post('/open-modal', [AjaxController::class, 'open_modal'])->name('open-modal');
+    Route::post('/search-in-class', [AjaxController::class, 'search_in_class'])->name('search-in-class');
 });
 
 Route::name('auth.')->prefix('auth/')->group(function () {
