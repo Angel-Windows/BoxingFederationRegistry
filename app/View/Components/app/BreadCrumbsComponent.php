@@ -12,7 +12,7 @@ class BreadCrumbsComponent extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct(public $page_name = null)
     {
         //
     }
@@ -22,24 +22,35 @@ class BreadCrumbsComponent extends Component
      */
     public function render(): View|Closure|string
     {
-        $current_name = Route::current()->getName();
-        $page_name = str_replace('page.', '', $current_name);
+        $page_name = Route::current()->parameters()['class_name'];
+
+//        dd(Route::current()->parameters()['class_name']);
         $arr_bread = [[
             'route' => 'page.home',
             'text' => 'Головна',
         ]
         ];
-        switch ($page_name) {
-            case 'trainer':
-                $arr_bread[] = [
-                    'route' => 'page.trainer',
-                    'text' => 'Тренери',
-                ];
-                break;
-            case '':
-                break;
-        }
+        if ($page_name) {
 
+            switch ($page_name) {
+                case 'trainer':
+                    $arr_bread[] = [
+                        'route' => 'page.home',
+                        'text' => 'Тренери',
+                    ];
+                    break;
+                case 'insurance-companies':
+                    $arr_bread[] = [
+                        'route' => 'page.home',
+                        'text' => 'Страхові компанії',
+                    ];
+                    break;
+                case '':
+                    break;
+            }
+
+            return view('components.app.bread-crumbs-component', compact('arr_bread'));
+        }
         return view('components.app.bread-crumbs-component', compact('arr_bread'));
     }
 }

@@ -15,7 +15,6 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
 //            ConfigSeeder::class,
-//            TypeAccountSeeder::class,
             ClassTypeSeeder::class,
 
 //            QualificationSeeder::class,

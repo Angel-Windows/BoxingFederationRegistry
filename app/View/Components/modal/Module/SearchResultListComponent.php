@@ -11,7 +11,7 @@ class SearchResultListComponent extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public $data)
+    public function __construct(public $data, public $class_type)
     {
         //
     }
@@ -22,6 +22,8 @@ class SearchResultListComponent extends Component
     public function render(): View|Closure|string
     {
         return view('components.modal.module.search-result-list-component')
-            ->with('data', $this->data);
+            ->with('data', $this->data)
+            ->with('class_type', $this->class_type)
+            ;
     }
 }

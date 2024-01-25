@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Component;
 
 use App\Http\Controllers\Controller;
+use App\Models\Class\ClassType;
 use App\Models\UserProfile;
-use App\View\Components\Modal\Module\SearchResultList;
 use App\View\Components\Modal\Module\SearchResultListComponent;
 use App\View\Components\modal\SearchComponent;
 use Illuminate\Http\Request;
@@ -26,19 +26,23 @@ class AjaxController extends Controller
     public function search_in_class(Request $request): JsonResponse
     {
         $search_value = $request->input('search_value') ?? "";
-        $class_types = $request->input('class_types') ?? "";
+        $class_type_id = $request->input('class_types') ?? "";
+        $class_type = ClassType::where('id', $class_type_id)->first();
+//        $getCache = ClassType::getCache(1);
+
         $data = UserProfile::
         where('first_name', 'like', "%".$search_value."%")
         ->orWhere('last_name', 'like', "%".$search_value."%")
+        ->orWhere('surname', 'like', "%".$search_value."%")
             ->limit(10)
             ->get();
-        $menuMarkButtons = new SearchResultListComponent($data);
+        $menuMarkButtons = new SearchResultListComponent($data, $class_type->link);
         $menuMarkButtonsView = $menuMarkButtons->render()->render();
-
 
         return response()->json(
             [
                 'data' => $menuMarkButtonsView,
+
             ]
         );
     }

@@ -22,6 +22,7 @@ Route::get('/send-welcome-email', [EmailController::class, 'sendWelcomeEmail']);
 Route::name('page.')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/trainer', [TrainerController::class, 'index'])->name('trainer');
+    Route::get('/class/{class_name}/{id}', [TrainerController::class, 'class_page'])->name('class');
 });
 
 

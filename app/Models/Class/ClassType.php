@@ -4,6 +4,7 @@ namespace App\Models\Class;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * @method static create(string[] $array)
@@ -14,5 +15,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 class ClassType extends Model
 {
-    use HasFactory;
+    public static function getCache($id = null)
+    {
+        $all_type = Cache::remember('class_types', 1, static fn() => self::all());
+        return $id ? $all_type[$id] : $all_type;
+    }
 }

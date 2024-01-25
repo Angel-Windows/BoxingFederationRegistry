@@ -22,7 +22,7 @@
             </div>
         @endif
     </section>
-    <section class="table-auto_fool editц">
+    <section class="table-auto_fool edit">
         <div class="big_img">
             <div class="img"><img src="{{asset('img/users_img/9284da0c7ca70f123c97200aa73fa3dc.png')}}" alt=""></div>
         </div>
@@ -50,14 +50,14 @@
                     </div>
                     <h3>Мої спортсмени</h3>
                     <div class="checkbox-list">
-                        @foreach($temp__checkboxes as $user_ids=>$item)
-                            <div class="label type__checkbox no_check inline-flex">
-                                <span class="">{{$item}}</span>
-                                <label>
-                                    <input type="checkbox">
-                                </label>
-                            </div>
-                        @endforeach
+{{--                        @foreach($temp__checkboxes as $user_ids=>$item)--}}
+{{--                            <div class="label type__checkbox no_check inline-flex">--}}
+{{--                                <span class="">{{$item}}</span>--}}
+{{--                                <label>--}}
+{{--                                    <input type="checkbox">--}}
+{{--                                </label>--}}
+{{--                            </div>--}}
+{{--                        @endforeach--}}
                     </div>
                     <div class="history-work">
                         <h3>Історія місць роботи</h3>

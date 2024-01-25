@@ -16,6 +16,7 @@
 <div class="content-wrapper">
     @if(trim($__env->yieldContent('class_body')) !== 'home')
         <x-app.bread-crumbs-component/>
+
     @endif
     <main class="content">
         @yield('content')
