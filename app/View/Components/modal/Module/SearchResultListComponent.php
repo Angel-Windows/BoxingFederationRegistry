@@ -11,7 +11,7 @@ class SearchResultListComponent extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public $data, public $class_type)
+    public function __construct(public $data = [], public $class_type = "")
     {
         //
     }

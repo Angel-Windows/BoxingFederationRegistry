@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-//            ConfigSeeder::class,
+            ConfigSeeder::class,
             ClassTypeSeeder::class,
 
 //            QualificationSeeder::class,
@@ -24,6 +24,9 @@ class DatabaseSeeder extends Seeder
 //            HistoryWorkSeeder::class,
 //
 //            LinkingUsersSeeder::class,
+//
+            TrainerSeeder::class,
+  //
         ]);
     }
 }

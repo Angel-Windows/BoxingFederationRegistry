@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Page;
 
 use App\Http\Controllers\Controller;
+use App\Models\Class\Trainer;
 use App\Models\LinkingUsers;
 use App\Models\User;
 use App\Models\UserProfile;
@@ -11,6 +12,21 @@ use function Laravel\Prompts\select;
 
 class TrainerController extends Controller
 {
+    public array $monthsUkrainian = [
+        'Січень',
+        'Лютий',
+        'Березень',
+        'Квітень',
+        'Травень',
+        'Червень',
+        'Липень',
+        'Серпень',
+        'Вересень',
+        'Жовтень',
+        'Листопад',
+        'Грудень'
+    ];
+
     public function index(Request $request)
     {
         $user = User::where('users.id', 1)
@@ -178,41 +194,39 @@ class TrainerController extends Controller
 
     private function get_trainer_data(): array
     {
-        $user = UserProfile::where('user_profiles.id', 1)
-            ->leftJoin('users', 'users.id', 'user_profiles.user_id')
-            ->leftJoin('qualifications', 'qualifications.id', 'user_profiles.qualification_id')
-            ->leftJoin('federations', 'federations.id', 'user_profiles.federation_id')
-            ->select(
-                'users.email',
-                'users.balance',
-                'user_profiles.*',
-                'qualifications.name as qualifications_name',
-                'federations.name as federations_name'
-            )
-            ->first();
+//        $user = UserProfile::where('user_profiles.id', 1)
+//            ->leftJoin('users', 'users.id', 'user_profiles.user_id')
+//            ->leftJoin('qualifications', 'qualifications.id', 'user_profiles.qualification_id')
+//            ->leftJoin('federations', 'federations.id', 'user_profiles.federation_id')
+//            ->select(
+//                'users.email',
+//                'users.balance',
+//                'user_profiles.*',
+//                'qualifications.name as qualifications_name',
+//                'federations.name as federations_name'
+//            )
+//            ->first();
+        $user = Trainer::find(3);
+//        dd($user);
+//        $linking_users = UserProfile::limit(15)->get()->map(function ($user) {
+//            return $user->fool_name;
+//        })->toArray();
 
-        $linking_users = UserProfile::limit(15)->get()->map(function ($user) {
-            return $user->fool_name;
-        })->toArray();
-        $monthsUkrainian = [
-            'Січень',
-            'Лютий',
-            'Березень',
-            'Квітень',
-            'Травень',
-            'Червень',
-            'Липень',
-            'Серпень',
-            'Вересень',
-            'Жовтень',
-            'Листопад',
-            'Грудень'
-        ];
+        $history_work = [];
+
+
+        foreach (json_decode($user->history_work) as $item) {
+            $history_work[] = [
+                $item->name, $this->set_month($item->start_work), '-', $this->set_month($item->end_work),
+            ];
+        }
+
         return [
-            'name' => "sdf",
+            'name' => $user->name,
             'img' => [
                 'class' => 'big_img',
-                'link' => 'img/users_img/9284da0c7ca70f123c97200aa73fa3dc.png'
+                'link' => $user->logo
+//                'link' => 'img/users_img/9284da0c7ca70f123c97200aa73fa3dc.png'
             ],
             'right_panel' => [
                 [
@@ -226,11 +240,11 @@ class TrainerController extends Controller
                                     [
                                         'link' => '',
                                         'logo' => 'img/phone.svg',
-                                        'text' => '097 777-77-77'
+                                        'text' => $user->phone
                                     ], [
                                         'link' => '',
                                         'logo' => 'img/mail.svg',
-                                        'text' => 'email@gmail.com'
+                                        'text' => $user->email
                                     ]
                                 ]
                             ],
@@ -238,12 +252,12 @@ class TrainerController extends Controller
                                 'type' => 'table',
                                 'data' => [
                                     'body' => [
-                                        ['Кваліфікація', $user->qualifications_name],
-                                        ['Моя федерація', $user->federations_name],
+                                        ['Кваліфікація', $user->qualification],
+                                        ['Моя федерація', $user->federation],
                                         ['Адреса проживання', $user->address],
-                                        ['Державні, почесні звання, спортивні звання та розряди', $user->rewards],
-                                        ['Державні заохочення', $user->honors_and_awards],
-                                        ['Мої навчальні заклади', $user->education_place],
+                                        ['Державні, почесні звання, спортивні звання та розряди', $user->rank],
+                                        ['Державні заохочення', $user->gov],
+                                        ['Мої навчальні заклади', $user->school],
                                     ]
                                 ]
                             ]
@@ -262,11 +276,7 @@ class TrainerController extends Controller
                                     'class' => 'history-work no-wrap',
                                     'data' => [
                                         'thead' => ['Назва закладу', 'Початок', '', 'Кінець'],
-                                        'body' => [
-                                            ['Ананас', $monthsUkrainian[0] . ' 2015', '+', $monthsUkrainian[3] . ' 2017'],
-                                            ['Ламповые', $monthsUkrainian[5] . ' 2011', '+', $monthsUkrainian[1] . ' 2021'],
-                                            ['Град Софии', $monthsUkrainian[3] . ' 2021', '+', $monthsUkrainian[5] . ' 2023'],
-                                        ]
+                                        'body' => $history_work
                                     ]
                                 ]
                             ]
@@ -368,5 +378,13 @@ class TrainerController extends Controller
                 ],
             ]
         ];
+    }
+    function set_month($date)
+    {
+        $date_split = explode('-', $date);
+        $month_index = (int)$date_split[1] - 1; // Convert month to array index
+        $year = $date_split[0];
+
+        return $this->monthsUkrainian[$month_index] . ' ' . $year;
     }
 }

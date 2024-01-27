@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Component;
 
 use App\Http\Controllers\Controller;
 use App\Models\Class\ClassType;
+use App\Models\Class\Trainer;
 use App\Models\UserProfile;
 use App\View\Components\Modal\Module\SearchResultListComponent;
 use App\View\Components\modal\SearchComponent;
@@ -27,16 +28,25 @@ class AjaxController extends Controller
     {
         $search_value = $request->input('search_value') ?? "";
         $class_type_id = $request->input('class_types') ?? "";
-        $class_type = ClassType::where('id', $class_type_id)->first();
+        $class_type = ClassType::where('id', $class_type_id)->first()->link;
+        switch ($class_type){
+            case 'trainer':
+                $data = Trainer::where('name', 'like', "%".$search_value."%")
+                    ->get();
+                break;
+            default :
+                $data = UserProfile::
+                where('first_name', 'like', "%".$search_value."%")
+                    ->orWhere('last_name', 'like', "%".$search_value."%")
+                    ->orWhere('surname', 'like', "%".$search_value."%")
+                    ->limit(10)
+                    ->get();
+                break;
+        }
 //        $getCache = ClassType::getCache(1);
 
-        $data = UserProfile::
-        where('first_name', 'like', "%".$search_value."%")
-        ->orWhere('last_name', 'like', "%".$search_value."%")
-        ->orWhere('surname', 'like', "%".$search_value."%")
-            ->limit(10)
-            ->get();
-        $menuMarkButtons = new SearchResultListComponent($data, $class_type->link);
+
+        $menuMarkButtons = new SearchResultListComponent($data, $class_type);
         $menuMarkButtonsView = $menuMarkButtons->render()->render();
 
         return response()->json(

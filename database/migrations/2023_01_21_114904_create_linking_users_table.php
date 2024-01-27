@@ -15,8 +15,10 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
 //            $table->unsignedBigInteger('type_id');
-            $table->integer('type_id');
             $table->integer('refer_id');
+            $table->integer('role_id');
+            $table->integer('type_id');
+
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
