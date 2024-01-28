@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category\CategoryJudge;
 use App\Models\Category\CategorySportsman;
 use App\Models\Category\CategoryTrainer;
 use App\Models\Class\BoxFederation;
@@ -23,5 +24,8 @@ class ClassSeeder extends Seeder
 
         CategorySportsman::truncate();
         CategorySportsman::factory()->count(10)->create();
+
+        CategoryJudge::truncate();
+        CategoryJudge::factory()->count(10)->create();
     }
 }

@@ -32,6 +32,7 @@ class CategorySportsmanFactory extends Factory
             'name' => $this->faker->name,
             'phones' => json_encode(getRandomPhone()),
             'email' => $this->faker->unique()->safeEmail,
+            'logo' => $this->faker->imageUrl,
             'birthday' => $this->faker->date,
             'gender' => $this->faker->randomElement([0, 1]), // Assuming 0 for male, 1 for female
             'weight' => $this->faker->numberBetween(50, 100), // Assuming weight in kg

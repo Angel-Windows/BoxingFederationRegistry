@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->json('phones')->nullable();
             $table->string('email')->nullable();
+            $table->string('logo')->nullable();
             $table->date('birthday')->nullable();
             $table->integer('gender')->nullable();
             $table->integer('weight')->nullable();
