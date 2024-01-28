@@ -5,9 +5,9 @@ namespace Database\Factories\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Category\CategoryJudge>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Category\CategorySportsInstitutions>
  */
-class CategoryJudgeFactory extends Factory
+class CategorySportsInstitutionsFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -22,11 +22,11 @@ class CategoryJudgeFactory extends Factory
             'email' => $this->faker->unique()->safeEmail,
             'logo' => $this->faker->imageUrl,
             'address' => $this->faker->address,
-            'qualification' => $this->faker->word,
-            'rank' => $this->faker->word,
-            'gov' => $this->faker->word,
-            'school' => $this->faker->company,
-            'history_works' => json_encode([$this->faker->sentence, $this->faker->sentence]),
+            'type' => $this->faker->randomElement(['Type A', 'Type B', 'Type C']),
+            'category' => $this->faker->randomElement(['Category X', 'Category Y', 'Category Z']),
+            'edrpou' => $this->faker->randomNumber(6),
+            'director' => $this->faker->name,
+            'site' => $this->faker->url,
         ];
     }
 }
