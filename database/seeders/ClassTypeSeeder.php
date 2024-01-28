@@ -21,7 +21,7 @@ class ClassTypeSeeder extends Seeder
                 'accusative' => 'федерацію боксу',
                 'description' => 'Тут ви знайдете інформацію по всіх існуючих в Україні федераціях боксу та їх працівниках',
                 'count' => 375,
-                'link' => 'federation',
+                'link' => 'box_federation',
                 'logo' => 'img/homeAbout/box.svg',
             ], [
                 'name' => 'Спортсмени',

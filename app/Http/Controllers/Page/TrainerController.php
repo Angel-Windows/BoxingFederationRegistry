@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Page;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category\CategoryTrainer;
 use App\Models\Class\Trainer;
 use App\Models\LinkingUsers;
 use App\Models\User;
@@ -182,31 +183,25 @@ class TrainerController extends Controller
         switch ($class_name) {
             case 'trainer':
                 $bread_crumbs = '';
-                $data_info = $this->get_trainer_data();
+                $data_info = $this->get_trainer_data($id);
                 break;
             case 'insurance-companies':
                 $data_info = $this->get_insurance_companies_data();
+                break;
+            default :
+//                return response()->view('errors.404', [], 404);
+                return response()->view('errors.505', [], 404);
         }
 
         return view('page.trainer')
             ->with('data_info', $data_info);
     }
 
-    private function get_trainer_data(): array
+    private function get_trainer_data($profile_id): array
     {
-//        $user = UserProfile::where('user_profiles.id', 1)
-//            ->leftJoin('users', 'users.id', 'user_profiles.user_id')
-//            ->leftJoin('qualifications', 'qualifications.id', 'user_profiles.qualification_id')
-//            ->leftJoin('federations', 'federations.id', 'user_profiles.federation_id')
-//            ->select(
-//                'users.email',
-//                'users.balance',
-//                'user_profiles.*',
-//                'qualifications.name as qualifications_name',
-//                'federations.name as federations_name'
-//            )
-//            ->first();
-        $user = Trainer::find(3);
+
+        $user = CategoryTrainer::find($profile_id);
+//        $user = Trainer::find($profile_id);
 //        dd($user);
 //        $linking_users = UserProfile::limit(15)->get()->map(function ($user) {
 //            return $user->fool_name;
@@ -236,17 +231,7 @@ class TrainerController extends Controller
                         'data' => [
                             [
                                 'type' => 'buttons',
-                                'data' => [
-                                    [
-                                        'link' => '',
-                                        'logo' => 'img/phone.svg',
-                                        'text' => $user->phone
-                                    ], [
-                                        'link' => '',
-                                        'logo' => 'img/mail.svg',
-                                        'text' => $user->email
-                                    ]
-                                ]
+                                'data' => $this->getButtons(['phones' => $user->phones, 'emails' => 'email@gmail.com'])
                             ],
                             [
                                 'type' => 'table',
@@ -288,20 +273,6 @@ class TrainerController extends Controller
 
     private function get_insurance_companies_data(): array
     {
-        $user = UserProfile::where('user_profiles.id', 1)
-            ->leftJoin('users', 'users.id', 'user_profiles.user_id')
-            ->leftJoin('qualifications', 'qualifications.id', 'user_profiles.qualification_id')
-            ->leftJoin('federations', 'federations.id', 'user_profiles.federation_id')
-            ->select(
-                'users.email',
-                'users.balance',
-                'user_profiles.*',
-                'qualifications.name as qualifications_name',
-                'federations.name as federations_name'
-            )
-            ->first();
-
-
         return [
             'name' => "insurance_companies",
             'img' => [
@@ -379,6 +350,42 @@ class TrainerController extends Controller
             ]
         ];
     }
+
+    private function getButtons(array $arr): array
+    {
+        $data_phones = [];
+
+        foreach ($arr as $key => $item_category) {
+            if (isJson($item_category)) {
+                $items = json_decode($item_category, true); // Decode JSON as associative arrays
+            } else {
+                $items = [$item_category]; // Wrap non-JSON items in an array
+            }
+
+            foreach ($items as $item) {
+                switch ($key) {
+                    case 'phones':
+                        $data_phones[] = [
+                            'link' => '',
+                            'logo' => 'img/phone.svg',
+                            'text' => formatPhone($item),
+                        ];
+                        break;
+                    case 'emails':
+                        $data_phones[] = [
+                            'link' => '',
+                            'logo' => 'img/mail.svg',
+                            'text' => $item,
+                        ];
+                        break;
+                    // Add more cases if needed
+                }
+            }
+        }
+        return $data_phones;
+    }
+
+
     function set_month($date)
     {
         $date_split = explode('-', $date);

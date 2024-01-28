@@ -6,11 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @method static where(string $string, string $string1, string $string2)
- * @method static find(int $int)
  * @method static truncate()
+ * @method static where(string $string, string $string1, string $string2)
  */
-class Trainer extends Model
+class BoxFederation extends Model
 {
     use HasFactory;
 }

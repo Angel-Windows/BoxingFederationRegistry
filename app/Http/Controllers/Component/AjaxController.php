@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Component;
 
 use App\Http\Controllers\Controller;
+use App\Models\Class\BoxFederation;
 use App\Models\Class\ClassType;
 use App\Models\Class\Trainer;
 use App\Models\UserProfile;
@@ -32,6 +33,10 @@ class AjaxController extends Controller
         switch ($class_type){
             case 'trainer':
                 $data = Trainer::where('name', 'like', "%".$search_value."%")
+                    ->get();
+                break;
+                case 'box_federation':
+                $data = BoxFederation::where('name', 'like', "%".$search_value."%")
                     ->get();
                 break;
             default :

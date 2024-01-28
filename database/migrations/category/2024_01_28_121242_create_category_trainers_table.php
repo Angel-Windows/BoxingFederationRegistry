@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('trainers', function (Blueprint $table) {
+        Schema::create('category_trainers', static function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
-            $table->string('logo')->nullable();
-            $table->string('phone')->nullable();
+            $table->json('phones')->nullable();
             $table->string('email')->nullable();
+            $table->string('logo')->nullable();
             $table->string('qualification')->nullable();
             $table->string('federation')->nullable();
             $table->string('address')->nullable();
@@ -24,7 +24,6 @@ return new class extends Migration
             $table->string('gov')->nullable();
             $table->string('school')->nullable();
             $table->json('history_work')->nullable();
-
             $table->timestamps();
         });
     }
@@ -34,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('trainers');
+        Schema::dropIfExists('category_trainers');
     }
 };

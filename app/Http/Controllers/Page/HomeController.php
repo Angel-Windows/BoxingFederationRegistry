@@ -10,6 +10,9 @@ class HomeController extends Controller
 {
     public function index()
     {
+
+
+
         $card_data = ClassType::all();
         return view('page.home', compact('card_data'));
     }
