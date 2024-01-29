@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Category\CategoryEmployessInstitutions;
+use App\Models\Category\CategoryEmployessSchool;
 use App\Models\Category\CategoryFunZone;
 use App\Models\Category\CategoryJudge;
 use App\Models\Category\CategoryMedical;
@@ -49,5 +50,8 @@ class ClassSeeder extends Seeder
 
         CategoryEmployessInstitutions::truncate();
         CategoryEmployessInstitutions::factory()->count(10)->create();
+
+        CategoryEmployessSchool::truncate();
+        CategoryEmployessSchool::factory()->count(10)->create();
     }
 }
