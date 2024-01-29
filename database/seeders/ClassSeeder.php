@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Category\CategoryJudge;
 use App\Models\Category\CategoryMedical;
+use App\Models\Category\CategorySchool;
 use App\Models\Category\CategorySportsInstitutions;
 use App\Models\Category\CategorySportsman;
 use App\Models\Category\CategoryTrainer;
@@ -20,6 +21,9 @@ class ClassSeeder extends Seeder
     {
         CategoryMedical::truncate();
         CategoryMedical::factory()->count(10)->create();
+
+        CategorySchool::truncate();
+        CategorySchool::factory()->count(10)->create();
 
         CategorySportsInstitutions::truncate();
         CategorySportsInstitutions::factory()->count(10)->create();
