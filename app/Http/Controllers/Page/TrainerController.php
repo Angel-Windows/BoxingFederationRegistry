@@ -378,7 +378,6 @@ class TrainerController extends Controller
                             'text' => $item,
                         ];
                         break;
-                    // Add more cases if needed
                 }
             }
         }
@@ -386,10 +385,10 @@ class TrainerController extends Controller
     }
 
 
-    function set_month($date)
+    private function set_month($date): string
     {
         $date_split = explode('-', $date);
-        $month_index = (int)$date_split[1] - 1; // Convert month to array index
+        $month_index = (int)$date_split[1] - 1;
         $year = $date_split[0];
 
         return $this->monthsUkrainian[$month_index] . ' ' . $year;

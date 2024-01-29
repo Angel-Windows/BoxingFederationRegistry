@@ -29,7 +29,7 @@ class ClassTypeSeeder extends Seeder
                 'accusative' => 'sss',
                 'description' => 'Ви можете переглядати інформацію по всіх спортсменах, їх контакти та інші данні',
                 'count' => 11,
-                'link' => 'sportsmen',
+                'link' => 'category_sportsmen',
                 'logo' => 'img/homeAbout/sportsmen.svg'
             ], [
                 'name' => 'Тренери',
@@ -37,7 +37,7 @@ class ClassTypeSeeder extends Seeder
                 'accusative' => 'sss',
                 'description' => 'Ви можете переглядати інформацію про всіх тренерів, кого вони тренують, заклад в якому працюють та їх контакти',
                 'count' => 33,
-                'link' => 'trainer',
+                'link' => 'category_trainers',
                 'logo' => 'img/homeAbout/trainer.svg'
             ], [
                 'name' => 'Судді',
@@ -45,7 +45,7 @@ class ClassTypeSeeder extends Seeder
                 'accusative' => 'sss',
                 'description' => 'Ви можете переглядати інформацію про всіх суддів, їх контакти та інші данні',
                 'count' => 112,
-                'link' => 'referee',
+                'link' => 'category_judges',
                 'logo' => 'img/homeAbout/referee.svg'
             ], [
                 'name' => 'Спортивні заклади',
@@ -53,7 +53,7 @@ class ClassTypeSeeder extends Seeder
                 'accusative' => 'sss',
                 'description' => 'Ви можете переглядати інформацію про всіх суддів, їх контакти та інші данні',
                 'count' => 123,
-                'link' => 'sports_grounds',
+                'link' => 'category_sports_institutions',
                 'logo' => 'img/homeAbout/sports_grounds.svg'
             ], [
                 'name' => 'Страхові компанії',
@@ -61,7 +61,7 @@ class ClassTypeSeeder extends Seeder
                 'accusative' => 'sss',
                 'description' => 'Ви можете переглянути інформацію про страхові компанії, які є партнерами Федерації боксу України',
                 'count' => 44,
-                'link' => 'insurance_companies',
+                'link' => 'category_insurances',
                 'logo' => 'img/homeAbout/insurance_companies.svg'
             ], [
                 'name' => 'Медичні заклади',
@@ -69,7 +69,7 @@ class ClassTypeSeeder extends Seeder
                 'accusative' => 'sss',
                 'description' => 'Ви можете переглянути інформацію про медичні заклади, які є партнерами Федерації боксу України',
                 'count' => 8,
-                'link' => 'medical_institutions',
+                'link' => 'category_medicals',
                 'logo' => 'img/homeAbout/medical_institutions.svg'
             ], [
                 'name' => 'Навчальні заклади',
@@ -77,7 +77,7 @@ class ClassTypeSeeder extends Seeder
                 'accusative' => 'sss',
                 'description' => 'Ви можете переглянути інформацію про навчальні заклади, які є партнерами Федерації боксу України',
                 'count' => 119,
-                'link' => 'schools',
+                'link' => 'category_schools',
                 'logo' => 'img/homeAbout/schools.svg'
             ], [
                 'name' => 'Магазин/Аукціон',
@@ -85,7 +85,7 @@ class ClassTypeSeeder extends Seeder
                 'accusative' => 'sss',
                 'description' => "Тут ви можете придбати речі, що прямо пов'язані з боксом, або прийняти участь в аукціоні",
                 'count' => 445,
-                'link' => 'auction',
+                'link' => '',
                 'logo' => 'img/homeAbout/auction.svg'
             ], [
                 'name' => 'ФанЗона',
@@ -93,7 +93,7 @@ class ClassTypeSeeder extends Seeder
                 'accusative' => 'sss',
                 'description' => "Тут ви можете знайти інформацію про фанів боксу та боксерів, а при реєстрації отримувати знижки на турніри, білети і різноманітні товари",
                 'count' => 13,
-                'link' => 'fan_zone',
+                'link' => 'category_fun_zones',
                 'logo' => 'img/homeAbout/fan_zone.svg'
             ]]
         );
