@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Category;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @method static inRandomOrder()
+ * @method static truncate()
+ * @method static exists()
  */
-class Federation extends Model
+class CategoryStore extends Model
 {
     use HasFactory;
-
-    public $timestamps = false;
 }

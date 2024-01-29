@@ -13,8 +13,6 @@ return new class extends Migration {
         Schema::create('user_profiles', static function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->unique();
-            $table->unsignedBigInteger('federation_id');
-            $table->unsignedBigInteger('qualification_id');
             $table->string('first_name');
             $table->string('last_name');
             $table->string('surname');
@@ -27,8 +25,6 @@ return new class extends Migration {
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('qualification_id')->references('id')->on('qualifications');
-            $table->foreign('federation_id')->references('id')->on('federations');
         });
 
     }

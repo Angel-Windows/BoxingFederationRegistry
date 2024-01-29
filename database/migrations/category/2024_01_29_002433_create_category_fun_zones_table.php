@@ -17,7 +17,7 @@ return new class extends Migration
             $table->json('phones')->nullable();
             $table->string('email')->nullable();
             $table->string('logo')->nullable();
-            $table->string('director')->nullable();
+            $table->date('birthday')->nullable();
             $table->string('address')->nullable();
             $table->timestamps();
         });

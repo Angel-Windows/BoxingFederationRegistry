@@ -171,6 +171,9 @@ return [
         App\Providers\FortifyServiceProvider::class,
         App\Providers\JetstreamServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
+
+        //mine
+        App\Providers\RepositoryServiceProvider::class,
     ])->toArray(),
 
     /*

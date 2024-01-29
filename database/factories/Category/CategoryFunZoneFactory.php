@@ -22,7 +22,7 @@ class CategoryFunZoneFactory extends Factory
             'email' => $this->faker->unique()->safeEmail,
             'logo' => $this->faker->imageUrl,
             'address' => $this->faker->address,
-            'director' => $this->faker->name,
+            'birthday' => $this->faker->date,
         ];
     }
 }

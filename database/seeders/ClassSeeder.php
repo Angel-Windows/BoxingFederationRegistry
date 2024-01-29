@@ -5,11 +5,13 @@ namespace Database\Seeders;
 use App\Models\Category\CategoryEmployessInstitutions;
 use App\Models\Category\CategoryEmployessSchool;
 use App\Models\Category\CategoryFunZone;
+use App\Models\Category\CategoryInsurance;
 use App\Models\Category\CategoryJudge;
 use App\Models\Category\CategoryMedical;
 use App\Models\Category\CategorySchool;
 use App\Models\Category\CategorySportsInstitutions;
 use App\Models\Category\CategorySportsman;
+use App\Models\Category\CategoryStore;
 use App\Models\Category\CategoryTrainer;
 use App\Models\Class\BoxFederation;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -22,36 +24,67 @@ class ClassSeeder extends Seeder
      */
     public function run(): void
     {
-        CategoryMedical::truncate();
-        CategoryMedical::factory()->count(10)->create();
+        $count_seed = 100;
+        if (!CategoryStore::exists() || false) {
+            CategoryStore::truncate();
+            CategoryStore::factory()->count($count_seed)->create();
+        }
 
-        CategorySchool::truncate();
-        CategorySchool::factory()->count(10)->create();
+        if (!CategoryInsurance::exists() || false) {
+            CategoryInsurance::truncate();
+            CategoryInsurance::factory()->count($count_seed)->create();
+        }
 
-        CategoryFunZone::truncate();
-        CategoryFunZone::factory()->count(10)->create();
+        if (!CategoryMedical::exists() || false) {
+            CategoryMedical::truncate();
+            CategoryMedical::factory()->count($count_seed)->create();
+        }
 
-        CategorySportsInstitutions::truncate();
-        CategorySportsInstitutions::factory()->count(10)->create();
+        if (!CategorySchool::exists() || false) {
+            CategorySchool::truncate();
+            CategorySchool::factory()->count($count_seed)->create();
+        }
 
-        BoxFederation::truncate();
-        BoxFederation::factory()->count(10)->create();
+        if (!CategoryFunZone::exists() || false) {
+            CategoryFunZone::truncate();
+            CategoryFunZone::factory()->count($count_seed)->create();
+        }
 
-        CategoryTrainer::truncate();
-        CategoryTrainer::factory()->count(10)->create();
+        if (!CategorySportsInstitutions::exists() || false) {
+            CategorySportsInstitutions::truncate();
+            CategorySportsInstitutions::factory()->count($count_seed)->create();
+        }
 
-        CategorySportsman::truncate();
-        CategorySportsman::factory()->count(10)->create();
+        if (!BoxFederation::exists() || false) {
+            BoxFederation::truncate();
+            BoxFederation::factory()->count($count_seed)->create();
+        }
 
-        CategoryJudge::truncate();
-        CategoryJudge::factory()->count(10)->create();
+        if (!CategoryTrainer::exists() || false) {
+            CategoryTrainer::truncate();
+            CategoryTrainer::factory()->count($count_seed)->create();
+        }
 
+        if (!CategorySportsman::exists() || false) {
+            CategorySportsman::truncate();
+            CategorySportsman::factory()->count($count_seed)->create();
+        }
+
+        if (!CategoryJudge::exists() || false) {
+            CategoryJudge::truncate();
+            CategoryJudge::factory()->count($count_seed)->create();
+        }
         //Працівники
 
-        CategoryEmployessInstitutions::truncate();
-        CategoryEmployessInstitutions::factory()->count(10)->create();
 
-        CategoryEmployessSchool::truncate();
-        CategoryEmployessSchool::factory()->count(10)->create();
+        if (!CategoryEmployessInstitutions::exists() || false) {
+            CategoryEmployessInstitutions::truncate();
+            CategoryEmployessInstitutions::factory()->count($count_seed)->create();
+        }
+
+        if (!CategoryEmployessSchool::exists() || false) {
+            CategoryEmployessSchool::truncate();
+            CategoryEmployessSchool::factory()->count($count_seed)->create();
+        }
     }
 }

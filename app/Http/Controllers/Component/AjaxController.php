@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 
 class AjaxController extends Controller
 {
+
     public function open_modal(Request $request): JsonResponse
     {
         $menuMarkButtons = new SearchComponent($request->input('class_types'));
@@ -31,19 +32,10 @@ class AjaxController extends Controller
         $search_value = $request->input('search_value') ?? "";
         $class_type_id = $request->input('class_types') ?? "";
         $class_type = ClassType::where('id', $class_type_id)->first()->link;
-        $data = DB::table($class_type)->where('name', 'like', "%".$search_value."%")
+        $data = DB::table($class_type)
+            ->where('name', 'like', "%".$search_value."%")
+            ->limit(10)
             ->get();
-//        switch ($class_type){
-//            case 'trainer':
-//
-//                break;
-//                case 'box_federation':
-//                $data = BoxFederation::where('name', 'like', "%".$search_value."%")
-//                    ->get();
-//                break;
-//        }
-//        $getCache = ClassType::getCache(1);
-
 
         $menuMarkButtons = new SearchResultListComponent($data, $class_type);
         $menuMarkButtonsView = $menuMarkButtons->render()->render();

@@ -17,14 +17,18 @@
         @endif
     </section>
     <section class="table-auto_fool">
-        <div class="{{$data_info['img']['class']}}">
-            <div class="img"><img src="{{asset($data_info['img']['link'])}}" alt=""></div>
-        </div>
-        <div>
-            @foreach($data_info['right_panel'] as $item_wrapper)
-                @include('components.info.info')
-            @endforeach
-        </div>
+        @if(isset($data_info['right_panel']))
+
+            <div class="{{$data_info['img']['class']}}">
+                <div class="img"><img src="{{asset($data_info['img']['link'])}}" alt=""></div>
+            </div>
+
+            <div>
+                @foreach($data_info['right_panel'] as $item_wrapper)
+                    @include('components.info.info')
+                @endforeach
+            </div>
+        @endif
         @if(isset($data_info['bottom_panel']))
             <div class="grid-sp-2">
                 @foreach($data_info['bottom_panel'] as $item_wrapper)

@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('federations', function (Blueprint $table) {
+        Schema::create('category_stores', static function (Blueprint $table) {
             $table->id();
             $table->string('name');
-//            $table->timestamps();
+            $table->timestamps();
         });
     }
 
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('federations');
+        Schema::dropIfExists('category_stores');
     }
 };

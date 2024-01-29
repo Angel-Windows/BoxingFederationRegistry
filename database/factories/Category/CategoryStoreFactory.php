@@ -1,13 +1,13 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\Category;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Federation>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Category\CategoryStore>
  */
-class FederationFactory extends Factory
+class CategoryStoreFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,7 +17,7 @@ class FederationFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name(1),
+            'name' => $this->faker->name,
         ];
     }
 }

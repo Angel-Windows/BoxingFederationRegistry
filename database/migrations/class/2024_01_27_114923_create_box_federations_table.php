@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('box_federations', static function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
+            $table->string('director')->nullable();
+            $table->string('address')->nullable();
             $table->json('phones')->nullable();
             $table->string('email')->nullable();
             $table->string('federation')->nullable();

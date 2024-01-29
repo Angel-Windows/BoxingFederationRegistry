@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @method static truncate()
+ * @method static exists()
  */
 class CategoryEmployessInstitutions extends Model
 {
