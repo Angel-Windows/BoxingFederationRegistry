@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category\CategoryFunZone;
 use App\Models\Category\CategoryJudge;
 use App\Models\Category\CategoryMedical;
 use App\Models\Category\CategorySchool;
@@ -24,6 +25,9 @@ class ClassSeeder extends Seeder
 
         CategorySchool::truncate();
         CategorySchool::factory()->count(10)->create();
+
+        CategoryFunZone::truncate();
+        CategoryFunZone::factory()->count(10)->create();
 
         CategorySportsInstitutions::truncate();
         CategorySportsInstitutions::factory()->count(10)->create();
