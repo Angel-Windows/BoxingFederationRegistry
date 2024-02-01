@@ -30,5 +30,10 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
-
+    'cloudipsp' => [
+        'merchant_id' => env('CLOUDIPSP_MERCHANT_ID'),
+        'secret_key' => env('CLOUDIPSP_SECRET_KEY'),
+        'api_url' => env('CLOUDIPSP_API_URL', 'https://api.fondy.eu/api'),
+        'checkout_url' => env('CLOUDIPSP_CHECKOUT_URL', 'https://secure.fondy.eu/checkout'),
+    ],
 ];

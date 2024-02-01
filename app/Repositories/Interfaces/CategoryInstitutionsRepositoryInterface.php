@@ -5,7 +5,7 @@ interface CategoryInstitutionsRepositoryInterface
 
     public function index($id, $profile_id);
 
-    public function edit();
+    public function edit_page();
 
 
 }

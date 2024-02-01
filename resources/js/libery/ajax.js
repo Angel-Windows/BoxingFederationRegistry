@@ -1,4 +1,5 @@
 import * as  search from "./ajaxs/search.js";
+import * as  category from "./ajaxs/category.js";
 
 let CsrfToken = null;
 const getCsrfToken = () => {
@@ -17,6 +18,9 @@ export function SendPostNoForm(url, data, function_name = "") {
     })
         .then(response => response.json())
         .then(data => {
+            if (data.log){
+                console.log(data.log)
+            }
             functionsArray[function_name](data);
             return data;
         })
@@ -32,6 +36,9 @@ export function Post(form, function_name = "") {
 
     getResource(url, formData)
         .then(data => {
+            if (data.log){
+                console.log(data.log)
+            }
             functionsArray[function_name](data);
         })
         .catch(error => {
@@ -66,6 +73,12 @@ export const FindPostForm = (element, function_name = "") => {
     } while ((parentElement.tagName.toLowerCase() !== 'form'));
     Post(parentElement, function_name)
 }
+export const PostFormFind = (element, function_name = "") => {
+   const parentElement = document.querySelector('#' + element)
+    Post(parentElement, function_name)
+}
+
 const functionsArray = {
+    ...category,
     ...search,
 };

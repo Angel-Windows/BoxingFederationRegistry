@@ -7,6 +7,9 @@ use App\Http\Controllers\PhoneVerificationController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Page\TrainerController;
 use App\Http\Controllers\Page\HomeController;
+
+use App\Http\Controllers\PaymentController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,6 +26,8 @@ Route::name('page.')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/trainer', [TrainerController::class, 'index'])->name('trainer');
     Route::get('/class/{class_name}/{id}', [TrainerController::class, 'class_page'])->name('class');
+    Route::get('/class/{class_name}/{id}/edit', [TrainerController::class, 'edit_page'])->name('class.edit_page');
+    Route::post('/class/{class_name}/{id}/edit', [TrainerController::class, 'edit'])->name('class.edit');
 });
 
 
@@ -35,13 +40,26 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
-Route::name('ajax.')->prefix('ajax/')->group(function () {
-    Route::get('/')->name('link');
-    Route::post('/open-modal', [AjaxController::class, 'open_modal'])->name('open-modal');
-    Route::post('/search-in-class', [AjaxController::class, 'search_in_class'])->name('search-in-class');
-});
+
 
 Route::name('auth.')->prefix('auth/')->group(function () {
     Route::post('/login', [AuthController::class, 'login'])->name('login');
     Route::post('/get_code', [PhoneVerificationController::class, 'get_code'])->name('get_code');
+});
+
+Route::prefix('payment')->name('payment.')->group(function () {
+    Route::prefix('fondy')->name('fondy.')->group(function () {
+        Route::get('/form', [PaymentController::class, 'form'])->name('form');
+        // PAGE
+        Route::post('/process-payment', [PaymentController::class, 'initiatePayment'])->name('processPayment');
+
+        // CALLBACK
+        Route::post('/response-url', [PaymentController::class, 'response_url'])->name('response-url');
+        Route::post('/callback-url', [PaymentController::class, 'callback_url'])->name('callback-url');
+    });
+});
+Route::name('ajax.')->prefix('ajax/')->group(function () {
+    Route::get('/')->name('link');
+    Route::post('/open-modal', [AjaxController::class, 'open_modal'])->name('open-modal');
+    Route::post('/search-in-class', [AjaxController::class, 'search_in_class'])->name('search-in-class');
 });

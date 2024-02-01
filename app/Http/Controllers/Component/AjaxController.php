@@ -18,11 +18,23 @@ class AjaxController extends Controller
 
     public function open_modal(Request $request): JsonResponse
     {
-        $menuMarkButtons = new SearchComponent($request->input('class_types'));
+        if ($request->has('modal')) {
+            switch ($request->input('modal')) {
+                case "search":
+                    $menuMarkButtons = new SearchComponent($request->input('class_types'));
+                    break;
+                case "register":
+                    $menuMarkButtons = new SearchComponent($request->input('class_types'));
+                    break;
+            }
+        }
+//        $menuMarkButtons = new SearchComponent($request->input('class_types'));
+
         $menuMarkButtonsView = $menuMarkButtons->render()->render();
         return response()->json(
             [
                 'data' => $menuMarkButtonsView,
+                'log' => $request->input(),
             ]
         );
     }
@@ -33,7 +45,7 @@ class AjaxController extends Controller
         $class_type_id = $request->input('class_types') ?? "";
         $class_type = ClassType::where('id', $class_type_id)->first()->link;
         $data = DB::table($class_type)
-            ->where('name', 'like', "%".$search_value."%")
+            ->where('name', 'like', "%" . $search_value . "%")
             ->limit(10)
             ->get();
 

@@ -1,8 +1,8 @@
 const oldActiveArray = {};
 
 const oldActiveArrayInterval = [];
-
-export function toggleParentActive(element, parent, className = 'active', functionName, params = []) {
+const findParent = (element, parent, func) => {
+    let parentElement = null;
     const foundIndex = oldActiveArrayInterval.findIndex(item => item.id === element);
     if (foundIndex === -1) {
         oldActiveArrayInterval.push({
@@ -11,18 +11,49 @@ export function toggleParentActive(element, parent, className = 'active', functi
                 oldActiveArrayInterval.splice(foundIndex, 1);
             }, 5),
         });
-        let parentElement = null;
+
         do {
+
+
             if (!parentElement) {
                 parentElement = element;
             }
             parentElement = parentElement.parentNode;
         } while (!parentElement.classList.contains(parent));
+        func(parentElement)
+    }
+    return {
+        'parentElement': parentElement
+    }
+}
+export function addParentActive(element, parent, className = 'active', functionName, params = []) {
+    const func = (parentElement) => {
+        parentElement.classList.add(className);
+        if (functionsArray[functionName] && typeof functionsArray[functionName] === 'function') {
+            functionsArray[functionName](parentElement, className, params);
+        }
+    }
+
+    findParent(element, parent, func)
+
+}
+export function removeParentActive(element, parent, className = 'active', functionName, params = []) {
+    const func = (parentElement) => {
+        parentElement.classList.remove(className);
+        if (functionsArray[functionName] && typeof functionsArray[functionName] === 'function') {
+            functionsArray[functionName](parentElement, className, params);
+        }
+    }
+    findParent(element, parent, func)
+}
+export function toggleParentActive(element, parent, className = 'active', functionName, params = []) {
+    const func = (parentElement) => {
         parentElement.classList.toggle(className);
         if (functionsArray[functionName] && typeof functionsArray[functionName] === 'function') {
             functionsArray[functionName](parentElement, className, params);
         }
     }
+    findParent(element, parent, func)
 }
 
 export const removeOldActive = (elem, className, arrayParams) => {

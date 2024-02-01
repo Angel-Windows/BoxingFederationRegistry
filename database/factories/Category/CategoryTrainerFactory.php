@@ -32,6 +32,10 @@ class CategoryTrainerFactory extends Factory
                 'end_work' => $random_end_date
             ];
         }
+        $address = $this->faker->city . "||";
+        $address .= $this->faker->address . "||";
+        $address .= random_int(1, 122) . "||";
+        $address .= random_int(1, 122);
         return [
             'logo' => $this->faker->imageUrl(),
             'name' => $this->faker->firstName() . " " . $this->faker->lastName() . " " . $this->faker->firstName(),
@@ -39,7 +43,7 @@ class CategoryTrainerFactory extends Factory
             'email' => $this->faker->email(),
             'qualification' => $this->faker->text(50),
             'federation' => $this->faker->text(random_int(30, 50)),
-            'address' => $this->faker->address(),
+            'address' => $address,
             'rank' => $this->faker->text(random_int(30, 50)),
             'gov' => $this->faker->text(random_int(30, 50)),
             'school' => $this->faker->text(random_int(30, 50)),

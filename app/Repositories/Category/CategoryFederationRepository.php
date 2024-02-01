@@ -57,7 +57,7 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
             ]
         ];
     }
-    public function edit(): array
+    public function edit_page(): array
     {
         return [];
     }

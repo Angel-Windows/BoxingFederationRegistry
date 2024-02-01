@@ -87,7 +87,7 @@ class CategoryInsuranceCompaniesRepository implements CategoryRepositoryInterfac
             ],
         ];
     }
-    public function edit(): array
+    public function edit_page(): array
     {
         return [];
     }

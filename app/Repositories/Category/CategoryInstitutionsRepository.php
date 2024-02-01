@@ -78,7 +78,7 @@ class CategoryInstitutionsRepository implements CategoryInstitutionsRepositoryIn
             ]
         ];
     }
-    public function edit(): array
+    public function edit_page(): array
     {
         return [];
     }

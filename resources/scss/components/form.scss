@@ -18,6 +18,7 @@ form {
         padding-left: 20px;
     }
 
+
     .label {
         height: calc(1em + 16px * 2 + 10px);
         padding: 0 16px;
@@ -26,6 +27,36 @@ form {
         border: 1px solid var(--grey-middle, #E9E8EE);
         background: var(--white, #FFF);
         margin: 0;
+        transition-duration: 0.1s;
+        position: relative;
+
+        &:before, &:after {
+            transition-duration: 0.3s;
+            content: '';
+            display: block;
+            height: 2px;
+            right: 0;
+            left: 0;
+            top: 53%;
+            rotate: 0deg;
+            position: absolute;
+
+        }
+
+        &.delete {
+            background: lightgrey;
+            color: #863737ed;
+
+            &:before {
+                rotate: -4deg;
+                background: rgba(173, 173, 173, 0.61);
+            }
+
+            &:after {
+                rotate: 4deg;
+                background: rgba(173, 173, 173, 0.61);
+            }
+        }
 
         span, td, th {
             font-size: 16px;
@@ -129,6 +160,57 @@ form {
                 color: var(--text, #36363D);
             }
         }
+    }
+
+    .custom-select {
+        position: relative;
+
+        &:before {
+            content: '';
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            display: block;
+            transform: translateY(-75%) rotate(135deg);
+            z-index: 1;
+            width: 16px;
+            height: 16px;
+            border-top: 2px solid #AAA8B8;
+            border-right: 2px solid #AAA8B8;
+            border-radius: 1px;
+        }
+    }
+
+    .label.type__text .custom-select-input {
+        width: calc(100% - 16px - 16px);
+    }
+
+    .custom-select-options {
+        position: absolute;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        display: none;
+        z-index: 1;
+
+        max-height: 150px;
+        overflow-y: auto;
+    }
+
+    .custom-select-options.show-all {
+        max-height: none;
+    }
+
+    .custom-select-options li {
+        padding: 10px;
+        cursor: pointer;
+    }
+
+    .custom-select-options li:hover {
+        background-color: #f2f2f2;
     }
 
 

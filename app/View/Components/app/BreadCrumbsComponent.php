@@ -22,7 +22,7 @@ class BreadCrumbsComponent extends Component
      */
     public function render(): View|Closure|string
     {
-        $page_name = Route::current()->parameters()['class_name'];
+        $page_name = Route::current()->parameters()['class_name'] ?? "";
 
 //        dd(Route::current()->parameters()['class_name']);
         $arr_bread = [[
