@@ -24,11 +24,16 @@ Route::get('/send-welcome-email', [EmailController::class, 'sendWelcomeEmail']);
 
 Route::name('page.')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('/test', static function () {
+        return view('test_page');
+    })->name('test');
     Route::get('/trainer', [TrainerController::class, 'index'])->name('trainer');
     Route::get('/class/{class_name}/{id}', [TrainerController::class, 'class_page'])->name('class');
     Route::get('/class/{class_name}/{id}/edit', [TrainerController::class, 'edit_page'])->name('class.edit_page');
     Route::post('/class/{class_name}/{id}/edit', [TrainerController::class, 'edit'])->name('class.edit');
+    Route::post('/class/{class_name}/{id}/register_category', [TrainerController::class, 'register_category'])->name('class.register_category');
 });
+Route::get('/photos/{filename}', [AjaxController::class, 'show'])->name('photo.show');
 
 
 Route::middleware([
@@ -58,8 +63,10 @@ Route::prefix('payment')->name('payment.')->group(function () {
         Route::post('/callback-url', [PaymentController::class, 'callback_url'])->name('callback-url');
     });
 });
+
 Route::name('ajax.')->prefix('ajax/')->group(function () {
     Route::get('/')->name('link');
     Route::post('/open-modal', [AjaxController::class, 'open_modal'])->name('open-modal');
     Route::post('/search-in-class', [AjaxController::class, 'search_in_class'])->name('search-in-class');
+    Route::post('/upload-img', [AjaxController::class, 'upload_img'])->name('upload-img');
 });

@@ -7,10 +7,141 @@ use App\Models\Category\CategoryTrainer;
 use App\Models\Class\Trainer;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
 use App\Traits\CategoryUITrait;
+use phpDocumentor\Reflection\Type;
 
 class CategoryTrainerRepository implements CategoryRepositoryInterface
 {
     use CategoryUITrait;
+
+    private $data = [
+        [
+            'type' => 'table',
+            'data' => [
+                [
+                    'name' => 'last_name',
+                    'tag' => 'input',
+                    'text' => 'Прізвище',
+//                        'value' => $fool_name[0] ?? ""
+                ],
+                [
+                    'name' => 'first_name',
+                    'tag' => 'input',
+                    'text' => 'Імя',
+//                        'value' => $fool_name[1] ?? ""
+                ],
+                [
+                    'name' => 'surname',
+                    'tag' => 'input',
+                    'text' => 'По батькові',
+//                        'value' => $fool_name[2] ?? ""
+                ],
+                [
+                    'name' => 'phone',
+                    'tag' => 'input',
+                    'text' => 'Номер телефону',
+//                        'value' => json_decode($user->phones)[0] ?? "",
+                ],
+                [
+                    'name' => 'email',
+                    'tag' => 'input',
+                    'text' => 'E-mail',
+//                        'value' => $user->email,
+                ], [
+                    'name' => 'qualification',
+                    'tag' => 'custom-select',
+                    'placeholder' => 'Кваліфікація',
+//                        'value' => $user->qualification,
+                    'option' => [
+                        'expert' => 'Експерт',
+                        'trainer' => 'Тренер',
+                        'kitchen' => 'Повар',
+                    ],
+                ], [
+                    'name' => 'city',
+                    'tag' => 'custom-select',
+                    'placeholder' => 'Місто',
+                    'size' => 'fool',
+//                        'value' => $address[0],
+                    'option' => [
+                        'zp' => 'Запоріжжя',
+                        'pt' => 'Полтава',
+                        'hr' => 'Херсон',
+                        'vi' => 'Вінниця',
+                    ],
+                ], [
+                    'name' => 'address',
+                    'tag' => 'custom-select',
+                    'placeholder' => 'Вулиця/провулок/проспект',
+                    'autocomplete' => 'street-address',
+                    'size' => 'fool',
+//                        'value' => $address[1],
+                    'option' => [
+                        'zp' => 'Запоріжжя',
+                        'pt' => 'Полтава',
+                        'hr' => 'Херсон',
+                        'vi' => 'Вінниця',
+                    ],
+                ], [
+                    'name' => 'house_number',
+                    'tag' => 'custom-select',
+                    'placeholder' => 'Номер будинку',
+//                        'value' => $address[2],
+                    'option' => [
+                        '1' => '1',
+                        '2' => '2',
+                        '3' => '3',
+                        '4' => '4',
+                        '4a' => '4a',
+                    ],
+                ], [
+                    'name' => 'apartment_number',
+                    'tag' => 'custom-select',
+                    'placeholder' => 'Номер квартири',
+//                        'value' => $address[3],
+                    'option' => [
+                        '1' => '1',
+                        '2' => '2',
+                        '3' => '3',
+                        '4' => '4',
+                        '4a' => '4a',
+                    ],
+                ], [
+                    'name' => 'federation',
+                    'tag' => 'custom-select',
+                    'placeholder' => 'Моя федерація',
+                    'size' => 'fool',
+//                        'value' => $user->federation,
+                    'option' => [
+                        'box' => 'Бокс',
+                        'school-box' => 'Школа бокса',
+                        'yoga' => 'Йога',
+                    ],
+                ], [
+                    'name' => 'rank',
+                    'tag' => 'custom-select',
+                    'placeholder' => 'Державні, почесні звання, спортивні звання та розряди',
+                    'size' => 'fool',
+//                        'value' => $user->rank,
+                    'option' => [
+                        'box' => 'Бокс',
+                        'school-box' => 'Школа бокса',
+                        'yoga' => 'Йога',
+                    ],
+                ], [
+                    'name' => 'gov',
+                    'tag' => 'custom-select',
+                    'placeholder' => 'Державні заохочення',
+                    'size' => 'fool',
+//                        'value' => $user->gov,
+                    'option' => [
+                        'box' => 'Бокс',
+                        'school-box' => 'Школа бокса',
+                        'yoga' => 'Йога',
+                    ],
+                ]
+            ],
+        ],
+    ];
 
     public function index($id): array
     {
@@ -82,183 +213,190 @@ class CategoryTrainerRepository implements CategoryRepositoryInterface
     public function edit_page($id): array
     {
         $user = CategoryTrainer::find($id);
-        $sportsman = CategorySportsman::inRandomOrder()->limit(random_int(2, 10))->get();
-        $sportsman_list = [];
-        $history_work = [];
-        foreach ($sportsman as $item) {
-            $sportsman_list[] = [
-                'value' => 3,
-                'text' => 'Віталій Кравчук Вікторович'
-            ];
-        }
+        if ($user) {
+            $sportsman = CategorySportsman::inRandomOrder()->limit(random_int(2, 10))->get();
+            $sportsman_list = [];
+            $history_work = [];
+            foreach ($sportsman as $item) {
+                $sportsman_list[] = [
+                    'value' => 3,
+                    'text' => 'Віталій Кравчук Вікторович'
+                ];
+            }
 //        foreach (json_decode($user->history_work) as $item) {
 //            $history_work[] = [
 //
 //            ];
 //        }
-        $fool_name = explode(' ', $user->name);
-        $address = explode('||', $user->address);
+            $fool_name = explode(' ', $user->name);
+            $address = explode('||', $user->address);
+            return [
+                [
+                    'type' => 'table',
+                    'data' => [
+                        [
+                            'name' => 'last_name',
+                            'tag' => 'input',
+                            'text' => 'Прізвище',
+                            'value' => $fool_name[0] ?? ""
+                        ],
+                        [
+                            'name' => 'first_name',
+                            'tag' => 'input',
+                            'text' => 'Імя',
+                            'value' => $fool_name[1] ?? ""
+                        ],
+                        [
+                            'name' => 'surname',
+                            'tag' => 'input',
+                            'text' => 'По батькові',
+                            'value' => $fool_name[2] ?? ""
+                        ],
+                        [
+                            'name' => 'phone',
+                            'tag' => 'input',
+                            'text' => 'Номер телефону',
+                            'value' => json_decode($user->phones)[0] ?? "",
+                        ],
+                        [
+                            'name' => 'email',
+                            'tag' => 'input',
+                            'text' => 'E-mail',
+                            'value' => $user->email,
+                        ], [
+                            'name' => 'qualification',
+                            'tag' => 'custom-select',
+                            'placeholder' => 'Кваліфікація',
+                            'value' => $user->qualification,
+                            'option' => [
+                                'expert' => 'Експерт',
+                                'trainer' => 'Тренер',
+                                'kitchen' => 'Повар',
+                            ],
+                        ], [
+                            'name' => 'city',
+                            'tag' => 'custom-select',
+                            'placeholder' => 'Місто',
+                            'size' => 'fool',
+                            'value' => $address[0],
+                            'option' => [
+                                'zp' => 'Запоріжжя',
+                                'pt' => 'Полтава',
+                                'hr' => 'Херсон',
+                                'vi' => 'Вінниця',
+                            ],
+                        ], [
+                            'name' => 'address',
+                            'tag' => 'custom-select',
+                            'placeholder' => 'Вулиця/провулок/проспект',
+                            'autocomplete' => 'street-address',
+                            'size' => 'fool',
+                            'value' => $address[1],
+                            'option' => [
+                                'zp' => 'Запоріжжя',
+                                'pt' => 'Полтава',
+                                'hr' => 'Херсон',
+                                'vi' => 'Вінниця',
+                            ],
+                        ], [
+                            'name' => 'house_number',
+                            'tag' => 'custom-select',
+                            'placeholder' => 'Номер будинку',
+                            'value' => $address[2],
+                            'option' => [
+                                '1' => '1',
+                                '2' => '2',
+                                '3' => '3',
+                                '4' => '4',
+                                '4a' => '4a',
+                            ],
+                        ], [
+                            'name' => 'apartment_number',
+                            'tag' => 'custom-select',
+                            'placeholder' => 'Номер квартири',
+                            'value' => $address[3],
+                            'option' => [
+                                '1' => '1',
+                                '2' => '2',
+                                '3' => '3',
+                                '4' => '4',
+                                '4a' => '4a',
+                            ],
+                        ], [
+                            'name' => 'federation',
+                            'tag' => 'custom-select',
+                            'placeholder' => 'Моя федерація',
+                            'size' => 'fool',
+                            'value' => $user->federation,
+                            'option' => [
+                                'box' => 'Бокс',
+                                'school-box' => 'Школа бокса',
+                                'yoga' => 'Йога',
+                            ],
+                        ], [
+                            'name' => 'rank',
+                            'tag' => 'custom-select',
+                            'placeholder' => 'Державні, почесні звання, спортивні звання та розряди',
+                            'size' => 'fool',
+                            'value' => $user->rank,
+                            'option' => [
+                                'box' => 'Бокс',
+                                'school-box' => 'Школа бокса',
+                                'yoga' => 'Йога',
+                            ],
+                        ], [
+                            'name' => 'gov',
+                            'tag' => 'custom-select',
+                            'placeholder' => 'Державні заохочення',
+                            'size' => 'fool',
+                            'value' => $user->gov,
+                            'option' => [
+                                'box' => 'Бокс',
+                                'school-box' => 'Школа бокса',
+                                'yoga' => 'Йога',
+                            ],
+                        ]
+                    ],
+                ], [
+                    'title' => 'Мої спортсмени',
+                    'data' => [
+                        [
+                            'tag' => 'checkbox-list',
+                            'name' => 'sportsman[]',
+                            'data' => $sportsman_list,
+                        ]
+                    ],
 
-        return [
-            [
-                'type' => 'table',
-                'data' => [
-                    [
-                        'name' => 'last_name',
-                        'tag' => 'input',
-                        'text' => 'Прізвище',
-                        'value' => $fool_name[0] ?? ""
-                    ],
-                    [
-                        'name' => 'first_name',
-                        'tag' => 'input',
-                        'text' => 'Імя',
-                        'value' => $fool_name[1] ?? ""
-                    ],
-                    [
-                        'name' => 'surname',
-                        'tag' => 'input',
-                        'text' => 'По батькові',
-                        'value' => $fool_name[2] ?? ""
-                    ],
-                    [
-                        'name' => 'phone',
-                        'tag' => 'input',
-                        'text' => 'Номер телефону',
-                        'value' => json_decode($user->phones)[0] ?? "",
-                    ],
-                    [
-                        'name' => 'email',
-                        'tag' => 'input',
-                        'text' => 'E-mail',
-                        'value' => $user->email,
-                    ], [
-                        'name' => 'qualification',
-                        'tag' => 'custom-select',
-                        'placeholder' => 'Кваліфікація',
-                        'value' => $user->qualification,
-                        'option' => [
-                            'expert' => 'Експерт',
-                            'trainer' => 'Тренер',
-                            'kitchen' => 'Повар',
-                        ],
-                    ], [
-                        'name' => 'city',
-                        'tag' => 'custom-select',
-                        'placeholder' => 'Місто',
-                        'size' => 'fool',
-                        'value' => $address[0],
-                        'option' => [
-                            'zp' => 'Запоріжжя',
-                            'pt' => 'Полтава',
-                            'hr' => 'Херсон',
-                            'vi' => 'Вінниця',
-                        ],
-                    ], [
-                        'name' => 'address',
-                        'tag' => 'custom-select',
-                        'placeholder' => 'Вулиця/провулок/проспект',
-                        'autocomplete' => 'street-address',
-                        'size' => 'fool',
-                        'value' => $address[1],
-                        'option' => [
-                            'zp' => 'Запоріжжя',
-                            'pt' => 'Полтава',
-                            'hr' => 'Херсон',
-                            'vi' => 'Вінниця',
-                        ],
-                    ], [
-                        'name' => 'house_number',
-                        'tag' => 'custom-select',
-                        'placeholder' => 'Номер будинку',
-                        'value' => $address[2],
-                        'option' => [
-                            '1' => '1',
-                            '2' => '2',
-                            '3' => '3',
-                            '4' => '4',
-                            '4a' => '4a',
-                        ],
-                    ], [
-                        'name' => 'apartment_number',
-                        'tag' => 'custom-select',
-                        'placeholder' => 'Номер квартири',
-                        'value' => $address[3],
-                        'option' => [
-                            '1' => '1',
-                            '2' => '2',
-                            '3' => '3',
-                            '4' => '4',
-                            '4a' => '4a',
-                        ],
-                    ], [
-                        'name' => 'federation',
-                        'tag' => 'custom-select',
-                        'placeholder' => 'Моя федерація',
-                        'size' => 'fool',
-                        'value' => $user->federation,
-                        'option' => [
-                            'box' => 'Бокс',
-                            'school-box' => 'Школа бокса',
-                            'yoga' => 'Йога',
-                        ],
-                    ], [
-                        'name' => 'rank',
-                        'tag' => 'custom-select',
-                        'placeholder' => 'Державні, почесні звання, спортивні звання та розряди',
-                        'size' => 'fool',
-                        'value' => $user->rank,
-                        'option' => [
-                            'box' => 'Бокс',
-                            'school-box' => 'Школа бокса',
-                            'yoga' => 'Йога',
-                        ],
-                    ], [
-                        'name' => 'gov',
-                        'tag' => 'custom-select',
-                        'placeholder' => 'Державні заохочення',
-                        'size' => 'fool',
-                        'value' => $user->gov,
-                        'option' => [
-                            'box' => 'Бокс',
-                            'school-box' => 'Школа бокса',
-                            'yoga' => 'Йога',
-                        ],
-                    ]
-                ],
-            ], [
-                'title' => 'Мої спортсмени',
-                'data' => [
-                    [
-                        'tag' => 'checkbox-list',
-                        'name' => 'sportsman[]',
-                        'data' => $sportsman_list,
-                    ]
-                ],
 
-
-            ], [
-                'title' => 'Історія місць роботи',
-                'data' => [
-                    [
-                        'tag' => 'history-work',
-                        'name' => 'history_work[]',
-                        'data' => json_decode($user->history_work)
-                    ]
+                ], [
+                    'title' => 'Історія місць роботи',
+                    'data' => [
+                        [
+                            'tag' => 'history-work',
+                            'name' => 'history_work[]',
+                            'data' => json_decode($user->history_work)
+                        ]
+                    ],
                 ],
-            ],
-        ];
+            ];
+        } else {
+            return $this->get_data();
+        }
     }
 
-    public function edit($id, $request)
+    public function edit($id, $request, $type)
     {
         $error = [];
         if ($request->input('phone') === '2') {
             $error['phone'][] = 'length';
         }
 
+        if ($type === 'edit') {
+            $category = CategoryTrainer::find($id);
+        } else {
+            $category = new CategoryTrainer();
+        }
 
-        $category = CategoryTrainer::find($id);
         $category->name = $request->input('first_name') . ' ' . $request->input('last_name') . ' ' . $request->input('surname');
         $category->phones = json_encode([$request->input('phone')]);
         $category->email = $request->input('email');
@@ -272,5 +410,10 @@ class CategoryTrainerRepository implements CategoryRepositoryInterface
         return [
             'error' => $error
         ];
+    }
+
+    public function get_data(): array
+    {
+        return $this->data;
     }
 }

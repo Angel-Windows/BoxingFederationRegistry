@@ -13,7 +13,7 @@
 
     }
     h1 {
-        color: var(--text, #36363D);
+        color: var(--text);
         font-family: Roboto, sans-serif;
         width: 170px;
         font-size: 14px;
@@ -55,7 +55,7 @@
 
     & > div:last-child {
         p {
-            color: var(--text, #36363D);
+            color: var(--text);
             text-align: right;
             font-family: Roboto, sans-serif;
             font-size: 14px;

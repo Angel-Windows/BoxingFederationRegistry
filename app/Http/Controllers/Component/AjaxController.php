@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Component;
 use App\Http\Controllers\Controller;
 use App\Models\Class\BoxFederation;
 use App\Models\Class\ClassType;
-use App\Models\Class\Trainer;
 use App\Models\UserProfile;
+use App\View\Components\modal\CategoryRegisterComponent;
+use App\View\Components\modal\ModalNofFoundComponent;
 use App\View\Components\Modal\Module\SearchResultListComponent;
+use App\View\Components\modal\RegisterComponent;
 use App\View\Components\modal\SearchComponent;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
@@ -24,17 +26,23 @@ class AjaxController extends Controller
                     $menuMarkButtons = new SearchComponent($request->input('class_types'));
                     break;
                 case "register":
-                    $menuMarkButtons = new SearchComponent($request->input('class_types'));
+                    $menuMarkButtons = new RegisterComponent();
                     break;
+                case "category-register":
+                    $category_name = $request->input('category') ?? "";
+                    $menuMarkButtons = new CategoryRegisterComponent($category_name);
+                    break;
+                default:
+                    $menuMarkButtons = new ModalNofFoundComponent($request->input('modal'));
             }
         }
-//        $menuMarkButtons = new SearchComponent($request->input('class_types'));
 
         $menuMarkButtonsView = $menuMarkButtons->render()->render();
         return response()->json(
             [
                 'data' => $menuMarkButtonsView,
-                'log' => $request->input(),
+                'class_name' =>$request->input('modal'),
+                'log' => $request->input('category') ?? "",
             ]
         );
     }
@@ -48,7 +56,6 @@ class AjaxController extends Controller
             ->where('name', 'like', "%" . $search_value . "%")
             ->limit(10)
             ->get();
-
         $menuMarkButtons = new SearchResultListComponent($data, $class_type);
         $menuMarkButtonsView = $menuMarkButtons->render()->render();
 
@@ -58,5 +65,31 @@ class AjaxController extends Controller
 
             ]
         );
+    }
+    public function upload_img(Request $request){
+        $request->validate([
+            'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Пример валидации
+        ]);
+
+        $photoPath = $request->file('photo')->store('photos');
+
+        // Сохранение информации о фотографии в базе данных
+//        $photo = new Photo();
+//        $photo->path = $photoPath;
+//        $photo->save();
+
+        return response()->json(['message' => 'Фотография успешно загружена.']);
+
+    }
+
+    public function show($filename)
+    {
+        $path = storage_path('app/photos/' . $filename); // Путь к файлу в хранилище
+
+        if (!\Storage::exists('photos/' . $filename)) {
+            abort(404); // Если файл не найден, вернем HTTP ошибку 404
+        }
+
+        return response()->file($path); // Вернем файл в ответ на запрос
     }
 }

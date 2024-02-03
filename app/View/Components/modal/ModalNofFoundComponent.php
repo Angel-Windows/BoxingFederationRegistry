@@ -6,12 +6,12 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class RegisterComponent extends Component
+class ModalNofFoundComponent extends Component
 {
     /**
      * Create a new component instance.
      */
-    public function __construct(public $category_name = "")
+    public function __construct(public $modal_name = '')
     {
         //
     }
@@ -21,7 +21,7 @@ class RegisterComponent extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.modal.register-component')
-            ->with($this->category_name);
+        return view('components.modal.modal-nof-found-component')
+            ->with('modal_name', $this->modal_name);
     }
 }

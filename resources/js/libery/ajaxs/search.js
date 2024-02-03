@@ -1,15 +1,80 @@
 const modal_wrapper = document.querySelector('.modal_wrapper');
 const modal_content = modal_wrapper.querySelector('.modal_content');
 let search_result_list = null;
-export function modal_open(data) {
+
+export function modal_open(data, class_name = '') {
     modal_wrapper.classList.add('open')
     modal_content.innerHTML = data['data'];
-    search_result_list = document.querySelector('#search_result_list');
-    const search_input = document.querySelector('#search_input');
+    modal_content.className = 'modal_content ' + data['class_name']
 
+
+    if (class_name === 'search') {
+        search();
+    }else {
+        upload_img();
+    }
+}
+function search(){
+    const search_input = document.querySelector('#search_input');
+    search_result_list = document.querySelector('#search_result_list');
     search_input.addEventListener('input', (e) => {
         functionsArray['ajax_findPostForm'](e.target, "search_in_class")
     });
+}
+function upload_img() {
+    const imageWrapper = document.querySelector('.upload_img');
+    const imagePreview = imageWrapper.querySelector('input');
+    const dragText = imageWrapper.querySelector('.drop');
+    const fileInput = imageWrapper.querySelector("input[type='file']");
+    const button_open_file = imageWrapper.querySelector('.button_open_file')
+
+    button_open_file.addEventListener('click', ()=>{
+        fileInput.click()
+    })
+    document.addEventListener('dragover', function (event) {
+        event.preventDefault();
+        dragText.classList.add('active');
+    });
+
+    document.addEventListener('dragleave', function (event) {
+        dragText.classList.remove('active');
+        event.preventDefault();
+    });
+
+    imageWrapper.addEventListener('drop', function (event) {
+        event.preventDefault();
+        dragText.classList.remove('active');
+
+        const file = event.dataTransfer.files[0];
+
+        if (file.type.match('image.*')) {
+            displayImage(file)
+        } else {
+            alert('Пожалуйста, перетащите изображение');
+        }
+
+        // Скопируйте файл в input type="file"
+        fileInput.files = event.dataTransfer.files;
+
+
+
+    });
+    fileInput.addEventListener('change', function (event) {
+        const file = event.target.files[0];
+        if (file.type.match('image.*')) {
+            displayImage(file);
+        } else {
+            alert('Пожалуйста, выберите изображение');
+        }
+
+    });
+    function displayImage(file) {
+        const reader = new FileReader();
+        reader.onload = function (event) {
+            imagePreview.src = event.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
 }
 export function search_in_class(data) {
 

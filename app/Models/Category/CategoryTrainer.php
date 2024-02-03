@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static truncate()
  * @method static find($profile_id)
  * @method static exists()
+ * @property mixed $gov
  */
 class CategoryTrainer extends Model
 {

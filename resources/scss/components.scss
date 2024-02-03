@@ -29,7 +29,7 @@
 .info-wrapper {
     padding: 20px 40px;
     border-radius: 5px;
-    background: var(--white, #FFF);
+    background: var(--white);
     margin-bottom: 29px;
     width: 100%;
 
@@ -40,13 +40,13 @@
 
 h2 {
     font-family: Oswald, sans-serif;
-    color: var(--text, #36363D);
+    color: var(--text);
     font-size: 42px;
     margin-bottom: 0px;
 }
 
 h3 {
-    color: var(--text, #36363D);
+    color: var(--text);
     /* h2 */
     font-family: Oswald, sans-serif;
     font-size: 24px;

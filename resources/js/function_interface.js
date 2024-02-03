@@ -2,6 +2,7 @@ import * as  ajax_scripts from './libery/ajax.js';
 import * as  home_scripts from './home_scripts.js';
 import * as  modals_scripts from './components/modal.js';
 import {PostFormFind} from "./libery/ajax.js";
+import {open_modal} from "./components/modal.js";
 
 
 window.functionsArray = {
@@ -24,3 +25,5 @@ window.getAjaxLink =(page)=> {
     const ajax_link = ajax_link_meta.getAttribute('content');
     return ajax_link + '/' + page;
 }
+functionsArray['open_modal']('category-register', {'category': 'category_trainers'})
+// color a & curl parrot.live

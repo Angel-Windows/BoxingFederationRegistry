@@ -5,7 +5,8 @@ interface CategoryRepositoryInterface
 
     public function index($id);
     public function edit_page($id);
-    public function edit($id, $request);
+    public function edit($id, $request, $type);
 
+    public function get_data();
 
 }

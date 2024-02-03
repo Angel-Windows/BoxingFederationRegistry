@@ -9,7 +9,9 @@
         background: var(--text_bg, #36363D);
         color: var(--white, #FFF);
 
-
+        &.one{
+            display: block;
+        }
         cursor: pointer;
         img{
             height: 24px;
@@ -22,10 +24,9 @@
             line-height: normal;
         }
         &.white{
-            color: var(--text, #36363D);
-
-            background: none;
-            border: 1px solid var(--grey-middle, #E9E8EE);
+            color: var(--text);
+            background: white;
+            border: 1px solid var(--text);
             span{
                 font-weight: 400;
             }
