@@ -1,4 +1,4 @@
-<x-forms.category-register-form-component :class="$category" :route="'register_category'" enctype="multipart/form-data" method="post">
+<x-forms-category-register-form-component :class="$category" :route="'register_category'" enctype="multipart/form-data" method="post">
     <div class="upload_img" id="imageButton">
         <div class="drop">Відпустити тут</div>
         <div class="img">
@@ -20,5 +20,5 @@
         </label>
     </div>
 
-</x-forms.category-register-form-component>
+</x-forms-category-register-form-component>
 

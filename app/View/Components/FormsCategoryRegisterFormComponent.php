@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components\forms;
+namespace App\View\Components;
 
 use App\Repositories\Category\CategoryFederationRepository;
 use App\Repositories\Category\CategoryFunZonesRepository;
@@ -12,7 +12,7 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class CategoryRegisterFormComponent extends Component
+class FormsCategoryRegisterFormComponent extends Component
 {
     /**
      * Create a new component instance.
