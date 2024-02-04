@@ -6,6 +6,7 @@ use Cloudipsp\Checkout;
 use Cloudipsp\Configuration;
 use Cloudipsp\Exception\ApiException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Session; // Добавлен импорт Session
 
 trait FondyTrait
 {
@@ -18,12 +19,16 @@ trait FondyTrait
     public static function fondyBuy(int $amount = 0, string $email = '', $response_url = '', $callback_url = ''): JsonResponse
     {
         $amount *= 100;
+
         if ($amount <= 0) {
             return response()->json(['paymentUrl' => route('errors.500')]);
         }
 
         Configuration::setMerchantId(config('services.cloudipsp.merchant_id'));
         Configuration::setSecretKey(config('services.cloudipsp.secret_key'));
+
+        $csrfToken = Session::token();
+
         $data = [
             'order_desc' => 'Тестовый заказ SDK',
             'currency' => 'UAH',
@@ -38,7 +43,8 @@ trait FondyTrait
                 'custom_data1' => 'Some string',
                 'custom_data2' => '00000000000',
                 'custom_data3' => '3!@#$%^&(()_+?"}'
-            ]
+            ],
+            '_token' => $csrfToken
         ];
         $paymentUrl = Checkout::url($data)->getData();
 
