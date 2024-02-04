@@ -126,7 +126,7 @@ class TrainerController extends Controller
 //        return redirect()->back();
     }
     public function register_category($class_name, $id, Request $request){
-
         $result = (new CategoryTrainerRepository())->edit($id, $request, 'register');
+        dd($result);
     }
 }

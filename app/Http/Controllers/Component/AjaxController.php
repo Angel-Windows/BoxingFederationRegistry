@@ -67,18 +67,6 @@ class AjaxController extends Controller
         );
     }
     public function upload_img(Request $request){
-        $request->validate([
-            'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Пример валидации
-        ]);
-
-        $photoPath = $request->file('photo')->store('photos');
-
-        // Сохранение информации о фотографии в базе данных
-//        $photo = new Photo();
-//        $photo->path = $photoPath;
-//        $photo->save();
-
-        return response()->json(['message' => 'Фотография успешно загружена.']);
 
     }
 

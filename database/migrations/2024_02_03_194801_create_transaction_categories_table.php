@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('link_categories', static function (Blueprint $table) {
+        Schema::create('transaction_categories', static function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
             $table->integer('category_id');
             $table->integer('type');
-            $table->integer('role');
+            $table->date('date_at');
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('link_categories');
+        Schema::dropIfExists('transaction_categories');
     }
 };

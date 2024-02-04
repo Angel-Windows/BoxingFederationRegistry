@@ -63,4 +63,48 @@ trait CategoryUITrait
 
         return $this->monthsUkrainian[$month_index] . ' ' . $year;
     }
+
+    public static function validate_category($request): array
+    {
+        $error = [];
+        $img_patch = self::upload_img($request);
+
+        if ($img_patch['errors']){
+            $error['logo'][] = $img_patch['errors'];
+        }
+        if ($request->input('phone') === '2') {
+            $error['phone'][] = 'length';
+        }
+        return [
+            'error' => $error,
+            'img_patch' => $img_patch['patch'],
+        ];
+    }
+    public static function upload_img($request): array
+    {
+        $photo = $request->file('photo');
+
+        if (!$photo) {
+            return [
+                'errors' => false,
+                'patch' => null,
+            ];
+        }
+
+        $validator = \Validator::make(['photo' => $photo], [
+            'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        if ($validator->fails()) {
+            return [
+                'errors' => $validator->errors()->all(),
+                'text' => "",
+            ];
+        }
+
+        return [
+            'errors' => false,
+            'text' => $photo->store('photos'),
+        ];
+    }
 }

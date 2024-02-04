@@ -15,9 +15,25 @@ use Illuminate\Support\Facades\Cache;
  */
 class ClassType extends Model
 {
+
+    public static function getCacheCategory()
+    {
+        return Cache::remember('class_types', 1, static fn() => self::all());
+    }
     public static function getCache($id = null)
     {
-        $all_type = Cache::remember('class_types', 1, static fn() => self::all());
+        $all_type = self::getCacheCategory();
         return $id ? $all_type[$id] : $all_type;
+    }
+
+    public static function getIdCategory($name)
+    {
+        $all_categories = self::getCacheCategory();
+        foreach ($all_categories as $category) {
+            if ($category->link === $name) {
+                return $category->id;
+            }
+        }
+        return null;
     }
 }
