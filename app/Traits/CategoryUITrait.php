@@ -98,13 +98,13 @@ trait CategoryUITrait
         if ($validator->fails()) {
             return [
                 'errors' => $validator->errors()->all(),
-                'text' => "",
+                'patch' => "",
             ];
         }
 
         return [
             'errors' => false,
-            'text' => $photo->store('photos'),
+            'patch' => $photo->store('photos'),
         ];
     }
 }

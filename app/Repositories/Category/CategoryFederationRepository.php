@@ -2,11 +2,11 @@
 namespace App\Repositories\Category;
 use App\Models\Class\BoxFederation;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
-use App\Traits\CategoryUITrait;
+use App\Traits\FondyTrait;
 
 class CategoryFederationRepository implements CategoryRepositoryInterface
 {
-    use CategoryUITrait;
+    use FondyTrait;
     public function index($id): array
     {
         $category_data = BoxFederation::find($id);

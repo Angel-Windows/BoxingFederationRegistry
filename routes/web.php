@@ -70,3 +70,4 @@ Route::name('ajax.')->prefix('ajax/')->group(function () {
     Route::post('/search-in-class', [AjaxController::class, 'search_in_class'])->name('search-in-class');
     Route::post('/upload-img', [AjaxController::class, 'upload_img'])->name('upload-img');
 });
+

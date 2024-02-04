@@ -3,12 +3,12 @@ namespace App\Repositories\Category;
 use App\Models\Category\CategoryTrainer;
 use App\Repositories\Interfaces\CategoryInstitutionsRepositoryInterface;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
-use App\Traits\CategoryUITrait;
+use App\Traits\FondyTrait;
 use Illuminate\Support\Facades\DB;
 
 class CategoryInstitutionsRepository implements CategoryInstitutionsRepositoryInterface
 {
-    use CategoryUITrait;
+    use FondyTrait;
     public function index($id, $profile_id): array
     {
         switch ($profile_id) {

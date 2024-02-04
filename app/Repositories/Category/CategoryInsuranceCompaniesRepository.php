@@ -2,11 +2,11 @@
 namespace App\Repositories\Category;
 use App\Models\Category\CategorySportsInstitutions;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
-use App\Traits\CategoryUITrait;
+use App\Traits\FondyTrait;
 
 class CategoryInsuranceCompaniesRepository implements CategoryRepositoryInterface
 {
-    use CategoryUITrait;
+    use FondyTrait;
     public function index($id): array
     {
         $user = CategorySportsInstitutions::find($id);

@@ -410,10 +410,8 @@ class CategoryTrainerRepository implements CategoryRepositoryInterface
         $category->gov = $request->input('gov');
         $category->save();
 
-        if ($type === 'register'){
-            $link_link = new LinkCategory();
-            $link_link->setAddLinkAttribute($category->id, 'category_trainers');
-        }
+
+
         return [
             'error' => null
         ];

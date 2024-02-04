@@ -2,11 +2,11 @@
 namespace App\Repositories\Category;
 use App\Models\Category\CategoryJudge;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
-use App\Traits\CategoryUITrait;
+use App\Traits\FondyTrait;
 
 class CategoryJudgeRepository implements CategoryRepositoryInterface
 {
-    use CategoryUITrait;
+    use FondyTrait;
     public function index($id): array
     {
         $user = CategoryJudge::find($id);

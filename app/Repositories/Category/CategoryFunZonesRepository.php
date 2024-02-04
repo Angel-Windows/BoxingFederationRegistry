@@ -2,11 +2,11 @@
 namespace App\Repositories\Category;
 use App\Models\Category\CategoryFunZone;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
-use App\Traits\CategoryUITrait;
+use App\Traits\FondyTrait;
 
 class CategoryFunZonesRepository implements CategoryRepositoryInterface
 {
-    use CategoryUITrait;
+    use FondyTrait;
     public function index($id): array
     {
         $user = CategoryFunZone::find($id);
