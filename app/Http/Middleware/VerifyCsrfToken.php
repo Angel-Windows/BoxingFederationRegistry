@@ -12,6 +12,7 @@ class VerifyCsrfToken extends Middleware
      * @var array<int, string>
      */
     protected $except = [
-        //
+        '/payment/fondy/response-url',
+        '/payment/fondy/callback-url',
     ];
 }

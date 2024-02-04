@@ -28,7 +28,6 @@ trait FondyTrait
         Configuration::setSecretKey(config('services.cloudipsp.secret_key'));
 
         $csrfToken = Session::token();
-
         $data = [
             'order_desc' => 'Тестовый заказ SDK',
             'currency' => 'UAH',
@@ -43,8 +42,7 @@ trait FondyTrait
                 'custom_data1' => 'Some string',
                 'custom_data2' => '00000000000',
                 'custom_data3' => '3!@#$%^&(()_+?"}'
-            ],
-            '_token' => $csrfToken
+            ]
         ];
         $paymentUrl = Checkout::url($data)->getData();
 
