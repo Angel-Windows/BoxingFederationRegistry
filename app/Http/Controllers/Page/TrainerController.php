@@ -136,7 +136,7 @@ class TrainerController extends Controller
         if ($result['error']) {
             return false;
         }
-        $response_url = route('page.home');
+        $response_url = route('payment.fondy.response-url');
         $callback_url = route('payment.fondy.callback-url');
         $get_fondy_url = self::fondyBuy(1, 'eliphas.sn@gmail.com', $response_url, $callback_url);
 

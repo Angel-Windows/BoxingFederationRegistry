@@ -28,11 +28,13 @@ class PaymentController extends Controller
 
     public function response_url(Request $request)
     {
-        dd($request->input());
+        $model  = new \App\Models\Qualification();
+        $model->name = 'response';
+        $model->save();
     }
     public function callback_url(){
         $model  = new \App\Models\Qualification();
-        $model->name = 'success';
+        $model->name = 'callback';
         $model->save();
     }
 }

@@ -59,8 +59,9 @@ Route::prefix('payment')->name('payment.')->group(function () {
         Route::post('/process-payment', [PaymentController::class, 'initiatePayment'])->name('processPayment');
 
         // CALLBACK
-        Route::post('/response-url', [PaymentController::class, 'response_url'])->name('response-url');
-        Route::post('/callback-url', [PaymentController::class, 'callback_url'])->name('callback-url');
+        Route::match(['get', 'post'], '/response-url', [PaymentController::class, 'response_url'])->name('response-url');
+        Route::match(['get', 'post'], '/callback-url', [PaymentController::class, 'callback_url'])->name('callback-url');
+
     });
 });
 
