@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components\home;
+namespace App\View\Components;
 
 use Closure;
 use Illuminate\Contracts\View\View;
