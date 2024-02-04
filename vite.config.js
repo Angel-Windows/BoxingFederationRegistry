@@ -10,10 +10,12 @@ export default defineConfig({
                 // SCSS
                 'resources/scss/components.scss',
                 'resources/scss/page/home.scss',
+                'resources/scss/page/trainer.scss',
 
                 //JS
                 'resources/js/app.js',
                 'resources/js/function_interface.js',
+
             ],
             refresh: true,
         }),

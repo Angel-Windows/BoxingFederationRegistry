@@ -11,7 +11,7 @@ class CardAboutComponent extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public $cardData)
+    public function __construct(public $data)
     {
 
     }
@@ -23,6 +23,6 @@ class CardAboutComponent extends Component
     {
 
         return view('components.home.card-about-component')
-            ->with('card_data', $this->cardData);
+            ->with('card_data', $this->data);
     }
 }
