@@ -12,6 +12,7 @@ class HomeController extends Controller
     public function index()
     {
         $card_data = ClassType::all();
+        dd($card_data);
         return view('page.home', compact('card_data'));
     }
 }
