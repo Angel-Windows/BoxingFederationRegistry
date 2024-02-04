@@ -397,9 +397,6 @@ class CategoryTrainerRepository implements CategoryRepositoryInterface
             $category = CategoryTrainer::find($id);
         } else {
             $category = new CategoryTrainer();
-
-//            $id_category = ClassType::getIdCategory('category_trainers');
-
         }
 
         $category->name = $request->input('first_name') . ' ' . $request->input('last_name') . ' ' . $request->input('surname');

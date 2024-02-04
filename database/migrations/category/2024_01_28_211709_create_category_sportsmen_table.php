@@ -30,6 +30,7 @@ return new class extends Migration
             $table->string('school')->nullable();
             $table->string('achievements')->nullable();
             $table->string('rank')->nullable();
+            $table->date('end_subscription')->nullable();
             $table->timestamps();
         });
     }

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('category_employess_schools', function (Blueprint $table) {
+        Schema::create('category_employess_schools', static function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->json('phones')->nullable();
@@ -21,6 +21,7 @@ return new class extends Migration
             $table->date('birthday');
             $table->string('address');
             $table->string('position');
+            $table->date('end_subscription')->nullable();
             $table->timestamps();
         });
     }
