@@ -21,7 +21,6 @@ class HomeCardAboutComponent extends Component
      */
     public function render(): View|Closure|string
     {
-        dd($this->data);
         return view('components.home.card-about-component')
             ->with('card_data', $this->data);
     }
