@@ -23,7 +23,7 @@ return new class extends Migration
             $table->integer('edrpou')->nullable();
             $table->string('director')->nullable();
             $table->string('site')->nullable();
-            $table->date('end_subscription')->nullable();
+            $table->dateTime('end_subscription')->nullable();
             $table->timestamps();
         });
     }

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->date('birthday');
             $table->string('address');
             $table->string('position');
-            $table->date('end_subscription')->nullable();
+            $table->dateTime('end_subscription')->nullable();
             $table->timestamps();
         });
     }

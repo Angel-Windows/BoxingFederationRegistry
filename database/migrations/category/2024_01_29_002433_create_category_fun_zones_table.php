@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('logo')->nullable();
             $table->date('birthday')->nullable();
             $table->string('address')->nullable();
-            $table->date('end_subscription')->nullable();
+            $table->dateTime('end_subscription')->nullable();
             $table->timestamps();
         });
     }

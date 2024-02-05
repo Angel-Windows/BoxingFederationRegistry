@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('category_stores', static function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->date('end_subscription')->nullable();
+            $table->dateTime('end_subscription')->nullable();
             $table->timestamps();
         });
     }

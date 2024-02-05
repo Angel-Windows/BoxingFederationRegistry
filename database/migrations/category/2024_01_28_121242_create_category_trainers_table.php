@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('gov')->nullable();
             $table->string('school')->nullable();
             $table->json('history_work')->nullable();
-            $table->date('end_subscription')->nullable();
+            $table->dateTime('end_subscription')->nullable();
             $table->timestamps();
         });
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Traits\FondyTrait;
+use Carbon\Carbon;
 use Cloudipsp\Checkout;
 use Cloudipsp\Exception\ApiException;
 use Cloudipsp\P2pcredit;
@@ -32,7 +33,7 @@ class PaymentController extends Controller
         $order_time = $request->input('order_time');
         \DB::table($merchant_data->type)
             ->where('id', $merchant_data->id)
-            ->update(['end_subscription' => $order_time]);
+            ->update(['end_subscription' => Carbon::parse($order_time)]);
         dd($merchant_data);
 //        order_time
 //        actual_amount == 100
