@@ -15,7 +15,7 @@
 <x-app.header-component/>
 <div class="content-wrapper">
     @if(trim($__env->yieldContent('class_body')) !== 'home')
-{{--        <x-app-bread-crumbs-component/>--}}
+        <x-app-bread-crumbs-component/>
 
     @endif
     <main class="content">
