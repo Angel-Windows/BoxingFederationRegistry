@@ -28,7 +28,7 @@ class PaymentController extends Controller
 
     public function response_url(Request $request)
     {
-        dd(json_encode($request));
+        dd($request);
 
     }
     public function callback_url(Request $request){
