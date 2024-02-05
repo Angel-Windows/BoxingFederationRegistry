@@ -74,5 +74,4 @@ Route::name('ajax.')->prefix('ajax/')->group(function () {
 });
 Route::prefix('config')->name('config.')->group(function () {
     Route::get('/show-img/{filename}', [ConfigController::class, 'showImg'])->name('show-img');
-
 });
