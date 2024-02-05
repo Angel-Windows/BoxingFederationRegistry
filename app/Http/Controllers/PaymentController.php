@@ -29,7 +29,12 @@ class PaymentController extends Controller
     public function response_url(Request $request)
     {
         dd($request->input());
-
+//        order_time
+//        actual_amount == 100
+//        response_status == 'success'
+//        order_id
+//        payment_id
+//        product_id
     }
     public function callback_url(Request $request){
 //        $model  = new \App\Models\Qualification();

@@ -16,7 +16,7 @@ trait FondyTrait
      * @return JsonResponse
      * @throws ApiException
      */
-    public static function fondyBuy(int $amount = 0, string $email = '', $response_url = '', $callback_url = ''): JsonResponse
+    public static function fondyBuy(int $amount = 0, $merchant_data = [], string $email = '', $response_url = '', $callback_url = ''): JsonResponse
     {
         $amount *= 100;
 
@@ -37,11 +37,7 @@ trait FondyTrait
             'lang' => 'ua',
             'product_id' => 'some_product_id',
             'lifetime' => 36000,
-            'merchant_data' => [
-                'custom_data1' => 'Some string',
-                'custom_data2' => '00000000000',
-                'custom_data3' => '3!@#$%^&(()_+?"}'
-            ]
+            'merchant_data' => $merchant_data
         ];
         $paymentUrl = Checkout::url($data)->getData();
 
