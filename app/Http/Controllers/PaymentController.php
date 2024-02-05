@@ -33,9 +33,10 @@ class PaymentController extends Controller
     public function response_url(Request $request): void
     {
         $merchant_data = json_decode($request->input('merchant_data'), false, 512, JSON_THROW_ON_ERROR);
-        redirect()->route('page.class')
-            ->with('class_name', $merchant_data->type)
-            ->with('id', $merchant_data->id);
+        redirect()->route('page.class', [
+            'class_name' => $merchant_data->type,
+            'id' => $merchant_data->id
+        ]);
     }
 
     public function callback_url(Request $request): void
