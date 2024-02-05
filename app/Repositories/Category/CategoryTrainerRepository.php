@@ -148,8 +148,7 @@ class CategoryTrainerRepository implements CategoryRepositoryInterface
         $user = CategoryTrainer::find($id);
         $history_work = [];
 
-
-        foreach (json_decode($user->history_work, false, 512, JSON_THROW_ON_ERROR) as $item) {
+        foreach (json_decode($user->history_work, false, 512, JSON_THROW_ON_ERROR) ?? [] as $item) {
             $history_work[] = [
                 $item->name, $this->set_month($item->start_work), '-', $this->set_month($item->end_work),
             ];
