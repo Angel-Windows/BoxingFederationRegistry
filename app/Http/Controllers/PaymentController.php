@@ -28,12 +28,12 @@ class PaymentController extends Controller
 
     public function response_url(Request $request)
     {
-        dd($request);
+        dd($request->input());
 
     }
     public function callback_url(Request $request){
         $model  = new \App\Models\Qualification();
-        $model->name =  json_encode($request);
+        $model->name =  json_encode($request->input());
         $model->save();
     }
 }
