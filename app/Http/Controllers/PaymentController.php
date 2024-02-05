@@ -28,7 +28,7 @@ class PaymentController extends Controller
 
     public function response_url(Request $request)
     {
-        $merchant_data = $request->input('merchant_data');
+        $merchant_data = json_decode($request->input('merchant_data'), false, 512, JSON_THROW_ON_ERROR);
         $order_time = $request->input('order_time');
         dd($merchant_data);
         $data = \DB::table($merchant_data['type'])->find($merchant_data['id']);
