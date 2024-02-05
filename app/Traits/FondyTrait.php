@@ -27,7 +27,6 @@ trait FondyTrait
         Configuration::setMerchantId(config('services.cloudipsp.merchant_id'));
         Configuration::setSecretKey(config('services.cloudipsp.secret_key'));
 
-        $csrfToken = Session::token();
         $data = [
             'order_desc' => 'Тестовый заказ SDK',
             'currency' => 'UAH',
