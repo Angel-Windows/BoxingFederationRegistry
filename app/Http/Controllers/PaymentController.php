@@ -33,7 +33,7 @@ class PaymentController extends Controller
         $order_time = $request->input('order_time');
         \DB::table($merchant_data->type)
             ->where('id', $merchant_data->id)
-            ->update(['end_subscription' => Carbon::parse($order_time)]);
+            ->update(['end_subscription' => Carbon::parse($order_time)->addYear()]);
         dd($merchant_data);
 //        order_time
 //        actual_amount == 100
