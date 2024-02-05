@@ -21,7 +21,8 @@
 
             <div class="{{$data_info['img']['class']}}">
                 <div class="img">
-                    <img src="{{ route('config.show-img', ['filename' => $data_info['img']['link']]) }}" alt="">
+                    <img src="{{ route('config.show-img', ['filename' => 'res'] }}" alt="">
+{{--                    <img src="{{ route('config.show-img', ['filename' => $data_info['img']['link']]) }}" alt="">--}}
                 </div>
 {{--                <div class="img"><img src="{{asset($data_info['img']['link'])}}" alt=""></div>--}}
             </div>
