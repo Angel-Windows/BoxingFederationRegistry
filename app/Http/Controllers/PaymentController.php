@@ -32,8 +32,12 @@ class PaymentController extends Controller
 
     }
     public function callback_url(Request $request){
-        $model  = new \App\Models\Qualification();
-        $model->name =  json_encode($request->input() ?? '');
-        $model->save();
+//        $model  = new \App\Models\Qualification();
+//        $model->name =  json_encode($request->input() ?? '');
+//        $model->save();
+
+        \Log::info( json_encode($request->input() ?? ''));
+        \Log::info( $request->input());
+
     }
 }
