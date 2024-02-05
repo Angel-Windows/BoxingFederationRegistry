@@ -73,5 +73,5 @@ Route::name('ajax.')->prefix('ajax/')->group(function () {
     Route::post('/upload-img', [AjaxController::class, 'upload_img'])->name('upload-img');
 });
 Route::prefix('config')->name('config.')->group(function () {
-    Route::get('/show-img/{filename}', [ConfigController::class, 'showImg'])->name('show-img');
+    Route::get('/show-img', [ConfigController::class, 'showImg'])->name('show-img');
 });

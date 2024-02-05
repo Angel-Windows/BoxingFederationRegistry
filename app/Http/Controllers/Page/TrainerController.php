@@ -134,8 +134,9 @@ class TrainerController extends Controller
     {
         $result = $this->get_category('register', $class_name, $id, $request);
         if ($result['error']) {
-            return false;
+            dd($result['error']);
         }
+
         $response_url = route('payment.fondy.response-url');
         $callback_url = route('payment.fondy.callback-url');
         $merchant_data = [
@@ -145,6 +146,7 @@ class TrainerController extends Controller
         $get_fondy_url = self::fondyBuy(1,$merchant_data, 'eliphas.sn@gmail.com', $response_url, $callback_url);
 
         $route = json_decode($get_fondy_url->content(), false, 512, JSON_THROW_ON_ERROR)->paymentUrl->checkout_url;
+
         return redirect($route);
 
     }

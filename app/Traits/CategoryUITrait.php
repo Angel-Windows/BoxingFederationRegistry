@@ -92,7 +92,7 @@ trait CategoryUITrait
         }
 
         $validator = \Validator::make(['photo' => $photo], [
-            'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:20048',
         ]);
 
         if ($validator->fails()) {

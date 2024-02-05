@@ -6,14 +6,15 @@ use Illuminate\Http\Request;
 
 class ConfigController extends Controller
 {
-    public function showImg($filename = "" )
+    public function showImg(Request $request): \Symfony\Component\HttpFoundation\BinaryFileResponse
     {
+        $filename = $request->input('filename');
         $path = storage_path('app/' . $filename); // Путь к файлу в хранилище
-
-        if (!\Storage::exists('photos/' . $filename)) {
-            abort(404); // Если файл не найден, вернем HTTP ошибку 404
+        if (!\Storage::exists($filename)) {
+            dd($filename, $path);
+//            abort(404);
         }
 
-        return response()->file($path); // Вернем файл в ответ на запрос
+        return response()->file($path);
     }
 }
