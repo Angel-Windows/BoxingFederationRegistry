@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class ConfigController extends Controller
 {
-    public function showImg($fileName)
+    public function showImg($fileName )
     {
         $path = storage_path('app/photos/' . $fileName); // Путь к файлу в хранилище
 
