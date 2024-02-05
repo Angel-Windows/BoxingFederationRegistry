@@ -6,11 +6,11 @@ use Illuminate\Http\Request;
 
 class ConfigController extends Controller
 {
-    public function showImg($filename)
+    public function showImg($fileName)
     {
-        $path = storage_path('app/photos/' . $filename); // Путь к файлу в хранилище
+        $path = storage_path('app/photos/' . $fileName); // Путь к файлу в хранилище
 
-        if (!\Storage::exists('photos/' . $filename)) {
+        if (!\Storage::exists('photos/' . $fileName)) {
             abort(404); // Если файл не найден, вернем HTTP ошибку 404
         }
 

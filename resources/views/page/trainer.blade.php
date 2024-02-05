@@ -20,7 +20,7 @@
         @if(isset($data_info['right_panel']))
 
             <div class="{{$data_info['img']['class']}}">
-                <div class="img"><img src="{{route('config.show-img', ['filename' => $data_info['img']['link']])}}" alt=""></div>
+                <div class="img"><img src="{{route('config.show-img', $data_info['img']['link'])}}" alt=""></div>
 {{--                <div class="img"><img src="{{asset($data_info['img']['link'])}}" alt=""></div>--}}
             </div>
 
