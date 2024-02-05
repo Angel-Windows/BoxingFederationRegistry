@@ -25,7 +25,10 @@ if (!function_exists('getRandomPhone')) {
 if (!function_exists('formatPhone')) {
     function formatPhone($phone = ""): string
     {
-        if (strlen($phone) !== 9) { return $phone; }
+
+        if ($phone && strlen($phone) !== 9) {
+            return $phone;
+        }
 
         $countryCode = '0';
 //        $countryCode = '+380';
@@ -38,7 +41,8 @@ if (!function_exists('formatPhone')) {
     }
 }
 if (!function_exists('isJson')) {
-    function isJson($string) {
+    function isJson($string)
+    {
         json_decode($string);
         return (json_last_error() == JSON_ERROR_NONE);
     }
