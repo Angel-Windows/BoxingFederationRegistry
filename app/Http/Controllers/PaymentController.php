@@ -30,7 +30,7 @@ class PaymentController extends Controller
     {
         $merchant_data = json_decode($request->input('merchant_data'), false, 512, JSON_THROW_ON_ERROR);
         $order_time = $request->input('order_time');
-        $data = \DB::table($merchant_data['type'])->find($merchant_data['id']);
+        $data = \DB::table($merchant_data->type)->find($merchant_data->id);
         $data->end_subscription = $order_time;
         $data->save();
         dd($merchant_data);
