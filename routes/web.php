@@ -7,6 +7,7 @@ use App\Http\Controllers\PhoneVerificationController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Page\TrainerController;
 use App\Http\Controllers\Page\HomeController;
+use App\Http\Controllers\ConfigController;
 
 use App\Http\Controllers\PaymentController;
 
@@ -71,4 +72,6 @@ Route::name('ajax.')->prefix('ajax/')->group(function () {
     Route::post('/search-in-class', [AjaxController::class, 'search_in_class'])->name('search-in-class');
     Route::post('/upload-img', [AjaxController::class, 'upload_img'])->name('upload-img');
 });
-
+Route::prefix('config')->name('config.')->group(function () {
+    Route::post('/show-img', [ConfigController::class, 'showImg'])->name('show-img');
+});
