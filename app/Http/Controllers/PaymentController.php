@@ -30,10 +30,10 @@ class PaymentController extends Controller
         return self::fondyBuy(1, 'eliphas.sn@gmail.com');
     }
 
-    public function response_url(Request $request): void
+    public function response_url(Request $request): \Illuminate\Http\RedirectResponse
     {
         $merchant_data = json_decode($request->input('merchant_data'), false, 512, JSON_THROW_ON_ERROR);
-        redirect()->route('page.class', [
+        return redirect()->route('page.class', [
             'class_name' => $merchant_data->type,
             'id' => $merchant_data->id
         ]);
