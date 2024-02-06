@@ -26,7 +26,13 @@ class GroupMigrate extends Command
     public function handle()
     {
         $this->call('migrate');
+        $this->call('migrate', ['--path' => '/database/migrations/config']);
+        $this->call('migrate', ['--path' => '/database/migrations/default']);
+        $this->call('migrate', ['--path' => '/database/migrations/payment']);
+
         $this->call('migrate', ['--path' => '/database/migrations/class']);
         $this->call('migrate', ['--path' => '/database/migrations/category']);
+
+        $this->call('migrate', ['--path' => '/database/migrations/links']);
     }
 }
