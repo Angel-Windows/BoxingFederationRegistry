@@ -16,14 +16,15 @@ class CategoryEmployessInstitutionsFactory extends Factory
      */
     public function definition(): array
     {
+        $address = randomAddress();
         return [
             'name' => $this->faker->name,
-            'phones' => json_encode(getRandomPhone()),
+            'phone' => getRandomPhone(),
             'email' => $this->faker->unique()->safeEmail,
             'logo' => $this->faker->imageUrl,
             'birthday' => $this->faker->date,
             'position' => $this->faker->text(10),
-            'address' => $this->faker->address,
+            'address' => $address,
         ];
     }
 }

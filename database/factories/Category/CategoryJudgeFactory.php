@@ -16,12 +16,13 @@ class CategoryJudgeFactory extends Factory
      */
     public function definition(): array
     {
+        $address = randomAddress();
         return [
             'name' => $this->faker->name,
-            'phones' => json_encode(getRandomPhone()),
+            'phone' => getRandomPhone(),
             'email' => $this->faker->unique()->safeEmail,
             'logo' => $this->faker->imageUrl,
-            'address' => $this->faker->address,
+            'address' => $address,
             'qualification' => $this->faker->word,
             'rank' => $this->faker->word,
             'gov' => $this->faker->word,

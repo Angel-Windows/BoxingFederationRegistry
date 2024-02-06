@@ -18,7 +18,7 @@ if (!function_exists('getRandomPhone')) {
             $phones[] = $operators[random_int(0, (count($operators) - 1))] . random_int(1000000, 9999999);
 
         } while (count($phones) < $count_phones);
-        return $phones;
+        return $phones[0];
     }
 }
 
@@ -45,6 +45,20 @@ if (!function_exists('isJson')) {
     {
         json_decode($string);
         return (json_last_error() == JSON_ERROR_NONE);
+    }
+}
+
+if (!function_exists('randomAddress')) {
+    function randomAddress(): bool|string
+    {
+        $faker = \Faker\Factory::create();
+
+        return json_encode([
+            'city' => $faker->city,
+            'street' => $faker->streetName,
+            'house_number' => random_int(1, 100),
+            'house' => random_int(1, 100),
+        ]);
     }
 }
 

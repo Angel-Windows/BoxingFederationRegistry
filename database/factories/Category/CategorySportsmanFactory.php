@@ -27,10 +27,11 @@ class CategorySportsmanFactory extends Factory
         }
         $rand_federation = $this->federation->random()->id;
         $rand_trainer = $this->trainer->random()->id;
-
+        $address_birth = randomAddress();
+        $address_address = randomAddress();
         return [
             'name' => $this->faker->name,
-            'phones' => json_encode(getRandomPhone()),
+            'phone' => getRandomPhone(),
             'email' => $this->faker->unique()->safeEmail,
             'logo' => $this->faker->imageUrl,
             'birthday' => $this->faker->date,
@@ -38,8 +39,8 @@ class CategorySportsmanFactory extends Factory
             'weight' => $this->faker->numberBetween(50, 100), // Assuming weight in kg
             'height' => $this->faker->numberBetween(150, 200), // Assuming height in cm
             'weight_category' => $this->faker->numberBetween(1, 10), // Assuming weight category as an integer
-            'address_birth' => $this->faker->address,
-            'address_address' => $this->faker->address,
+            'address_birth' => $address_birth,
+            'address_address' => $address_address,
             'passport' => $this->faker->numerify('##########'),
             'federation' => $rand_federation,
             'trainer' => $rand_trainer,

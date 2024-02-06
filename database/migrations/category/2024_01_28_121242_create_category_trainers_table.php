@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->string('phone')->nullable();
-            $table->json('phones')->nullable();
             $table->string('email')->nullable();
             $table->string('logo')->nullable();
             $table->string('qualification')->nullable();
@@ -24,8 +23,6 @@ return new class extends Migration
             $table->string('rank')->nullable();
             $table->string('gov')->nullable();
             $table->string('school')->nullable();
-            $table->json('history_work')->nullable();
-            $table->dateTime('end_subscription')->nullable();
             $table->timestamps();
         });
     }

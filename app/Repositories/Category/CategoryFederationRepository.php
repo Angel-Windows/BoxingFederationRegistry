@@ -188,17 +188,17 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
 
         $address = json_decode($category_data->address ?? "");
         $fool_address = '';
-        if (isset($address['city'])) {
-            $fool_address .= 'м. ' . $address['city'];
+        if (isset($address->city)) {
+            $fool_address .= 'м. ' . $address->city;
         }
-        if (isset($address['street'])) {
-            $fool_address .= ', ' . $address['street'];
+        if (isset($address->street)) {
+            $fool_address .= ', ' . $address->street;
         }
-        if (isset($address['house_number'])) {
-            $fool_address .= ' ' . $address['house_number'];
+        if (isset($address->house_number)) {
+            $fool_address .= ' ' . $address->house_number;
         }
-        if (isset($address['apartment_number'])) {
-            $fool_address .= ', кв. ' . $address['apartment_number'];
+        if (isset($address->apartment_number)) {
+            $fool_address .= ', кв. ' . $address->apartment_number;
         }
         $new_data['director']['value'] = $category_data->director ?? "";
         $new_data['address']['value'] = $fool_address;

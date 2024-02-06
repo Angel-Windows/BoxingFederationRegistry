@@ -22,15 +22,15 @@ class CategoryEmployessSchoolFactory extends Factory
             $this->school = CategorySchool::all();
         }
         $rand_school = $this->school->random()->id ?? null;
-
+        $address = randomAddress();
         return [
             'name' => $this->faker->name,
-            'phones' => json_encode(getRandomPhone()),
+            'phone' => getRandomPhone(),
             'email' => $this->faker->unique()->safeEmail,
             'logo' => $this->faker->imageUrl,
             'school'=> $rand_school,
             'birthday' => $this->faker->date,
-            'address' => $this->faker->address,
+            'address' => $address,
             'position' => $this->faker->text(10),
 
         ];

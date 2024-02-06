@@ -32,15 +32,11 @@ class TrainerController extends Controller
     public function get_data($class_name, $data = [])
     {
         switch ($class_name) {
-            case 'box_federations':
-                $data_info = (new CategoryFederationRepository())->get_data($data);
-                break;
-            case 'category_sportsmen':
-                $data_info = (new SportsmanFederationRepository())->get_data($data);
-                break;
-            case 'category_trainers':
-                $data_info = (new CategoryTrainerRepository())->get_data($data);
-                break;
+
+
+
+
+
             case 'category_judges':
                 $data_info = (new CategoryJudgeRepository())->get_data($data);
                 break;
@@ -55,6 +51,20 @@ class TrainerController extends Controller
                 break;
             case 'category_fun_zones':
                 $data_info = (new CategoryFunZonesRepository())->get_data($data);
+                break;
+            case 'category_sportsmen':
+                $data_info = (new SportsmanFederationRepository())->get_data($data);
+                break;
+
+
+
+
+
+            case 'box_federations':
+                $data_info = (new CategoryFederationRepository())->get_data($data);
+                break;
+            case 'category_trainers':
+                $data_info = (new CategoryTrainerRepository())->get_data($data);
                 break;
             case 'category_stores':
                 return response()->view('errors.404', [], 404);
