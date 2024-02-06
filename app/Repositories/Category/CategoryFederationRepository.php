@@ -3,6 +3,7 @@ namespace App\Repositories\Category;
 use App\Models\Category\CategoryTrainer;
 use App\Models\Class\BoxFederation;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
+use App\Services\MyAuthService;
 use App\Traits\CategoryUITrait;
 
 class CategoryFederationRepository implements CategoryRepositoryInterface
@@ -179,6 +180,7 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
     }
     private function get_value($table, $category_data): array
     {
+        MyAuthService::CheckMiddlewareRoute();
         $new_data = $table;
 
         $new_data['email']['value'] = $category_data->email ?? "";

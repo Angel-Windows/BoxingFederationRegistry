@@ -13,28 +13,28 @@ class CategoryTrainerRepository implements CategoryRepositoryInterface
         'last_name' => [
             'name' => 'last_name',
             'tag' => 'input',
-            'text' => 'Прізвище',
+            'placeholder' => 'Прізвище',
         ],
         'first_name' => [
             'name' => 'first_name',
             'tag' => 'input',
-            'text' => 'Імя',
+            'placeholder' => 'Імя',
         ],
         'surname' => [
             'name' => 'surname',
             'tag' => 'input',
-            'text' => 'По батькові',
+            'placeholder' => 'По батькові',
         ],
         'phone' => [
             'name' => 'phone',
             'tag' => 'input',
-            'text' => 'Номер телефону',
+            'placeholder' => 'Номер телефону',
             'logo' => 'img/phone.svg'
         ],
         'email' => [
             'name' => 'email',
             'tag' => 'input',
-            'text' => 'E-mail',
+            'placeholder' => 'E-mail',
             'logo' => 'img/mail.svg'
         ],
         'qualification' => [
