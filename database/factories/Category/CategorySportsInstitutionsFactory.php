@@ -28,6 +28,7 @@ class CategorySportsInstitutionsFactory extends Factory
             'edrpou' => $this->faker->randomNumber(6),
             'director' => $this->faker->name,
             'site' => $this->faker->url,
+
         ];
     }
 }

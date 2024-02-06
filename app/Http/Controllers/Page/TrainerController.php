@@ -8,7 +8,7 @@ use App\Repositories\Category\CategoryFederationRepository;
 use App\Repositories\Category\CategoryFunZonesRepository;
 use App\Repositories\Category\CategoryInstitutionsRepository;
 use App\Repositories\Category\CategoryJudgeRepository;
-use App\Repositories\Category\CategoryTrainerRepository;
+use App\Repositories\Category\CategorySportsInstitutionsRepository;
 use App\Repositories\Category\SportsmanFederationRepository;
 use App\Services\MyAuthService;
 use App\Traits\FondyTrait;
@@ -32,14 +32,13 @@ class TrainerController extends Controller
     public function get_data($class_name, $data = [])
     {
         switch ($class_name) {
-
-
-
-
-
-            case 'category_judges':
-                $data_info = (new CategoryJudgeRepository())->get_data($data);
+            case 'category_sports_institutions':
+                $data_info = (new CategorySportsInstitutionsRepository())->get_data($data);
                 break;
+
+
+
+
             case 'category_insurances':
                 $data_info = (new CategoryInstitutionsRepository())->get_data($data, 'insurance');
                 break;
@@ -59,12 +58,14 @@ class TrainerController extends Controller
 
 
 
-
+            case 'category_judges':
+                $data_info = (new CategoryJudgeRepository())->get_data($data);
+                break;
             case 'box_federations':
                 $data_info = (new CategoryFederationRepository())->get_data($data);
                 break;
             case 'category_trainers':
-                $data_info = (new CategoryTrainerRepository())->get_data($data);
+                $data_info = (new CategorySportsInstitutionsRepository())->get_data($data);
                 break;
             case 'category_stores':
                 return response()->view('errors.404', [], 404);
@@ -104,7 +105,7 @@ class TrainerController extends Controller
                 $result = (new SportsmanFederationRepository())->edit($id, $request);
                 break;
             case 'category_trainers':
-                $result = (new CategoryTrainerRepository())->edit($id, $request, 'edit');
+                $result = (new CategorySportsInstitutionsRepository())->edit($id, $request, 'edit');
                 break;
             case 'category_judges':
                 $result = (new CategoryJudgeRepository())->edit($id, $request);
@@ -160,7 +161,7 @@ class TrainerController extends Controller
                 $result = (new SportsmanFederationRepository())->edit($id, $request, $type);
                 break;
             case 'category_trainers':
-                $result = (new CategoryTrainerRepository())->edit($id, $request, $type);
+                $result = (new CategorySportsInstitutionsRepository())->edit($id, $request, $type);
                 break;
             case 'category_judges':
                 $result = (new CategoryJudgeRepository())->edit($id, $request, $type);
