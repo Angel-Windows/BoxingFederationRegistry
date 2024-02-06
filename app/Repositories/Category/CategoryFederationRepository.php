@@ -180,7 +180,6 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
     }
     private function get_value($table, $category_data): array
     {
-        MyAuthService::CheckMiddlewareRoute();
         $new_data = $table;
 
         $new_data['email']['value'] = $category_data->email ?? "";
@@ -273,8 +272,10 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
                 ]
             ];
             $table = $this->get_value($this->data, $category);
+
         } else {
             $table = $this->data;
+
         }
 
 

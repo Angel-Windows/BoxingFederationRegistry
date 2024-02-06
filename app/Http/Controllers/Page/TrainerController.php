@@ -9,6 +9,7 @@ use App\Repositories\Category\CategoryFunZonesRepository;
 use App\Repositories\Category\CategoryInstitutionsRepository;
 use App\Repositories\Category\CategoryJudgeRepository;
 use App\Repositories\Category\CategorySportsInstitutionsRepository;
+use App\Repositories\Category\CategoryTrainerRepository;
 use App\Repositories\Category\SportsmanFederationRepository;
 use App\Services\MyAuthService;
 use App\Traits\FondyTrait;
@@ -32,6 +33,18 @@ class TrainerController extends Controller
     public function get_data($class_name, $data = [])
     {
         switch ($class_name) {
+
+            case 'category_fun_zones':
+                $data_info = (new CategoryFunZonesRepository())->get_data($data);
+                break;
+
+            case 'category_sportsmen':
+                $data_info = (new SportsmanFederationRepository())->get_data($data);
+                break;
+
+
+
+
             case 'category_insurances':
                 $data_info = (new CategoryInstitutionsRepository())->get_data($data, 'insurance');
                 break;
@@ -41,14 +54,6 @@ class TrainerController extends Controller
             case 'category_schools':
                 $data_info = (new CategoryInstitutionsRepository())->get_data($data, 'school');
                 break;
-            case 'category_fun_zones':
-                $data_info = (new CategoryFunZonesRepository())->get_data($data);
-                break;
-            case 'category_sportsmen':
-                $data_info = (new SportsmanFederationRepository())->get_data($data);
-                break;
-
-
             case 'category_sports_institutions':
                 $data_info = (new CategorySportsInstitutionsRepository())->get_data($data);
                 break;
@@ -59,7 +64,7 @@ class TrainerController extends Controller
                 $data_info = (new CategoryFederationRepository())->get_data($data);
                 break;
             case 'category_trainers':
-                $data_info = (new CategorySportsInstitutionsRepository())->get_data($data);
+                $data_info = (new CategoryTrainerRepository())->get_data($data);
                 break;
             case 'category_stores':
                 return response()->view('errors.404', [], 404);
