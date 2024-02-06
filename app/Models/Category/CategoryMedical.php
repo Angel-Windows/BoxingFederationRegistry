@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @method static truncate()
  * @method static exists()
+ * @method static find($id)
  */
 class CategoryMedical extends Model
 {

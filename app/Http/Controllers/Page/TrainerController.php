@@ -32,13 +32,6 @@ class TrainerController extends Controller
     public function get_data($class_name, $data = [])
     {
         switch ($class_name) {
-            case 'category_sports_institutions':
-                $data_info = (new CategorySportsInstitutionsRepository())->get_data($data);
-                break;
-
-
-
-
             case 'category_insurances':
                 $data_info = (new CategoryInstitutionsRepository())->get_data($data, 'insurance');
                 break;
@@ -56,8 +49,9 @@ class TrainerController extends Controller
                 break;
 
 
-
-
+            case 'category_sports_institutions':
+                $data_info = (new CategorySportsInstitutionsRepository())->get_data($data);
+                break;
             case 'category_judges':
                 $data_info = (new CategoryJudgeRepository())->get_data($data);
                 break;

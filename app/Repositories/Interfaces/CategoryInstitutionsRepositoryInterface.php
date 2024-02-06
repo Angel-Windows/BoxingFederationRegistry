@@ -3,9 +3,8 @@ namespace App\Repositories\Interfaces;
 interface CategoryInstitutionsRepositoryInterface
 {
 
-    public function index($id, $profile_id);
 
-    public function edit_page();
+    public function edit($id, $request, $type);
 
-
+    public function get_data($data, $db_name);
 }
