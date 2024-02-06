@@ -17,7 +17,7 @@ class FormsCategoryRegisterFormComponent extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public $class = '', public $id = 0, public $route = 'edit')
+    public function __construct(public $route = 'edit', public $get = [])
     {
     }
 
@@ -26,39 +26,9 @@ class FormsCategoryRegisterFormComponent extends Component
      */
     public function render(): View|Closure|string
     {
-        $id = $this->id;
-        switch ($this->class) {
-            case 'box_federations':
-                $data_info = (new CategoryFederationRepository())->edit_page($id);
-                break;
-            case 'category_sportsmen':
-                $data_info = (new SportsmanFederationRepository())->edit_page($id);
-                break;
-            case 'category_trainers':
-                $data_info = (new CategoryTrainerRepository())->edit_page($id);
-                break;
-            case 'category_judges':
-                $data_info = (new CategoryJudgeRepository())->edit_page($id);
-                break;
-            case 'category_insurances':
-                $data_info = (new CategoryInstitutionsRepository())->edit_page($id, 'insurance');
-                break;
-            case 'category_medicals':
-                $data_info = (new CategoryInstitutionsRepository())->edit_page($id, 'medical');
-                break;
-            case 'category_schools':
-                $data_info = (new CategoryInstitutionsRepository())->edit_page($id, 'school');
-                break;
-            case 'category_fun_zones':
-                $data_info = (new CategoryFunZonesRepository())->edit_page($id);
-                break;
-            case 'category_stores':
-                return response()->view('errors.506', [], 404);
-            default :
-                return response()->view('errors.506', [], 405);
-        }
         return view('components.forms.category-register-form-component')
-            ->with('route_type', $this->route)
-            ->with('temp__info_list', $data_info);
+            ->with('table', $this->get['table'])
+            ->with('more_data', $this->get['more_data'])
+            ->with('route_type', $this->route);
     }
 }

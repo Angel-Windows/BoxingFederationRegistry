@@ -7,11 +7,16 @@ export function modal_open(data, class_name = '') {
     modal_content.innerHTML = data['data'];
     modal_content.className = 'modal_content ' + data['class_name']
 
-
-    if (class_name === 'search') {
-        search();
-    }else {
-        upload_img();
+    switch (data.class_name){
+        case "search":
+            search();
+            break;
+        case "upload_img":
+            upload_img();
+            break;
+        case "check-code":
+            check_code();
+            break;
     }
 }
 function search(){
@@ -79,4 +84,7 @@ function upload_img() {
 export function search_in_class(data) {
 
     search_result_list.innerHTML = data['data']
+}
+function check_code() {
+    console.log('')
 }

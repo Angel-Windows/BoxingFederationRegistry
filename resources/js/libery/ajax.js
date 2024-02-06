@@ -7,7 +7,7 @@ const getCsrfToken = () => {
         (CsrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
 }
 
-export function SendPostNoForm(url, data, function_name = "") {
+export function SendPostNoForm(url, data = [], function_name = "") {
     return fetch(url, {
         method: 'POST',
         headers: {

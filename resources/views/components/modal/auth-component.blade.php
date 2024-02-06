@@ -4,5 +4,5 @@
     <label>
         <input type="text" name="phone" placeholder="Номер телефону">
     </label>
-    <button class="button">Отримати код з смс</button>
+    <button class="button">!!! Отримати код з смс</button>
 </form>

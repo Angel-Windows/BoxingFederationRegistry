@@ -71,7 +71,14 @@ Route::name('ajax.')->prefix('ajax/')->group(function () {
     Route::post('/open-modal', [AjaxController::class, 'open_modal'])->name('open-modal');
     Route::post('/search-in-class', [AjaxController::class, 'search_in_class'])->name('search-in-class');
     Route::post('/upload-img', [AjaxController::class, 'upload_img'])->name('upload-img');
+
 });
 Route::prefix('config')->name('config.')->group(function () {
     Route::get('/show-img', [ConfigController::class, 'showImg'])->name('show-img');
+});
+
+Route::name('auth.')->prefix('auth/')->group(function () {
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::post('/login', [AuthController::class, 'login'])->name('login');
+    Route::post('/send-code', [AuthController::class, 'send_code'])->name('send_code');
 });

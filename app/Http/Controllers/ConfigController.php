@@ -9,7 +9,7 @@ class ConfigController extends Controller
     public function showImg(Request $request): \Symfony\Component\HttpFoundation\BinaryFileResponse
     {
         $filename = $request->input('filename');
-        $path = storage_path('app/' . $filename); // Путь к файлу в хранилище
+        $path = storage_path('app/' . $filename);
         if (!\Storage::exists($filename)) {
             dd($filename, $path);
 //            abort(404);

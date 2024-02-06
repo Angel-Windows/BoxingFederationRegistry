@@ -10,92 +10,82 @@ use App\Repositories\Category\CategoryInstitutionsRepository;
 use App\Repositories\Category\CategoryJudgeRepository;
 use App\Repositories\Category\CategoryTrainerRepository;
 use App\Repositories\Category\SportsmanFederationRepository;
+use App\Services\MyAuthService;
 use App\Traits\FondyTrait;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 
 class TrainerController extends Controller
 {
     use FondyTrait;
 
-    public function class_page($class_name, $id, Request $request)
+
+    public function class_page($class_name, $id)
+    {
+        $get_data = $this->get_data($class_name, ['id' => $id, 'type' => 'preview']);
+
+        return view('page.trainer')
+            ->with('data_info', $get_data['table'])
+            ->with('more_data', $get_data['more_data']);
+    }
+
+    public function get_data($class_name, $data = [])
     {
         switch ($class_name) {
             case 'box_federations':
-                $data_info = (new CategoryFederationRepository())->index($id);
+                $data_info = (new CategoryFederationRepository())->get_data($data);
                 break;
             case 'category_sportsmen':
-                $data_info = (new SportsmanFederationRepository())->index($id);
+                $data_info = (new SportsmanFederationRepository())->get_data($data);
                 break;
             case 'category_trainers':
-                $data_info = (new CategoryTrainerRepository())->index($id);
+                $data_info = (new CategoryTrainerRepository())->get_data($data);
                 break;
             case 'category_judges':
-                $data_info = (new CategoryJudgeRepository())->index($id);
+                $data_info = (new CategoryJudgeRepository())->get_data($data);
                 break;
             case 'category_insurances':
-                $data_info = (new CategoryInstitutionsRepository())->index($id, 'insurance');
+                $data_info = (new CategoryInstitutionsRepository())->get_data($data, 'insurance');
                 break;
             case 'category_medicals':
-                $data_info = (new CategoryInstitutionsRepository())->index($id, 'medical');
+                $data_info = (new CategoryInstitutionsRepository())->get_data($data, 'medical');
                 break;
             case 'category_schools':
-                $data_info = (new CategoryInstitutionsRepository())->index($id, 'school');
+                $data_info = (new CategoryInstitutionsRepository())->get_data($data, 'school');
                 break;
             case 'category_fun_zones':
-                $data_info = (new CategoryFunZonesRepository())->index($id);
+                $data_info = (new CategoryFunZonesRepository())->get_data($data);
                 break;
             case 'category_stores':
                 return response()->view('errors.404', [], 404);
-                break;
             default :
-                return response()->view('errors.404', [], 404);
+                return response()->view('errors.404', [], 405);
         }
-
-        return view('page.trainer')
-            ->with('data_info', $data_info);
+        return $data_info;
     }
 
     public function edit_page($class_name, $id, Request $request)
     {
-//        switch ($class_name) {
-//            case 'box_federations':
-//                $data_info = (new CategoryFederationRepository())->edit_page($id);
-//                break;
-//            case 'category_sportsmen':
-//                $data_info = (new SportsmanFederationRepository())->edit_page($id);
-//                break;
-//            case 'category_trainers':
-//                $data_info = (new CategoryTrainerRepository())->edit_page($id);
-//                break;
-//            case 'category_judges':
-//                $data_info = (new CategoryJudgeRepository())->edit_page($id);
-//                break;
-//            case 'category_insurances':
-//                $data_info = (new CategoryInstitutionsRepository())->edit_page($id, 'insurance');
-//                break;
-//            case 'category_medicals':
-//                $data_info = (new CategoryInstitutionsRepository())->edit_page($id, 'medical');
-//                break;
-//            case 'category_schools':
-//                $data_info = (new CategoryInstitutionsRepository())->edit_page($id, 'school');
-//                break;
-//            case 'category_fun_zones':
-//                $data_info = (new CategoryFunZonesRepository())->edit_page($id);
-//                break;
-//            case 'category_stores':
-//                return response()->view('errors.505', [], 404);
-//            default :
-//                return response()->view('errors.404', [], 404);
-//        }
+
+        $get = $this->get_data($class_name, ['id' => $id, 'type' => 'edit_page']);
+
+        if (!MyAuthService::CheckMiddlewareRoute($get['more_data'])) {
+            return redirect()->route('page.class', [
+                'class_name' => $class_name,
+                'id' => $id
+            ]);
+        }
         return view('page.trainer_edit')
+            ->with('get', $get)
             ->with('class_name', $class_name)
             ->with('id', $id);
     }
 
     public function edit($class_name, $id, Request $request)
     {
+        if (!MyAuthService::CheckMiddleware('+380956686191')) {
+            return redirect()->back();
+        }
         switch ($class_name) {
             case 'box_federations':
                 $result = (new CategoryFederationRepository())->edit($id, $request);
@@ -143,12 +133,11 @@ class TrainerController extends Controller
             'id' => $id,
             'type' => $class_name,
         ];
-        $get_fondy_url = self::fondyBuy(1,$merchant_data, 'eliphas.sn@gmail.com', $response_url, $callback_url);
+        $get_fondy_url = self::fondyBuy(1, $merchant_data, 'eliphas.sn@gmail.com', $response_url, $callback_url);
 
         $route = json_decode($get_fondy_url->content(), false, 512, JSON_THROW_ON_ERROR)->paymentUrl->checkout_url;
 
         return redirect($route);
-
     }
 
     public function get_category($type, $class_name, $id, $request)

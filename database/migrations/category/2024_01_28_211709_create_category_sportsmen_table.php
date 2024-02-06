@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('category_sportsmen', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
-            $table->json('phones')->nullable();
+            $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->string('logo')->nullable();
             $table->date('birthday')->nullable();
@@ -22,8 +22,8 @@ return new class extends Migration
             $table->integer('weight')->nullable();
             $table->integer('height')->nullable();
             $table->integer('weight_category')->nullable();
-            $table->string('address_birth')->nullable();
-            $table->string('address_address')->nullable();
+            $table->json('address_birth')->nullable();
+            $table->json('address_address')->nullable();
             $table->string('passport')->nullable();
             $table->integer('federation')->nullable();
             $table->integer('trainer')->nullable();

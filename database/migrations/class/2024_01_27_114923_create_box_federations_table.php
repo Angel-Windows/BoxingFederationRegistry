@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->string('director')->nullable();
-            $table->string('address')->nullable();
-            $table->json('phones')->nullable();
+            $table->json('address')->nullable();
+            $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->string('federation')->nullable();
             $table->integer('edrpou')->nullable();

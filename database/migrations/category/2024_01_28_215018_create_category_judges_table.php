@@ -14,16 +14,15 @@ return new class extends Migration
         Schema::create('category_judges', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
-            $table->json('phones')->nullable();
+            $table->string('phones')->nullable();
             $table->string('email')->nullable();
             $table->string('logo')->nullable();
-            $table->string('address')->nullable();
+            $table->json('address')->nullable();
             $table->string('qualification')->nullable();
             $table->string('rank')->nullable();
             $table->string('gov')->nullable();
             $table->string('school')->nullable();
             $table->json('history_works')->nullable();
-            $table->dateTime('end_subscription')->nullable();
             $table->timestamps();
         });
     }

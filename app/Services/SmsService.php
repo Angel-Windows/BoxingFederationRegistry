@@ -10,7 +10,7 @@ use Infobip\Configuration;
 
 class SmsService
 {
-    public static function sendSms($phoneNumber, $message)
+    public static function sendSms($phoneNumber, $message): \Exception|\Infobip\Model\SmsResponse|\Infobip\Model\ApiException|ApiException|null
     {
         $configuration = new Configuration(
             host: 'https://qyqprm.api.infobip.com',

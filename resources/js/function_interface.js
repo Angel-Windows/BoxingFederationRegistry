@@ -25,5 +25,5 @@ window.getAjaxLink =(page)=> {
     const ajax_link = ajax_link_meta.getAttribute('content');
     return ajax_link + '/' + page;
 }
-functionsArray['open_modal']('category-register', {'category': 'category_trainers'})
+//
 // color a & curl parrot.live

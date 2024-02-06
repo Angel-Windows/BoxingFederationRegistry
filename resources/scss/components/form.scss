@@ -81,7 +81,8 @@ form {
                 color: var(--grey, #AAA8B8);
             }
 
-            input {
+            input, select {
+                position: absolute;
                 transition-duration: 0.3s;
                 border: none;
                 outline: none;
@@ -92,14 +93,24 @@ form {
                 opacity: 0;
                 font-size: 0;
             }
-
+            select{
+                left: 0;
+                right: 0;
+                padding-left: 16px;
+                padding-right: 16px;
+                width: 100%;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
+                background-image: none;
+            }
             &:hover, &.active {
                 span {
                     transform: translateY(0);
                     font-size: 13px;
                 }
 
-                input {
+                input, select {
                     font-size: 16px;
                     opacity: 1;
                 }
@@ -152,7 +163,7 @@ form {
                 }
             }
 
-            input {
+            input, select {
                 display: none;
             }
 
@@ -162,7 +173,7 @@ form {
         }
     }
 
-    .custom-select {
+    .custom-select, .select-box {
         position: relative;
 
         &:before {
@@ -180,7 +191,9 @@ form {
             border-radius: 1px;
         }
     }
+    .select-box {
 
+    }
     .label.type__text .custom-select-input {
         width: calc(100% - 16px - 16px);
     }

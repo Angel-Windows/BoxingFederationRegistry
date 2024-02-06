@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('category_employess_institutions', static function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->json('phones')->nullable();
+            $table->string('phone')->nullable();
             $table->string('email')->unique();
             $table->string('logo')->nullable();
             $table->date('birthday');
             $table->string('position');
-            $table->string('address');
+            $table->json('address');
             $table->dateTime('end_subscription')->nullable();
             $table->timestamps();
         });

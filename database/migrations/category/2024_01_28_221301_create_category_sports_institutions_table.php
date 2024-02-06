@@ -11,19 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('category_sports_institutions', function (Blueprint $table) {
+        Schema::create('category_sports_institutions', static function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
-            $table->json('phones')->nullable();
+            $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->string('logo')->nullable();
-            $table->string('address')->nullable();
+            $table->json('address')->nullable();
             $table->string('type')->nullable();
             $table->string('category')->nullable();
             $table->integer('edrpou')->nullable();
             $table->string('director')->nullable();
             $table->string('site')->nullable();
-            $table->dateTime('end_subscription')->nullable();
             $table->timestamps();
         });
     }

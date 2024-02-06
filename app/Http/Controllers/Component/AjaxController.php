@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Class\BoxFederation;
 use App\Models\Class\ClassType;
 use App\Models\UserProfile;
+use App\Services\MyAuthService;
 use App\View\Components\modal\CategoryRegisterComponent;
+use App\View\Components\modal\CheckCodeComponent;
 use App\View\Components\modal\ModalNofFoundComponent;
 use App\View\Components\Modal\Module\SearchResultListComponent;
 use App\View\Components\modal\RegisterComponent;
@@ -17,7 +19,6 @@ use Illuminate\Support\Facades\DB;
 
 class AjaxController extends Controller
 {
-
     public function open_modal(Request $request): JsonResponse
     {
         if ($request->has('modal')) {
@@ -25,13 +26,17 @@ class AjaxController extends Controller
                 case "search":
                     $menuMarkButtons = new SearchComponent($request->input('class_types'));
                     break;
-                case "register":
+                case "auth":
                     $menuMarkButtons = new RegisterComponent();
+                    break;
+                case "check-code":
+                    $menuMarkButtons = new CheckCodeComponent();
                     break;
                 case "category-register":
                     $category_name = $request->input('category') ?? "";
                     $menuMarkButtons = new CategoryRegisterComponent($category_name);
                     break;
+
                 default:
                     $menuMarkButtons = new ModalNofFoundComponent($request->input('modal'));
             }
@@ -41,7 +46,7 @@ class AjaxController extends Controller
         return response()->json(
             [
                 'data' => $menuMarkButtonsView,
-                'class_name' =>$request->input('modal'),
+                'class_name' => $request->input('modal'),
                 'log' => $request->input('category') ?? "",
             ]
         );
@@ -66,7 +71,9 @@ class AjaxController extends Controller
             ]
         );
     }
-    public function upload_img(Request $request){
+
+    public function upload_img(Request $request)
+    {
 
     }
 

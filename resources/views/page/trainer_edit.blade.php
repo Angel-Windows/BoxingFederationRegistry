@@ -27,7 +27,7 @@
         </div>
         <div>
             <div class="">
-                <x-forms.category-register-form-component :class="$class_name" :id="$id" />
+                <x-forms-category-register-form-component :class="$class_name" :id="$id" :get="$get"/>
             </div>
         </div>
     </section>

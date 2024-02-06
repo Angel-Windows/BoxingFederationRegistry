@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('link_categories', static function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
+            $table->string('phone');
             $table->integer('category_id');
             $table->integer('type');
             $table->integer('role');

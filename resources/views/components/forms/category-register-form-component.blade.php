@@ -4,13 +4,12 @@
       enctype="multipart/form-data"
 >
     @csrf
-
     {{ $slot }}
-    @foreach($temp__info_list as $item_list)
+    @foreach($table as $item_list)
+
         @if(isset($item_list['title']))
             <h3>{{$item_list['title']}}</h3>
         @endif
-
         <div class="table">
             @foreach($item_list['data'] as $item)
                 @php
@@ -25,12 +24,11 @@
                 @switch($item['tag'] ?? '')
                     @case('input')
                         @php
-
                             $name = $item['placeholder'] ?? $item ?? "No text";
                             $type =  $item['type'] ?? "text";
                         @endphp
                         <label class="label type__text  {{$class}} act">
-                            <span class="unselectable">{{$item['text']}}</span>
+                            <span class="unselectable">{{$item['placeholder']}}</span>
                             <input class="input" placeholder="" name="{{$item['name']}}"
                                    type="{{$type}}" value="{{$value}}">
                         </label>
@@ -49,6 +47,23 @@
                                     <li>{{$item}}</li>
                                 @endforeach
                             </ul>
+                        </div>
+                        @break
+                    @case('select-box')
+                        <div class="select-box  {{$class}}">
+                            <label class="label type__text  {{$class}}">
+                                <span class="unselectable">{{$item['placeholder']}}</span>
+                                <select
+                                       type="text"
+                                       name="{{$item['name']??''}}"
+                                       value="{{$value}}"
+                                       class=" input">
+                                    <option value="">Не обрано</option>
+                                    @foreach($item['option'] as $key=>$item)
+                                        <option value="{{$key}}">{{$item}}</option>
+                                    @endforeach
+                                </select>
+                            </label>
                         </div>
                         @break
                     @case('checkbox-list')

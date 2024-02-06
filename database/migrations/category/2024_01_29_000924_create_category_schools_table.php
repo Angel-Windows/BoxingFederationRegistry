@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('category_schools', static function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
-            $table->json('phones')->nullable();
+            $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->string('logo')->nullable();
             $table->string('director')->nullable();
-            $table->string('address')->nullable();
+            $table->json('address')->nullable();
             $table->dateTime('end_subscription')->nullable();
             $table->timestamps();
         });

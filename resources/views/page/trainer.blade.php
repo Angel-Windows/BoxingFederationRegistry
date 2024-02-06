@@ -1,3 +1,4 @@
+<?php use \App\Services\MyAuthService?>
 @extends('app.my-layout')
 @section('title', 'Trainer')
 @section('class_body', 'trainer')
@@ -8,35 +9,37 @@
 @section('scripts')@endsection
 @section('content')
     <section class="nav">
-        <h2>{{$data_info['name']}}</h2>
-        @if(Auth::check())
+        <h2>{{$more_data['name'] ?? ''}}</h2>
+        @if(MyAuthService::CheckMiddlewareRoute($more_data))
             <div class="buttons">
-                <a href="{{route(Route::current()->getName(), ['edit'])}}" class="button"><img
+                <a href="{{request()->url() . '/edit'}}" class="button"><img
                         src="{{asset('img/homeAbout/register.svg')}}" alt="register-icon">Редагувати</a>
             </div>
         @endif
     </section>
     <section class="table-auto_fool">
-        @if(isset($data_info['right_panel']))
-
-            <div class="{{$data_info['img']['class']}}">
+        @if(isset($more_data['logo']))
+            <div class="{{$more_data['logo']['class'] ?? ''}}">
                 <div class="img"><img
-                        src="{{ route('config.show-img', ['filename' => $data_info['img']['link']]) }}"
+                        src="{{ route('config.show-img', ['filename' => $more_data['logo']['link'] ?? '']) }}"
                         alt=""></div>
             </div>
+        @endif
 
-            <div>
-                @foreach($data_info['right_panel'] as $item_wrapper)
-                    @include('components.info.info')
-                @endforeach
-            </div>
-        @endif
-        @if(isset($data_info['bottom_panel']))
-            <div class="grid-sp-2">
-                @foreach($data_info['bottom_panel'] as $item_wrapper)
-                    @include('components.info.info')
-                @endforeach
-            </div>
-        @endif
+
+        <div>
+            @include('components.info.info')
+            {{--                @foreach($data_info as $item_wrapper)--}}
+            {{--                   --}}
+            {{--                @endforeach--}}
+        </div>
+        {{--        @endif--}}
+        {{--        @if(isset($data_info['bottom_panel']))--}}
+        {{--            <div class="grid-sp-2">--}}
+        {{--                @foreach($data_info['bottom_panel'] as $item_wrapper)--}}
+        {{--                    @include('components.info.info')--}}
+        {{--                @endforeach--}}
+        {{--            </div>--}}
+        {{--        @endif--}}
     </section>
 @endsection
