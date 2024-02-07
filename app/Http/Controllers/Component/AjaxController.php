@@ -68,8 +68,6 @@ class AjaxController extends Controller
         return response()->json(
             [
                 'data' => $menuMarkButtonsView,
-//                'data' => $menuMarkButtonsView,
-
             ]
         );
     }
