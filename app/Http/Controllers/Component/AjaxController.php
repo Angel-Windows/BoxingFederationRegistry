@@ -58,9 +58,9 @@ class AjaxController extends Controller
 
     public function search_in_class(Request $request): JsonResponse
     {
-//        $search_value = $request->input('search_value') ?? "";
-//        $class_type_id = $request->input('class_types') ?? "";
-//        $class_type = ClassType::where('id', $class_type_id)->first()->link;
+        $search_value = $request->input('search_value') ?? "";
+        $class_type_id = $request->input('class_types') ?? "";
+        $class_type = ClassType::where('id', $class_type_id)->first()->link;
 //        $data = DB::table($class_type)
 //            ->where('name', 'like', "%" . $search_value . "%")
 //            ->limit(10)
