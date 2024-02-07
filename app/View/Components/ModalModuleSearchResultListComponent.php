@@ -1,12 +1,12 @@
 <?php
 
-namespace App\View\Components\Modal\Module;
+namespace App\View\Components;
 
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class SearchResultListComponent extends Component
+class ModalModuleSearchResultListComponent extends Component
 {
     /**
      * Create a new component instance.

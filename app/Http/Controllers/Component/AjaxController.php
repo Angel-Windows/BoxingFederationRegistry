@@ -3,19 +3,16 @@
 namespace App\Http\Controllers\Component;
 
 use App\Http\Controllers\Controller;
-use App\Models\Class\BoxFederation;
 use App\Models\Class\ClassType;
-use App\Models\UserProfile;
-use App\Services\MyAuthService;
 use App\View\Components\modal\CategoryRegisterComponent;
 use App\View\Components\modal\CheckCodeComponent;
 use App\View\Components\modal\ModalNofFoundComponent;
-use App\View\Components\Modal\Module\SearchResultListComponent;
 use App\View\Components\modal\RegisterComponent;
 use App\View\Components\modal\SearchComponent;
 use App\View\Components\ModalAddFormItemComponent;
-use Illuminate\Http\Request;
+use App\View\Components\ModalModuleSearchResultListComponent;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class AjaxController extends Controller
@@ -65,7 +62,7 @@ class AjaxController extends Controller
             ->where('name', 'like', "%" . $search_value . "%")
             ->limit(10)
             ->get();
-//        $menuMarkButtons = new SearchResultListComponent($data, $class_type);
+        $menuMarkButtons = new ModalModuleSearchResultListComponent($data, $class_type);
 //        $menuMarkButtonsView = $menuMarkButtons->render()->render();
 
         return response()->json(
