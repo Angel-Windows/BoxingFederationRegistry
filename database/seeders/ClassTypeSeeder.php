@@ -21,6 +21,7 @@ class ClassTypeSeeder extends Seeder
                 'accusative' => 'федерацію боксу',
                 'description' => 'Тут ви знайдете інформацію по всіх існуючих в Україні федераціях боксу та їх працівниках',
                 'count' => 375,
+                'linking' => null,
                 'link' => 'box_federations',
                 'logo' => 'img/homeAbout/box.svg',
             ], [
@@ -28,6 +29,7 @@ class ClassTypeSeeder extends Seeder
                 'genitive' => 'спортсмену',
                 'accusative' => 'sss',
                 'description' => 'Ви можете переглядати інформацію по всіх спортсменах, їх контакти та інші данні',
+                'linking' => null,
                 'count' => 11,
                 'link' => 'category_sportsmen',
                 'logo' => 'img/homeAbout/sportsmen.svg'
@@ -36,6 +38,7 @@ class ClassTypeSeeder extends Seeder
                 'genitive' => 'тренера',
                 'accusative' => 'sss',
                 'description' => 'Ви можете переглядати інформацію про всіх тренерів, кого вони тренують, заклад в якому працюють та їх контакти',
+                'linking' => null,
                 'count' => 33,
                 'link' => 'category_trainers',
                 'logo' => 'img/homeAbout/trainer.svg'
@@ -44,6 +47,7 @@ class ClassTypeSeeder extends Seeder
                 'genitive' => 'судді',
                 'accusative' => 'sss',
                 'description' => 'Ви можете переглядати інформацію про всіх суддів, їх контакти та інші данні',
+                'linking' => null,
                 'count' => 112,
                 'link' => 'category_judges',
                 'logo' => 'img/homeAbout/referee.svg'
@@ -52,6 +56,7 @@ class ClassTypeSeeder extends Seeder
                 'genitive' => 'спортивного закладу',
                 'accusative' => 'sss',
                 'description' => 'Ви можете переглядати інформацію про всіх суддів, їх контакти та інші данні',
+                'linking' => json_encode(['category_trainers', 'category_member_sports_institutions']),
                 'count' => 123,
                 'link' => 'category_sports_institutions',
                 'logo' => 'img/homeAbout/sports_grounds.svg'
@@ -60,6 +65,7 @@ class ClassTypeSeeder extends Seeder
                 'genitive' => 'страхової компанії',
                 'accusative' => 'sss',
                 'description' => 'Ви можете переглянути інформацію про страхові компанії, які є партнерами Федерації боксу України',
+                'linking' => null,
                 'count' => 44,
                 'link' => 'category_insurances',
                 'logo' => 'img/homeAbout/insurance_companies.svg'
@@ -68,6 +74,7 @@ class ClassTypeSeeder extends Seeder
                 'genitive' => 'медичного закладу',
                 'accusative' => 'sss',
                 'description' => 'Ви можете переглянути інформацію про медичні заклади, які є партнерами Федерації боксу України',
+                'linking' => null,
                 'count' => 8,
                 'link' => 'category_medicals',
                 'logo' => 'img/homeAbout/medical_institutions.svg'
@@ -76,6 +83,7 @@ class ClassTypeSeeder extends Seeder
                 'genitive' => 'навчального закладу',
                 'accusative' => 'sss',
                 'description' => 'Ви можете переглянути інформацію про навчальні заклади, які є партнерами Федерації боксу України',
+                'linking' => null,
                 'count' => 119,
                 'link' => 'category_schools',
                 'logo' => 'img/homeAbout/schools.svg'
@@ -84,6 +92,7 @@ class ClassTypeSeeder extends Seeder
                 'genitive' => 'магазину / аукціону',
                 'accusative' => 'sss',
                 'description' => "Тут ви можете придбати речі, що прямо пов'язані з боксом, або прийняти участь в аукціоні",
+                'linking' => null,
                 'count' => 445,
                 'link' => 'category_stores',
                 'logo' => 'img/homeAbout/auction.svg'
@@ -92,10 +101,23 @@ class ClassTypeSeeder extends Seeder
                 'genitive' => 'фанЗони',
                 'accusative' => 'sss',
                 'description' => "Тут ви можете знайти інформацію про фанів боксу та боксерів, а при реєстрації отримувати знижки на турніри, білети і різноманітні товари",
+                'linking' => null,
                 'count' => 13,
                 'link' => 'category_fun_zones',
                 'logo' => 'img/homeAbout/fan_zone.svg'
-            ]]
+            ],
+//                Працівники
+                [
+                    'name' => 'Працівник закладу',
+                    'genitive' => 'Працівники закладу',
+                    'accusative' => 'Працівника закладу',
+                    'description' => null,
+                    'linking' => null,
+                    'count' => 13,
+                    'link' => 'category_member_sports_institutions',
+                    'logo' => null
+                ],
+            ]
         );
     }
 }

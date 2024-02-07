@@ -1,8 +1,7 @@
 import * as  ajax_scripts from './libery/ajax.js';
 import * as  home_scripts from './home_scripts.js';
 import * as  modals_scripts from './components/modal.js';
-import {PostFormFind} from "./libery/ajax.js";
-import {open_modal} from "./components/modal.js";
+import * as forms_script from "./components/forms.js";
 
 
 window.functionsArray = {
@@ -16,11 +15,14 @@ window.functionsArray = {
     'toggle_parent_active': home_scripts.toggleParentActive,
     'hideOverflowingElements_start': home_scripts.hideOverflowingElements_start,
     'open_modal': modals_scripts.open_modal,
+
+
+    'inputs_input':  forms_script.inputs_input,
 };
 
-window.getAjaxLink =(page)=> {
+window.getAjaxLink = (page) => {
     const ajax_link_meta = document.querySelector('meta[name="ajax-link"]');
-    if(!ajax_link_meta)
+    if (!ajax_link_meta)
         return "";
     const ajax_link = ajax_link_meta.getAttribute('content');
     return ajax_link + '/' + page;

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Page;
 
 use App\Http\Controllers\Controller;
 
+use App\Models\Class\ClassType;
+use App\Models\Linking\LinkingMembers;
 use App\Repositories\Category\CategoryFederationRepository;
 use App\Repositories\Category\CategoryFunZonesRepository;
 use App\Repositories\Category\CategoryInstitutionsRepository;
@@ -32,18 +34,19 @@ class TrainerController extends Controller
 
     public function get_data($class_name, $data = [])
     {
+
+//        $get_members = LinkingMembers::where('category_id', $id_category);
+
+
         switch ($class_name) {
-
-            case 'category_fun_zones':
-                $data_info = (new CategoryFunZonesRepository())->get_data($data);
-                break;
-
             case 'category_sportsmen':
                 $data_info = (new SportsmanFederationRepository())->get_data($data);
                 break;
 
 
-
+            case 'category_fun_zones':
+                $data_info = (new CategoryFunZonesRepository())->get_data($data);
+                break;
 
             case 'category_insurances':
                 $data_info = (new CategoryInstitutionsRepository())->get_data($data, 'insurance');

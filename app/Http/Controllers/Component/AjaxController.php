@@ -13,6 +13,7 @@ use App\View\Components\modal\ModalNofFoundComponent;
 use App\View\Components\Modal\Module\SearchResultListComponent;
 use App\View\Components\modal\RegisterComponent;
 use App\View\Components\modal\SearchComponent;
+use App\View\Components\ModalAddFormItemComponent;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
@@ -35,6 +36,9 @@ class AjaxController extends Controller
                 case "category-register":
                     $category_name = $request->input('category') ?? "";
                     $menuMarkButtons = new CategoryRegisterComponent($category_name);
+                    break;
+                case "add-form-item":
+                    $menuMarkButtons = new ModalAddFormItemComponent();
                     break;
 
                 default:

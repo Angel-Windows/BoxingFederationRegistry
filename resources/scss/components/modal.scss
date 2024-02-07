@@ -60,6 +60,9 @@
     .button {
         margin-top: 12px;
         width: 100%;
+        span{
+            color: var(--white);
+        }
     }
 
     .upload_img {

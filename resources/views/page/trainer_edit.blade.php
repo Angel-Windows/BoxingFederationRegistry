@@ -7,7 +7,8 @@
 @section('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // functionsArray['hideOverflowingElements_start']()
+            functionsArray['inputs_input']();
+            console.log()
         });
     </script>
 @endsection
@@ -21,14 +22,13 @@
             </button>
         </div>
     </section>
-    <section class="table-auto_fool edit">
-        <div class="big_img">
-            <div class="img"><img src="{{asset('img/users_img/9284da0c7ca70f123c97200aa73fa3dc.png')}}" alt=""></div>
-        </div>
-        <div>
-            <div class="">
-                <x-forms-category-register-form-component :class="$class_name" :id="$id" :get="$get"/>
-            </div>
+    <section>
+{{--    <section class="table-auto_fool edit ">--}}
+        {{--        <div class="big_img">--}}
+        {{--            <div class="img"><img src="{{asset('img/users_img/9284da0c7ca70f123c97200aa73fa3dc.png')}}" alt=""></div>--}}
+        {{--        </div>--}}
+        <div class="">
+            <x-forms-category-register-form-component :class="$class_name" :id="$id" :get="$get"/>
         </div>
     </section>
 @endsection

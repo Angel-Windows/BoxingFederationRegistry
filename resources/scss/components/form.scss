@@ -1,3 +1,26 @@
+.modal_content {
+    .m-0 {
+        margin-right: 0;
+        margin-left: 0;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+    
+}
+
+.d-flex {
+    display: flex;
+
+    .button {
+        width: auto;
+    }
+}
+
+.space-between {
+    align-items: center;
+    justify-content: space-between;
+}
+
 form {
     table {
     }
@@ -6,6 +29,17 @@ form {
         display: flex;
         flex-wrap: wrap;
         gap: 8px;
+
+        .text {
+            * {
+                display: block;
+
+                &.subtitle {
+                    color: var(--grey) !important;
+                    font-size: 14px;
+                }
+            }
+        }
     }
 
     tr.label {
@@ -93,7 +127,8 @@ form {
                 opacity: 0;
                 font-size: 0;
             }
-            select{
+
+            select {
                 left: 0;
                 right: 0;
                 padding-left: 16px;
@@ -104,6 +139,7 @@ form {
                 appearance: none;
                 background-image: none;
             }
+
             &:hover, &.active {
                 span {
                     transform: translateY(0);
@@ -191,9 +227,11 @@ form {
             border-radius: 1px;
         }
     }
+
     .select-box {
 
     }
+
     .label.type__text .custom-select-input {
         width: calc(100% - 16px - 16px);
     }

@@ -11,7 +11,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $card_data = ClassType::all();
+        $card_data = ClassType::whereIsset('description');
         return view('page.home', compact('card_data'));
     }
 }

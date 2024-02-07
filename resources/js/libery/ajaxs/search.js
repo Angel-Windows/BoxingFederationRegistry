@@ -7,7 +7,8 @@ export function modal_open(data, class_name = '') {
     modal_content.innerHTML = data['data'];
     modal_content.className = 'modal_content ' + data['class_name']
 
-    switch (data.class_name){
+    let input;
+    switch (data.class_name) {
         case "search":
             search();
             break;
@@ -17,15 +18,25 @@ export function modal_open(data, class_name = '') {
         case "check-code":
             check_code();
             break;
+        case "add-form-item":
+            input = modal_wrapper.querySelectorAll('.input');
+            functionsArray['inputs_input']('modal_wrapper')
+            break;
+        case "register-category":
+            input = modal_wrapper.querySelectorAll('.input');
+            functionsArray['inputs_input']('modal_wrapper')
+            break;
     }
 }
-function search(){
+
+function search() {
     const search_input = document.querySelector('#search_input');
     search_result_list = document.querySelector('#search_result_list');
     search_input.addEventListener('input', (e) => {
         functionsArray['ajax_findPostForm'](e.target, "search_in_class")
     });
 }
+
 function upload_img() {
     const imageWrapper = document.querySelector('.upload_img');
     const imagePreview = imageWrapper.querySelector('input');
@@ -33,7 +44,7 @@ function upload_img() {
     const fileInput = imageWrapper.querySelector("input[type='file']");
     const button_open_file = imageWrapper.querySelector('.button_open_file')
 
-    button_open_file.addEventListener('click', ()=>{
+    button_open_file.addEventListener('click', () => {
         fileInput.click()
     })
     document.addEventListener('dragover', function (event) {
@@ -62,7 +73,6 @@ function upload_img() {
         fileInput.files = event.dataTransfer.files;
 
 
-
     });
     fileInput.addEventListener('change', function (event) {
         const file = event.target.files[0];
@@ -73,6 +83,7 @@ function upload_img() {
         }
 
     });
+
     function displayImage(file) {
         const reader = new FileReader();
         reader.onload = function (event) {
@@ -81,10 +92,12 @@ function upload_img() {
         reader.readAsDataURL(file);
     }
 }
+
 export function search_in_class(data) {
 
     search_result_list.innerHTML = data['data']
 }
+
 function check_code() {
     console.log('')
 }

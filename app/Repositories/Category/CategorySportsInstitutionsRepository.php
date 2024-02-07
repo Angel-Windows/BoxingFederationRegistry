@@ -4,12 +4,21 @@ namespace App\Repositories\Category;
 
 use App\Models\Category\CategorySportsInstitutions;
 use App\Models\Category\CategoryTrainer;
+use App\Models\Class\ClassType;
+use App\Models\Linking\LinkingMembers;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
 use App\Traits\CategoryUITrait;
 
 class CategorySportsInstitutionsRepository implements CategoryRepositoryInterface
 {
     use CategoryUITrait;
+
+    public $category_type_id;
+
+    public function __construct()
+    {
+        $this->category_type_id = ClassType::getIdCategory('category_sports_institutions');
+    }
 
     private $data = [
         'name' => [
@@ -64,6 +73,8 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
             'tag' => 'input',
             'placeholder' => 'Веб сайт',
         ],
+
+
         'city' => [
             'name' => 'city',
             'tag' => 'select-box',
@@ -116,32 +127,78 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
             'option' => [
             ],
         ],
+        'members' => [
+            'name' => 'members',
+            'tag' => 'checkbox-list',
+            'placeholder' => 'Працівники',
 
+        ],
 
     ];
 
-    private function get_edit($table): array
+    private function get_edit($table, $id): array
     {
+        $members_works = LinkingMembers::leftJoin('category_trainers', 'category_trainers.id', 'linking_members.member_id')
+            ->where('linking_members.category_id', $id)
+            ->where('linking_members.category_type', $this->category_type_id)
+            ->select(
+                'linking_members.*',
+                'category_trainers.name',
+                'category_trainers.phone',
+                'category_trainers.email',
+                'category_trainers.logo',
+            )
+            ->get();
+
+        $table['members']['data'] = [];
+        foreach ($members_works as $member) {
+            $table['members']['data'][] = [
+                'text' => $member->name,
+                'value' => $member->id,
+                'subtitle' => $member->id,
+            ];
+        }
         return [
             [
-                'type' => 'table',
-                'data' => [
-                    $table['name'],
-                    $table['type'],
-                    $table['phone'],
-                    $table['email'],
-                    $table['category'],
-                    $table['edrpou'],
-                    $table['director'],
-                    $table['site'],
+                'type' => '',
+                'data_block' =>
+                    [
 
-                    $table['city'],
-                    $table['address'],
-                    $table['house_number'],
-                    $table['apartment_number'],
-                ],
+                        [
+                            'type' => 'table',
+                            'data' => [
+                                $table['name'],
+                                $table['type'],
+                                $table['phone'],
+                                $table['email'],
+                                $table['category'],
+                                $table['edrpou'],
+                                $table['director'],
+                                $table['site'],
+
+                                $table['city'],
+                                $table['address'],
+                                $table['house_number'],
+                                $table['apartment_number'],
+
+                            ],
+                        ],
+
+                    ],
             ],
+            [
+                'class' => 'grid-sp-2',
+                'data_block' => [
+                    [
+                        'title' => 'Працівники які працюють в закладі',
+                        'data' => [
+                            $table['members'],
+                        ]]
+                ],
+            ]
+
         ];
+
     }
 
     public function edit($id, $request, $type): array
@@ -197,7 +254,7 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
         }
 
         $new_data['address']['value'] = $fool_address;
-        $new_data['name']['value'] =  $category_data->name ?? '';
+        $new_data['name']['value'] = $category_data->name ?? '';
         $new_data['phone']['value'] = $category_data->phone ?? "";
         $new_data['email']['value'] = $category_data->email ?? "";
 
@@ -212,8 +269,25 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
         return $new_data;
     }
 
-    private function created_view($table): array
+    private function created_view($table, $id): array
     {
+
+        $members_works = LinkingMembers::leftJoin('category_trainers', 'category_trainers.id', 'linking_members.member_id')
+            ->where('linking_members.category_id', $id)
+            ->where('linking_members.category_type', $this->category_type_id)
+            ->select(
+                'linking_members.*',
+                'category_trainers.name',
+                'category_trainers.phone',
+                'category_trainers.email',
+                'category_trainers.logo',
+            )
+            ->get();
+
+        $works = [];
+        foreach ($members_works as $member) {
+            $works[] = [$member->logo, $member->name, $member->role, $member->phone, $member->email];
+        }
         return [
             [
                 'title' => null,
@@ -229,26 +303,37 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
                         'type' => 'table',
                         'data' => [
                             'body' => [
-                               [
+                                [
                                     $table['address']['placeholder'],
                                     $table['address']['value'] ?? '',
                                 ], [
                                     $table['type']['placeholder'],
                                     $table['type']['value'] ?? '',
-                                ],[
+                                ], [
                                     $table['category']['placeholder'],
                                     $table['category']['value'] ?? '',
-                                ],[
+                                ], [
                                     $table['edrpou']['placeholder'],
                                     $table['edrpou']['value'] ?? '',
-                                ],[
+                                ], [
                                     $table['director']['placeholder'],
                                     $table['director']['value'] ?? '',
-                                ],[
+                                ], [
                                     $table['site']['placeholder'],
                                     $table['site']['value'] ?? '',
                                 ],
                             ],
+                        ],
+                    ],
+                ],
+            ], [
+                'title' => 'Працівники які працюють в закладі',
+                'data_wrapper' => [
+                    [
+                        'type' => 'todo_table',
+                        'data' => [
+                            'thead' => ['ПІП', '', 'Посада', 'Телефон', 'Пошта'],
+                            'body' => $works,
                         ],
                     ],
                 ],
@@ -282,10 +367,10 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
                 $create = $this->data;
                 break;
             case 'edit_page':
-                $create = $this->get_edit($table, $category);
+                $create = $this->get_edit($table, $data['id']);
                 break;
             case "preview" :
-                $create = $this->created_view($table);
+                $create = $this->created_view($table, $data['id']);
                 break;
         }
 

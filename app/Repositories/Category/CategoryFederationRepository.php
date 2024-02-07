@@ -1,7 +1,11 @@
 <?php
+
 namespace App\Repositories\Category;
+
 use App\Models\Category\CategoryTrainer;
 use App\Models\Class\BoxFederation;
+use App\Models\Class\ClassType;
+use App\Models\Linking\LinkingMembers;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
 use App\Services\MyAuthService;
 use App\Traits\CategoryUITrait;
@@ -10,13 +14,22 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
 {
     use CategoryUITrait;
 
+    /**
+     * @var null
+     */
+    public $category_type_id;
+    public function __construct()
+    {
+        $this->category_type_id = ClassType::getIdCategory('box_federations');
+    }
+
     public $data = [
         'name' => [
             'name' => 'name',
             'tag' => 'input',
             'size' => 'fool',
             'placeholder' => 'Назва федерації',
-        ],'phone' => [
+        ], 'phone' => [
             'name' => 'phone',
             'tag' => 'input',
             'placeholder' => 'Номер телефону',
@@ -125,6 +138,7 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
             ],
         ],
     ];
+
     private function get_edit($table): array
     {
         return [
@@ -147,6 +161,7 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
             ],
         ];
     }
+
     public function edit($id, $request, $type): array
     {
         $validate = self::validate_category($request);
@@ -178,6 +193,7 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
             'error' => null
         ];
     }
+
     private function get_value($table, $category_data): array
     {
         $new_data = $table;
@@ -210,9 +226,26 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
 
         return $new_data;
     }
-    private function created_view($table): array
+
+    private function created_view($table, $id): array
     {
 
+        $members_works = LinkingMembers::leftJoin('category_trainers', 'category_trainers.id', 'linking_members.member_id')
+            ->where('linking_members.category_id', $id)
+            ->where('linking_members.category_type', $this->category_type_id)
+                ->select(
+                    'linking_members.*',
+                    'category_trainers.name',
+                    'category_trainers.phone',
+                    'category_trainers.email',
+                    'category_trainers.logo',
+                )
+                ->get();
+
+        $works = [];
+        foreach ($members_works as $member) {
+            $works[] = [$member->logo, $member->name, $member->role, $member->phone, $member->email];
+        }
         return [
             [
                 'title' => null,
@@ -223,8 +256,7 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
                             $table['phone'],
                             $table['email'],
                         ],
-                    ],
-                    [
+                    ], [
                         'type' => 'table',
                         'data' => [
                             'body' => [
@@ -251,11 +283,20 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
             ], [
                 'title' => 'Працівники федерації',
                 'data_wrapper' => [
+                    [
+                        'type' => 'todo_table',
+                        'button_add' => '',
 
+                            'data' => [
+                            'thead' => ['ПІП', '', 'Посада', 'Телефон', 'Пошта'],
+                            'body' => $works,
+                        ],
+                    ],
                 ],
             ],
         ];
     }
+
     public function get_data($data): array
     {
         $type = $data['type'] ?? '';
@@ -287,7 +328,7 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
                 $create = $this->get_edit($table, $category);
                 break;
             case "preview" :
-                $create = $this->created_view($table);
+                $create = $this->created_view($table, $data['id']);
                 break;
         }
 

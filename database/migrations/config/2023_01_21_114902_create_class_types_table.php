@@ -16,10 +16,11 @@ return new class extends Migration
             $table->string('name');
             $table->string('genitive');
             $table->string('accusative');
-            $table->text('description');
+            $table->text('description')->nullable();
+            $table->json('linking')->nullable();
             $table->integer('count');
-            $table->string('link')->index();
-            $table->string('logo');
+            $table->string('link');
+            $table->string('logo')->nullable();
             $table->timestamps();
         });
     }

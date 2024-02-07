@@ -24,6 +24,15 @@
     display: grid;
     grid-template-columns: minmax(333px, auto) 1fr;
     gap: 24px;
+    h3 {
+        display: flex;
+        justify-content: space-between;
+        p{
+            font-weight: 400;
+            color: var(--text);
+            font-family: Oswald, Arial, sans-serif;
+        }
+    }
 }
 
 .info-wrapper {
