@@ -63,11 +63,11 @@ class AjaxController extends Controller
             ->limit(10)
             ->get();
         $menuMarkButtons = new ModalModuleSearchResultListComponent($data, $class_type);
-//        $menuMarkButtonsView = $menuMarkButtons->render()->render();
+        $menuMarkButtonsView = $menuMarkButtons->render()->render();
 
         return response()->json(
             [
-                'data' => '111111111',
+                'data' => '2222',
 //                'data' => $menuMarkButtonsView,
 
             ]
