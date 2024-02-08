@@ -4,6 +4,7 @@ namespace App\Repositories\Category;
 
 use App\Models\Category\CategoryJudge;
 use App\Models\Category\CategoryTrainer;
+use App\Models\Class\ClassType;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
 use App\Traits\CategoryUITrait;
 use App\Traits\FondyTrait;
@@ -11,35 +12,14 @@ use App\Traits\FondyTrait;
 class CategoryJudgeRepository implements CategoryRepositoryInterface
 {
     use CategoryUITrait;
-
+    private $is_default_length = 'fool';
+    public $table_model = CategoryJudge::class;
+    public function __construct(){
+        $this->category_type_id = ClassType::getIdCategory('category_sports_institutions');
+        $this->data = array_merge($this->data, $this->getDefaultArrayData($this->is_default_length));
+    }
     private $data = [
-        'last_name' => [
-            'name' => 'last_name',
-            'tag' => 'input',
-            'placeholder' => 'Прізвище',
-        ],
-        'first_name' => [
-            'name' => 'first_name',
-            'tag' => 'input',
-            'placeholder' => 'Імя',
-        ],
-        'surname' => [
-            'name' => 'surname',
-            'tag' => 'input',
-            'placeholder' => 'По батькові',
-        ],
-        'phone' => [
-            'name' => 'phone',
-            'tag' => 'input',
-            'placeholder' => 'Номер телефону',
-            'logo' => 'img/phone.svg'
-        ],
-        'email' => [
-            'name' => 'email',
-            'tag' => 'input',
-            'placeholder' => 'E-mail',
-            'logo' => 'img/mail.svg'
-        ],
+
         'qualification' => [
             'name' => 'qualification',
             'tag' => 'custom-select',
@@ -132,50 +112,43 @@ class CategoryJudgeRepository implements CategoryRepositoryInterface
         ]
     ];
 
-    private function get_edit($table): array
+
+
+    private function get_edit($table, $id): array
     {
         return [
             [
-                'type' => 'table',
-                'data' => [
-                    $table['last_name'],
-                    $table['first_name'],
-                    $table['surname'],
-                    $table['phone'],
-                    $table['email'],
-                    $table['qualification'],
-                    $table['city'],
-                    $table['address'],
-                    $table['house_number'],
-                    $table['apartment_number'],
-                    $table['rank'],
-                    $table['gov'],
-                ],
+                'type' => '',
+                'data_block' =>
+                    [
+                        [
+                            'type' => 'table',
+                            'data' => [
+                                $table['last_name'],
+                                $table['first_name'],
+                                $table['surname'],
+                                $table['phone'],
+                                $table['email'],
+                                $table['qualification'],
+                                $table['city'],
+                                $table['address'],
+                                $table['house_number'],
+                                $table['apartment_number'],
+                                $table['rank'],
+                                $table['gov'],
+                            ],
+                        ],
+                    ],
             ],
         ];
     }
 
     public function edit($id, $request, $type): array
     {
-        $validate = self::validate_category($request);
-        if ($validate['error']) {
-            return [
-                'error' => $validate['error']
-            ];
-        }
+        $category = self::validate_category($request, $this->table_model, $type, $id);
 
-        if ($type === 'edit') {
-            $category = CategoryTrainer::find($id);
-        } else {
-            $category = new CategoryTrainer();
-        }
-
-        $category->name = $request->input('first_name') . ' ' . $request->input('last_name') . ' ' . $request->input('surname');
-        $category->logo = $validate['img_patch'];
-        $category->phones = json_encode([$request->input('phone')], JSON_THROW_ON_ERROR);
-        $category->email = $request->input('email');
         $category->qualification = $request->input('qualification');
-        $category->address = $request->input('city') . "||" . $request->input('address') . "||" . $request->input('house_number') . "||" . $request->input('apartment_number');
+
         $category->rank = $request->input('rank');
         $category->gov = $request->input('gov');
         $category->save();
@@ -189,31 +162,8 @@ class CategoryJudgeRepository implements CategoryRepositoryInterface
     private function get_value($table, $category_data): array
     {
         $new_data = $table;
+        $this->getDefaultValue($new_data, $category_data, $this->is_default_length);
 
-        $name = explode(' ', $category_data->name ?? '');
-
-        $address = json_decode($category_data->address ?? "");
-        $fool_address = '';
-        if (isset($address->city)) {
-            $fool_address .= 'м. ' . $address->city;
-        }
-        if (isset($address->street)) {
-            $fool_address .= ', ' . $address->street;
-        }
-        if (isset($address->house_number)) {
-            $fool_address .= ' ' . $address->house_number;
-        }
-        if (isset($address->apartment_number)) {
-            $fool_address .= ', кв. ' . $address->apartment_number;
-        }
-
-        $new_data['address']['value'] = $fool_address;
-
-        $new_data['first_name']['value'] = $name[0] ?? '';
-        $new_data['last_name']['value'] = $name[1] ?? '';
-        $new_data['surname']['value'] = $name[2] ?? '';
-        $new_data['phone']['value'] = $category_data->phone ?? "";
-        $new_data['email']['value'] = $category_data->email ?? "";
         $new_data['qualification']['value'] = $category_data->qualification ?? "";
         $new_data['school']['value'] = $category_data->school ?? "";
         $new_data['rank']['value'] = $category_data->rank ?? "";
@@ -222,7 +172,7 @@ class CategoryJudgeRepository implements CategoryRepositoryInterface
         return $new_data;
     }
 
-    private function created_view($table): array
+    private function created_view($table, $id): array
     {
         return [
             [
@@ -252,7 +202,7 @@ class CategoryJudgeRepository implements CategoryRepositoryInterface
                                 ], [
                                     $table['gov']['placeholder'],
                                     $table['gov']['value'] ?? '',
-                                ],  [
+                                ], [
                                     $table['school']['placeholder'],
                                     $table['school']['value'] ?? '',
                                 ],
@@ -309,10 +259,10 @@ class CategoryJudgeRepository implements CategoryRepositoryInterface
         ];
     }
 
-    public function get_data($data): array
+    public function get_data($data, $request = null): array
     {
         $type = $data['type'] ?? '';
-        $category = CategoryTrainer::find($data['id']);
+        $category = $this->table_model::find($data['id']);
         $more_data = [];
 
         if ($category) {
@@ -335,11 +285,16 @@ class CategoryJudgeRepository implements CategoryRepositoryInterface
                 $create = $this->data;
                 break;
             case 'edit_page':
-                $create = $this->get_edit($table, $category);
+                $create = $this->get_edit($table, $data['id']);
+                break;
+            case 'edit':
+                $create = $this->edit($data['id'], $request, $type);
                 break;
             case "preview" :
-                $create = $this->created_view($table);
+                $create = $this->created_view($table, $data['id']);
                 break;
+            default:
+                $create = [];
         }
 
 

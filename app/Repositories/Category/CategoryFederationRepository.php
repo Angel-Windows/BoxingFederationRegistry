@@ -5,6 +5,7 @@ namespace App\Repositories\Category;
 use App\Models\Category\CategoryTrainer;
 use App\Models\Class\BoxFederation;
 use App\Models\Class\ClassType;
+use App\Models\Federation;
 use App\Models\Linking\LinkingMembers;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
 use App\Services\MyAuthService;
@@ -14,34 +15,15 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
 {
     use CategoryUITrait;
 
-    /**
-     * @var null
-     */
+    private $is_default_length = '';
     public $category_type_id;
-    public function __construct()
-    {
-        $this->category_type_id = ClassType::getIdCategory('box_federations');
+    public $table_model = BoxFederation::class;
+    public function __construct(){
+        $this->category_type_id = ClassType::getIdCategory('category_sports_institutions');
+        $this->data = array_merge($this->data, $this->getDefaultArrayData($this->is_default_length));
     }
 
     public $data = [
-        'name' => [
-            'name' => 'name',
-            'tag' => 'input',
-            'size' => 'fool',
-            'placeholder' => 'Назва федерації',
-        ], 'phone' => [
-            'name' => 'phone',
-            'tag' => 'input',
-            'placeholder' => 'Номер телефону',
-            'logo' => 'img/phone.svg'
-        ],
-        'email' => [
-            'name' => 'email',
-            'tag' => 'input',
-            'placeholder' => 'E-mail',
-            'logo' => 'img/mail.svg'
-        ],
-
         'director' => [
             'name' => 'director',
             'tag' => 'input',
@@ -68,67 +50,6 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
             'tag' => 'input',
             'placeholder' => 'Вебсайт',
         ],
-        'address' => [
-            'name' => 'address',
-            'tag' => 'custom-select',
-            'placeholder' => 'Адреса федерації',
-            'autocomplete' => 'street-address',
-            'size' => 'fool',
-            'option' => [
-            ],
-        ],
-        'city' => [
-            'name' => 'city',
-            'tag' => 'select-box',
-            'placeholder' => 'Місто',
-            'size' => 'fool',
-            'option' => [
-                1 => "Київ",
-                2 => "Харків",
-                3 => "Одеса",
-                4 => "Дніпро",
-                5 => "Донецьк",
-                6 => "Запоріжжя",
-                7 => "Львів",
-                8 => "Кривий Ріг",
-                9 => "Миколаїв",
-                10 => "Маріуполь",
-                11 => "Вінниця",
-                12 => "Полтава",
-                13 => "Чернігів",
-                14 => "Черкаси",
-                15 => "Житомир",
-                16 => "Суми",
-                17 => "Рівне",
-                18 => "Кам'янець-Подільський",
-                19 => "Луцьк",
-                20 => "Кременчук",
-            ],
-        ],
-        'street' => [
-            'name' => 'street',
-            'tag' => 'custom-select',
-            'placeholder' => 'Вулиця/провулок/проспект',
-            'autocomplete' => 'street-address',
-            'size' => 'fool',
-            'option' => [
-            ],
-        ],
-        'house_number' => [
-            'name' => 'house_number',
-            'tag' => 'custom-select',
-            'placeholder' => 'Номер будинку',
-            'option' => [
-                ''
-            ],
-        ],
-        'apartment_number' => [
-            'name' => 'apartment_number',
-            'tag' => 'custom-select',
-            'placeholder' => 'Номер квартири',
-            'option' => [
-            ],
-        ],
         'members' => [
             'name' => 'members',
             'tag' => 'custom-select',
@@ -139,53 +60,43 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
         ],
     ];
 
-    private function get_edit($table): array
+    private function get_edit($table, $id): array
     {
         return [
             [
-                'type' => 'table',
-                'data' => [
-                    $table['name'],
-                    $table['director'],
-                    $table['phone'],
-                    $table['email'],
-                    $table['federation'],
-                    $table['edrpou'],
-                    $table['site'],
-                    $table['city'],
-                    $table['street'],
-                    $table['house_number'],
-                    $table['apartment_number'],
-                    $table['members'],
-                ],
+                'type' => '',
+                'data_block' =>
+                    [
+                        [
+                            'type' => 'table',
+                            'data' => [
+                                $table['name'],
+                                $table['director'],
+                                $table['phone'],
+                                $table['email'],
+                                $table['federation'],
+                                $table['edrpou'],
+                                $table['site'],
+                                $table['city'],
+                                $table['street'],
+                                $table['house_number'],
+                                $table['apartment_number'],
+                                $table['members'],
+                            ],
+                        ],
+                    ],
             ],
         ];
     }
 
     public function edit($id, $request, $type): array
     {
-        $validate = self::validate_category($request);
-        if ($validate['error']) {
-            return [
-                'error' => $validate['error']
-            ];
-        }
+        $category = self::validate_category($request, $this->table_model, $type, $id);
 
-        if ($type === 'edit') {
-            $category = CategoryTrainer::find($id);
-        } else {
-            $category = new CategoryTrainer();
-        }
-
-        $category->name = $request->input('first_name') . ' ' . $request->input('last_name') . ' ' . $request->input('surname');
-        $category->logo = $validate['img_patch'];
-        $category->phones = json_encode([$request->input('phone')], JSON_THROW_ON_ERROR);
-        $category->email = $request->input('email');
-        $category->qualification = $request->input('qualification');
-        $category->address = $request->input('city') . "||" . $request->input('address') . "||" . $request->input('house_number') . "||" . $request->input('apartment_number');
-        $category->federation = $request->input('federation');
-        $category->rank = $request->input('rank');
-        $category->gov = $request->input('gov');
+        $category->director = $request->input('director') ?? '';
+        $category->federation = $request->input('federation') ?? '';
+        $category->edrpou = $request->input('edrpou') ?? '';
+        $category->site = $request->input('site') ?? '';
         $category->save();
 
 
@@ -197,28 +108,10 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
     private function get_value($table, $category_data): array
     {
         $new_data = $table;
+        $this->getDefaultValue($new_data, $category_data, $this->is_default_length);
 
-        $new_data['email']['value'] = $category_data->email ?? "";
-
-        $new_data['phone']['value'] = $category_data->phone ?? "";
-
-
-        $address = json_decode($category_data->address ?? "");
-        $fool_address = '';
-        if (isset($address->city)) {
-            $fool_address .= 'м. ' . $address->city;
-        }
-        if (isset($address->street)) {
-            $fool_address .= ', ' . $address->street;
-        }
-        if (isset($address->house_number)) {
-            $fool_address .= ' ' . $address->house_number;
-        }
-        if (isset($address->apartment_number)) {
-            $fool_address .= ', кв. ' . $address->apartment_number;
-        }
         $new_data['director']['value'] = $category_data->director ?? "";
-        $new_data['address']['value'] = $fool_address;
+
         $new_data['federation']['value'] = $category_data->federation ?? "";
 
         $new_data['edrpou']['value'] = $category_data->edrpou ?? "";
@@ -233,14 +126,14 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
         $members_works = LinkingMembers::leftJoin('category_trainers', 'category_trainers.id', 'linking_members.member_id')
             ->where('linking_members.category_id', $id)
             ->where('linking_members.category_type', $this->category_type_id)
-                ->select(
-                    'linking_members.*',
-                    'category_trainers.name',
-                    'category_trainers.phone',
-                    'category_trainers.email',
-                    'category_trainers.logo',
-                )
-                ->get();
+            ->select(
+                'linking_members.*',
+                'category_trainers.name',
+                'category_trainers.phone',
+                'category_trainers.email',
+                'category_trainers.logo',
+            )
+            ->get();
 
         $works = [];
         foreach ($members_works as $member) {
@@ -287,7 +180,7 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
                         'type' => 'todo_table',
                         'button_add' => '',
 
-                            'data' => [
+                        'data' => [
                             'thead' => ['ПІП', '', 'Посада', 'Телефон', 'Пошта'],
                             'body' => $works,
                         ],
@@ -297,10 +190,11 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
         ];
     }
 
-    public function get_data($data): array
+    public function get_data($data, $request = null): array
     {
+
         $type = $data['type'] ?? '';
-        $category = BoxFederation::find($data['id']);
+        $category = $this->table_model::find($data['id']);
         $more_data = [];
 
         if ($category) {
@@ -325,11 +219,16 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
                 $create = $this->data;
                 break;
             case 'edit_page':
-                $create = $this->get_edit($table, $category);
+                $create = $this->get_edit($table, $data['id']);
+                break;
+            case 'edit':
+                $create = $this->edit($data['id'], $request, $type);
                 break;
             case "preview" :
                 $create = $this->created_view($table, $data['id']);
                 break;
+            default:
+                $create = [];
         }
 
 

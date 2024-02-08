@@ -57,7 +57,7 @@ if (!function_exists('randomAddress')) {
             'city' => $faker->city,
             'street' => $faker->streetName,
             'house_number' => random_int(1, 100),
-            'house' => random_int(1, 100),
+            'apartment_number' => random_int(1, 100),
         ]);
     }
 }

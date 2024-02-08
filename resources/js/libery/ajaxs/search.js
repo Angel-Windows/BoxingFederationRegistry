@@ -1,3 +1,5 @@
+import {inputs_input} from "@/components/forms.js";
+
 const modal_wrapper = document.querySelector('.modal_wrapper');
 const modal_content = modal_wrapper.querySelector('.modal_content');
 let search_result_list = null;
@@ -19,6 +21,7 @@ export function modal_open(data, class_name = '') {
             check_code();
             break;
         case "add-form-item":
+            searchNoForm()
             input = modal_wrapper.querySelectorAll('.input');
             functionsArray['inputs_input']('modal_wrapper')
             break;
@@ -29,11 +32,24 @@ export function modal_open(data, class_name = '') {
     }
 }
 
-function search() {
+function search(data = {}) {
     const search_input = document.querySelector('#search_input');
     search_result_list = document.querySelector('#search_result_list');
     search_input.addEventListener('input', (e) => {
         functionsArray['ajax_findPostForm'](e.target, "search_in_class")
+    });
+}
+function searchNoForm(data = {}) {
+    const search_input = document.querySelector('.modal_wrapper .custom-select-input');
+    inputs_input('modal_wrapper', false);
+    search_result_list = document.querySelector('.modal_wrapper .custom-select-options');
+    const url = getAjaxLink("search-in-class-no-form");
+    search_input.addEventListener('input', (e) => {
+        functionsArray['ajax_postNoForm'](url, {
+            'search_value': 'a',
+            'class_types': 3,
+
+        }, 'search_in_class_no_form')
     });
 }
 
@@ -94,6 +110,10 @@ function upload_img() {
 }
 
 export function search_in_class(data) {
+
+    search_result_list.innerHTML = data['data']
+}
+export function search_in_class_no_form(data) {
 
     search_result_list.innerHTML = data['data']
 }

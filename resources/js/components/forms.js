@@ -1,4 +1,4 @@
-export const inputs_input = (parent_class) => {
+export const inputs_input = (parent_class, is_search = true) => {
     let parent = document.querySelector('.' + parent_class);
     if (!parent) parent = document;
     const all_inputs = parent.querySelectorAll('.input')
@@ -21,27 +21,40 @@ export const inputs_input = (parent_class) => {
         let selectInput = item.querySelector('.custom-select-input');
         let selectOptions = item.querySelector('.custom-select-options');
         let optionItems = selectOptions.querySelectorAll('li');
+        let input_value = item.querySelector('.input-value')
+        let old_value = item.querySelector('.old-value')
 
         selectInput.addEventListener('focus', function () {
-            filterOptions(selectInput, selectOptions, optionItems);
+            old_value.value = selectInput.value;
+            if (is_search) {
+                filterOptions(selectInput, selectOptions, optionItems);
+            }
             selectOptions.style.display = 'block';
         });
 
         selectInput.addEventListener('input', function () {
-            filterOptions(selectInput, selectOptions, optionItems);
+            if (is_search) {
+                filterOptions(selectInput, selectOptions, optionItems);
+
+            }
             selectOptions.style.display = 'block';
         });
 
         selectOptions.addEventListener('click', function (e) {
             if (e.target.tagName === 'LI') {
+                input_value.value = e.target.dataset.value
                 selectInput.value = e.target.textContent;
                 selectOptions.style.display = 'none';
+
             }
         });
 
         document.addEventListener('click', function (e) {
             if (!selectInput.contains(e.target) && !selectOptions.contains(e.target)) {
-                selectOptions.style.display = 'none';
+                if (selectOptions.style.display === 'block') {
+                    selectInput.value = old_value.value;
+                    selectOptions.style.display = 'none';
+                }
             }
         });
     })

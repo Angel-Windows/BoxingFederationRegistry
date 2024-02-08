@@ -16,13 +16,12 @@ class LinkingMembersSeeder extends Seeder
     {
         $create = [];
         $link_category = ClassType::whereIsset('linking');
-
         foreach ($link_category as $item) {
             $parent_table = \DB::table($item->link)->get();
             foreach ($parent_table as $item_parent) {
                 foreach (json_decode($item->linking) as $item_link) {
                     $category_type = ClassType::getIdCategory($item_link);
-                    $count_rand = random_int(1, 4);
+                    $count_rand = random_int(10, 40);
                     $table_link = \DB::table($item_link)->inRandomOrder()->limit($count_rand)->get();
 
                     foreach ($table_link as $item_table) {

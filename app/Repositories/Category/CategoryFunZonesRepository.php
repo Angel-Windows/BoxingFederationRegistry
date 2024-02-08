@@ -1,149 +1,72 @@
 <?php
+
 namespace App\Repositories\Category;
+
 use App\Models\Category\CategoryFunZone;
 use App\Models\Category\CategoryTrainer;
+use App\Models\Class\ClassType;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
 use App\Traits\CategoryUITrait;
-use App\Traits\FondyTrait;
 
+/**
+ * @property null $category_type_id
+ */
 class CategoryFunZonesRepository implements CategoryRepositoryInterface
 {
     use CategoryUITrait;
 
+    private $is_default_length = 'fool';
+    public $table_model = CategoryFunZone::class;
+
+    public function __construct()
+    {
+        $this->category_type_id = ClassType::getIdCategory('category_sports_institutions');
+        $this->data = array_merge($this->data, $this->getDefaultArrayData($this->is_default_length));
+    }
+
     private $data = [
-        'last_name' => [
-            'name' => 'last_name',
-            'tag' => 'input',
-            'placeholder' => 'Прізвище',
-        ],
-        'first_name' => [
-            'name' => 'first_name',
-            'tag' => 'input',
-            'placeholder' => 'Імя',
-        ],
-        'surname' => [
-            'name' => 'surname',
-            'tag' => 'input',
-            'placeholder' => 'По батькові',
-        ],
-        'phone' => [
-            'name' => 'phone',
-            'tag' => 'input',
-            'placeholder' => 'Номер телефону',
-            'logo' => 'img/phone.svg'
-        ],
-        'email' => [
+        'birthday' => [
             'name' => 'email',
             'tag' => 'input',
-            'placeholder' => 'E-mail',
-            'logo' => 'img/mail.svg'
+            'placeholder' => 'Дата народження',
         ],
-        'address' => [
-            'name' => 'address',
-            'tag' => 'custom-select',
-            'placeholder' => 'Адреса проживання',
-            'autocomplete' => 'street-address',
-            'size' => 'fool',
-            'option' => [
-            ],
-        ],
-        'city' => [
-            'name' => 'city',
-            'tag' => 'select-box',
-            'placeholder' => 'Місто',
-            'size' => 'fool',
-            'option' => [
-                1 => "Київ",
-                2 => "Харків",
-                3 => "Одеса",
-                4 => "Дніпро",
-                5 => "Донецьк",
-                6 => "Запоріжжя",
-                7 => "Львів",
-                8 => "Кривий Ріг",
-                9 => "Миколаїв",
-                10 => "Маріуполь",
-                11 => "Вінниця",
-                12 => "Полтава",
-                13 => "Чернігів",
-                14 => "Черкаси",
-                15 => "Житомир",
-                16 => "Суми",
-                17 => "Рівне",
-                18 => "Кам'янець-Подільський",
-                19 => "Луцьк",
-                20 => "Кременчук",
-            ],
-        ],
-        'street' => [
-            'name' => 'street',
-            'tag' => 'custom-select',
-            'placeholder' => 'Адреса проживання',
-            'autocomplete' => 'street-address',
-            'size' => 'fool',
-            'option' => [
-            ],
-        ],
-        'house_number' => [
-            'name' => 'house_number',
-            'tag' => 'custom-select',
-            'placeholder' => 'Номер будинку',
-            'option' => [
-                ''
-            ],
-        ],
-        'apartment_number' => [
-            'name' => 'apartment_number',
-            'tag' => 'custom-select',
-            'placeholder' => 'Номер квартири',
-            'option' => [
-            ],
-        ],
-
     ];
 
-    private function get_edit($table): array
+
+    private function get_edit($table, $id): array
     {
         return [
             [
-                'type' => 'table',
-                'data' => [
-                    $table['last_name'],
-                    $table['first_name'],
-                    $table['surname'],
-                    $table['phone'],
-                    $table['email'],
-                    $table['birthday'],
-                    $table['city'],
-                    $table['street'],
-                    $table['house_number'],
-                    $table['apartment_number'],
-                ],
+                'type' => '',
+                'data_block' =>
+                    [
+                        [
+                            'type' => 'table',
+                            'data' => [
+                                $table['last_name'],
+                                $table['first_name'],
+                                $table['surname'],
+                                $table['phone'],
+                                $table['email'],
+                                $table['birthday'],
+                                $table['city'],
+                                $table['street'],
+                                $table['house_number'],
+                                $table['apartment_number'],
+                            ],
+                        ],
+                    ],
             ],
         ];
     }
 
     public function edit($id, $request, $type): array
     {
-        $validate = self::validate_category($request);
-        if ($validate['error']) {
-            return [
-                'error' => $validate['error']
-            ];
-        }
 
-        if ($type === 'edit') {
-            $category = CategoryTrainer::find($id);
-        } else {
-            $category = new CategoryTrainer();
-        }
 
-        $category->name = $request->input('first_name') . ' ' . $request->input('last_name') . ' ' . $request->input('surname');
-        $category->logo = $validate['img_patch'];
-        $category->phones = json_encode([$request->input('phone')], JSON_THROW_ON_ERROR);
-        $category->email = $request->input('email');
+        $category = self::validate_category($request, $this->table_model, $type, $id);
+
         $category->qualification = $request->input('qualification');
-        $category->address = $request->input('city') . "||" . $request->input('address') . "||" . $request->input('house_number') . "||" . $request->input('apartment_number');
         $category->rank = $request->input('rank');
         $category->gov = $request->input('gov');
         $category->save();
@@ -158,27 +81,7 @@ class CategoryFunZonesRepository implements CategoryRepositoryInterface
     {
         $new_data = $table;
 
-        $name = explode(' ', $category_data->name ?? '');
-
-        $address = json_decode($category_data->address ?? "");
-        $fool_address = '';
-        if (isset($address->city)) {
-            $fool_address .= 'м. ' . $address->city;
-        }
-        if (isset($address->street)) {
-            $fool_address .= ', ' . $address->street;
-        }
-        if (isset($address->house_number)) {
-            $fool_address .= ' ' . $address->house_number;
-        }
-        if (isset($address->apartment_number)) {
-            $fool_address .= ', кв. ' . $address->apartment_number;
-        }
-
-        $new_data['address']['value'] = $fool_address;
-
-        $new_data['first_name']['value'] = $name[0] ?? '';
-        $new_data['last_name']['value'] = $name[1] ?? '';
+        $this->getDefaultValue($new_data, $category_data, $this->is_default_length);
         $new_data['surname']['value'] = $name[2] ?? '';
         $new_data['phone']['value'] = $category_data->phone ?? "";
         $new_data['email']['value'] = $category_data->email ?? "";
@@ -188,7 +91,7 @@ class CategoryFunZonesRepository implements CategoryRepositoryInterface
         return $new_data;
     }
 
-    private function created_view($table): array
+    private function created_view($table, $id): array
     {
         return [
             [
@@ -209,7 +112,7 @@ class CategoryFunZonesRepository implements CategoryRepositoryInterface
                                     $table['birthday']['placeholder'],
                                     $table['birthday']['value'] ?? '',
                                 ],
-                                 [
+                                [
                                     $table['address']['placeholder'],
                                     $table['address']['value'] ?? '',
                                 ],
@@ -222,10 +125,10 @@ class CategoryFunZonesRepository implements CategoryRepositoryInterface
         ];
     }
 
-    public function get_data($data): array
+    public function get_data($data, $request = null): array
     {
         $type = $data['type'] ?? '';
-        $category = CategoryFunZone::find($data['id']);
+        $category = $this->table_model::find($data['id']);
         $more_data = [];
 
         if ($category) {
@@ -248,11 +151,16 @@ class CategoryFunZonesRepository implements CategoryRepositoryInterface
                 $create = $this->data;
                 break;
             case 'edit_page':
-                $create = $this->get_edit($table, $category);
+                $create = $this->get_edit($table, $data['id']);
+                break;
+            case 'edit':
+                $create = $this->edit($data['id'], $request, $type);
                 break;
             case "preview" :
-                $create = $this->created_view($table);
+                $create = $this->created_view($table, $data['id']);
                 break;
+            default:
+                $create = [];
         }
 
 

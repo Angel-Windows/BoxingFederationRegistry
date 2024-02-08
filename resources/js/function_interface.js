@@ -3,7 +3,10 @@ import * as  home_scripts from './home_scripts.js';
 import * as  modals_scripts from './components/modal.js';
 import * as forms_script from "./components/forms.js";
 
-
+const checkbox_toggle = (elem) => {
+    const input = elem.querySelector('input');
+    input.checked = elem.classList.contains('delete');
+}
 window.functionsArray = {
     'ajax_post': ajax_scripts.Post,
     'ajax_postNoForm': ajax_scripts.SendPostNoForm,
@@ -17,7 +20,11 @@ window.functionsArray = {
     'open_modal': modals_scripts.open_modal,
 
 
-    'inputs_input':  forms_script.inputs_input,
+    'inputs_input': forms_script.inputs_input,
+
+
+    'checkbox_toggle': checkbox_toggle,
+
 };
 
 window.getAjaxLink = (page) => {

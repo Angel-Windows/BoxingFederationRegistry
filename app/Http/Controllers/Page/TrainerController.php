@@ -32,20 +32,19 @@ class TrainerController extends Controller
             ->with('more_data', $get_data['more_data']);
     }
 
-    public function get_data($class_name, $data = [])
+    public function get_data($class_name, $data = [], $request = null)
     {
 
 //        $get_members = LinkingMembers::where('category_id', $id_category);
 
-
         switch ($class_name) {
             case 'category_sportsmen':
-                $data_info = (new SportsmanFederationRepository())->get_data($data);
+                $data_info = (new SportsmanFederationRepository())->get_data($data, $request);
                 break;
 
 
             case 'category_fun_zones':
-                $data_info = (new CategoryFunZonesRepository())->get_data($data);
+                $data_info = (new CategoryFunZonesRepository())->get_data($data, $request);
                 break;
 
             case 'category_insurances':
@@ -58,16 +57,16 @@ class TrainerController extends Controller
                 $data_info = (new CategoryInstitutionsRepository())->get_data($data, 'school');
                 break;
             case 'category_sports_institutions':
-                $data_info = (new CategorySportsInstitutionsRepository())->get_data($data);
+                $data_info = (new CategorySportsInstitutionsRepository())->get_data($data, $request);
                 break;
             case 'category_judges':
-                $data_info = (new CategoryJudgeRepository())->get_data($data);
+                $data_info = (new CategoryJudgeRepository())->get_data($data, $request);
                 break;
             case 'box_federations':
-                $data_info = (new CategoryFederationRepository())->get_data($data);
+                $data_info = (new CategoryFederationRepository())->get_data($data, $request);
                 break;
             case 'category_trainers':
-                $data_info = (new CategoryTrainerRepository())->get_data($data);
+                $data_info = (new CategoryTrainerRepository())->get_data($data, $request);
                 break;
             case 'category_stores':
                 return response()->view('errors.404', [], 404);
@@ -96,41 +95,10 @@ class TrainerController extends Controller
 
     public function edit($class_name, $id, Request $request)
     {
-        if (!MyAuthService::CheckMiddleware('+380956686191')) {
-            return redirect()->back();
-        }
-        switch ($class_name) {
-            case 'box_federations':
-                $result = (new CategoryFederationRepository())->edit($id, $request);
-                break;
-            case 'category_sportsmen':
-                $result = (new SportsmanFederationRepository())->edit($id, $request);
-                break;
-            case 'category_trainers':
-                $result = (new CategorySportsInstitutionsRepository())->edit($id, $request, 'edit');
-                break;
-            case 'category_judges':
-                $result = (new CategoryJudgeRepository())->edit($id, $request);
-                break;
-            case 'category_insurances':
-                $result = (new CategoryInstitutionsRepository())->edit_page($id, 'insurance');
-                break;
-            case 'category_medicals':
-                $result = (new CategoryInstitutionsRepository())->edit_page($id, 'medical');
-                break;
-            case 'category_schools':
-                $result = (new CategoryInstitutionsRepository())->edit_page($id, 'school');
-                break;
-            case 'category_fun_zones':
-                $result = (new CategoryFunZonesRepository())->edit($id, $request);
-                break;
-            case 'category_stores':
-                return response()->view('errors.505', [], 404);
-            default :
-                return response()->view('errors.404', [], 404);
-        }
-        dump($request->file('photo'));
-//        return redirect()->back();
+        $get_data = $this->get_data($class_name, ['id' => $id, 'type' => 'edit'], $request);
+//        dump($request->file('photo'));
+        return redirect()->back();
+
     }
 
     public function register_category($class_name, $id, Request $request)

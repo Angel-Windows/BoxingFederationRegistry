@@ -19,7 +19,10 @@
     box-sizing: content-box;
     margin: auto;
 }
+.trainer .content-wrapper{
+    padding-bottom: 40px;
 
+}
 .table-auto_fool {
     display: grid;
     grid-template-columns: minmax(333px, auto) 1fr;

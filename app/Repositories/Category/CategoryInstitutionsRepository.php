@@ -6,6 +6,7 @@ use App\Models\Category\CategoryInsurance;
 use App\Models\Category\CategoryMedical;
 use App\Models\Category\CategorySchool;
 use App\Models\Category\CategoryTrainer;
+use App\Models\Class\ClassType;
 use App\Repositories\Interfaces\CategoryInstitutionsRepositoryInterface;
 use App\Traits\CategoryUITrait;
 
@@ -14,25 +15,8 @@ class CategoryInstitutionsRepository implements CategoryInstitutionsRepositoryIn
 {
     use CategoryUITrait;
 
+    private $is_default_length = 'fool';
     private $data = [
-        'name' => [
-            'name' => 'name',
-            'tag' => 'input',
-            'placeholder' => 'Керівник',
-        ],
-
-        'phone' => [
-            'name' => 'phone',
-            'tag' => 'input',
-            'placeholder' => 'Номер телефону',
-            'logo' => 'img/phone.svg'
-        ],
-        'email' => [
-            'name' => 'email',
-            'tag' => 'input',
-            'placeholder' => 'E-mail',
-            'logo' => 'img/mail.svg'
-        ],
         'director' => [
             'name' => 'director',
             'tag' => 'input',
@@ -40,104 +24,50 @@ class CategoryInstitutionsRepository implements CategoryInstitutionsRepositoryIn
             'option' => [
             ],
         ],
-        'city' => [
-            'name' => 'city',
-            'tag' => 'select-box',
-            'placeholder' => 'Місто',
-            'size' => 'fool',
-            'option' => [
-                1 => "Київ",
-                2 => "Харків",
-                3 => "Одеса",
-                4 => "Дніпро",
-                5 => "Донецьк",
-                6 => "Запоріжжя",
-                7 => "Львів",
-                8 => "Кривий Ріг",
-                9 => "Миколаїв",
-                10 => "Маріуполь",
-                11 => "Вінниця",
-                12 => "Полтава",
-                13 => "Чернігів",
-                14 => "Черкаси",
-                15 => "Житомир",
-                16 => "Суми",
-                17 => "Рівне",
-                18 => "Кам'янець-Подільський",
-                19 => "Луцьк",
-                20 => "Кременчук",
-            ],
-        ],
-        'address' => [
-            'name' => 'address',
-            'tag' => 'custom-select',
-            'placeholder' => 'Адреса проживання',
-            'autocomplete' => 'street-address',
-            'size' => 'fool',
-            'option' => [
-            ],
-        ],
-        'house_number' => [
-            'name' => 'house_number',
-            'tag' => 'custom-select',
-            'placeholder' => 'Номер будинку',
-            'option' => [
-                ''
-            ],
-        ],
-        'apartment_number' => [
-            'name' => 'apartment_number',
-            'tag' => 'custom-select',
-            'placeholder' => 'Номер квартири',
-            'option' => [
-            ],
-        ],
     ];
 
-    private function get_edit($table): array
+     public $table_model = CategoryInsurance::class;
+
+    public function __construct(){
+        $this->category_type_id = ClassType::getIdCategory('category_sports_institutions');
+        $this->data = array_merge($this->data, $this->getDefaultArrayData($this->is_default_length));
+    }
+
+    private function get_edit($table, $id): array
     {
         return [
             [
-                'type' => 'table',
-                'data' => [
-                    $table['last_name'],
-                    $table['first_name'],
-                    $table['surname'],
-                    $table['phone'],
-                    $table['email'],
-                    $table['qualification'],
-                    $table['city'],
-                    $table['address'],
-                    $table['house_number'],
-                    $table['apartment_number'],
-                    $table['rank'],
-                    $table['gov'],
-                ],
+                'type' => '',
+                'data_block' =>
+                    [
+                        [
+                            'type' => 'table',
+                            'data' => [
+                                $table['last_name'],
+                                $table['first_name'],
+                                $table['surname'],
+                                $table['phone'],
+                                $table['email'],
+                                $table['qualification'],
+                                $table['city'],
+                                $table['address'],
+                                $table['house_number'],
+                                $table['apartment_number'],
+                                $table['rank'],
+                                $table['gov'],
+                            ],
+                        ],
+                    ],
             ],
         ];
     }
 
     public function edit($id, $request, $type): array
     {
-        $validate = self::validate_category($request);
-        if ($validate['error']) {
-            return [
-                'error' => $validate['error']
-            ];
-        }
 
-        if ($type === 'edit') {
-            $category = CategoryTrainer::find($id);
-        } else {
-            $category = new CategoryTrainer();
-        }
+        $category = self::validate_category($request, $this->table_model, $type, $id);
 
-        $category->name = $request->input('first_name') . ' ' . $request->input('last_name') . ' ' . $request->input('surname');
-        $category->logo = $validate['img_patch'];
-        $category->phones = json_encode([$request->input('phone')], JSON_THROW_ON_ERROR);
-        $category->email = $request->input('email');
         $category->qualification = $request->input('qualification');
-        $category->address = $request->input('city') . "||" . $request->input('address') . "||" . $request->input('house_number') . "||" . $request->input('apartment_number');
         $category->rank = $request->input('rank');
         $category->gov = $request->input('gov');
         $category->save();
@@ -152,33 +82,13 @@ class CategoryInstitutionsRepository implements CategoryInstitutionsRepositoryIn
     {
         $new_data = $table;
 
-        $name = explode(' ', $category_data->name ?? '');
-
-        $address = json_decode($category_data->address ?? "");
-        $fool_address = '';
-        if (isset($address->city)) {
-            $fool_address .= 'м. ' . $address->city;
-        }
-        if (isset($address->street)) {
-            $fool_address .= ', ' . $address->street;
-        }
-        if (isset($address->house_number)) {
-            $fool_address .= ' ' . $address->house_number;
-        }
-        if (isset($address->apartment_number)) {
-            $fool_address .= ', кв. ' . $address->apartment_number;
-        }
-
-        $new_data['address']['value'] = $fool_address;
-
-        $new_data['phone']['value'] = $category_data->phone ?? "";
-        $new_data['email']['value'] = $category_data->email ?? "";
+        $this->getDefaultValue($new_data, $category_data, $this->is_default_length);
         $new_data['director']['value'] = $category_data->director ?? "";
 
         return $new_data;
     }
 
-    private function created_view($table): array
+    private function created_view($table, $id): array
     {
         return [
             [
@@ -214,7 +124,7 @@ class CategoryInstitutionsRepository implements CategoryInstitutionsRepositoryIn
     public function get_data($data, $db_name): array
     {
         $type = $data['type'] ?? '';
-        switch ($db_name){
+        switch ($db_name) {
             case 'insurance':
                 $category = CategoryInsurance::find($data['id']);
                 break;
@@ -248,11 +158,16 @@ class CategoryInstitutionsRepository implements CategoryInstitutionsRepositoryIn
                 $create = $this->data;
                 break;
             case 'edit_page':
-                $create = $this->get_edit($table, $category);
+                $create = $this->get_edit($table, $data['id']);
+                break;
+            case 'edit':
+                $create = $this->edit($data['id'], $request, $type);
                 break;
             case "preview" :
-                $create = $this->created_view($table);
+                $create = $this->created_view($table, $data['id']);
                 break;
+            default:
+                $create = [];
         }
 
 

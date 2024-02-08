@@ -1,9 +1,11 @@
 <form method="post"
-      action="{{route('page.class.' . $route_type, ['class_name'=>'category_trainers', 'id'=>1])}}"
+      action="{{route('page.class.edit', ['class_name'=>$category_name, 'id'=>$id])}}"
+{{--      action="{{route('page.class.' . $route_type, ['class_name'=>$category_name, 'id'=>$id])}}"--}}
       id="form_edit"
       enctype="multipart/form-data"
-
 >
+
+    <button class="button">subm</button>
     @csrf
     {{--    {{ $slot }}--}}
     <section class="table-auto_fool edit ">
@@ -20,6 +22,7 @@
                             <div
                                 class="button"
                                 onclick="functionsArray['open_modal']('add-form-item', {'class_types': 1})"
+                                {{--                                onclick="functionsArray['open_modal']('add-form-item', {'class_types': 1})"--}}
                             >
                                 <span>+</span>
                                 <span>Додати</span>
@@ -53,20 +56,14 @@
                                     </label>
                                     @break
                                 @case('custom-select')
-                                    <div class="custom-select  {{$class}}">
-                                        <label class="label type__text  {{$class}}">
-                                            <span class="unselectable">{{$item['placeholder']}}</span>
-                                            <input type="text"
-                                                   name="{{$item['name']??''}}"
-                                                   value="{{$value}}"
-                                                   class="custom-select-input input">
-                                        </label>
-                                        <ul class="custom-select-options">
-                                            @foreach($item['option'] as $item)
-                                                <li>{{$item}}</li>
-                                            @endforeach
-                                        </ul>
-                                    </div>
+                                    @include('components.forms.custom-select',
+                                        [
+                                            'class_name'=> $class,
+                                            'placeholder'=>$item['placeholder'],
+                                            'value'=>$value,
+                                            'name'=>$item['name'],
+                                            'option'=>$item['option']
+                                        ])
                                     @break
                                 @case('select-box')
                                     <div class="select-box  {{$class}}">
@@ -95,8 +92,8 @@
                                                 </div>
 
                                                 <label
-                                                    onclick="functionsArray['toggle_parent_active'](this, 'label', 'delete')">
-                                                    <input type="checkbox" name="{{$item['name']}}"
+                                                    onclick="functionsArray['toggle_parent_active'](this, 'label', 'delete', 'checkbox_toggle')">
+                                                    <input type="checkbox" checked name="{{$item['name']}}[]"
                                                            value="{{$item_data['value']}}">
                                                 </label>
                                             </div>

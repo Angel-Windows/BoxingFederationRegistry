@@ -18,10 +18,11 @@ export function SendPostNoForm(url, data = [], function_name = "") {
     })
         .then(response => response.json())
         .then(data => {
-            if (data.log){
+            if (data.log) {
                 console.log(data.log)
             }
-            functionsArray[function_name](data);
+            if (function_name)
+                functionsArray[function_name](data);
             return data;
         })
         .catch(error => {
@@ -36,7 +37,7 @@ export function Post(form, function_name = "") {
 
     getResource(url, formData)
         .then(data => {
-            if (data.log){
+            if (data.log) {
                 console.log(data.log)
             }
             functionsArray[function_name](data);
@@ -74,7 +75,7 @@ export const FindPostForm = (element, function_name = "") => {
     Post(parentElement, function_name)
 }
 export const PostFormFind = (element, function_name = "") => {
-   const parentElement = document.querySelector('#' + element)
+    const parentElement = document.querySelector('#' + element)
     Post(parentElement, function_name)
 }
 
