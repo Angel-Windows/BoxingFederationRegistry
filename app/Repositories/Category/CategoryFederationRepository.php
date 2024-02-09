@@ -10,54 +10,27 @@ use App\Models\Linking\LinkingMembers;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
 use App\Services\MyAuthService;
 use App\Traits\CategoryUITrait;
+use App\Traits\DataTypeTrait;
 
 class CategoryFederationRepository implements CategoryRepositoryInterface
 {
+    use DataTypeTrait;
     use CategoryUITrait;
 
     private $is_default_length = '';
     public $category_type_id;
     public $table_model = BoxFederation::class;
-    public function __construct(){
+    public $data;
+
+    public function __construct()
+    {
         $this->category_type_id = ClassType::getIdCategory('category_sports_institutions');
-        $this->data = array_merge($this->data, $this->getDefaultArrayData($this->is_default_length));
+        $this->data = $this->getDefaultArrayData($this->is_default_length, $this->data_inputs);
     }
 
-    public $data = [
-        'director' => [
-            'name' => 'director',
-            'tag' => 'input',
-            'placeholder' => 'Президент',
-        ],
-        'edrpou' => [
-            'name' => 'edrpou',
-            'tag' => 'input',
-            'placeholder' => 'Код за ЄДРПОУ',
-        ],
-        'federation' => [
-            'name' => 'federation',
-            'tag' => 'custom-select',
-            'placeholder' => 'Підпорядковані федерації',
 
-            'option' => [
-                'box' => 'Бокс',
-                'school-box' => 'Школа бокса',
-                'yoga' => 'Йога',
-            ],
-        ],
-        'site' => [
-            'name' => 'site',
-            'tag' => 'input',
-            'placeholder' => 'Вебсайт',
-        ],
-        'members' => [
-            'name' => 'members',
-            'tag' => 'custom-select',
-            'size' => 'fool',
-            'placeholder' => 'Учасники федерації',
-            'option' => [
-            ],
-        ],
+    private $data_inputs = [
+
     ];
 
     private function get_edit($table, $id): array
@@ -110,12 +83,10 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
         $new_data = $table;
         $this->getDefaultValue($new_data, $category_data, $this->is_default_length);
 
-        $new_data['director']['value'] = $category_data->director ?? "";
+        $this->GetValueInputs($category_data->director, 'director', $new_data);
+        $this->GetValueInputs($category_data->federation, 'federation', $new_data);
+        $this->GetValueInputs($category_data->site, 'site', $new_data);
 
-        $new_data['federation']['value'] = $category_data->federation ?? "";
-
-        $new_data['edrpou']['value'] = $category_data->edrpou ?? "";
-        $new_data['site']['value'] = $category_data->site ?? "";
 
         return $new_data;
     }
@@ -155,19 +126,19 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
                             'body' => [
                                 [
                                     $table['director']['placeholder'],
-                                    $table['director']['value'] ?? '',
+                                    $table['director']['text'] ?? '',
                                 ], [
                                     $table['address']['placeholder'],
-                                    $table['address']['value'] ?? '',
+                                    $table['address']['text'] ?? '',
                                 ], [
                                     $table['federation']['placeholder'],
-                                    $table['federation']['value'] ?? '',
+                                    $table['federation']['text'] ?? '',
                                 ], [
                                     $table['edrpou']['placeholder'],
-                                    $table['edrpou']['value'] ?? '',
+                                    $table['edrpou']['text'] ?? '',
                                 ], [
                                     $table['site']['placeholder'],
-                                    $table['site']['value'] ?? '',
+                                    $table['site']['text'] ?? '',
                                 ],
                             ],
                         ],

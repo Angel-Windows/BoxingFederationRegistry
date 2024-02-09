@@ -3,106 +3,40 @@
 namespace App\Repositories\Category;
 
 use App\Http\Controllers\Page\TrainerController;
+use App\Models\Category\CategorySchool;
 use App\Models\Category\CategoryTrainer;
 use App\Models\Class\BoxFederation;
 use App\Models\Class\ClassType;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
 use App\Traits\CategoryUITrait;
+use App\Traits\DataTypeTrait;
 
 /**
  * @property null $category_type_id
  */
 class CategoryTrainerRepository implements CategoryRepositoryInterface
 {
+    use DataTypeTrait;
     use CategoryUITrait;
-
 
     private $is_default_length = 'fool';
     public $table_model = CategoryTrainer::class;
-
+    private $data;
     public function __construct()
     {
         $this->category_type_id = ClassType::getIdCategory('category_sports_institutions');
-        $this->data = array_merge($this->data, $this->getDefaultArrayData($this->is_default_length));
+        $this->data = $this->getDefaultArrayData($this->is_default_length, $this->data_inputs);
     }
+    private $data_inputs = [
 
-    private $data = [
-        'qualification' => [
-            'name' => 'qualification',
-            'tag' => 'select-box',
-            'placeholder' => 'Кваліфікація',
-            'option' => [
-                'Заслужений тренер України',
-                'Заслужений майстер спорту України',
-                'Майстер спорту України міжнародного класу',
-                'Майстер спорту України',
-                'Кандидат у майстри спорту України',
-                'Перший розряд',
-                'Другий розряд',
-                'Третій розряд',
-                'Перший юнацький розряд',
-                'Другий юнацький розряд',
-                'Третій юнацький розряд'
-            ]
-            ,
-        ],
-        'federation' => [
-            'name' => 'federation',
-            'tag' => 'custom-select',
-            'placeholder' => 'Моя федерація',
-            'size' => 'fool',
-            'option' => [
-                'box' => 'Бокс',
-                'school-box' => 'Школа бокса',
-                'yoga' => 'Йога',
-            ],
-        ],
-        'school' => [
-            'name' => 'school',
-            'tag' => 'input',
-            'placeholder' => 'Мої навчальні заклади',
-            'size' => 'fool',
-            'option' => [
-            ],
-        ],
-        'sportsmen' => [
-            'name' => 'sportsmen',
-            'tag' => 'input',
-            'placeholder' => 'Мої спортсмени',
-            'size' => 'fool',
-        ],
-        'rank' => [
-            'name' => 'rank',
-            'tag' => 'select-box',
-            'placeholder' => 'Державні, почесні звання, спортивні звання та розряди',
-            'size' => 'fool',
-            'class' => ' fool',
-            'option' => [
-                'Заслужений тренер України',
-                'Заслужений майстер спорту України',
-                'Майстер спорту України міжнародного класу',
-                'Майстер спорту України',
-                'Кандидат у майстри спорту України',
-                'Перший розряд, Другий розряд',
-                'Третій розряд',
-                'Перший юнацький розряд',
-                'Другий юнацький розряд',
-                'Третій юнацький розряд',
-            ],
-        ],
-        'gov' => [
-            'name' => 'gov',
-            'class' => ' fool',
-            'tag' => 'no-active',
-            'placeholder' => 'Державні заохочення',
-            'size' => 'fool',
-        ]
     ];
+
 
 
     private function get_edit($table, $id): array
     {
         $table['federation']['option'] = BoxFederation::pluck('name', 'id');
+
 
         return [
             [
@@ -167,6 +101,7 @@ class CategoryTrainerRepository implements CategoryRepositoryInterface
 
     private function created_view($table, $id): array
     {
+
         return [
             [
                 'title' => null,
@@ -184,25 +119,25 @@ class CategoryTrainerRepository implements CategoryRepositoryInterface
                             'body' => [
                                 [
                                     $table['qualification']['placeholder'],
-                                    $table['qualification']['value'] ?? '',
+                                    $table['qualification']['text'] ?? '',
                                 ], [
                                     $table['federation']['placeholder'],
-                                    $table['federation']['value'] ?? '',
+                                    $table['federation']['text'] ?? '',
                                 ], [
                                     $table['address']['placeholder'],
-                                    $table['address']['value'] ?? '',
+                                    $table['address']['text'] ?? '',
                                 ], [
                                     $table['city']['placeholder'],
                                     $table['city']['text'] ?? '',
                                 ], [
                                     $table['rank']['placeholder'],
-                                    $table['rank']['value'] ?? '',
+                                    $table['rank']['text'] ?? '',
                                 ], [
                                     $table['gov']['placeholder'],
-                                    $table['gov']['value'] ?? '',
+                                    $table['gov']['text'] ?? '',
                                 ], [
                                     $table['school']['placeholder'],
-                                    $table['school']['value'] ?? '',
+                                    $table['school']['text'] ?? '',
                                 ], [
                                     $table['sportsmen']['placeholder'],
                                     'asdf, asdf,acvzfv, sdfgsdfht, adaf cxvzrg',

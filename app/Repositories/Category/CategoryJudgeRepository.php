@@ -7,17 +7,22 @@ use App\Models\Category\CategoryTrainer;
 use App\Models\Class\ClassType;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
 use App\Traits\CategoryUITrait;
+use App\Traits\DataTypeTrait;
 use App\Traits\FondyTrait;
 
 class CategoryJudgeRepository implements CategoryRepositoryInterface
 {
+    use DataTypeTrait;
     use CategoryUITrait;
     private $is_default_length = 'fool';
     public $table_model = CategoryJudge::class;
     public function __construct(){
         $this->category_type_id = ClassType::getIdCategory('category_sports_institutions');
-        $this->data = array_merge($this->data, $this->getDefaultArrayData($this->is_default_length));
+        $this->data = $this->getDefaultArrayData($this->is_default_length, $this->data_inputs);
     }
+    private $data_inputs = [
+
+    ];
     private $data = [
 
         'qualification' => [
@@ -152,10 +157,10 @@ class CategoryJudgeRepository implements CategoryRepositoryInterface
         $new_data = $table;
         $this->getDefaultValue($new_data, $category_data, $this->is_default_length);
 
-        $new_data['qualification']['value'] = $category_data->qualification ?? "";
-        $new_data['school']['value'] = $category_data->school ?? "";
-        $new_data['rank']['value'] = $category_data->rank ?? "";
-        $new_data['gov']['value'] = $category_data->gov ?? "";
+        $this->GetValueInputs($category_data->qualification, 'qualification', $new_data);
+        $this->GetValueInputs($category_data->school, 'school', $new_data);
+        $this->GetValueInputs($category_data->rank, 'rank', $new_data);
+        $this->GetValueInputs($category_data->gov, 'gov', $new_data);
 
         return $new_data;
     }
@@ -179,20 +184,20 @@ class CategoryJudgeRepository implements CategoryRepositoryInterface
                             'body' => [
                                 [
                                     $table['address']['placeholder'],
-                                    $table['address']['value'] ?? '',
+                                    $table['address']['text'] ?? '',
                                 ],
                                 [
                                     $table['qualification']['placeholder'],
-                                    $table['qualification']['value'] ?? '',
+                                    $table['qualification']['text'] ?? '',
                                 ], [
                                     $table['rank']['placeholder'],
-                                    $table['rank']['value'] ?? '',
+                                    $table['rank']['text'] ?? '',
                                 ], [
                                     $table['gov']['placeholder'],
-                                    $table['gov']['value'] ?? '',
+                                    $table['gov']['text'] ?? '',
                                 ], [
                                     $table['school']['placeholder'],
-                                    $table['school']['value'] ?? '',
+                                    $table['school']['text'] ?? '',
                                 ],
                             ],
                         ],

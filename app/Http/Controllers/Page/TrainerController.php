@@ -15,6 +15,7 @@ use App\Repositories\Category\CategoryTrainerRepository;
 use App\Repositories\Category\SportsmanFederationRepository;
 use App\Services\MyAuthService;
 use App\Traits\CategoryUITrait;
+use App\Traits\DataTypeTrait;
 use App\Traits\FondyTrait;
 use Illuminate\Http\Request;
 
@@ -22,6 +23,7 @@ use Illuminate\Http\Request;
 class TrainerController extends Controller
 {
     use FondyTrait;
+    use DataTypeTrait;
     use CategoryUITrait;
 
     public function class_page($class_name, $id)

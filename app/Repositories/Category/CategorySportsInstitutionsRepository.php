@@ -9,72 +9,27 @@ use App\Models\Class\ClassType;
 use App\Models\Linking\LinkingMembers;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
 use App\Traits\CategoryUITrait;
+use App\Traits\DataTypeTrait;
 
 class CategorySportsInstitutionsRepository implements CategoryRepositoryInterface
 {
+    use DataTypeTrait;
     use CategoryUITrait;
+
     private $is_default_length = '';
     public $category_type_id;
-    private $data = [
-        'type' => [
-            'name' => 'type',
-            'tag' => 'select-box',
-            'placeholder' => 'Тип закладу',
-            'option' => [
-                'Спеціалізована',
-                'Олімпійська ',
-                'Параолімпійська',
-                'Середня загальноосвітня школа-інтернат/ліцей-інтернат спортивного профілю',
-                'Училище спортивного профілю  ',
-                'Спортивний ліцей',
-                'Професійний коледж (коледж) спортивного профілю',
-                'Фаховий коледж',
+    public $table_model = CategorySportsInstitutions::class;
+    private $data;
 
-            ],
-        ],
-        'category' => [
-            'name' => 'category',
-            'tag' => 'select-box',
-            'placeholder' => 'Категорія',
-            'option' => [
-                'Дитячо-юнацька спортивна школа',
-                'Спеціалізована дитячо-юнацька спортивна школа олімпійського резерву',
-                'Обласний центр олімпійської підготовки',
-                'Центр олімпійської підготовки',
-                'Школа вищої спортивної майстерності',
-                'Спортивний клуб',
+    public function __construct()
+    {
+        $this->category_type_id = ClassType::getIdCategory('category_sports_institutions');
+        $this->data = $this->getDefaultArrayData($this->is_default_length, $this->data_inputs);
+    }
 
-            ],
-        ],
-        'edrpou' => [
-            'name' => 'edrpou',
-            'tag' => 'input',
-            'placeholder' => 'Код за ЄДРПОУ',
-        ],
-        'director' => [
-            'name' => 'director',
-            'tag' => 'input',
-            'placeholder' => 'Директор',
-        ],
-        'site' => [
-            'name' => 'site',
-            'tag' => 'input',
-            'placeholder' => 'Веб сайт',
-        ],
-        'members' => [
-            'name' => 'members',
-            'tag' => 'checkbox-list',
-            'placeholder' => 'Працівники',
-        ],
+    private $data_inputs = [
 
     ];
-
-     public $table_model = CategorySportsInstitutions::class;
-
-    public function __construct(){
-        $this->category_type_id = ClassType::getIdCategory('category_sports_institutions');
-        $this->data = array_merge($this->data, $this->getDefaultArrayData($this->is_default_length));
-    }
 
 
     private function get_edit($table, $id): array
@@ -159,16 +114,13 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
     private function get_value($table, $category_data): array
     {
         $new_data = $table;
-
         $this->getDefaultValue($new_data, $category_data, $this->is_default_length);
 
-
-        $new_data['category']['value'] = $category_data->category ?? "";
-        $new_data['type']['value'] = $category_data->type ?? "";
-        $new_data['edrpou']['value'] = $category_data->edrpou ?? "";
-        $new_data['director']['value'] = $category_data->director ?? "";
-        $new_data['site']['value'] = $category_data->site ?? "";
-
+        $this->GetValueInputs($category_data->category, 'category', $new_data);
+        $this->GetValueInputs($category_data->type, 'type', $new_data);
+        $this->GetValueInputs($category_data->edrpou, 'edrpou', $new_data);
+        $this->GetValueInputs($category_data->director, 'director', $new_data);
+        $this->GetValueInputs($category_data->site, 'site', $new_data);
 
         return $new_data;
     }
@@ -188,14 +140,9 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
             )
             ->get();
         $sportsmens_data = CategorySportsman::leftJoin('category_sports_institutions', 'category_sports_institutions.id', 'category_sportsmen.id')
-//            ->whereNull('linking_members.date_end_at')
             ->where('category_sportsmen.category_sports_institutions', $id)
             ->select(
                 'category_sportsmen.*',
-//                'category_trainers.name',
-//                'category_sportsmen.phone',
-//                'category_sportsmen.email',
-//                'category_sportsmen.logo',
             )
             ->get();
         $works = [];
@@ -205,7 +152,7 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
 
         $sportsmens = [];
         foreach ($sportsmens_data as $sportsmen) {
-            $sportsmens[] = [$sportsmen->logo, $sportsmen->name,$sportsmen->phone, $sportsmen->email];
+            $sportsmens[] = [$sportsmen->logo, $sportsmen->name, $sportsmen->phone, $sportsmen->email];
         }
         return [
             [
@@ -224,22 +171,22 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
                             'body' => [
                                 [
                                     $table['address']['placeholder'],
-                                    $table['address']['value'] ?? '',
+                                    $table['address']['text'] ?? '',
                                 ], [
                                     $table['type']['placeholder'],
-                                    $table['type']['value'] ?? '',
+                                    $table['type']['text'] ?? '',
                                 ], [
                                     $table['category']['placeholder'],
-                                    $table['category']['value'] ?? '',
+                                    $table['category']['text'] ?? '',
                                 ], [
                                     $table['edrpou']['placeholder'],
-                                    $table['edrpou']['value'] ?? '',
+                                    $table['edrpou']['text'] ?? '',
                                 ], [
                                     $table['director']['placeholder'],
-                                    $table['director']['value'] ?? '',
+                                    $table['director']['text'] ?? '',
                                 ], [
                                     $table['site']['placeholder'],
-                                    $table['site']['value'] ?? '',
+                                    $table['site']['text'] ?? '',
                                 ],
                             ],
                         ],
@@ -256,13 +203,13 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
                         ],
                     ],
                 ],
-            ],[
+            ], [
                 'title' => 'Спортсмени',
                 'data_wrapper' => [
                     [
                         'type' => 'todo_table',
                         'data' => [
-                            'thead' => ['ПІП','', 'Телефон', 'Пошта'],
+                            'thead' => ['ПІП', '', 'Телефон', 'Пошта'],
                             'body' => $sportsmens,
                         ],
                     ],

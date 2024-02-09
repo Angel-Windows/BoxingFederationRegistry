@@ -9,12 +9,13 @@ use App\Models\Category\CategoryTrainer;
 use App\Models\Class\ClassType;
 use App\Repositories\Interfaces\CategoryInstitutionsRepositoryInterface;
 use App\Traits\CategoryUITrait;
+use App\Traits\DataTypeTrait;
 
 
 class CategoryInstitutionsRepository implements CategoryInstitutionsRepositoryInterface
 {
+    use DataTypeTrait;
     use CategoryUITrait;
-
     private $is_default_length = 'fool';
     private $data = [
         'director' => [
@@ -30,9 +31,11 @@ class CategoryInstitutionsRepository implements CategoryInstitutionsRepositoryIn
 
     public function __construct(){
         $this->category_type_id = ClassType::getIdCategory('category_sports_institutions');
-        $this->data = array_merge($this->data, $this->getDefaultArrayData($this->is_default_length));
+        $this->data = $this->getDefaultArrayData($this->is_default_length, $this->data_inputs);
     }
+    private $data_inputs = [
 
+    ];
     private function get_edit($table, $id): array
     {
         return [
@@ -83,7 +86,9 @@ class CategoryInstitutionsRepository implements CategoryInstitutionsRepositoryIn
         $new_data = $table;
 
         $this->getDefaultValue($new_data, $category_data, $this->is_default_length);
-        $new_data['director']['value'] = $category_data->director ?? "";
+
+        $this->GetValueInputs($category_data->director, 'director', $new_data);
+
 
         return $new_data;
     }
@@ -107,11 +112,11 @@ class CategoryInstitutionsRepository implements CategoryInstitutionsRepositoryIn
                             'body' => [
                                 [
                                     $table['director']['placeholder'],
-                                    $table['director']['value'] ?? '',
+                                    $table['director']['text'] ?? '',
                                 ],
                                 [
                                     $table['address']['placeholder'],
-                                    $table['address']['value'] ?? '',
+                                    $table['address']['text'] ?? '',
                                 ],
                             ],
                         ],

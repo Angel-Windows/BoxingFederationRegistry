@@ -46,7 +46,11 @@
 
                             @php
                                 $class = '';
+                                $class .= $item['class'] ?? "";
+                                $class .= " ";
                                 $class .=  $item['size'] ?? "";
+                                $class .= " ";
+
                                 $value = "";
 
                                 if (isset($item['value']) &&  ($item['value'] || $item['value'] == 0) ){
@@ -69,7 +73,7 @@
                                     </label>
                                     @break
                                 @case('no-active')
-                                    <label class="label type__text   {{$item['class']}} no-active">
+                                    <label class="label type__text   {{$class}} no-active">
                                         <span class="unselectable">{{$item['placeholder']}}</span>
                                         <input class="" placeholder="" name="{{$item['name']}}"
                                                type="{{$type}}" value="">
@@ -83,11 +87,11 @@
                                             'value'=>$value,
                                             'text'=>$item['text'] ?? '',
                                             'name'=>$item['name'],
-                                            'option'=>$item['option']
+                                            'option'=>$item['option'] ?? []
                                         ])
                                     @break
                                 @case('select-box')
-                                    <div class="select-box   {{$item['class']??''}}">
+                                    <div class="select-box   {{$class}}">
                                         <label class="label type__text hovered  {{$class}}">
 {{--                                            @foreach($item['option'] as $key_opt=>$item_opt)--}}
 {{--                                                @if(($item['name'] ?? '') == 'rank')@dd($item['value'] ?? '') @endif--}}

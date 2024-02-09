@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Component;
 use App\Http\Controllers\Controller;
 use App\Models\Class\ClassType;
 use App\Traits\CategoryUITrait;
+use App\Traits\DataTypeTrait;
 use App\View\Components\modal\CategoryRegisterComponent;
 use App\View\Components\modal\CheckCodeComponent;
 use App\View\Components\modal\ModalNofFoundComponent;

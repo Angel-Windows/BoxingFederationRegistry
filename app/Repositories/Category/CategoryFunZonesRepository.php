@@ -7,23 +7,26 @@ use App\Models\Category\CategoryTrainer;
 use App\Models\Class\ClassType;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
 use App\Traits\CategoryUITrait;
+use App\Traits\DataTypeTrait;
 
 /**
  * @property null $category_type_id
  */
 class CategoryFunZonesRepository implements CategoryRepositoryInterface
 {
+    use DataTypeTrait;
     use CategoryUITrait;
-
     private $is_default_length = 'fool';
     public $table_model = CategoryFunZone::class;
 
     public function __construct()
     {
         $this->category_type_id = ClassType::getIdCategory('category_sports_institutions');
-        $this->data = array_merge($this->data, $this->getDefaultArrayData($this->is_default_length));
+        $this->data = $this->getDefaultArrayData($this->is_default_length, $this->data_inputs);
     }
+    private $data_inputs = [
 
+    ];
     private $data = [
         'birthday' => [
             'name' => 'email',
@@ -82,10 +85,9 @@ class CategoryFunZonesRepository implements CategoryRepositoryInterface
         $new_data = $table;
 
         $this->getDefaultValue($new_data, $category_data, $this->is_default_length);
-        $new_data['surname']['value'] = $name[2] ?? '';
-        $new_data['phone']['value'] = $category_data->phone ?? "";
-        $new_data['email']['value'] = $category_data->email ?? "";
-        $new_data['birthday']['value'] = $category_data->birthday ?? "";
+
+        $this->GetValueInputs($category_data->birthday, 'birthday', $new_data);
+
 
 
         return $new_data;
@@ -110,11 +112,11 @@ class CategoryFunZonesRepository implements CategoryRepositoryInterface
                             'body' => [
                                 [
                                     $table['birthday']['placeholder'],
-                                    $table['birthday']['value'] ?? '',
+                                    $table['birthday']['text'] ?? '',
                                 ],
                                 [
                                     $table['address']['placeholder'],
-                                    $table['address']['value'] ?? '',
+                                    $table['address']['text'] ?? '',
                                 ],
                             ],
                         ],

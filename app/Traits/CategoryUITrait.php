@@ -17,29 +17,7 @@ use Faker\Factory;
 
 trait CategoryUITrait
 {
-    private $city_arr = [
-        "Київ",
-        "Харків",
-        "Одеса",
-        "Дніпро",
-        "Донецьк",
-        "Запоріжжя",
-        "Львів",
-        "Кривий Ріг",
-        "Миколаїв",
-        "Маріуполь",
-        "Вінниця",
-        "Полтава",
-        "Чернігів",
-        "Черкаси",
-        "Житомир",
-        "Суми",
-        "Рівне",
-        "Кам'янець-Подільський",
-        "Луцьк",
-        "Кременчук",
-    ];
-
+    use DataTypeTrait;
     public static function getButtons(array $arr): array
     {
         $data_phones = [];
@@ -76,104 +54,12 @@ trait CategoryUITrait
         return $data_phones;
     }
 
-    public function getDefaultArrayData($name_type = ''): array
-    {
-        $return = [];
-        $return = array_merge($return, [
-            'address' => [
-                'name' => 'address',
-                'tag' => 'input',
-                'placeholder' => 'Адреса проживання',
-                'autocomplete' => 'street-address',
-                'size' => 'fool',
 
-            ],
-            'city' => [
-                'name' => 'city',
-                'tag' => 'select-box',
-                'placeholder' => 'Місто',
-                'size' => 'fool',
-                'option' => $this->city_arr,
-
-            ],
-            'street' => [
-                'name' => 'street',
-                'tag' => 'input',
-                'placeholder' => 'Вулиця/провулок/проспект',
-
-            ],
-            'house_number' => [
-                'name' => 'house_number',
-                'tag' => 'input',
-                'placeholder' => 'Номер будинку',
-
-            ],
-            'apartment_number' => [
-                'name' => 'apartment_number',
-                'tag' => 'input',
-                'placeholder' => 'Номер квартири',
-            ],
-        ]);
-        if ($name_type === 'fool') {
-            $return = array_merge($return, [
-                'last_name' => [
-                    'name' => 'last_name',
-                    'tag' => 'input',
-                    'placeholder' => 'Прізвище',
-                ],
-                'first_name' => [
-                    'name' => 'first_name',
-                    'tag' => 'input',
-                    'placeholder' => 'Імя',
-                ],
-                'surname' => [
-                    'name' => 'surname',
-                    'tag' => 'input',
-                    'placeholder' => 'По батькові',
-                ],
-                'phone' => [
-                    'name' => 'phone',
-                    'tag' => 'input',
-                    'placeholder' => 'Номер телефону',
-                    'logo' => 'img/phone.svg'
-                ],
-                'email' => [
-                    'name' => 'email',
-                    'tag' => 'input',
-                    'placeholder' => 'E-mail',
-                    'logo' => 'img/mail.svg'
-                ],
-            ]);
-        } else {
-            $return = array_merge($return, [
-                'name' => [
-                    'name' => 'name',
-                    'tag' => 'input',
-                    'placeholder' => 'Назва закладу',
-                ],
-                'phone' => [
-                    'name' => 'phone',
-                    'tag' => 'input',
-                    'placeholder' => 'Номер телефону',
-                    'logo' => 'img/phone.svg'
-                ],
-                'email' => [
-                    'name' => 'email',
-                    'tag' => 'input',
-                    'placeholder' => 'E-mail',
-                    'logo' => 'img/mail.svg'
-                ],
-            ]);
-
-        }
-
-        return $return;
-    }
 
     public function getDefaultValue(&$new_data, $category_data, $name_type = ''): void
     {
-        $this->GetValueInputs($category_data->phone , 'phone', $new_data, true);
-        $this->GetValueInputs($category_data->email , 'email', $new_data, true);
+        $this->GetValueInputs($category_data->phone, 'phone', $new_data, true);
+        $this->GetValueInputs($category_data->email, 'email', $new_data, true);
         if ($name_type === 'fool') {
             $name = explode(' ', $category_data->name ?? '');
             $new_data['first_name']['value'] = $name[0] ?? '';
@@ -192,13 +78,13 @@ trait CategoryUITrait
         if (isset($address->street)) {
             $fool_address .= ', ' . $address->street;
 //            $new_data['street']['value'] = $address->street;
-            $this->GetValueInputs($address->street , 'street', $new_data, true);
+            $this->GetValueInputs($address->street, 'street', $new_data, true);
 
         }
         if (isset($address->house_number)) {
             $fool_address .= ' ' . $address->house_number;
 //            $new_data['house_number']['value'] = $address->house_number;
-            $this->GetValueInputs($address->house_number , 'house_number', $new_data, true);
+            $this->GetValueInputs($address->house_number, 'house_number', $new_data, true);
         }
         if (isset($address->apartment_number)) {
             $fool_address .= ', кв. ' . $address->apartment_number;
@@ -209,20 +95,6 @@ trait CategoryUITrait
         $this->GetValueInputs($fool_address, 'address', $new_data, true);
     }
 
-    public array $monthsUkrainian = [
-        'Січень',
-        'Лютий',
-        'Березень',
-        'Квітень',
-        'Травень',
-        'Червень',
-        'Липень',
-        'Серпень',
-        'Вересень',
-        'Жовтень',
-        'Листопад',
-        'Грудень'
-    ];
 
     public function set_month($date): string
     {
@@ -439,13 +311,13 @@ trait CategoryUITrait
             switch ($dataKey['tag']) {
                 case 'select-box':
                 case 'custom-select':
-                    $data[$key]['value'] = $result;
-                    $data[$key]['text'] = $result;
+                    $data[$key]['value'] = $value;
                     break;
                 case 'input':
                     $data[$key]['value'] = $result;
                     break;
             }
+            $data[$key]['text'] = $result;
         }
 
         return $result;
