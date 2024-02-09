@@ -14,7 +14,7 @@ class CategoryTrainerFactory extends Factory
         $address = randomAddress();
 
         return [
-            'logo' => $this->faker->imageUrl(),
+            'logo' => RandPhoto(),
             'name' => $this->faker->firstName() . " " . $this->faker->lastName() . " " . $this->faker->firstName(),
             'phone' => getRandomPhone(1),
             'email' => $this->faker->email(),

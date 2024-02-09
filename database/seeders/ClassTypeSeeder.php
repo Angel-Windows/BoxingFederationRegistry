@@ -23,6 +23,7 @@ class ClassTypeSeeder extends Seeder
                 'count' => 375,
                 'linking' => null,
                 'link' => 'box_federations',
+//                'route ' => 'federation',
                 'logo' => 'img/homeAbout/box.svg',
             ], [
                 'name' => 'Спортсмени',

@@ -16,7 +16,15 @@ export function SendPostNoForm(url, data = [], function_name = "") {
         },
         body: JSON.stringify(data)
     })
-        .then(response => response.json())
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                const queryString = Object.keys(data).map(key => key + '=' + data[key]).join('&');
+                window.location.href = url + '?' + queryString;
+                throw new Error('Network response was not ok.');
+            }
+        })
         .then(data => {
             if (data.log) {
                 console.log(data.log)
@@ -26,9 +34,11 @@ export function SendPostNoForm(url, data = [], function_name = "") {
             return data;
         })
         .catch(error => {
+            // Обрабатываем ошибку
             console.error('Ошибка', error);
         });
 }
+
 
 export function Post(form, function_name = "") {
     event.preventDefault();

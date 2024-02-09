@@ -10,7 +10,10 @@ export function modal_open(data, class_name = '') {
     modal_content.className = 'modal_content ' + data['class_name']
 
     let input;
+    console.log(data.class_name)
+
     switch (data.class_name) {
+
         case "search":
             search();
             break;
@@ -25,13 +28,14 @@ export function modal_open(data, class_name = '') {
             input = modal_wrapper.querySelectorAll('.input');
             functionsArray['inputs_input']('modal_wrapper')
             break;
-        case "register-category":
+        case "category-register":
             input = modal_wrapper.querySelectorAll('.input');
             functionsArray['inputs_input']('modal_wrapper')
+            upload_img();
             break;
     }
 }
-
+upload_img();
 function search(data = {}) {
     const search_input = document.querySelector('#search_input');
     search_result_list = document.querySelector('#search_result_list');
@@ -54,11 +58,17 @@ function searchNoForm(data = {}) {
 }
 
 function upload_img() {
+
     const imageWrapper = document.querySelector('.upload_img');
+    if (!imageWrapper){
+        return false;
+    }
+
     const imagePreview = imageWrapper.querySelector('input');
     const dragText = imageWrapper.querySelector('.drop');
     const fileInput = imageWrapper.querySelector("input[type='file']");
     const button_open_file = imageWrapper.querySelector('.button_open_file')
+    console.log(dragText)
 
     button_open_file.addEventListener('click', () => {
         fileInput.click()

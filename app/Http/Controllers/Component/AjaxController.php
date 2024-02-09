@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Component;
 
 use App\Http\Controllers\Controller;
 use App\Models\Class\ClassType;
+use App\Traits\CategoryUITrait;
 use App\View\Components\modal\CategoryRegisterComponent;
 use App\View\Components\modal\CheckCodeComponent;
 use App\View\Components\modal\ModalNofFoundComponent;
@@ -11,12 +12,15 @@ use App\View\Components\modal\RegisterComponent;
 use App\View\Components\modal\SearchComponent;
 use App\View\Components\ModalAddFormItemComponent;
 use App\View\Components\ModalModuleSearchResultListComponent;
+use App\View\Components\ModalRegisterSelectComponent;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class AjaxController extends Controller
 {
+    use CategoryUITrait;
+
     public function open_modal(Request $request): JsonResponse
     {
         if ($request->has('modal')) {
@@ -32,7 +36,23 @@ class AjaxController extends Controller
                     break;
                 case "category-register":
                     $category_name = $request->input('category') ?? "";
-                    $menuMarkButtons = new CategoryRegisterComponent($category_name);
+                    $get_data = $this->get_data($category_name, ['id' => null, 'type' => 'register_page'], $request);
+                    $menuMarkButtons = new CategoryRegisterComponent($category_name, $get_data);
+                    break;
+                case "register-box":
+                    $category_name = $request->input('category') ?? "";
+                    switch ($category_name) {
+                        case 'category_sportsmen':
+                        case 'category_trainers':
+                        case 'category_judges':
+                            $category_name = $request->input('category') ?? "";
+                            $get_data = $this->get_data($category_name, ['id' => null, 'type' => 'register_page'], $request);
+                            $menuMarkButtons = new CategoryRegisterComponent($category_name, $get_data);
+                            break;
+                        default :
+                            $menuMarkButtons = new ModalRegisterSelectComponent($category_name);
+                            break;
+                    }
                     break;
                 case "add-form-item":
                     $menuMarkButtons = new ModalAddFormItemComponent();
@@ -42,6 +62,7 @@ class AjaxController extends Controller
                     $menuMarkButtons = new ModalNofFoundComponent($request->input('modal'));
             }
         }
+
 
         $menuMarkButtonsView = $menuMarkButtons->render()->render();
         return response()->json(
@@ -73,6 +94,7 @@ class AjaxController extends Controller
             ]
         );
     }
+
     public function search_in_class_no_form(Request $request): JsonResponse
     {
         $search_value = $request->input('search_value') ?? "";
@@ -82,7 +104,7 @@ class AjaxController extends Controller
             ->where('name', 'like', "%" . $search_value . "%")
             ->limit(10)
             ->get();
-        $menuMarkButtons = new ModalModuleSearchResultListComponent($data, $class_type , $tag);
+        $menuMarkButtons = new ModalModuleSearchResultListComponent($data, $class_type, $tag = '');
         $menuMarkButtonsView = $menuMarkButtons->render()->render();
 
         return response()->json(

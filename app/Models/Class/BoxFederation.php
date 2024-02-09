@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static where(string $string, string $string1, string $string2)
  * @method static exists()
  * @method static find($id)
+ * @method static pluck(string $string, string $string1)
  */
 class BoxFederation extends Model
 {

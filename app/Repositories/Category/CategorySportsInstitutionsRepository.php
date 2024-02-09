@@ -3,6 +3,7 @@
 namespace App\Repositories\Category;
 
 use App\Models\Category\CategorySportsInstitutions;
+use App\Models\Category\CategorySportsman;
 use App\Models\Category\CategoryTrainer;
 use App\Models\Class\ClassType;
 use App\Models\Linking\LinkingMembers;
@@ -20,8 +21,15 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
             'tag' => 'select-box',
             'placeholder' => 'Тип закладу',
             'option' => [
-                'test',
-                'temp',
+                'Спеціалізована',
+                'Олімпійська ',
+                'Параолімпійська',
+                'Середня загальноосвітня школа-інтернат/ліцей-інтернат спортивного профілю',
+                'Училище спортивного профілю  ',
+                'Спортивний ліцей',
+                'Професійний коледж (коледж) спортивного профілю',
+                'Фаховий коледж',
+
             ],
         ],
         'category' => [
@@ -29,8 +37,13 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
             'tag' => 'select-box',
             'placeholder' => 'Категорія',
             'option' => [
-                'test',
-                'temp',
+                'Дитячо-юнацька спортивна школа',
+                'Спеціалізована дитячо-юнацька спортивна школа олімпійського резерву',
+                'Обласний центр олімпійської підготовки',
+                'Центр олімпійської підготовки',
+                'Школа вищої спортивної майстерності',
+                'Спортивний клуб',
+
             ],
         ],
         'edrpou' => [
@@ -131,7 +144,7 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
 
     public function edit($id, $request, $type): array
     {
-        $category = self::validate_category($request, $this->table_model, $type, $id);
+        $category = self::validate_category($request, $this->table_model, $id);
 
         $category->type = $request->input('name');
         $category->category = self::convertAddressRequest($request);
@@ -146,7 +159,6 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
     private function get_value($table, $category_data): array
     {
         $new_data = $table;
-
 
         $this->getDefaultValue($new_data, $category_data, $this->is_default_length);
 
@@ -175,10 +187,25 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
                 'category_trainers.logo',
             )
             ->get();
-
+        $sportsmens_data = CategorySportsman::leftJoin('category_sports_institutions', 'category_sports_institutions.id', 'category_sportsmen.id')
+//            ->whereNull('linking_members.date_end_at')
+            ->where('category_sportsmen.category_sports_institutions', $id)
+            ->select(
+                'category_sportsmen.*',
+//                'category_trainers.name',
+//                'category_sportsmen.phone',
+//                'category_sportsmen.email',
+//                'category_sportsmen.logo',
+            )
+            ->get();
         $works = [];
         foreach ($members_works as $member) {
             $works[] = [$member->logo, $member->name, $member->role, $member->phone, $member->email];
+        }
+
+        $sportsmens = [];
+        foreach ($sportsmens_data as $sportsmen) {
+            $sportsmens[] = [$sportsmen->logo, $sportsmen->name,$sportsmen->phone, $sportsmen->email];
         }
         return [
             [
@@ -229,6 +256,17 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
                         ],
                     ],
                 ],
+            ],[
+                'title' => 'Спортсмени',
+                'data_wrapper' => [
+                    [
+                        'type' => 'todo_table',
+                        'data' => [
+                            'thead' => ['ПІП','', 'Телефон', 'Пошта'],
+                            'body' => $sportsmens,
+                        ],
+                    ],
+                ],
             ],
         ];
     }
@@ -238,7 +276,6 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
         $type = $data['type'] ?? '';
         $category = $this->table_model::find($data['id']);
         $more_data = [];
-
         if ($category) {
             $more_data = [
                 'name' => $category->name,
@@ -253,10 +290,12 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
             $table = $this->data;
         }
 
-
         switch ($type) {
             case 'register':
                 $create = $this->data;
+                break;
+            case 'register_page':
+                $create = $this->get_edit($table, null);
                 break;
             case 'edit_page':
                 $create = $this->get_edit($table, $data['id']);
@@ -272,6 +311,7 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
         }
         return [
             'table' => $create,
+            'modeles' => $this->table_model,
             'more_data' => $more_data
         ];
     }

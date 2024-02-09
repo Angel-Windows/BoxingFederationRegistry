@@ -68,7 +68,7 @@ Route::prefix('payment')->name('payment.')->group(function () {
 
 Route::name('ajax.')->prefix('ajax/')->group(function () {
     Route::get('/')->name('link');
-    Route::post('/open-modal', [AjaxController::class, 'open_modal'])->name('open-modal');
+    Route::match(['get', 'post'], '/open-modal', [AjaxController::class, 'open_modal'])->name('open-modal');
     Route::post('/search-in-class', [AjaxController::class, 'search_in_class'])->name('search-in-class');
     Route::post('/search-in-class-no-form', [AjaxController::class, 'search_in_class_no_form'])->name('search-in-class-no-form');
     Route::post('/upload-img', [AjaxController::class, 'upload_img'])->name('upload-img');

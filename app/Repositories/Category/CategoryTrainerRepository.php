@@ -4,6 +4,7 @@ namespace App\Repositories\Category;
 
 use App\Http\Controllers\Page\TrainerController;
 use App\Models\Category\CategoryTrainer;
+use App\Models\Class\BoxFederation;
 use App\Models\Class\ClassType;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
 use App\Traits\CategoryUITrait;
@@ -15,20 +16,35 @@ class CategoryTrainerRepository implements CategoryRepositoryInterface
 {
     use CategoryUITrait;
 
+
     private $is_default_length = 'fool';
     public $table_model = CategoryTrainer::class;
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->category_type_id = ClassType::getIdCategory('category_sports_institutions');
         $this->data = array_merge($this->data, $this->getDefaultArrayData($this->is_default_length));
     }
+
     private $data = [
         'qualification' => [
             'name' => 'qualification',
-            'tag' => 'custom-select',
+            'tag' => 'select-box',
             'placeholder' => 'Кваліфікація',
             'option' => [
-            ],
+                'Заслужений тренер України',
+                'Заслужений майстер спорту України',
+                'Майстер спорту України міжнародного класу',
+                'Майстер спорту України',
+                'Кандидат у майстри спорту України',
+                'Перший розряд',
+                'Другий розряд',
+                'Третій розряд',
+                'Перший юнацький розряд',
+                'Другий юнацький розряд',
+                'Третій юнацький розряд'
+            ]
+            ,
         ],
         'federation' => [
             'name' => 'federation',
@@ -43,7 +59,7 @@ class CategoryTrainerRepository implements CategoryRepositoryInterface
         ],
         'school' => [
             'name' => 'school',
-            'tag' => 'custom-select',
+            'tag' => 'input',
             'placeholder' => 'Мої навчальні заклади',
             'size' => 'fool',
             'option' => [
@@ -57,32 +73,37 @@ class CategoryTrainerRepository implements CategoryRepositoryInterface
         ],
         'rank' => [
             'name' => 'rank',
-            'tag' => 'custom-select',
+            'tag' => 'select-box',
             'placeholder' => 'Державні, почесні звання, спортивні звання та розряди',
             'size' => 'fool',
+            'class' => ' fool',
             'option' => [
-                'box' => 'Бокс',
-                'school-box' => 'Школа бокса',
-                'yoga' => 'Йога',
+                'Заслужений тренер України',
+                'Заслужений майстер спорту України',
+                'Майстер спорту України міжнародного класу',
+                'Майстер спорту України',
+                'Кандидат у майстри спорту України',
+                'Перший розряд, Другий розряд',
+                'Третій розряд',
+                'Перший юнацький розряд',
+                'Другий юнацький розряд',
+                'Третій юнацький розряд',
             ],
         ],
         'gov' => [
             'name' => 'gov',
-            'tag' => 'custom-select',
+            'class' => ' fool',
+            'tag' => 'no-active',
             'placeholder' => 'Державні заохочення',
             'size' => 'fool',
-            'option' => [
-                'box' => 'Бокс',
-                'school-box' => 'Школа бокса',
-                'yoga' => 'Йога',
-            ],
         ]
     ];
 
 
-
     private function get_edit($table, $id): array
     {
+        $table['federation']['option'] = BoxFederation::pluck('name', 'id');
+
         return [
             [
                 'type' => '',
@@ -98,7 +119,7 @@ class CategoryTrainerRepository implements CategoryRepositoryInterface
                                 $table['email'],
                                 $table['qualification'],
                                 $table['city'],
-                                $table['address'],
+                                $table['street'],
                                 $table['house_number'],
                                 $table['apartment_number'],
                                 $table['federation'],
@@ -113,7 +134,8 @@ class CategoryTrainerRepository implements CategoryRepositoryInterface
 
     public function edit($id, $request, $type): array
     {
-        $category = self::validate_category($request, $this->table_model, $type, $id);
+
+        $category = self::validate_category($request, $this->table_model, $id);
 
         $category->qualification = $request->input('qualification');
         $category->federation = $request->input('federation');
@@ -132,12 +154,12 @@ class CategoryTrainerRepository implements CategoryRepositoryInterface
         $new_data = $table;
 
         $this->getDefaultValue($new_data, $category_data, $this->is_default_length);
-        $new_data['qualification']['value'] = $category_data->qualification ?? "";
-        $new_data['school']['value'] = $category_data->school ?? "";
-        $new_data['sportsmen']['value'] = $category_data->school ?? "";
+        $this->GetValueInputs($category_data->qualification , 'qualification', $new_data);
+        $this->GetValueInputs($category_data->school , 'school', $new_data);
+        $this->GetValueInputs($category_data->rank , 'rank', $new_data);
+        $this->GetValueInputs($category_data->sportsmen , 'sportsmen', $new_data);
+        $this->GetValueInputs($category_data->federation , 'federation', $new_data);
 
-        $new_data['federation']['value'] = $category_data->federation ?? "";
-        $new_data['rank']['value'] = $category_data->rank ?? "";
         $new_data['gov']['value'] = $category_data->gov ?? "";
 
         return $new_data;
@@ -171,7 +193,7 @@ class CategoryTrainerRepository implements CategoryRepositoryInterface
                                     $table['address']['value'] ?? '',
                                 ], [
                                     $table['city']['placeholder'],
-                                    $table['city']['value'] ?? '',
+                                    $table['city']['text'] ?? '',
                                 ], [
                                     $table['rank']['placeholder'],
                                     $table['rank']['value'] ?? '',
@@ -263,6 +285,9 @@ class CategoryTrainerRepository implements CategoryRepositoryInterface
             case 'register':
                 $create = $this->data;
                 break;
+            case 'register_page':
+                $create = $this->get_edit($table, null);
+                break;
             case 'edit_page':
                 $create = $this->get_edit($table, $data['id']);
                 break;
@@ -279,7 +304,8 @@ class CategoryTrainerRepository implements CategoryRepositoryInterface
 
         return [
             'table' => $create,
-            'more_data' => $more_data
+            'modeles' => $this->table_model,
+            'more_data' => $more_data,
         ];
     }
 }

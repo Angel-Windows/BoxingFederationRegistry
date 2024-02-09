@@ -18,10 +18,10 @@
         @endif
     </section>
     <section class="table-auto_fool">
-        @if(isset($more_data['logo']))
+        @if(isset($more_data['logo']['link']))
             <div class="{{$more_data['logo']['class'] ?? ''}}">
                 <div class="img"><img
-                        src="{{ route('config.show-img', ['filename' => $more_data['logo']['link'] ?? '']) }}"
+                        src="{{ MyAsset($more_data['logo']['link']) }}"
                         alt=""></div>
             </div>
         @endif

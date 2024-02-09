@@ -2,12 +2,44 @@
 
 namespace App\Traits;
 
+use App\Models\Category\CategorySchool;
 use App\Models\Category\CategoryTrainer;
+use App\Models\Class\BoxFederation;
 use App\Models\Linking\LinkingMembers;
+use App\Repositories\Category\CategoryFederationRepository;
+use App\Repositories\Category\CategoryFunZonesRepository;
+use App\Repositories\Category\CategoryInstitutionsRepository;
+use App\Repositories\Category\CategoryJudgeRepository;
+use App\Repositories\Category\CategorySportsInstitutionsRepository;
+use App\Repositories\Category\CategoryTrainerRepository;
+use App\Repositories\Category\SportsmanFederationRepository;
 use Faker\Factory;
 
 trait CategoryUITrait
 {
+    private $city_arr = [
+        "Київ",
+        "Харків",
+        "Одеса",
+        "Дніпро",
+        "Донецьк",
+        "Запоріжжя",
+        "Львів",
+        "Кривий Ріг",
+        "Миколаїв",
+        "Маріуполь",
+        "Вінниця",
+        "Полтава",
+        "Чернігів",
+        "Черкаси",
+        "Житомир",
+        "Суми",
+        "Рівне",
+        "Кам'янець-Подільський",
+        "Луцьк",
+        "Кременчук",
+    ];
+
     public static function getButtons(array $arr): array
     {
         $data_phones = [];
@@ -58,31 +90,11 @@ trait CategoryUITrait
             ],
             'city' => [
                 'name' => 'city',
-                'tag' => 'custom-select',
+                'tag' => 'select-box',
                 'placeholder' => 'Місто',
                 'size' => 'fool',
-                'option' => [
-                    1 => "Київ",
-                    2 => "Харків",
-                    3 => "Одеса",
-                    4 => "Дніпро",
-                    5 => "Донецьк",
-                    6 => "Запоріжжя",
-                    7 => "Львів",
-                    8 => "Кривий Ріг",
-                    9 => "Миколаїв",
-                    10 => "Маріуполь",
-                    11 => "Вінниця",
-                    12 => "Полтава",
-                    13 => "Чернігів",
-                    14 => "Черкаси",
-                    15 => "Житомир",
-                    16 => "Суми",
-                    17 => "Рівне",
-                    18 => "Кам'янець-Подільський",
-                    19 => "Луцьк",
-                    20 => "Кременчук",
-                ],
+                'option' => $this->city_arr,
+
             ],
             'street' => [
                 'name' => 'street',
@@ -160,9 +172,8 @@ trait CategoryUITrait
 
     public function getDefaultValue(&$new_data, $category_data, $name_type = ''): void
     {
-        $new_data['phone']['value'] = $category_data->phone ?? "";
-        $new_data['email']['value'] = $category_data->email ?? "";
-
+        $this->GetValueInputs($category_data->phone , 'phone', $new_data, true);
+        $this->GetValueInputs($category_data->email , 'email', $new_data, true);
         if ($name_type === 'fool') {
             $name = explode(' ', $category_data->name ?? '');
             $new_data['first_name']['value'] = $name[0] ?? '';
@@ -175,23 +186,27 @@ trait CategoryUITrait
         $address = json_decode($category_data->address ?? "");
         $fool_address = '';
         if (isset($address->city)) {
-            $fool_address .= 'м. ' . $address->city;
-            $new_data['city']['value'] = $address->city;
+            $fool_address .= 'м. ' . $this->city_arr[$address->city];
+            $this->GetValueInputs($address->city, 'city', $new_data, true);
         }
         if (isset($address->street)) {
             $fool_address .= ', ' . $address->street;
-            $new_data['street']['value'] = $address->street;
+//            $new_data['street']['value'] = $address->street;
+            $this->GetValueInputs($address->street , 'street', $new_data, true);
+
         }
         if (isset($address->house_number)) {
             $fool_address .= ' ' . $address->house_number;
-            $new_data['house_number']['value'] = $address->house_number;
+//            $new_data['house_number']['value'] = $address->house_number;
+            $this->GetValueInputs($address->house_number , 'house_number', $new_data, true);
         }
         if (isset($address->apartment_number)) {
             $fool_address .= ', кв. ' . $address->apartment_number;
             $new_data['apartment_number']['value'] = $address->apartment_number;
         }
-        $new_data['address']['value'] = $fool_address;
-
+//        $new_data['address']['value'] = $fool_address;
+//        $new_data['address']['value'] = $fool_address;
+        $this->GetValueInputs($fool_address, 'address', $new_data, true);
     }
 
     public array $monthsUkrainian = [
@@ -218,9 +233,10 @@ trait CategoryUITrait
         return $this->monthsUkrainian[$month_index] . ' ' . $year;
     }
 
-    public static function validate_category($request, $table_model, $type, $id): mixed
+    public static function validate_category($request, $table_model, $id = null): mixed
     {
-        if ($type === 'edit') {
+
+        if ($id) {
             $category = $table_model::find($id);
         } else {
             $category = new $table_model();
@@ -228,17 +244,20 @@ trait CategoryUITrait
 
         $error = [];
 
-        if (array_key_exists('logo', $category->getAttributes())){
+        if (array_key_exists('logo', $category->getAttributes())) {
             $img_patch = self::upload_img($request);
             if ($img_patch['errors']) {
                 $error['logo'][] = $img_patch['errors'];
+
+            } else {
+                $category->logo = $img_patch['patch'];
             }
-            $category->logo = $img_patch['patch'];
+
         }
 
-        if ($request->has('name')){
+        if ($request->has('name')) {
             $category->name = $request->input('name');
-        }else{
+        } else {
             $category->name = $request->input('first_name') . ' ' . $request->input('last_name') . ' ' . $request->input('surname');
         }
 
@@ -261,11 +280,10 @@ trait CategoryUITrait
 
         if (!$photo) {
             return [
-                'errors' => false,
+                'errors' => true,
                 'patch' => null,
             ];
         }
-
         $validator = \Validator::make(['photo' => $photo], [
             'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:20048',
         ]);
@@ -344,4 +362,92 @@ trait CategoryUITrait
         dump($members, $request, $newMembers ?? '', $dismissedMembers, $newMembersArr ?? '');
     }
 
+
+    public function get_data($class_name, $data = [], $request = null): \Illuminate\Http\Response|array
+    {
+        switch ($class_name) {
+            case 'category_sportsmen':
+                $data_info = (new SportsmanFederationRepository())->get_data($data, $request);
+                break;
+
+
+            case 'category_fun_zones':
+                $data_info = (new CategoryFunZonesRepository())->get_data($data, $request);
+                break;
+
+            case 'category_insurances':
+                $data_info = (new CategoryInstitutionsRepository())->get_data($data, 'insurance');
+                break;
+            case 'category_medicals':
+                $data_info = (new CategoryInstitutionsRepository())->get_data($data, 'medical');
+                break;
+            case 'category_schools':
+                $data_info = (new CategoryInstitutionsRepository())->get_data($data, 'school');
+                break;
+            case 'category_sports_institutions':
+                $data_info = (new CategorySportsInstitutionsRepository())->get_data($data, $request);
+                break;
+            case 'category_judges':
+                $data_info = (new CategoryJudgeRepository())->get_data($data, $request);
+                break;
+            case 'box_federations':
+                $data_info = (new CategoryFederationRepository())->get_data($data, $request);
+                break;
+            case 'category_trainers':
+                $data_info = (new CategoryTrainerRepository())->get_data($data, $request);
+                break;
+            case 'category_stores':
+                return response()->view('errors.404', [], 404);
+            default :
+                return response()->view('errors.404', [], 405);
+        }
+        return $data_info;
+    }
+
+    public function GetValueInputs($value, $key, &$data, $is_set = true): string
+    {
+        $dataKey = $data[$key] ?? null;
+        if (!$dataKey) {
+            return '';
+        }
+
+        switch ($key) {
+            case "federation":
+                $result = BoxFederation::find($value)->name ?? '';
+                break;
+            case "trainer":
+                $result = CategoryTrainer::find($value)->name ?? '';
+                break;
+            case 'school':
+                $result = CategorySchool::find($value)->name ?? '';
+                break;
+            default:
+                switch ($dataKey['tag']) {
+                    case 'select-box':
+                        $result = $dataKey['option'][$value] ?? '';
+                        break;
+                    case 'input':
+                    case 'custom-select':
+                        $result = $value ?? '';
+                        break;
+                    default :
+                        $result = '';
+                }
+        }
+
+        if ($is_set) {
+            switch ($dataKey['tag']) {
+                case 'select-box':
+                case 'custom-select':
+                    $data[$key]['value'] = $result;
+                    $data[$key]['text'] = $result;
+                    break;
+                case 'input':
+                    $data[$key]['value'] = $result;
+                    break;
+            }
+        }
+
+        return $result;
+    }
 }

@@ -1,4 +1,4 @@
-<x-forms-category-register-form-component :class="$category" :route="'register_category'" enctype="multipart/form-data" method="post">
+<x-forms-category-register-form-component :class="$class_name"  :get="$get">
     <div class="upload_img" id="imageButton">
         <div class="drop">Відпустити тут</div>
         <div class="img">
@@ -10,7 +10,6 @@
             <button type="button" class="button one button_open_file">Загрузити фотографію</button>
             <input type="file" name="photo" style="display:none;">
         </div>
-
     </div>
     <div class="right">
         <button class="button">Перейти до оплати</button>

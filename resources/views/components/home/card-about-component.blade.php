@@ -23,10 +23,9 @@
                     <button  class="button"
                              onclick="functionsArray['open_modal']('search', {'class_types': {{$item['id']}}})"
                     ><img src="{{asset('img/search.svg')}}" alt="search"><span>Пошук</span></button>
-{{--                    <a href="{{route('page.trainer')}}" class="button"><img src="{{asset('img/search.svg')}}" alt="search"><span>Пошук</span></a>--}}
                     <button
                         class="button"
-                        onclick="functionsArray['open_modal']('category-register', {'category': 'category_trainers'})"
+                        onclick="functionsArray['open_modal']('register-box', {'category': '{{$item['link']}}'})"
                     ><img src="{{asset('img/homeAbout/register.svg')}}" alt="register"><span>Реєстрація</span></button>
                 </div>
             </div>

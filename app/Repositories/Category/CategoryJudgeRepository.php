@@ -22,9 +22,13 @@ class CategoryJudgeRepository implements CategoryRepositoryInterface
 
         'qualification' => [
             'name' => 'qualification',
-            'tag' => 'custom-select',
+            'tag' => 'select-box',
             'placeholder' => 'Кваліфікація',
             'option' => [
+                'Юний спортивний суддя',
+                'Спортивний суддя другої категорії',
+                'Спортивний суддя першої категорії',
+                'Спортивний суддя Національної категорії',
             ],
         ],
         'city' => [
@@ -55,30 +59,6 @@ class CategoryJudgeRepository implements CategoryRepositoryInterface
                 20 => "Кременчук",
             ],
         ],
-        'address' => [
-            'name' => 'address',
-            'tag' => 'custom-select',
-            'placeholder' => 'Адреса проживання',
-            'autocomplete' => 'street-address',
-            'size' => 'fool',
-            'option' => [
-            ],
-        ],
-        'house_number' => [
-            'name' => 'house_number',
-            'tag' => 'custom-select',
-            'placeholder' => 'Номер будинку',
-            'option' => [
-                ''
-            ],
-        ],
-        'apartment_number' => [
-            'name' => 'apartment_number',
-            'tag' => 'custom-select',
-            'placeholder' => 'Номер квартири',
-            'option' => [
-            ],
-        ],
 
         'school' => [
             'name' => 'school',
@@ -90,18 +70,26 @@ class CategoryJudgeRepository implements CategoryRepositoryInterface
         ],
         'rank' => [
             'name' => 'rank',
-            'tag' => 'custom-select',
+            'tag' => 'select-box',
             'placeholder' => 'Державні, почесні звання, спортивні звання та розряди',
             'size' => 'fool',
             'option' => [
-                'box' => 'Бокс',
-                'school-box' => 'Школа бокса',
-                'yoga' => 'Йога',
+                'Заслужений тренер України',
+                'Заслужений майстер спорту України',
+                'Майстер спорту України міжнародного класу',
+                'Майстер спорту України',
+                'Кандидат у майстри спорту України',
+                'Перший розряд, Другий розряд',
+                'Третій розряд',
+                'Перший юнацький розряд',
+                'Другий юнацький розряд',
+                'Третій юнацький розряд',
             ],
         ],
         'gov' => [
             'name' => 'gov',
-            'tag' => 'custom-select',
+            'tag' => 'select-box',
+            'class' => 'no-active',
             'placeholder' => 'Державні заохочення',
             'size' => 'fool',
             'option' => [
@@ -145,7 +133,7 @@ class CategoryJudgeRepository implements CategoryRepositoryInterface
 
     public function edit($id, $request, $type): array
     {
-        $category = self::validate_category($request, $this->table_model, $type, $id);
+        $category = self::validate_category($request, $this->table_model, $id);
 
         $category->qualification = $request->input('qualification');
 
@@ -284,6 +272,9 @@ class CategoryJudgeRepository implements CategoryRepositoryInterface
             case 'register':
                 $create = $this->data;
                 break;
+            case 'register_page':
+                $create = $this->get_edit($table, null);
+                break;
             case 'edit_page':
                 $create = $this->get_edit($table, $data['id']);
                 break;
@@ -300,6 +291,7 @@ class CategoryJudgeRepository implements CategoryRepositoryInterface
 
         return [
             'table' => $create,
+            'modeles' => $this->table_model,
             'more_data' => $more_data
         ];
     }

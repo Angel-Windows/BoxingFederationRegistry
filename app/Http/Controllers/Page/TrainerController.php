@@ -14,6 +14,7 @@ use App\Repositories\Category\CategorySportsInstitutionsRepository;
 use App\Repositories\Category\CategoryTrainerRepository;
 use App\Repositories\Category\SportsmanFederationRepository;
 use App\Services\MyAuthService;
+use App\Traits\CategoryUITrait;
 use App\Traits\FondyTrait;
 use Illuminate\Http\Request;
 
@@ -21,60 +22,19 @@ use Illuminate\Http\Request;
 class TrainerController extends Controller
 {
     use FondyTrait;
-
+    use CategoryUITrait;
 
     public function class_page($class_name, $id)
     {
         $get_data = $this->get_data($class_name, ['id' => $id, 'type' => 'preview']);
 
         return view('page.trainer')
+            ->with('modeles', $get_data['modeles'])
             ->with('data_info', $get_data['table'])
             ->with('more_data', $get_data['more_data']);
     }
 
-    public function get_data($class_name, $data = [], $request = null)
-    {
 
-//        $get_members = LinkingMembers::where('category_id', $id_category);
-
-        switch ($class_name) {
-            case 'category_sportsmen':
-                $data_info = (new SportsmanFederationRepository())->get_data($data, $request);
-                break;
-
-
-            case 'category_fun_zones':
-                $data_info = (new CategoryFunZonesRepository())->get_data($data, $request);
-                break;
-
-            case 'category_insurances':
-                $data_info = (new CategoryInstitutionsRepository())->get_data($data, 'insurance');
-                break;
-            case 'category_medicals':
-                $data_info = (new CategoryInstitutionsRepository())->get_data($data, 'medical');
-                break;
-            case 'category_schools':
-                $data_info = (new CategoryInstitutionsRepository())->get_data($data, 'school');
-                break;
-            case 'category_sports_institutions':
-                $data_info = (new CategorySportsInstitutionsRepository())->get_data($data, $request);
-                break;
-            case 'category_judges':
-                $data_info = (new CategoryJudgeRepository())->get_data($data, $request);
-                break;
-            case 'box_federations':
-                $data_info = (new CategoryFederationRepository())->get_data($data, $request);
-                break;
-            case 'category_trainers':
-                $data_info = (new CategoryTrainerRepository())->get_data($data, $request);
-                break;
-            case 'category_stores':
-                return response()->view('errors.404', [], 404);
-            default :
-                return response()->view('errors.404', [], 405);
-        }
-        return $data_info;
-    }
 
     public function edit_page($class_name, $id, Request $request)
     {
@@ -90,20 +50,13 @@ class TrainerController extends Controller
         return view('page.trainer_edit')
             ->with('get', $get)
             ->with('class_name', $class_name)
+            ->with('modeles', $class_name)
             ->with('id', $id);
-    }
-
-    public function edit($class_name, $id, Request $request)
-    {
-        $get_data = $this->get_data($class_name, ['id' => $id, 'type' => 'edit'], $request);
-//        dump($request->file('photo'));
-        return redirect()->back();
-
     }
 
     public function register_category($class_name, $id, Request $request)
     {
-        $result = $this->get_category('register', $class_name, $id, $request);
+        $result = $this->get_category('register_page', $class_name, null, $request);
         if ($result['error']) {
             dd($result['error']);
         }
@@ -120,6 +73,15 @@ class TrainerController extends Controller
 
         return redirect($route);
     }
+
+    public function edit($class_name, $id, Request $request)
+    {
+        $get_data = $this->get_data($class_name, ['id' => $id, 'type' => 'edit'], $request);
+//        dump($request->file('photo'));
+        return redirect()->back();
+
+    }
+
 
     public function get_category($type, $class_name, $id, $request)
     {

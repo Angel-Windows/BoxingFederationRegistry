@@ -21,7 +21,7 @@ class CategorySportsInstitutionsFactory extends Factory
             'name' => $this->faker->name,
             'phone' => getRandomPhone(),
             'email' => $this->faker->unique()->safeEmail,
-            'logo' => $this->faker->imageUrl,
+            'logo' => RandPhoto(),
             'address' => $address,
             'type' => $this->faker->randomElement(['Type A', 'Type B', 'Type C']),
             'category' => $this->faker->randomElement(['Category X', 'Category Y', 'Category Z']),

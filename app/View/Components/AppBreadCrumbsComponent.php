@@ -2,6 +2,7 @@
 
 namespace App\View\Components;
 
+use App\Models\Class\ClassType;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Route;
@@ -32,6 +33,10 @@ class AppBreadCrumbsComponent extends Component
         ];
         if ($page_name) {
 
+            $arr_bread[] = [
+                'route' => 'page.home',
+                'text' => ClassType::getFind('link', $page_name)->name,
+            ];
             switch ($page_name) {
                 case 'trainer':
                     $arr_bread[] = [
@@ -47,6 +52,7 @@ class AppBreadCrumbsComponent extends Component
                     break;
                 case '':
                     break;
+
             }
 
             return view('components.app.bread-crumbs-component', compact('arr_bread'));

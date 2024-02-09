@@ -1,6 +1,5 @@
 <?php
 
-
 if (!function_exists('customFunction')) {
     function customFunction()
     {
@@ -54,11 +53,27 @@ if (!function_exists('randomAddress')) {
         $faker = \Faker\Factory::create();
 
         return json_encode([
-            'city' => $faker->city,
+            'city' => random_int(0,11),
+
             'street' => $faker->streetName,
             'house_number' => random_int(1, 100),
             'apartment_number' => random_int(1, 100),
         ]);
+    }
+}
+
+if (!function_exists('MyAsset')) {
+    function MyAsset($url): bool|string
+    {
+        return route('config.show-img', ['filename' => $url]);
+    }
+}
+if (!function_exists('RandPhoto')) {
+    function RandPhoto(): bool|string
+    {
+        $img_arr = Storage::files('photos');
+        $rand_img = array_rand($img_arr);
+        return $img_arr[$rand_img];
     }
 }
 

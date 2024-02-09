@@ -30,11 +30,14 @@
     h3 {
         display: flex;
         justify-content: space-between;
+        margin-bottom: 12px;
+        margin-top: 12px;
         p{
             font-weight: 400;
             color: var(--text);
             font-family: Oswald, Arial, sans-serif;
         }
+
     }
 }
 
@@ -63,6 +66,13 @@ h3 {
     font-family: Oswald, sans-serif;
     font-size: 24px;
     margin-bottom: 14px;
+    .button{
+        padding: 8.5px 12px;
+
+        span{
+            font-size: 14px;
+        }
+    }
 }
 
 .nav {

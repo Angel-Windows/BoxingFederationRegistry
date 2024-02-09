@@ -91,7 +91,7 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
 
     public function edit($id, $request, $type): array
     {
-        $category = self::validate_category($request, $this->table_model, $type, $id);
+        $category = self::validate_category($request, $this->table_model, $id);
 
         $category->director = $request->input('director') ?? '';
         $category->federation = $request->input('federation') ?? '';
@@ -218,6 +218,10 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
             case 'register':
                 $create = $this->data;
                 break;
+            case 'register_page':
+                $create = $this->get_edit($table, null);
+
+                break;
             case 'edit_page':
                 $create = $this->get_edit($table, $data['id']);
                 break;
@@ -234,6 +238,7 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
 
         return [
             'table' => $create,
+            'modeles' => $this->table_model,
             'more_data' => $more_data
         ];
     }

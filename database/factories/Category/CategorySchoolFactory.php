@@ -21,7 +21,7 @@ class CategorySchoolFactory extends Factory
             'name' => $this->faker->name,
             'phone' => getRandomPhone(),
             'email' => $this->faker->unique()->safeEmail,
-            'logo' => $this->faker->imageUrl,
+            'logo' => RandPhoto(),
             'address' => $address,
             'director' => $this->faker->name,
         ];

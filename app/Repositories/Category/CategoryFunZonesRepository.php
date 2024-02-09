@@ -64,7 +64,7 @@ class CategoryFunZonesRepository implements CategoryRepositoryInterface
     {
 
 
-        $category = self::validate_category($request, $this->table_model, $type, $id);
+        $category = self::validate_category($request, $this->table_model, $id);
 
         $category->qualification = $request->input('qualification');
         $category->rank = $request->input('rank');
@@ -150,6 +150,9 @@ class CategoryFunZonesRepository implements CategoryRepositoryInterface
             case 'register':
                 $create = $this->data;
                 break;
+            case 'register_page':
+                $create = $this->get_edit($table, null);
+                break;
             case 'edit_page':
                 $create = $this->get_edit($table, $data['id']);
                 break;
@@ -166,6 +169,7 @@ class CategoryFunZonesRepository implements CategoryRepositoryInterface
 
         return [
             'table' => $create,
+            'modeles' => $this->table_model,
             'more_data' => $more_data
         ];
     }

@@ -21,7 +21,7 @@ class CategoryFunZoneFactory extends Factory
             'name' => $this->faker->name,
             'phone' => getRandomPhone(),
             'email' => $this->faker->unique()->safeEmail,
-            'logo' => $this->faker->imageUrl,
+            'logo' => RandPhoto(),
             'address' => $address,
             'birthday' => $this->faker->date,
         ];

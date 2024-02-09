@@ -19,18 +19,20 @@ return new class extends Migration
             $table->string('logo')->nullable();
             $table->date('birthday')->nullable();
             $table->integer('gender')->nullable();
+            $table->integer('arm_height')->nullable();
             $table->integer('weight')->nullable();
             $table->integer('height')->nullable();
             $table->integer('weight_category')->nullable();
-            $table->json('address_birth')->nullable();
-            $table->json('address_address')->nullable();
+            $table->string('address_birth')->nullable();
+            $table->json('address')->nullable();
             $table->string('passport')->nullable();
+            $table->string('foreign_passport')->nullable();
             $table->integer('federation')->nullable();
             $table->integer('trainer')->nullable();
-            $table->string('school')->nullable();
+            $table->integer('school')->nullable();
             $table->string('achievements')->nullable();
-            $table->string('rank')->nullable();
-            $table->dateTime('end_subscription')->nullable();
+            $table->integer('rank')->nullable();
+            $table->integer('category_sports_institutions')->nullable();
             $table->timestamps();
         });
     }

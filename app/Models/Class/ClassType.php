@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Cache;
  */
 class ClassType extends Model
 {
-
     public static function getCacheCategory()
     {
         return Cache::remember('class_types', 1, static fn() => self::all());
@@ -60,5 +59,17 @@ class ClassType extends Model
             }
         }
         return $data;
+    }
+
+    public static function getFind($column, $value)
+    {
+        $all_categories = self::getCacheCategory();
+
+        foreach ($all_categories as $category) {
+            if ($category->$column == $value) {
+                return $category;
+            }
+        }
+        return null;
     }
 }

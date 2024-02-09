@@ -1,4 +1,12 @@
+
 table {
+    &.no-width {
+        td, th{
+            &:last-child{
+                min-width: 215px;
+            }
+        }
+    }
     width: 100%;
     border-collapse: collapse;
 

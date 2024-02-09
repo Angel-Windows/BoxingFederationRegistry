@@ -5,7 +5,45 @@
         margin-top: 0;
         margin-bottom: 0;
     }
-    
+
+}
+
+.page-form-edit .upload_img {
+    position: relative;
+    background: lightgrey;
+    width: 370px;
+    height: 500px;
+    max-width: 370px;
+    .img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 100%;
+        input {
+            object-fit: cover;
+            height: 100%;
+            width: 100%;
+        }
+    }
+    .buttons {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        margin-bottom: 0 !important;
+
+        .button {
+            border-radius: 50%;
+            padding: 9px;
+            display: inline-flex;
+
+            img {
+                height: 16px;
+                width: 16px;
+            }
+        }
+    }
 }
 
 .d-flex {
@@ -102,7 +140,9 @@ form {
             display: block;
             margin-top: 1em;
         }
-
+        &.no-active{
+            background: var(--grey-middle);
+        }
         &.type__text {
             span {
                 cursor: text;
@@ -140,7 +180,7 @@ form {
                 background-image: none;
             }
 
-            &:hover, &.active {
+            &.hovered:hover, &.active {
                 span {
                     transform: translateY(0);
                     font-size: 13px;
@@ -211,7 +251,9 @@ form {
 
     .custom-select, .select-box {
         position: relative;
-
+        &.no-active{
+            background: red;
+        }
         &:before {
             content: '';
             position: absolute;
@@ -265,4 +307,48 @@ form {
     }
 
 
+}
+.category-register {
+    max-width: 1000px;
+    width: 100%;
+    .table-auto_fool {
+        grid-gap: 34px;
+        display: grid;
+        grid-template-columns: auto 1fr;
+    }
+
+    .upload_img {
+        width: 245px;
+
+        .buttons {
+
+            position: absolute;
+            right: 26px;
+            left: 26px;
+            bottom: 10px;
+
+            button {
+                font-size: 14px;
+            }
+        }
+    }
+
+    .table {
+
+        grid-column: 2;
+        grid-row: 1;
+    }
+
+    .right {
+        grid-column: 2;
+        grid-row: 2;
+    }
+
+    .right .button {
+        display: block;
+    }
+
+    .right input {
+        width: auto;
+    }
 }
