@@ -51,10 +51,11 @@ class SportsmanFederationRepository implements CategoryRepositoryInterface
         ]
     ];
 
-    private function get_edit($table, $id): array
+    private function get_edit($table, $id, $model): array
     {
         $table['federation']['option'] = BoxFederation::pluck('name', 'id');
         $table['school']['option'] = CategorySchool::pluck('name', 'id');
+
         return [
             [
                 'type' => '',
@@ -114,8 +115,14 @@ class SportsmanFederationRepository implements CategoryRepositoryInterface
                         'title' => 'Сім’я',
                         'button' => 'add-family',
                         'type' => 'table',
-                        'data' => [
+                        'data' =>
+//                            json_decode($model->family, true)
+                            [
+
                             $table['first_name'],
+                            $table['first_name'],
+                            $table['first_name'],
+
                         ],
                     ],
                     ],
@@ -176,7 +183,7 @@ class SportsmanFederationRepository implements CategoryRepositoryInterface
         return $new_data;
     }
 
-    private function created_view($table, $id): array
+    private function created_view($table, $id, $model): array
     {
         return [
             [
@@ -242,13 +249,10 @@ class SportsmanFederationRepository implements CategoryRepositoryInterface
                         'class' => 'no-width no-wrap',
                         'data' => [
                             'thead' => ['ПІП', 'Статус', 'Телефон'],
-                            'body' => [
-                                [
-                                    'Кравчук Віталій Вікторович',
-                                    'Тато',
-                                    '097 777-77-77',
-                                ]
-                            ],
+                            'body' =>
+                                json_decode($model->family, true)
+
+                            ,
                         ],
                     ],
                 ],
@@ -320,16 +324,16 @@ class SportsmanFederationRepository implements CategoryRepositoryInterface
                 $create = $this->data;
                 break;
             case 'register_page':
-                $create = $this->get_edit($table, null);
+                $create = $this->get_edit($table, null, $category);
                 break;
             case 'edit_page':
-                $create = $this->get_edit($table, $data['id']);
+                $create = $this->get_edit($table, $data['id'], $category);
                 break;
             case 'edit':
                 $create = $this->edit($data['id'], $request, $type);
                 break;
             case "preview" :
-                $create = $this->created_view($table, $data['id']);
+                $create = $this->created_view($table, $data['id'], $category);
                 break;
             default:
                 $create = [];

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('category_sportsmen', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable();
+            $table->string('name')->nullable()->index();
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->string('logo')->nullable();
@@ -32,6 +32,7 @@ return new class extends Migration
             $table->integer('school')->nullable();
             $table->string('achievements')->nullable();
             $table->integer('rank')->nullable();
+            $table->json('family')->nullable();
             $table->integer('category_sports_institutions')->nullable();
             $table->timestamps();
         });

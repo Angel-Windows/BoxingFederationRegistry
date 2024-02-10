@@ -24,7 +24,7 @@ class ClassSeeder extends Seeder
      */
     public function run(): void
     {
-        $count_seed = 5;
+        $count_seed = 25;
         $rebase = true;
         if ($count_seed > 0) {
 

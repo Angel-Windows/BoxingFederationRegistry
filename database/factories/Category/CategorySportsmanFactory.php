@@ -25,7 +25,7 @@ class CategorySportsmanFactory extends Factory
     public function definition(): array
     {
 
-        if (!$this->federation){
+        if (!$this->federation) {
             $this->federation = BoxFederation::all();
             $this->trainer = CategoryTrainer::all();
             $this->school = CategorySchool::all();
@@ -34,6 +34,16 @@ class CategorySportsmanFactory extends Factory
         $rand_trainer = $this->trainer->random()->id;
         $rand_school = $this->school->random()->id;
         $address_address = randomAddress();
+
+        $family = [];
+        $arr_family_status = ['Тато', 'Мама', 'Брат', 'Сестра', 'Дідусь', 'Син', 'Дочка', 'Друг', 'Інше'];
+        for ($i = 0; $i < random_int(0, 5); $i++) {
+            $family[] = [
+                'name' => $this->faker->name,
+                'status' => $arr_family_status[array_rand($arr_family_status)],
+                'phone' => getRandomPhone(),
+            ];
+        }
         return [
             'name' => $this->faker->name,
             'phone' => getRandomPhone(),
@@ -54,6 +64,7 @@ class CategorySportsmanFactory extends Factory
             'school' => $rand_school,
             'achievements' => $this->faker->sentence,
             'rank' => random_int(0, 4),
+            'family' => json_encode($family),
             'category_sports_institutions' => random_int(0, 4),
         ];
     }
