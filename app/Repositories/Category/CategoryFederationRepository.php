@@ -6,6 +6,7 @@ use App\Models\Category\CategorySportsman;
 use App\Models\Category\CategoryTrainer;
 use App\Models\Class\BoxFederation;
 use App\Models\Class\ClassType;
+use App\Models\Employees\EmployeesFederation;
 use App\Models\Federation;
 use App\Models\Linking\LinkingMembers;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
@@ -33,7 +34,7 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
 
     private $data_inputs = [
         'employees' => [
-            'type' => 'checkbox-list',
+            'type' => 'table-list',
             'checkbox_type' => 'revert',
             'title' => 'Працівники федерації',
         ], 'members' => [
@@ -97,19 +98,21 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
     {
         $new_data = $table;
 
-//
-//        $trainers = CategoryTrainer::where('federation', $category_data->id)->get();
-//        $sportsman = CategorySportsman::where('federation', $category_data->id)->get();
-//        foreach ($trainers as $trainer) {
-//            $new_data['members']['data'][] = [
-//                'logo' => $trainer->name,
-//                'name' => $trainer->name,
-//                'phone' => $trainer->name,
-//                'email' => $trainer->name,
-//                'type_element' => $trainer->name,
-//
-//            ];
-//        }
+
+        $employees = EmployeesFederation::where('federation_id', $category_data->id)->get();
+//        dd($employees);
+        foreach ($employees as $item) {
+            $new_data['employees']['data'][] = [
+                'logo' => [
+                    'img' => $item->logo,
+                    'name' => $item->name
+                ],
+                $item->phone,
+                $item->email,
+                $item->type_elem == 'trainer' ?  'Тренер': 'Спортсмен',
+                'value' => json_encode([$item->type_elem, $item->id]),
+            ];
+        }
         $trainers = CategoryTrainer::where('federation', $category_data->id)
             ->select(
                 'id',

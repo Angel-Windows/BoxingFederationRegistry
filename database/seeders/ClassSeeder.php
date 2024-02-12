@@ -14,6 +14,8 @@ use App\Models\Category\CategorySportsman;
 use App\Models\Category\CategoryStore;
 use App\Models\Category\CategoryTrainer;
 use App\Models\Class\BoxFederation;
+use App\Models\Employees\EmployeesFederation;
+use Database\Factories\Employees\EmployeesFederationFactory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -96,6 +98,13 @@ class ClassSeeder extends Seeder
                 dump('CategoryEmployessSchool');
                 CategoryEmployessSchool::truncate();
                 CategoryEmployessSchool::factory()->count($count_seed)->create();
+            }
+
+
+            if ((!EmployeesFederation::exists() && true) || $rebase) {
+                dump('EmployeesFederation');
+                EmployeesFederation::truncate();
+                EmployeesFederation::factory()->count($count_seed * 3)->create();
             }
         }
 

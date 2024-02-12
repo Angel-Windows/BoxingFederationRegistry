@@ -11,8 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('employees_federations', function (Blueprint $table) {
+        Schema::create('employees_federations', static function (Blueprint $table) {
             $table->id();
+            $table->string('federation_id')->nullable();
+            $table->string('name');
+            $table->string('city');
+            $table->string('phone');
+            $table->string('email');
+            $table->date('birthday');
+            $table->integer('position');
+            $table->string('logo');
             $table->timestamps();
         });
     }
