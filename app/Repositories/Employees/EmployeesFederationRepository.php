@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\Category;
+namespace App\Repositories\Employees;
 
 use App\Models\Category\CategorySportsman;
 use App\Models\Category\CategoryTrainer;
@@ -13,52 +13,41 @@ use App\Traits\CategoryUITrait;
 use App\Traits\DataTypeTrait;
 use DB;
 
-class CategoryFederationRepository implements CategoryRepositoryInterface
+class EmployeesFederationRepository implements CategoryRepositoryInterface
 {
     use DataTypeTrait;
     use CategoryUITrait;
 
     private $is_default_length = '';
     public $category_type_id;
-    public $table_model = BoxFederation::class;
+    public $table_model = EmployeesFederation::class;
     public $data;
 
     public function __construct()
     {
         $this->category_type_id = ClassType::getIdCategory('category_sports_institutions');
         $this->data = $this->getDefaultArrayData($this->is_default_length, $this->data_inputs);
+        $this->data['position']['option'] = $this->data_option['employees_federation']['position'];
     }
 
 
     private $data_inputs = [
-        'employees' => [
-            'type' => 'table-list',
-            'checkbox_type' => 'revert',
-            'title' => 'Працівники федерації',
-        ],
-        'members' => [
-            'type' => 'table-list',
-//            'type' => 'checkbox-list',
-            'checkbox_type' => 'revert',
-            'title' => 'Члени федерації',
-        ],
-        'name' => [
+        'name'=>[
             'size' => 'fool',
-        ],
+            'placeholder' => 'ПІП'
+        ]
     ];
 
 
     private function get_edit($table, $id): array
     {
-
+        $position = $this->data_option['employees_federation']['position'];
 //        dd($this->data);
         if (!$id) {
             $table['employees'] = null;
             $table['members'] = null;
         }
-
         $table['federation']['option'] = BoxFederation::where('id', '<>', $id)->pluck('name', 'id');
-
         return [
             [
                 'type' => '',
@@ -67,22 +56,15 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
                         [
                             'type' => 'table',
                             'data' => [
-                                $table['name'],
-                                $table['director'],
-                                $table['phone'],
-                                $table['email'],
                                 $table['federation'],
-                                $table['edrpou'],
-                                $table['site'],
+                                $table['name'],
+                                $table['phone'],
                                 $table['city'],
-                                $table['street'],
-                                $table['house_number'],
-                                $table['apartment_number'],
+                                $table['position'],
+                                $table['email'],
+                                $table['birthday'],
                             ],
                         ],
-
-                        $table['employees'],
-                        $table['members'],
                     ],
             ],
         ];
@@ -91,11 +73,14 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
     public function edit($id, $request, $type): array
     {
         $category = self::validate_category($request, $this->table_model, $id);
-      
-        $category->director = $request->input('director') ?? '';
-        $category->federation = $request->input('federation') ?? '';
-        $category->edrpou = $request->input('edrpou') ?? '';
-        $category->site = $request->input('site') ?? '';
+
+        $category->federation_id = $request->input('federation') ?? '';
+        $category->name = $request->input('name') ?? '';
+        $category->phone = $request->input('phone') ?? '';
+        $category->city = $request->input('city') ?? '';
+        $category->position = $request->input('position') ?? '';
+        $category->email = $request->input('email') ?? '';
+        $category->birthday = $request->input('birthday') ?? '';
         $category->save();
 
 

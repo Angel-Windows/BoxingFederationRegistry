@@ -46,6 +46,49 @@ trait DataTypeTrait
                 'Старший тренер збірної команди України з боксу серед юнаків',
                 'Старший тренер збірної команди України з боксу серед дівчат',
             ]
+        ],
+        'employees_sports_institutions' => [
+            'position'=>[
+                'Директор ',
+                'Заступник директора з навчально-тренувальної роботи ',
+                'Заступник директора з адміністративно-господарської роботи ',
+                'Завідувач спортивного комплексу ',
+                'Завідувач господарства ',
+                'Завідувач складу',
+                'Головний тренер',
+                'Тренер ',
+                'Тренер-викладач',
+                'Тренер-лікар',
+                'Тренер-вихователь',
+                'Тренер-масажист',
+                'Старший тренер-викладач ',
+                'Інструктор-методист ',
+                'Старший інструктор-методист ',
+                'Практичний психолог ',
+                'Інструктор з фізичної культури ',
+                'Перекладач жестової мови ',
+                'Інженер з охорони праці ',
+                'Головний бухгалтер ',
+                'Заступник головного бухгалтера ',
+                'Бухгалтер ',
+                'Касир ',
+                'Юрисконсульт ',
+                'Старший інспектор з кадрів',
+                'Інспектор з кадрів ',
+                'Акомпаніатор ',
+                'Кінооператор ',
+                'Інженер ',
+                'Інженер-електронник ',
+                'Секретар-друкарка',
+                'Друкарка ',
+                'Діловод ',
+                'Лікар ',
+                'Лікар з функціональної діагностики ',
+                'Фахівець з фізичної реабілітації ',
+                'Сестра медична ',
+                'Сестра медична з фізіотерапії ',
+                'Сестра медична з масажу',
+            ]
         ]
     ];
     public array $monthsUkrainian = [
@@ -174,6 +217,7 @@ trait DataTypeTrait
         'birthday' => [
             'name' => 'birthday',
             'tag' => 'input',
+            'type' => 'date',
             'placeholder' => 'Дата народження',
         ],
         'gender' => [
@@ -184,6 +228,11 @@ trait DataTypeTrait
                 'Хлопець',
                 'Дівчина',
             ],
+        ],
+        'position' => [
+            'name' => 'position',
+            'tag' => 'select-box',
+            'placeholder' => 'Посада',
         ],
         'arm_height' => [
             'name' => 'arm_height',
@@ -303,6 +352,7 @@ trait DataTypeTrait
         'edrpou' => [
             'name' => 'edrpou',
             'tag' => 'input',
+            'type'=>'number',
             'placeholder' => 'Код за ЄДРПОУ',
         ],
         'site' => [
@@ -385,6 +435,7 @@ trait DataTypeTrait
             'house_number' => [
                 'name' => 'house_number',
                 'tag' => 'input',
+                'type' => 'number',
                 'placeholder' => 'Номер будинку',
 
             ],
@@ -446,12 +497,18 @@ trait DataTypeTrait
             ]);
 
         }
+        $merge = array_merge_recursive($return, $this->DataTypeInputs);
 
-        foreach (array_merge($return, $this->DataTypeInputs) as $key => $data_input) {
-            foreach ($data_input as $key_opt => $item_opt) {
-                $data[$key][$key_opt] = $item_opt;
+        foreach ($merge as $key => &$data_input) {
+            foreach ($data_input as $key_opt => &$item_opt) {
+                if (!isset($data[$key][$key_opt])) {
+                    $data[$key][$key_opt] = $item_opt;
+                }
             }
         }
+
+        unset($data_input, $item_opt);
+
         return $data;
     }
 

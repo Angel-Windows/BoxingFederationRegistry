@@ -13,6 +13,7 @@ use App\Repositories\Category\CategoryJudgeRepository;
 use App\Repositories\Category\CategorySportsInstitutionsRepository;
 use App\Repositories\Category\CategoryTrainerRepository;
 use App\Repositories\Category\SportsmanFederationRepository;
+use App\Repositories\Employees\EmployeesFederationRepository;
 use App\Services\MyAuthService;
 use App\Traits\CategoryUITrait;
 use App\Traits\DataTypeTrait;
@@ -79,7 +80,7 @@ class TrainerController extends Controller
     public function edit($class_name, $id, Request $request)
     {
         $get_data = $this->get_data($class_name, ['id' => $id, 'type' => 'edit'], $request);
-//        dump($request->file('photo'));
+
         return redirect()->back();
 
     }
@@ -115,6 +116,9 @@ class TrainerController extends Controller
                 break;
             case 'category_stores':
                 return response()->view('errors.505', [], 404);
+            case 'employees_federation':
+                $result = (new EmployeesFederationRepository())->edit($id, $request, $type);
+                break;
             default :
                 return response()->view('errors.404', [], 404);
         }

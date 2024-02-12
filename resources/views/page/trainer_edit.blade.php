@@ -24,7 +24,7 @@
     </section>
     <section>
         <div class="">
-            <x-forms-category-register-form-component :class="$class_name" :id="$id" :get="$get">
+            <x-forms-category-register-form-component :class="$class_name" :id="$id" :get="$get" :type_submit="'register'">
 {{--                <div class="big_img">--}}
 {{--                    <div class="img"><img src="{{asset('img/users_img/9284da0c7ca70f123c97200aa73fa3dc.png')}}" alt="">--}}
 {{--                    </div>--}}

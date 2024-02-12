@@ -1,3 +1,4 @@
+<h2>Реєстрація федерації</h2>
 <x-forms-category-register-form-component :class="$class_name"  :get="$get">
     <div class="upload_img" id="imageButton">
         <div class="drop">Відпустити тут</div>
@@ -11,13 +12,5 @@
             <input type="file" name="photo" style="display:none;">
         </div>
     </div>
-    <div class="right">
-        <button class="button">Перейти до оплати</button>
-        <label style="display: block">
-            <input style="display: inline-block" type="checkbox">
-            <span>Приймаю всі <a href="">умови користування</a> і також <a href="">політику конфіденційності</a></span>
-        </label>
-    </div>
-
 </x-forms-category-register-form-component>
 

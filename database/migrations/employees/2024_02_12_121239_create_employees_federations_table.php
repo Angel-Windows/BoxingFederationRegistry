@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('employees_federations', static function (Blueprint $table) {
             $table->id();
-            $table->string('federation_id')->nullable();
+            $table->integer('federation_id')->index()->nullable();
             $table->string('name');
             $table->string('city');
             $table->string('phone');
             $table->string('email');
             $table->date('birthday');
             $table->integer('position');
-            $table->string('logo');
+            $table->string('logo')->nullable();
             $table->timestamps();
         });
     }

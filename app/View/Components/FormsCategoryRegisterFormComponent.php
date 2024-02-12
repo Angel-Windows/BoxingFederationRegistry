@@ -17,7 +17,7 @@ class FormsCategoryRegisterFormComponent extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public $route = 'edit', public $get = [], public $class = '', public $id = 0)
+    public function __construct(public $route = 'edit', public $get = [], public $class = '', public $id = 0,  public $type_submit='edit')
     {
     }
 
@@ -31,6 +31,7 @@ class FormsCategoryRegisterFormComponent extends Component
             ->with('more_data', $this->get['more_data'])
             ->with('category_name', $this->class)
             ->with('id', $this->id)
+            ->with('type_submit', $this->type_submit)
             ->with('route_type', $this->route);
     }
 }

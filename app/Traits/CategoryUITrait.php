@@ -7,6 +7,7 @@ use App\Models\Category\CategorySportsInstitutions;
 use App\Models\Category\CategorySportsman;
 use App\Models\Category\CategoryTrainer;
 use App\Models\Class\BoxFederation;
+use App\Models\Employees\EmployeesFederation;
 use App\Models\Linking\LinkingMembers;
 use App\Repositories\Category\CategoryFederationRepository;
 use App\Repositories\Category\CategoryFunZonesRepository;
@@ -15,11 +16,13 @@ use App\Repositories\Category\CategoryJudgeRepository;
 use App\Repositories\Category\CategorySportsInstitutionsRepository;
 use App\Repositories\Category\CategoryTrainerRepository;
 use App\Repositories\Category\SportsmanFederationRepository;
+use App\Repositories\Employees\EmployeesFederationRepository;
 use Faker\Factory;
 
 trait CategoryUITrait
 {
     use DataTypeTrait;
+
     public static function getButtons(array $arr): array
     {
         $data_phones = [];
@@ -55,7 +58,6 @@ trait CategoryUITrait
         }
         return $data_phones;
     }
-
 
 
     public function getDefaultValue(&$new_data, $category_data, $name_type = ''): void
@@ -134,14 +136,16 @@ trait CategoryUITrait
         } else {
             $category->name = $request->input('first_name') . ' ' . $request->input('last_name') . ' ' . $request->input('surname');
         }
+        if ($request->has('address')){
+            $category->address =
+                json_encode([
+                    'city' => $request->input('city'),
+                    'street' => $request->input('street'),
+                    'house_number' => $request->input('house_number'),
+                    'apartment_number' => $request->input('apartment_number'),
+                ]);
+        }
 
-        $category->address =
-            json_encode([
-                'city' => $request->input('city'),
-                'street' => $request->input('street'),
-                'house_number' => $request->input('house_number'),
-                'apartment_number' => $request->input('apartment_number'),
-            ]);
         $category->phone = $request->input('phone') ?? '';
         $category->email = $request->input('email');
 
@@ -270,6 +274,10 @@ trait CategoryUITrait
             case 'category_trainers':
                 $data_info = (new CategoryTrainerRepository())->get_data($data, $request);
                 break;
+            case 'employees_federation':
+                $data_info = (new EmployeesFederationRepository())->get_data($data, $request);
+                break;
+
             case 'category_stores':
                 return response()->view('errors.404', [], 404);
             default :

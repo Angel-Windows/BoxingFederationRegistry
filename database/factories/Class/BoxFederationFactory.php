@@ -26,7 +26,7 @@ class BoxFederationFactory extends Factory
             'address' => $address,
             'phone' => getRandomPhone(),
             'email' => $this->faker->email(),
-            'federation' => $this->faker->name(),
+            'federation' => random_int(0, 10),
             'edrpou' => random_int(100000000, 999999999),
             'site' => $this->faker->url(),
         ];

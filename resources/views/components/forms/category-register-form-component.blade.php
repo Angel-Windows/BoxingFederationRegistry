@@ -175,6 +175,27 @@
                                                        value="">
                                             </label>
                                             @break
+                                        @case('select-box')
+                                            <div class="select-box   {{$class}}">
+                                                <label class="label type__text hovered  {{$class}}">
+                                                    {{--                                            @foreach($item['option'] as $key_opt=>$item_opt)--}}
+                                                    {{--                                                @if(($item['name'] ?? '') == 'rank')@dd($item['value'] ?? '') @endif--}}
+                                                    {{--                                                <option @if($key_opt === ($item_opt['value'] ?? '')) selected @endif value="{{$key_opt}}">{{$item_opt}}</option>--}}
+                                                    {{--                                            @endforeach--}}
+                                                    <span class="unselectable">{{$item['placeholder']}}</span>
+                                                    <select
+                                                        type="text"
+                                                        name="{{$item['name']??''}}"
+                                                        value="{{$value}}"
+                                                        class=" input">
+                                                        <option value="">Не обрано</option>
+                                                        @foreach($item['option'] as $key_opt=>$item_opt)
+                                                            <option @if($key_opt == ($item['value'] ?? '')) selected @endif value="{{$key_opt}}">{{$item_opt}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </label>
+                                            </div>
+                                            @break
                                         @case('custom-select')
                                             @include('components.forms.custom-select',
                                                 [
@@ -192,7 +213,17 @@
                         @default
                     @endswitch
                 @endforeach
+                @if($type_submit == 'register')
+                    <div class="right">
+                        <button class="button">Перейти до оплати</button>
+                        <label style="display: block">
+                            <input required style="display: inline-block" type="checkbox">
+                            <span>Приймаю всі <a href="">умови користування</a> і також <a href="">політику конфіденційності</a></span>
+                        </label>
+                    </div>
+                    @endif
             </div>
+
     @endforeach
 </form>
 
