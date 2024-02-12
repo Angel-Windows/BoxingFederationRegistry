@@ -3,6 +3,8 @@
 namespace App\Traits;
 
 use App\Models\Category\CategorySchool;
+use App\Models\Category\CategorySportsInstitutions;
+use App\Models\Category\CategorySportsman;
 use App\Models\Category\CategoryTrainer;
 use App\Models\Class\BoxFederation;
 use App\Models\Linking\LinkingMembers;
@@ -293,6 +295,9 @@ trait CategoryUITrait
             case 'school':
                 $result = CategorySchool::find($value)->name ?? '';
                 break;
+            case 'sports_institutions':
+                $result = CategorySportsInstitutions::find($value)->name ?? '';
+                break;
             default:
                 switch ($dataKey['tag']) {
                     case 'select-box':
@@ -308,6 +313,7 @@ trait CategoryUITrait
         }
 
         if ($is_set) {
+
             switch ($dataKey['tag']) {
                 case 'select-box':
                 case 'custom-select':

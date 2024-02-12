@@ -1,12 +1,13 @@
 
 table {
     &.no-width {
-        td, th{
-            &:last-child{
+        td, th {
+            &:last-child {
                 min-width: 215px;
             }
         }
     }
+
     width: 100%;
     border-collapse: collapse;
 
@@ -53,7 +54,10 @@ table {
             //white-space: nowrap;
             padding-left: 40px;
             padding-right: 40px;
-            min-width: 1px;
+            //min-width: 1px;
+            &.no_size, &.label_button {
+                min-width: max-content;
+            }
 
             &.pl-0 {
                 padding-left: 0;
@@ -157,8 +161,9 @@ table {
                 flex-wrap: wrap;
                 justify-content: space-between;
                 align-items: center;
-                td{
-                    &:nth-child(4){
+
+                td {
+                    &:nth-child(4) {
                         grid-column: span 2;
                     }
                 }

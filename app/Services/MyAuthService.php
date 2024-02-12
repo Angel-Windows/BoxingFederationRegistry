@@ -15,6 +15,8 @@ class MyAuthService
      */
     public static function Auth(string $phone): void
     {
+        self::Logout();
+
         $token = Str::random(60);
 
         $hashedPhone = hash('sha256', $phone);
@@ -44,6 +46,9 @@ class MyAuthService
      */
     public static function CheckMiddleware(?string $phone): bool
     {
+        if (!env('IS_REGISTER')) {
+            return true;
+        }
         $user = self::getUser();
 
         if (!$phone || !$user) {
@@ -52,11 +57,7 @@ class MyAuthService
 
         $hashedPhone = hash('sha256', $phone);
 
-        if ($hashedPhone === $user || $user === hash('sha256', '+380956686191')) {
-            return true;
-        }
-
-        return false;
+        return $hashedPhone === $user || $user === hash('sha256', '+380956686191');
     }
 
     public static function CheckMiddlewareRoute($data): bool

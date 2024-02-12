@@ -28,7 +28,15 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
     }
 
     private $data_inputs = [
-
+        'members' => [
+            'type' => 'checkbox-list',
+            'checkbox_type' => 'revert',
+            'title' => 'checkbox-list',
+        ], 'sportsmen' => [
+            'type' => 'checkbox-list',
+            'checkbox_type' => 'revert',
+            'title' => 'Спортсмени',
+        ],
     ];
 
 
@@ -46,13 +54,22 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
                 'category_trainers.logo',
             )
             ->get();
+        $sportsman = CategorySportsman::where('sports_institutions', $id)
+            ->get();
 
         $table['members']['data'] = [];
+        $table['sportsmen']['data'] = [];
         foreach ($members_works as $member) {
             $table['members']['data'][] = [
                 'text' => $member->name,
+                'subtitle' => $member->role,
                 'value' => $member->member_id,
-                'subtitle' => $member->id,
+            ];
+        }
+        foreach ($sportsman as $sportsman_item) {
+            $table['sportsmen']['data'][] = [
+                'text' => $sportsman_item->name,
+                'value' => $sportsman_item->id,
             ];
         }
         return [
@@ -71,34 +88,42 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
                                 $table['edrpou'],
                                 $table['director'],
                                 $table['site'],
-
                                 $table['city'],
                                 $table['address'],
                                 $table['house_number'],
                                 $table['apartment_number'],
-
                             ],
                         ],
 
                     ],
-            ],
-            [
-                'class' => 'grid-sp-2',
-                'data_block' => [
+
+            ], [
+                'type' => 'checkbox-list',
+                'class' => 'fool ',
+                'checkbox_type' => 'revert',
+                'data_block' =>
                     [
-                        'title' => 'Працівники які працюють в закладі',
-                        'data' => [
-                            $table['members'],
-                        ]]
-                ],
-            ]
-
+                        $table['members'],
+                        $table['sportsmen'],
+                    ],
+            ],
         ];
-
     }
+
 
     public function edit($id, $request, $type): array
     {
+        $members = $request->input('members') ?? [];
+        $sportsmen = $request->input('sportsmen') ?? [];
+
+        if ($members) {
+
+        }
+        if ($sportsmen) {
+            CategorySportsman::whereIn('id', $sportsmen)->update(['sports_institutions'=>null]);
+        }
+
+
         $category = self::validate_category($request, $this->table_model, $id);
 
         $category->type = $request->input('name');
@@ -194,6 +219,7 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
                 ],
             ], [
                 'title' => 'Працівники які працюють в закладі',
+                'class' => 'fool',
                 'data_wrapper' => [
                     [
                         'type' => 'todo_table',

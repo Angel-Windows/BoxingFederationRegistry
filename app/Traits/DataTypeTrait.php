@@ -81,11 +81,28 @@ trait DataTypeTrait
             'option' => [
             ],
         ],
+        'sports_institutions' => [
+            'name' => 'sports_institutions',
+            'tag' => 'custom-select',
+            'placeholder' => 'Спортивний заклад',
+            'size' => 'fool',
+            'option' => [
+            ],
+        ],
         'sportsmen' => [
             'name' => 'sportsmen',
             'tag' => 'input',
             'placeholder' => 'Мої спортсмени',
             'size' => 'fool',
+        ],
+        'history_works' => [
+            'title' => 'Історія місць роботи',
+            'name' => 'history_works',
+            'tag' => 'history_works',
+            'type' => 'history_works',
+            'class' => 'fool',
+            'placeholder' => 'Історія місць роботи',
+            'data' => [],
         ],
         'rank' => [
             'name' => 'rank',
@@ -207,6 +224,7 @@ trait DataTypeTrait
             'class' => 'fool',
             'placeholder' => 'Місце народження',
         ],
+
         'passport' => [
             'name' => 'passport',
             'tag' => 'input',
@@ -255,6 +273,14 @@ trait DataTypeTrait
             'tag' => 'custom-select',
             'size' => 'fool',
             'placeholder' => 'Учасники федерації',
+        ],
+        'employees' => [
+            'title'=> 'Працівники федерації',
+            'checkbox_type' => 'revert',
+            'name' => 'employees',
+            'tag' => 'checkbox-list',
+            'size' => 'fool',
+            'placeholder' => 'Працівники федерації',
         ],
         'type' => [
             'name' => 'type',
@@ -378,13 +404,13 @@ trait DataTypeTrait
             ]);
 
         }
-        $new_data = [];
+
         foreach (array_merge($return, $this->DataTypeInputs) as $key => $data_input) {
             foreach ($data_input as $key_opt => $item_opt) {
-                $new_data[$key][$key_opt] = $item_opt;
+                $data[$key][$key_opt] = $item_opt;
             }
         }
-        return $new_data;
+        return $data;
     }
 
 }

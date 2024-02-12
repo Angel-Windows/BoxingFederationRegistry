@@ -3,6 +3,7 @@
 namespace Database\Factories\Category;
 
 use App\Models\Category\CategorySchool;
+use App\Models\Category\CategorySportsInstitutions;
 use App\Models\Category\CategoryTrainer;
 use App\Models\Class\BoxFederation;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -20,7 +21,7 @@ class CategorySportsmanFactory extends Factory
      */
     public $federation = null;
     public $trainer = null;
-    public $school = null;
+    public $sports_institutions = null;
 
     public function definition(): array
     {
@@ -28,11 +29,11 @@ class CategorySportsmanFactory extends Factory
         if (!$this->federation) {
             $this->federation = BoxFederation::all();
             $this->trainer = CategoryTrainer::all();
-            $this->school = CategorySchool::all();
+            $this->sports_institutions = CategorySportsInstitutions::all();
         }
         $rand_federation = $this->federation->random()->id;
         $rand_trainer = $this->trainer->random()->id;
-        $rand_school = $this->school->random()->id;
+        $rand_sports_institutions = $this->sports_institutions->random()->id;
         $address_address = randomAddress();
 
         $family = [];
@@ -61,7 +62,7 @@ class CategorySportsmanFactory extends Factory
             'passport' => $this->faker->numerify('#########'),
             'federation' => $rand_federation,
             'trainer' => $rand_trainer,
-            'school' => $rand_school,
+            'sports_institutions' => $rand_sports_institutions,
             'achievements' => $this->faker->sentence,
             'rank' => random_int(0, 4),
             'family' => json_encode($family),

@@ -5,7 +5,9 @@ import * as forms_script from "./components/forms.js";
 
 const checkbox_toggle = (elem) => {
     const input = elem.querySelector('input');
-    input.checked = elem.classList.contains('delete');
+
+    const shouldRevert = input.classList.contains('revert');
+    input.checked = shouldRevert ? !elem.classList.contains('delete') : elem.classList.contains('delete');
 }
 window.functionsArray = {
     'ajax_post': ajax_scripts.Post,

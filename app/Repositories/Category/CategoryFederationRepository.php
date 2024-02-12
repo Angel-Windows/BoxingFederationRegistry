@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Category;
 
+use App\Models\Category\CategorySportsman;
 use App\Models\Category\CategoryTrainer;
 use App\Models\Class\BoxFederation;
 use App\Models\Class\ClassType;
@@ -11,6 +12,7 @@ use App\Repositories\Interfaces\CategoryRepositoryInterface;
 use App\Services\MyAuthService;
 use App\Traits\CategoryUITrait;
 use App\Traits\DataTypeTrait;
+use DB;
 
 class CategoryFederationRepository implements CategoryRepositoryInterface
 {
@@ -30,11 +32,23 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
 
 
     private $data_inputs = [
-
+        'employees' => [
+            'type' => 'checkbox-list',
+            'checkbox_type' => 'revert',
+            'title' => 'Працівники федерації',
+        ], 'members' => [
+            'type' => 'table-list',
+//            'type' => 'checkbox-list',
+            'checkbox_type' => 'revert',
+            'title' => 'Члени федерації',
+        ],
     ];
+
 
     private function get_edit($table, $id): array
     {
+//        dd($this->data);
+
         return [
             [
                 'type' => '',
@@ -54,9 +68,10 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
                                 $table['street'],
                                 $table['house_number'],
                                 $table['apartment_number'],
-                                $table['members'],
                             ],
                         ],
+                        $table['employees'],
+                        $table['members'],
                     ],
             ],
         ];
@@ -81,6 +96,53 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
     private function get_value($table, $category_data): array
     {
         $new_data = $table;
+
+//
+//        $trainers = CategoryTrainer::where('federation', $category_data->id)->get();
+//        $sportsman = CategorySportsman::where('federation', $category_data->id)->get();
+//        foreach ($trainers as $trainer) {
+//            $new_data['members']['data'][] = [
+//                'logo' => $trainer->name,
+//                'name' => $trainer->name,
+//                'phone' => $trainer->name,
+//                'email' => $trainer->name,
+//                'type_element' => $trainer->name,
+//
+//            ];
+//        }
+        $trainers = CategoryTrainer::where('federation', $category_data->id)
+            ->select(
+                'id',
+                'logo',
+                'name',
+                'email',
+                'phone',
+                DB::raw("'trainer' as type_elem")
+            );
+
+        $sportsman = CategorySportsman::where('federation', $category_data->id)
+            ->select(
+                'id',
+                'logo',
+                'name',
+                'email',
+                'phone',
+                DB::raw("'sportsman' as type_elem")
+            );
+        $combinedResults = $trainers->union($sportsman)->get();
+//        dd($combinedResults);
+        foreach ($combinedResults as $combinedResult) {
+            $new_data['members']['data'][] = [
+                'logo' => [
+                    'img' => $combinedResult->logo,
+                    'name' => $combinedResult->name
+                ],
+                $combinedResult->phone,
+                $combinedResult->email,
+                $combinedResult->type_elem == 'trainer' ?  'Тренер': 'Спортсмен',
+                'value' => json_encode([$combinedResult->type_elem, $combinedResult->id]),
+            ];
+        }
         $this->getDefaultValue($new_data, $category_data, $this->is_default_length);
 
         $this->GetValueInputs($category_data->director, 'director', $new_data);

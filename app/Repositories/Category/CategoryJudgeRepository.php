@@ -91,18 +91,7 @@ class CategoryJudgeRepository implements CategoryRepositoryInterface
                 'Третій юнацький розряд',
             ],
         ],
-        'gov' => [
-            'name' => 'gov',
-            'tag' => 'select-box',
-            'class' => 'no-active',
-            'placeholder' => 'Державні заохочення',
-            'size' => 'fool',
-            'option' => [
-                'box' => 'Бокс',
-                'school-box' => 'Школа бокса',
-                'yoga' => 'Йога',
-            ],
-        ]
+
     ];
 
 

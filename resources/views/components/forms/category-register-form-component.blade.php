@@ -30,129 +30,167 @@
                         <h3>
                             <p>{{$item_list['title']}}</p>
                             @if($item_list['button'] ?? null)
-                            <div
-                                class="button"
-                                onclick="functionsArray['open_modal']('add-form-item', {'class_types': 1})"
-                                {{--                                onclick="functionsArray['open_modal']('add-form-item', {'class_types': 1})"--}}
-                            >
-                                <span>+</span>
-                                <span>Додати</span>
-                            </div>
+                                <div
+                                    class="button"
+                                    onclick="functionsArray['open_modal']('add-form-item', {'class_types': 1})"
+                                    {{--                                onclick="functionsArray['open_modal']('add-form-item', {'class_types': 1})"--}}
+                                >
+                                    <span>+</span>
+                                    <span>Додати</span>
+                                </div>
                             @endif
                         </h3>
                     @endif
-                    <div class="table">
-                        @foreach($item_list['data'] as $item)
-
-                            @php
-                                $class = '';
-                                $class .= $item['class'] ?? "";
-                                $class .= " ";
-                                $class .=  $item['size'] ?? "";
-                                $class .= " ";
-
-                                $value = "";
-
-                                if (isset($item['value']) &&  ($item['value'] || $item['value'] == 0) ){
-                                    $class .= ' active';
-                                    $value = $item['value'];
-                                }
-                            @endphp
-                            @switch($item['tag'] ?? '')
-
-                                @case('input')
-
+                    @switch($item_list['type'] ?? '')
+                        @case('checkbox-list')
+                            {{--                            @dd(2)--}}
+                            <div class="checkbox-list fool">
+                                @foreach($item_list['data'] ?? [] as $user_ids=>$item_data)
                                     @php
-                                        $name = $item['placeholder'] ?? $item ?? "No text";
-                                        $type =  $item['type'] ?? "text";
+                                        $class = '';
+                                        $class .= $item_data['checkbox_type'] ?? '' ;
                                     @endphp
-                                    <label class="label hovered type__text  {{$class}}">
-                                        <span class="unselectable">{{$item['placeholder']}}</span>
-                                        <input class="input" placeholder="" name="{{$item['name']}}"
-                                               type="{{$type}}" value="{{$value}}">
-                                    </label>
-                                    @break
-                                @case('no-active')
-                                    <label class="label type__text   {{$class}} no-active">
-                                        <span class="unselectable">{{$item['placeholder']}}</span>
-                                        <input class="" placeholder="" name="{{$item['name']}}"
-                                               type="{{$type}}" value="">
-                                    </label>
-                                    @break
-                                @case('custom-select')
-                                    @include('components.forms.custom-select',
-                                        [
-                                            'class_name'=> $class,
-                                            'placeholder'=>$item['placeholder'],
-                                            'value'=>$value,
-                                            'text'=>$item['text'] ?? '',
-                                            'name'=>$item['name'],
-                                            'option'=>$item['option'] ?? []
-                                        ])
-                                    @break
-                                @case('select-box')
-                                    <div class="select-box   {{$class}}">
-                                        <label class="label type__text hovered  {{$class}}">
-{{--                                            @foreach($item['option'] as $key_opt=>$item_opt)--}}
-{{--                                                @if(($item['name'] ?? '') == 'rank')@dd($item['value'] ?? '') @endif--}}
-{{--                                                <option @if($key_opt === ($item_opt['value'] ?? '')) selected @endif value="{{$key_opt}}">{{$item_opt}}</option>--}}
-{{--                                            @endforeach--}}
-                                            <span class="unselectable">{{$item['placeholder']}}</span>
-                                            <select
-                                                type="text"
-                                                name="{{$item['name']??''}}"
-                                                value="{{$value}}"
-                                                class=" input">
-                                                <option value="">Не обрано</option>
-                                                @foreach($item['option'] as $key_opt=>$item_opt)
-                                                    <option @if($key_opt == ($item['value'] ?? '')) selected @endif value="{{$key_opt}}">{{$item_opt}}</option>
-                                                @endforeach
-                                            </select>
+                                    <div class="label type__checkbox no_check inline-flex">
+                                        <div class="text">
+                                            <span class="">{{$item_data['text'] ?? ''}}</span>
+                                            @if(isset($item_data['subtitle']))
+                                                <span class="subtitle">{{$item_data['subtitle'] ?? ''}}</span>
+                                            @endif
+                                        </div>
+                                        <label
+                                            onclick="functionsArray['toggle_parent_active'](this, 'label', 'delete', 'checkbox_toggle')">
+                                            <input type="checkbox"
+                                                   @if(!($item_data['checkbox_type'] ?? false)) checked @endif
+                                                   name="{{$item_list['name'] ?? ''}}[]"
+                                                   value="{{$item_data['value'] ?? ''}}"
+                                                   class="{{$class}}"
+
+                                            >
                                         </label>
                                     </div>
-                                    @break
-                                @case('checkbox-list')
-                                    <div class="checkbox-list fool">
-                                        @foreach($item['data'] as $user_ids=>$item_data)
-                                            <div class="label type__checkbox no_check inline-flex">
-                                                <div class="text">
-                                                    <span class="">{{$item_data['text']}}</span>
-                                                    <span class="subtitle">{{$item_data['text']}}</span>
-                                                </div>
+                                @endforeach
+                            </div>
+                            @break
+                        @case('history_works')
+                            <div class="history-work fool">
+                                <table class="no-wrap m-grid-3">
+                                    <tbody>
+                                    {{--                                    @dd($item_list['data'])--}}
+                                    @foreach($item_list['data'] ?? [] as $item_data)
+                                        <tr class="label type__checkbox no_check ">
+                                            <td>{{$item_data['name']}}</td>
+                                            <td class="m-span-1">{{$item_data['start_work']}}</td>
+                                            <td class="no_size m-span-1">-</td>
+                                            <td class="m-span-1">{{$item_data['end_work']}}</td>
+                                            <td class="m-span-1 pl-0 label_button"><label
+                                                    class="pl-0 "
+                                                    onclick="functionsArray['toggle_parent_active'](this, 'label', 'delete')"><input
+                                                        type="checkbox"></label></td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            @break
+                        @case('table-list')
+                            <div class="fool todo_table">
+                                <table class="no-wrap m-grid-3">
+                                    {{--                                        @if(isset($item_right['data']['thead']))--}}
+                                    {{--                                            <thead>--}}
+                                    {{--                                            <tr>--}}
+                                    {{--                                                @foreach($item_right['data']['thead'] as $thead_item)--}}
+                                    {{--                                                    <th>{{$thead_item}}</th>--}}
+                                    {{--                                                @endforeach--}}
+                                    {{--                                            </tr>--}}
+                                    {{--                                            </thead>--}}
+                                    {{--                                        @endif--}}
+                                    <tbody>
+                                    @foreach($item_list['data'] ?? [] as $item_body)
+                                        <tr class="label type__checkbox no_check ">
+                                            @foreach($item_body as $key=>$item_td)
+                                                @switch($key)
+                                                    @case('logo')
+                                                        <td>
+                                                            <div
+                                                                style="white-space: nowrap; display: flex; align-items: center">
+                                                                <div class="img"><img
+                                                                        src="{{ MyAsset($item_td['img']) }}"
+                                                                        alt="">
+                                                                </div>
+                                                                <span>{{$item_td['name']}}</span>
+                                                            </div>
+                                                        </td>
+                                                        @break
+                                                    @case('value')
+                                                        <td class="m-span-1 pl-0 label_button"><label
+                                                                class="pl-0 "
+                                                                onclick="functionsArray['toggle_parent_active'](this, 'label', 'delete')"><input
+                                                                    type="checkbox"></label></td>
+                                                        @break
+                                                    @default
+                                                        <td>
+                                                            <span>{{$item_td}}</span>
+                                                        </td>
+                                        @endswitch
+                                    @endforeach
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            @break
+                        @case('table')
+                            <div class="table">
+                                @foreach($item_list['data'] ?? [] as $item)
+                                    @php
+                                        $class = '';
+                                        $class .= $item['class'] ?? "";
+                                        $class .= " ";
+                                        $class .=  $item['size'] ?? "";
+                                        $class .= " ";
 
-                                                <label
-                                                    onclick="functionsArray['toggle_parent_active'](this, 'label', 'delete', 'checkbox_toggle')">
-                                                    <input type="checkbox" checked name="{{$item['name']}}[]"
-                                                           value="{{$item_data['value']}}">
-                                                </label>
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                    @break
-                                @case('history-work')
-                                    <div class="history-work fool">
-                                        <table class="no-wrap m-grid-3">
-                                            <tbody>
-                                            @foreach($item['data'] as $item_data)
-                                                <tr class="label type__checkbox no_check ">
-                                                    <td>{{$item_data->name}}</td>
-                                                    <td class="m-span-1">{{$item_data->start_work}}</td>
-                                                    <td class="no_size m-span-1">-</td>
-                                                    <td class="m-span-1">{{$item_data->end_work}}</td>
-                                                    <td class="m-span-1 pl-0 label_button"><label
-                                                            class="pl-0 "
-                                                            onclick="functionsArray['toggle_parent_active'](this, 'label', 'delete')"><input
-                                                                type="checkbox"></label></td>
-                                                </tr>
-                                            @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    @break
-                                @default
-                            @endswitch
-                        @endforeach
-                    </div>
+                                        $value = "";
+
+                                        if (isset($item['value']) &&  ($item['value'] || $item['value'] == 0) ){
+                                            $class .= ' active';
+                                            $value = $item['value'];
+                                        }
+                                    @endphp
+                                    @switch($item['tag'] ?? '')
+                                        @case('input')
+
+                                            @php
+                                                $name = $item['placeholder'] ?? $item ?? "No text";
+                                                $type =  $item['type'] ?? "text";
+                                            @endphp
+                                            <label class="label hovered type__text  {{$class}}">
+                                                <span class="unselectable">{{$item['placeholder']}}</span>
+                                                <input class="input" placeholder="" name="{{$item['name']}}"
+                                                       type="{{$type}}" value="{{$value}}">
+                                            </label>
+                                            @break
+                                        @case('no-active')
+                                            <label class="label fool type__text no-active">
+                                                <span class="unselectable">{{$item['placeholder']}}</span>
+                                                <input class="" placeholder=""
+                                                       value="">
+                                            </label>
+                                            @break
+                                        @case('custom-select')
+                                            @include('components.forms.custom-select',
+                                                [
+                                                    'class_name'=> $class,
+                                                    'placeholder'=>$item['placeholder'],
+                                                    'value'=>$value,
+                                                    'text'=>$item['text'] ?? '',
+                                                    'name'=>$item['name'],
+                                                    'option'=>$item['option'] ?? []
+                                                ])
+                                            @break
+                                    @endswitch
+                                @endforeach
+                            </div>
+                        @default
+                    @endswitch
                 @endforeach
             </div>
     @endforeach

@@ -30,8 +30,9 @@ class GroupMigrate extends Command
         $this->call('migrate', ['--path' => '/database/migrations/default']);
         $this->call('migrate', ['--path' => '/database/migrations/payment']);
 
-        $this->call('migrate', ['--path' => '/database/migrations/class']);
         $this->call('migrate', ['--path' => '/database/migrations/category']);
+
+        $this->call('migrate', ['--path' => '/database/migrations/employees']);
 
         $this->call('migrate', ['--path' => '/database/migrations/links']);
     }

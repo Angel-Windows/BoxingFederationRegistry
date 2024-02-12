@@ -29,6 +29,10 @@ Route::name('page.')->group(function () {
         return view('test_page');
     })->name('test');
     Route::get('/trainer', [TrainerController::class, 'index'])->name('trainer');
+    Route::get('/class', static function () {
+        return redirect()->route('page.home');
+    });
+
     Route::get('/class/{class_name}/{id}', [TrainerController::class, 'class_page'])->name('class');
     Route::get('/class/{class_name}/{id}/edit', [TrainerController::class, 'edit_page'])->name('class.edit_page');
     Route::post('/class/{class_name}/{id}/edit', [TrainerController::class, 'edit'])->name('class.edit');

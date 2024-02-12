@@ -4,9 +4,12 @@ namespace App\Repositories\Category;
 
 use App\Http\Controllers\Page\TrainerController;
 use App\Models\Category\CategorySchool;
+use App\Models\Category\CategorySportsInstitutions;
+use App\Models\Category\CategorySportsman;
 use App\Models\Category\CategoryTrainer;
 use App\Models\Class\BoxFederation;
 use App\Models\Class\ClassType;
+use App\Models\Linking\LinkingMembers;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
 use App\Traits\CategoryUITrait;
 use App\Traits\DataTypeTrait;
@@ -22,21 +25,44 @@ class CategoryTrainerRepository implements CategoryRepositoryInterface
     private $is_default_length = 'fool';
     public $table_model = CategoryTrainer::class;
     private $data;
+
     public function __construct()
     {
         $this->category_type_id = ClassType::getIdCategory('category_sports_institutions');
         $this->data = $this->getDefaultArrayData($this->is_default_length, $this->data_inputs);
     }
+
     private $data_inputs = [
-
+        'sportsmen' => [
+            'type' => 'checkbox-list',
+            'checkbox_type' => 'revert',
+            'title' => 'Спортсмени',
+        ],
     ];
-
-
 
     private function get_edit($table, $id): array
     {
+
+        $sportsman = CategorySportsman::where('trainer', $id)
+            ->get();
         $table['federation']['option'] = BoxFederation::pluck('name', 'id');
 
+
+        $table['sportsmen']['data'] = [];
+
+
+
+
+
+//        dd($table['history_works']);
+
+
+        foreach ($sportsman as $sportsman_item) {
+            $table['sportsmen']['data'][] = [
+                'text' => $sportsman_item->name,
+                'value' => $sportsman_item->id,
+            ];
+        }
 
         return [
             [
@@ -61,6 +87,8 @@ class CategoryTrainerRepository implements CategoryRepositoryInterface
                                 $table['gov'],
                             ],
                         ],
+                        $table['sportsmen'],
+                        $table['history_works'],
                     ],
             ],
         ];
@@ -87,13 +115,33 @@ class CategoryTrainerRepository implements CategoryRepositoryInterface
     {
         $new_data = $table;
 
-        $this->getDefaultValue($new_data, $category_data, $this->is_default_length);
-        $this->GetValueInputs($category_data->qualification , 'qualification', $new_data);
-        $this->GetValueInputs($category_data->school , 'school', $new_data);
-        $this->GetValueInputs($category_data->rank , 'rank', $new_data);
-        $this->GetValueInputs($category_data->sportsmen , 'sportsmen', $new_data);
-        $this->GetValueInputs($category_data->federation , 'federation', $new_data);
 
+        $linking = LinkingMembers::leftJoin('category_sports_institutions', 'category_sports_institutions.id', 'linking_members.category_id')
+            ->where('category_type', ClassType::getIdCategory('category_sports_institutions'))
+            ->where('member_id', $category_data->id)
+            ->select(
+                'linking_members.*',
+                'category_sports_institutions.name as category_sports_institutions_name',
+                'category_sports_institutions.id as category_sports_institutions_id',
+            )
+            ->get();
+        foreach ($linking as $link) {
+            $new_data['history_works']['data'][] = [
+                'name' => $link->category_sports_institutions_name,
+                'start_work' => ($link->date_start_at),
+                'end_work' => $link->date_end_at,
+                'value' => $link->category_sports_institutions_id,
+            ];
+        }
+
+        $this->getDefaultValue($new_data, $category_data, $this->is_default_length);
+        $this->GetValueInputs($category_data->qualification, 'qualification', $new_data);
+        $this->GetValueInputs($category_data->school, 'school', $new_data);
+        $this->GetValueInputs($category_data->rank, 'rank', $new_data);
+//        $this->GetValueInputs($category_data->sportsmen, 'sportsmen', $new_data);
+        $this->GetValueInputs($category_data->federation, 'federation', $new_data);
+
+        $new_data['sportsmen']['data'] = CategorySportsman::where('trainer', $category_data->id)->pluck('name', 'id')->toArray();
         $new_data['gov']['value'] = $category_data->gov ?? "";
 
         return $new_data;
@@ -140,7 +188,7 @@ class CategoryTrainerRepository implements CategoryRepositoryInterface
                                     $table['school']['text'] ?? '',
                                 ], [
                                     $table['sportsmen']['placeholder'],
-                                    'asdf, asdf,acvzfv, sdfgsdfht, adaf cxvzrg',
+                                    implode(', ', $table['sportsmen']['data']),
                                 ],
                             ],
                         ],

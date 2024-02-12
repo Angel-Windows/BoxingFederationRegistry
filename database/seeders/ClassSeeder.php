@@ -27,37 +27,21 @@ class ClassSeeder extends Seeder
         $count_seed = 25;
         $rebase = true;
         if ($count_seed > 0) {
-
-            if ((!CategoryTrainer::exists() && true) || $rebase) {
-                dump('CategoryTrainer');
-                CategoryTrainer::truncate();
-                CategoryTrainer::factory()->count($count_seed)->create();
-            }
-
-            if ((!CategoryStore::exists() && true) || $rebase) {
-                dump('CategoryStore');
-                CategoryStore::truncate();
-                CategoryStore::factory()->count($count_seed)->create();
-            }
-
-            if ((!CategoryInsurance::exists() && true) || $rebase) {
-                dump('CategoryInsurance');
-                CategoryInsurance::truncate();
-                CategoryInsurance::factory()->count($count_seed)->create();
-            }
-
-            if ((!CategoryMedical::exists() && true) || $rebase) {
-                dump('CategoryMedical');
-                CategoryMedical::truncate();
-                CategoryMedical::factory()->count($count_seed)->create();
-            }
-
             if ((!CategorySchool::exists() && true) || $rebase) {
                 dump('CategorySchool');
                 CategorySchool::truncate();
                 CategorySchool::factory()->count($count_seed)->create();
             }
-
+            if ((!CategoryMedical::exists() && true) || $rebase) {
+                dump('CategoryMedical');
+                CategoryMedical::truncate();
+                CategoryMedical::factory()->count($count_seed)->create();
+            }
+            if ((!CategoryInsurance::exists() && true) || $rebase) {
+                dump('CategoryInsurance');
+                CategoryInsurance::truncate();
+                CategoryInsurance::factory()->count($count_seed)->create();
+            }
             if ((!CategoryFunZone::exists() && true) || $rebase) {
                 dump('CategoryFunZone');
                 CategoryFunZone::truncate();
@@ -75,19 +59,30 @@ class ClassSeeder extends Seeder
                 BoxFederation::truncate();
                 BoxFederation::factory()->count($count_seed)->create();
             }
+            if ((!CategoryStore::exists() && true) || $rebase) {
+                dump('CategoryStore');
+                CategoryStore::truncate();
+                CategoryStore::factory()->count($count_seed)->create();
+            }
 
 
+            if ((!CategoryTrainer::exists() && true) || $rebase) {
+                dump('CategoryTrainer');
+                CategoryTrainer::truncate();
+                CategoryTrainer::factory()->count($count_seed * 2)->create();
+            }
             if ((!CategorySportsman::exists() && true) || $rebase) {
                 dump('CategorySportsman');
                 CategorySportsman::truncate();
-                CategorySportsman::factory()->count($count_seed)->create();
+                CategorySportsman::factory()->count($count_seed * 2)->create();
             }
-
             if ((!CategoryJudge::exists() && true) || $rebase) {
                 dump('CategoryJudge');
                 CategoryJudge::truncate();
-                CategoryJudge::factory()->count($count_seed)->create();
+                CategoryJudge::factory()->count($count_seed * 2)->create();
             }
+
+
             //Працівники
 
 

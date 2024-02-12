@@ -21,7 +21,7 @@ class LinkingMembersSeeder extends Seeder
             foreach ($parent_table as $item_parent) {
                 foreach (json_decode($item->linking) as $item_link) {
                     $category_type = ClassType::getIdCategory($item_link);
-                    $count_rand = random_int(10, 40);
+                    $count_rand = random_int(2, 14);
                     $table_link = \DB::table($item_link)->inRandomOrder()->limit($count_rand)->get();
 
                     foreach ($table_link as $item_table) {
@@ -33,7 +33,7 @@ class LinkingMembersSeeder extends Seeder
                             'type' => 1,
                             'role' => Factory::create()->jobTitle,
                             'date_start_at' => Factory::create()->date,
-                            'date_end_at' => null,
+                            'date_end_at' => random_int(0,1) ? Factory::create()->date : null,
                         ];
                     }
                 }

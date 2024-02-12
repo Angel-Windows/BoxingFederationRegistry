@@ -29,7 +29,7 @@ return new class extends Migration
             $table->string('foreign_passport')->nullable();
             $table->integer('federation')->nullable();
             $table->integer('trainer')->nullable();
-            $table->integer('school')->nullable();
+            $table->integer('sports_institutions')->nullable();
             $table->string('achievements')->nullable();
             $table->integer('rank')->nullable();
             $table->json('family')->nullable();

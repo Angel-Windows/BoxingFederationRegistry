@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Category;
 
-use App\Models\Category\CategorySchool;
+use App\Models\Category\CategorySportsInstitutions;
 use App\Models\Category\CategorySportsman;
 use App\Models\Category\CategoryTrainer;
 use App\Models\Class\BoxFederation;
@@ -10,8 +10,10 @@ use App\Models\Class\ClassType;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
 use App\Traits\CategoryUITrait;
 use App\Traits\DataTypeTrait;
-use App\Traits\FondyTrait;
 
+/**
+ * @property null $category_type_id
+ */
 class SportsmanFederationRepository implements CategoryRepositoryInterface
 {
     use CategoryUITrait;
@@ -54,7 +56,8 @@ class SportsmanFederationRepository implements CategoryRepositoryInterface
     private function get_edit($table, $id, $model): array
     {
         $table['federation']['option'] = BoxFederation::pluck('name', 'id');
-        $table['school']['option'] = CategorySchool::pluck('name', 'id');
+        $table['sports_institutions']['option'] = CategorySportsInstitutions::pluck('name', 'id');
+        $table['trainer']['option'] = CategoryTrainer::pluck('name', 'id');
 
         return [
             [
@@ -79,52 +82,56 @@ class SportsmanFederationRepository implements CategoryRepositoryInterface
 
                                 $table['federation'],
                                 $table['trainer'],
-                                $table['school'],
+                                $table['sports_institutions'],
                                 $table['achievements'],
                                 $table['rank'],
                             ],
-                        ], [
-                        'title' => 'Місце народження',
-                        'type' => 'table',
-                        'data' => [
-                            $table['address_birth'],
                         ],
-                    ], [
-                        'title' => 'Адреса проживання',
-                        'type' => 'table',
-                        'data' => [
-                            $table['city'],
-                            $table['street'],
-                            $table['house_number'],
-                            $table['apartment_number'],
+                        [
+                            'title' => 'Місце народження',
+                            'type' => 'table',
+                            'data' => [
+                                $table['address_birth'],
+                            ],
+                        ],
+                        [
+                            'title' => 'Адреса проживання',
+                            'type' => 'table',
+                            'data' => [
+                                $table['city'],
+                                $table['street'],
+                                $table['house_number'],
+                                $table['apartment_number'],
 
+                            ],
                         ],
-                    ], [
-                        'title' => 'Паспорт український',
-                        'type' => 'table',
-                        'data' => [
-                            $table['passport'],
+                        [
+                            'title' => 'Паспорт український',
+                            'type' => 'table',
+                            'data' => [
+                                $table['passport'],
+                            ],
                         ],
-                    ], [
-                        'title' => 'Паспорт закордонний',
-                        'type' => 'table',
-                        'data' => [
-                            $table['foreign_passport'],
+                        [
+                            'title' => 'Паспорт закордонний',
+                            'type' => 'table',
+                            'data' => [
+                                $table['foreign_passport'],
+                            ],
                         ],
-                    ], [
-                        'title' => 'Сім’я',
-                        'button' => 'add-family',
-                        'type' => 'table',
-                        'data' =>
-//                            json_decode($model->family, true)
-                            [
+                        [
+                            'title' => 'Сім’я',
+                            'button' => 'add-family',
+                            'type' => 'table',
+                            'data' =>
+                                [
 
-                            $table['first_name'],
-                            $table['first_name'],
-                            $table['first_name'],
+                                    $table['first_name'],
+                                    $table['first_name'],
+                                    $table['first_name'],
 
+                                ],
                         ],
-                    ],
                     ],
             ]
         ];
@@ -143,7 +150,7 @@ class SportsmanFederationRepository implements CategoryRepositoryInterface
         $category->weight_category = $request->input('weight_category');
         $category->federation = $request->input('federation');
         $category->trainer = $request->input('trainer');
-        $category->school = $request->input('school');
+        $category->sports_institutions = $request->input('sports_institutions');
         $category->achievements = $request->input('achievements');
         $category->rank = $request->input('rank');
         $category->address_birth = $request->input('address_birth');
@@ -164,7 +171,7 @@ class SportsmanFederationRepository implements CategoryRepositoryInterface
 
         $this->getDefaultValue($new_data, $category_data, $this->is_default_length);
 
-        $this->GetValueInputs($category_data->school, 'school', $new_data);
+        $this->GetValueInputs($category_data->sports_institutions, 'sports_institutions', $new_data);
         $this->GetValueInputs($category_data->federation, 'federation', $new_data);
         $this->GetValueInputs($category_data->birthday, 'birthday', $new_data);
         $this->GetValueInputs($category_data->gender, 'gender', $new_data);
@@ -176,7 +183,7 @@ class SportsmanFederationRepository implements CategoryRepositoryInterface
         $this->GetValueInputs($category_data->passport, 'passport', $new_data);
         $this->GetValueInputs($category_data->trainer, 'trainer', $new_data);
         $this->GetValueInputs($category_data->achievements, 'achievements', $new_data);
-        $this->GetValueInputs($category_data->school, 'school', $new_data);
+        $this->GetValueInputs($category_data->sports_institutions, 'sports_institutions', $new_data);
         $this->GetValueInputs($category_data->rank, 'rank', $new_data);
 
 
@@ -228,8 +235,8 @@ class SportsmanFederationRepository implements CategoryRepositoryInterface
                                     $table['trainer']['placeholder'],
                                     $table['trainer']['text'] ?? '',
                                 ], [
-                                    $table['school']['placeholder'],
-                                    $table['school']['text'] ?? '',
+                                    $table['sports_institutions']['placeholder'],
+                                    $table['sports_institutions']['text'] ?? '',
                                 ], [
                                     $table['achievements']['placeholder'],
                                     $table['achievements']['text'] ?? '',
