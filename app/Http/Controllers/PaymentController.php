@@ -40,7 +40,7 @@ class PaymentController extends Controller
         $transaction = TransactionCategory::where('key', $merchant_data->key)->first();
         $transaction->update(['status' => 2, 'get_transaction_at'=> $now]);
 
-
+        dd($transaction);
 
 
         $merchant_data = json_decode($request->input('merchant_data'), false, 512, JSON_THROW_ON_ERROR);
