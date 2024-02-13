@@ -120,7 +120,7 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
 
         }
         if ($sportsmen) {
-            CategorySportsman::whereIn('id', $sportsmen)->update(['sports_institutions'=>null]);
+            CategorySportsman::whereIn('id', $sportsmen)->update(['sports_institutions' => null]);
         }
 
 
@@ -132,7 +132,8 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
 
 
         return [
-            'error' => null
+            'error' => null,
+            'data'=>$category
         ];
     }
 
@@ -152,6 +153,8 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
 
     private function created_view($table, $id): array
     {
+
+
         $members_works = LinkingMembers::leftJoin('category_trainers', 'category_trainers.id', 'linking_members.member_id')
             ->whereNull('linking_members.date_end_at')
             ->where('linking_members.category_id', $id)
@@ -172,12 +175,28 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
             ->get();
         $works = [];
         foreach ($members_works as $member) {
-            $works[] = [$member->logo, $member->name, $member->role, $member->phone, $member->email];
+            $works[] = [
+                'logo' => [
+                    'img' => $member->logo,
+                    'name' => $member->name
+                ],
+                $member->name,
+                $member->role,
+                $member->phone,
+                $member->email];
         }
 
         $sportsmens = [];
         foreach ($sportsmens_data as $sportsmen) {
-            $sportsmens[] = [$sportsmen->logo, $sportsmen->name, $sportsmen->phone, $sportsmen->email];
+            $sportsmens[] = [
+                'logo' => [
+                    'img' => $sportsmen->logo,
+                    'name' => $sportsmen->name
+                ],
+                $sportsmen->name,
+                $sportsmen->phone,
+                $sportsmen->email
+            ];
         }
         return [
             [
@@ -224,18 +243,19 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
                     [
                         'type' => 'todo_table',
                         'data' => [
-                            'thead' => ['ПІП', '', 'Посада', 'Телефон', 'Пошта'],
+                            'thead' => ['ПІП', 'Посада', 'Телефон', 'Пошта'],
                             'body' => $works,
                         ],
                     ],
                 ],
             ], [
                 'title' => 'Спортсмени',
+                'class' => 'fool',
                 'data_wrapper' => [
                     [
                         'type' => 'todo_table',
                         'data' => [
-                            'thead' => ['ПІП', '', 'Телефон', 'Пошта'],
+                            'thead' => ['ПІП', 'Телефон', 'Пошта'],
                             'body' => $sportsmens,
                         ],
                     ],

@@ -87,7 +87,8 @@ class EmployeesSchoolRepository implements CategoryRepositoryInterface
 
 
         return [
-            'error' => null
+            'error' => null,
+            'data'=>$category
         ];
     }
 

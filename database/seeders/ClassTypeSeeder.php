@@ -57,7 +57,7 @@ class ClassTypeSeeder extends Seeder
                 'genitive' => 'спортивного закладу',
                 'accusative' => 'sss',
                 'description' => 'Ви можете переглядати інформацію про всіх суддів, їх контакти та інші данні',
-                'linking' => json_encode(['category_trainers', 'category_member_sports_institutions']),
+                'linking' => json_encode(['category_trainers', 'category_judges']),
                 'count' => 123,
                 'link' => 'category_sports_institutions',
                 'logo' => 'img/homeAbout/sports_grounds.svg'

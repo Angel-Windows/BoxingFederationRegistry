@@ -250,7 +250,7 @@ trait DataTypeTrait
         ],
         'history_works' => [
             'title' => 'Історія місць роботи',
-            'name' => 'history_works',
+            'name' => 'history_works[]',
             'tag' => 'history_works',
             'type' => 'history_works',
             'class' => 'fool',

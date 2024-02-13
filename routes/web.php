@@ -66,7 +66,6 @@ Route::prefix('payment')->name('payment.')->group(function () {
         // CALLBACK
         Route::match(['get', 'post'], '/response-url', [PaymentController::class, 'response_url'])->name('response-url');
         Route::match(['get', 'post'], '/callback-url', [PaymentController::class, 'callback_url'])->name('callback-url');
-
     });
 });
 
@@ -76,6 +75,7 @@ Route::name('ajax.')->prefix('ajax/')->group(function () {
     Route::post('/search-in-class', [AjaxController::class, 'search_in_class'])->name('search-in-class');
     Route::post('/search-in-class-no-form', [AjaxController::class, 'search_in_class_no_form'])->name('search-in-class-no-form');
     Route::post('/upload-img', [AjaxController::class, 'upload_img'])->name('upload-img');
+    Route::post('/add_history_work', [AjaxController::class, 'add_history_work'])->name('add_history_work');
 
 });
 Route::prefix('config')->name('config.')->group(function () {

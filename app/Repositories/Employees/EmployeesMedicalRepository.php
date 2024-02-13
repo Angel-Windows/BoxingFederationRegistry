@@ -87,7 +87,8 @@ class EmployeesMedicalRepository implements CategoryRepositoryInterface
 
 
         return [
-            'error' => null
+            'error' => null,
+            'data'=>$category
         ];
     }
 

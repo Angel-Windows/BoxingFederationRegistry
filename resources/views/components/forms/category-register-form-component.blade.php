@@ -10,6 +10,7 @@
     @csrf
     @php
         $model_table = new $get['modeles'];
+
         $hasLogoColumn =  $model_table->getConnection()->getSchemaBuilder()->hasColumn($model_table->getTable(), 'logo');
         if ($hasLogoColumn){
             $class_table = 'table-auto_fool';
@@ -32,7 +33,7 @@
                             @if($item_list['button'] ?? null)
                                 <div
                                     class="button"
-                                    onclick="functionsArray['open_modal']('add-form-item', {'class_types': 1})"
+                                    onclick="functionsArray['open_modal']('add-form-item', {'class_types': '{{$category_name}}', 'type_action': '{{$item_list['button']}}', 'id' : '{{$id}}'})"
                                     {{--                                onclick="functionsArray['open_modal']('add-form-item', {'class_types': 1})"--}}
                                 >
                                     <span>+</span>
@@ -48,7 +49,9 @@
                                 @foreach($item_list['data'] ?? [] as $user_ids=>$item_data)
                                     @php
                                         $class = '';
-                                        $class .= $item_data['checkbox_type'] ?? '' ;
+                                         if (($item_data['checkbox_type'] ?? '') == 'revert' || ($item_list['checkbox_type'] ?? '')  == 'revert' ){
+                                                $class .=  ' revert';
+                                             }
                                     @endphp
                                     <div class="label type__checkbox no_check inline-flex">
                                         <div class="text">
@@ -84,8 +87,12 @@
                                             <td class="m-span-1">{{$item_data['end_work']}}</td>
                                             <td class="m-span-1 pl-0 label_button"><label
                                                     class="pl-0 "
-                                                    onclick="functionsArray['toggle_parent_active'](this, 'label', 'delete')"><input
-                                                        type="checkbox"></label></td>
+                                                    onclick="functionsArray['toggle_parent_active'](this, 'label', 'delete')">
+                                                    <input
+                                                        type="checkbox"
+                                                        name="{{$item_list['name']}}"
+                                                        value="{{$item_data['value']}}"
+                                                    ></label></td>
                                         </tr>
                                     @endforeach
                                     </tbody>
@@ -176,25 +183,16 @@
                                             </label>
                                             @break
                                         @case('select-box')
-                                            <div class="select-box   {{$class}}">
-                                                <label class="label type__text hovered  {{$class}}">
-                                                    {{--                                            @foreach($item['option'] as $key_opt=>$item_opt)--}}
-                                                    {{--                                                @if(($item['name'] ?? '') == 'rank')@dd($item['value'] ?? '') @endif--}}
-                                                    {{--                                                <option @if($key_opt === ($item_opt['value'] ?? '')) selected @endif value="{{$key_opt}}">{{$item_opt}}</option>--}}
-                                                    {{--                                            @endforeach--}}
-                                                    <span class="unselectable">{{$item['placeholder']}}</span>
-                                                    <select
-                                                        type="text"
-                                                        name="{{$item['name']??''}}"
-                                                        value="{{$value}}"
-                                                        class=" input">
-                                                        <option value="">Не обрано</option>
-                                                        @foreach($item['option'] as $key_opt=>$item_opt)
-                                                            <option @if($key_opt == ($item['value'] ?? '')) selected @endif value="{{$key_opt}}">{{$item_opt}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </label>
-                                            </div>
+                                            @include('components.forms.select-box',
+                                                [
+                                                    'class_name'=> $class,
+                                                    'placeholder'=>$item['placeholder'],
+                                                    'value'=>$value,
+                                                    'text'=>$item['text'] ?? '',
+                                                    'name'=>$item['name'],
+                                                    'option'=>$item['option'] ?? []
+                                                ])
+
                                             @break
                                         @case('custom-select')
                                             @include('components.forms.custom-select',
@@ -221,7 +219,7 @@
                             <span>Приймаю всі <a href="">умови користування</a> і також <a href="">політику конфіденційності</a></span>
                         </label>
                     </div>
-                    @endif
+                @endif
             </div>
 
     @endforeach

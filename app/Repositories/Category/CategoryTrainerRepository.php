@@ -13,6 +13,7 @@ use App\Models\Linking\LinkingMembers;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
 use App\Traits\CategoryUITrait;
 use App\Traits\DataTypeTrait;
+use Carbon\Carbon;
 
 /**
  * @property null $category_type_id
@@ -38,6 +39,9 @@ class CategoryTrainerRepository implements CategoryRepositoryInterface
             'checkbox_type' => 'revert',
             'title' => 'Спортсмени',
         ],
+        'history_works' => [
+            'button' => 'add_history',
+        ]
     ];
 
     private function get_edit($table, $id): array
@@ -51,9 +55,6 @@ class CategoryTrainerRepository implements CategoryRepositoryInterface
         $table['sportsmen']['data'] = [];
 
 
-
-
-
 //        dd($table['history_works']);
 
 
@@ -63,7 +64,10 @@ class CategoryTrainerRepository implements CategoryRepositoryInterface
                 'value' => $sportsman_item->id,
             ];
         }
-
+        if (!$id) {
+            $table['sportsmen'] = null;
+            $table['history_works'] = null;
+        }
         return [
             [
                 'type' => '',
@@ -97,6 +101,27 @@ class CategoryTrainerRepository implements CategoryRepositoryInterface
     public function edit($id, $request, $type): array
     {
 
+
+        if ($links = LinkingMembers::whereIn('id', $request->input('history_works') ?? [])->get()) {
+            $update_null = [];
+            $update_now = [];
+            foreach ($links as $link) {
+                if ($link->date_end_at === null) {
+                    $update_now[] = $link->id;
+                } else {
+                    $update_null[] = $link->id;
+                }
+            }
+        }
+
+        if ($sportsmen = $request->input('sportsmen')){
+            CategorySportsman::whereIn('id', $sportsmen)->update(['trainer'=>null]);
+        }
+
+        LinkingMembers::whereIn('id', $update_null)->update(['date_end_at' => null]);
+        LinkingMembers::whereIn('id', $update_now)->update(['date_end_at' => Carbon::now()]);
+
+
         $category = self::validate_category($request, $this->table_model, $id);
 
         $category->qualification = $request->input('qualification');
@@ -107,7 +132,8 @@ class CategoryTrainerRepository implements CategoryRepositoryInterface
 
 
         return [
-            'error' => null
+            'error' => null,
+            'data'=>$category
         ];
     }
 
@@ -122,7 +148,7 @@ class CategoryTrainerRepository implements CategoryRepositoryInterface
             ->select(
                 'linking_members.*',
                 'category_sports_institutions.name as category_sports_institutions_name',
-                'category_sports_institutions.id as category_sports_institutions_id',
+                'linking_members.id as linking_members_id',
             )
             ->get();
         foreach ($linking as $link) {
@@ -130,10 +156,9 @@ class CategoryTrainerRepository implements CategoryRepositoryInterface
                 'name' => $link->category_sports_institutions_name,
                 'start_work' => ($link->date_start_at),
                 'end_work' => $link->date_end_at,
-                'value' => $link->category_sports_institutions_id,
+                'value' => $link->linking_members_id,
             ];
         }
-
         $this->getDefaultValue($new_data, $category_data, $this->is_default_length);
         $this->GetValueInputs($category_data->qualification, 'qualification', $new_data);
         $this->GetValueInputs($category_data->school, 'school', $new_data);
@@ -149,6 +174,14 @@ class CategoryTrainerRepository implements CategoryRepositoryInterface
 
     private function created_view($table, $id): array
     {
+        foreach ($table['history_works']['data'] as $item) {
+            $table['history_works']['data_view'][] = [
+                $item['name'],
+                $item['start_work'],
+                '-',
+                $item['end_work'],
+            ];
+        }
 
         return [
             [
@@ -196,6 +229,7 @@ class CategoryTrainerRepository implements CategoryRepositoryInterface
                 ],
             ], [
                 'title' => 'Історія місць роботи',
+                'class' => ' fool',
                 'data_wrapper' => [
                     [
                         'type' => 'table',
@@ -203,39 +237,15 @@ class CategoryTrainerRepository implements CategoryRepositoryInterface
                         'data' => [
                             'thead' => ['Назва закладу', 'Початок', '', 'Кінець'],
 
-                            'body' => [
-                                [
-                                    $table['qualification']['placeholder'],
-                                    $table['qualification']['value'] ?? '',
-                                    '',
-                                    $table['qualification']['value'] ?? '',
-                                ], [
-                                    $table['federation']['placeholder'],
-                                    $table['federation']['value'] ?? '',
-                                    '',
-                                    $table['federation']['value'] ?? '',
-                                ], [
-                                    $table['address']['placeholder'],
-                                    $table['address']['value'] ?? '',
-                                    '',
-                                    $table['address']['value'] ?? '',
-                                ], [
-                                    $table['rank']['placeholder'],
-                                    $table['rank']['value'] ?? '',
-                                    '',
-                                    $table['rank']['value'] ?? '',
-                                ], [
-                                    $table['gov']['placeholder'],
-                                    $table['gov']['value'] ?? '',
-                                    '',
-                                    $table['gov']['value'] ?? '',
-                                ], [
-                                    $table['school']['placeholder'],
-                                    $table['school']['value'] ?? '',
-                                    '',
-                                    $table['school']['value'] ?? '',
-                                ],
-                            ],
+                            'body' =>
+                                $table['history_works']['data_view']
+//                                [
+//                                    $table['qualification']['placeholder'],
+//                                    $table['qualification']['value'] ?? '',
+//                                    '',
+//                                    $table['qualification']['value'] ?? '',
+//                                ]
+
                         ],
                     ],
                 ],

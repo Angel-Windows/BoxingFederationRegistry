@@ -84,7 +84,8 @@ class EmployeesSportsInstitutionsRepository implements CategoryRepositoryInterfa
 
 
         return [
-            'error' => null
+            'error' => null,
+            'data'=>$category
         ];
     }
 

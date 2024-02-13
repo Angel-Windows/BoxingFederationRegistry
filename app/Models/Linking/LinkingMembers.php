@@ -18,4 +18,8 @@ use Illuminate\Database\Eloquent\Model;
 class LinkingMembers extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'date_end_at'
+    ];
+
 }

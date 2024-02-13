@@ -3,8 +3,10 @@
 namespace App\Repositories\Category;
 
 use App\Models\Category\CategoryJudge;
+use App\Models\Category\CategorySportsman;
 use App\Models\Category\CategoryTrainer;
 use App\Models\Class\ClassType;
+use App\Models\Linking\LinkingMembers;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
 use App\Traits\CategoryUITrait;
 use App\Traits\DataTypeTrait;
@@ -21,7 +23,9 @@ class CategoryJudgeRepository implements CategoryRepositoryInterface
         $this->data = $this->getDefaultArrayData($this->is_default_length, $this->data_inputs);
     }
     private $data_inputs = [
-
+        'history_works'=>[
+            'button' => 'add_history',
+        ]
     ];
     private $data = [
 
@@ -98,6 +102,7 @@ class CategoryJudgeRepository implements CategoryRepositoryInterface
 
     private function get_edit($table, $id): array
     {
+
         return [
             [
                 'type' => '',
@@ -120,6 +125,7 @@ class CategoryJudgeRepository implements CategoryRepositoryInterface
                                 $table['gov'],
                             ],
                         ],
+                        $table['history_works'],
                     ],
             ],
         ];
@@ -137,7 +143,8 @@ class CategoryJudgeRepository implements CategoryRepositoryInterface
 
 
         return [
-            'error' => null
+            'error' => null,
+            'data'=>$category
         ];
     }
 
@@ -150,6 +157,24 @@ class CategoryJudgeRepository implements CategoryRepositoryInterface
         $this->GetValueInputs($category_data->school, 'school', $new_data);
         $this->GetValueInputs($category_data->rank, 'rank', $new_data);
         $this->GetValueInputs($category_data->gov, 'gov', $new_data);
+
+        $linking = LinkingMembers::leftJoin('category_sports_institutions', 'category_sports_institutions.id', 'linking_members.category_id')
+            ->where('category_type', ClassType::getIdCategory('category_judges'))
+            ->where('member_id', $category_data->id)
+            ->select(
+                'linking_members.*',
+                'category_sports_institutions.name as category_sports_institutions_name',
+                'category_sports_institutions.id as category_sports_institutions_id',
+            )
+            ->get();
+        foreach ($linking as $link) {
+            $new_data['history_works']['data'][] = [
+                'name' => $link->category_sports_institutions_name,
+                'start_work' => ($link->date_start_at),
+                'end_work' => $link->date_end_at,
+                'value' => $link->category_sports_institutions_id,
+            ];
+        }
 
         return $new_data;
     }
@@ -194,6 +219,7 @@ class CategoryJudgeRepository implements CategoryRepositoryInterface
                 ],
             ], [
                 'title' => 'Історія місць роботи',
+                'class'=>'fool',
                 'data_wrapper' => [
                     [
                         'type' => 'table',

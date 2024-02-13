@@ -26,6 +26,7 @@ class FormsCategoryRegisterFormComponent extends Component
      */
     public function render(): View|Closure|string
     {
+
         return view('components.forms.category-register-form-component')
             ->with('table', $this->get['table'])
             ->with('more_data', $this->get['more_data'])

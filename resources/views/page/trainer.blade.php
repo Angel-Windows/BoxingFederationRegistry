@@ -18,21 +18,18 @@
         @endif
     </section>
     <section class="table-auto_fool">
-        @if(isset($more_data['logo']['link']))
-            <div class="{{$more_data['logo']['class'] ?? ''}}">
-                <div class="img"><img
-                        src="{{ MyAsset($more_data['logo']['link']) }}"
-                        alt=""></div>
-            </div>
-        @endif
 
-
-        <div>
+            @if(isset($more_data['logo']['link']))
+                <div class="{{$more_data['logo']['class'] ?? ''}}">
+                    <div class="img"><img
+                            src="{{ MyAsset($more_data['logo']['link']) }}"
+                            alt=""></div>
+                </div>
+            @endif
             @include('components.info.info')
             {{--                @foreach($data_info as $item_wrapper)--}}
             {{--                   --}}
             {{--                @endforeach--}}
-        </div>
         {{--        @endif--}}
         {{--        @if(isset($data_info['bottom_panel']))--}}
         {{--            <div class="grid-sp-2">--}}

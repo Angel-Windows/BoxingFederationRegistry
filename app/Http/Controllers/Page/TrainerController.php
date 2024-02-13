@@ -36,6 +36,7 @@ class TrainerController extends Controller
 
     public function class_page($class_name, $id)
     {
+
         $get_data = $this->get_data($class_name, ['id' => $id, 'type' => 'preview']);
 
         return view('page.trainer')
@@ -50,7 +51,6 @@ class TrainerController extends Controller
     {
 
         $get = $this->get_data($class_name, ['id' => $id, 'type' => 'edit_page']);
-
         if (!MyAuthService::CheckMiddlewareRoute($get['more_data'])) {
             return redirect()->route('page.class', [
                 'class_name' => $class_name,

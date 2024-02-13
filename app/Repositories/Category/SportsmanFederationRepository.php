@@ -13,6 +13,8 @@ use App\Traits\DataTypeTrait;
 
 /**
  * @property null $category_type_id
+ * @method static where(string $string, $sportsmen)
+ * @method static whereIn(string $string, $sportsmen)
  */
 class SportsmanFederationRepository implements CategoryRepositoryInterface
 {
@@ -161,7 +163,8 @@ class SportsmanFederationRepository implements CategoryRepositoryInterface
 
 
         return [
-            'error' => null
+            'error' => null,
+            'data'=>$category
         ];
     }
 

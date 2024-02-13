@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Component;
 
 use App\Http\Controllers\Controller;
 use App\Models\Class\ClassType;
+use App\Models\Linking\LinkingMembers;
 use App\Traits\CategoryUITrait;
 use App\Traits\DataTypeTrait;
 use App\View\Components\modal\CategoryRegisterComponent;
@@ -22,7 +23,7 @@ class AjaxController extends Controller
 {
     use CategoryUITrait;
 
-    public function open_modal(Request $request): JsonResponse
+    public function open_modal(Request $request)
     {
         if ($request->has('modal')) {
             switch ($request->input('modal')) {
@@ -59,14 +60,16 @@ class AjaxController extends Controller
                     }
                     break;
                 case "add-form-item":
-                    $menuMarkButtons = new ModalAddFormItemComponent();
+
+
+//                    return response((new ModalAddFormItemComponent($request))->render());
+                    $menuMarkButtons = new ModalAddFormItemComponent($request);
                     break;
 
                 default:
                     $menuMarkButtons = new ModalNofFoundComponent($request->input('modal'));
             }
         }
-
 
         $menuMarkButtonsView = $menuMarkButtons->render()->render();
         return response()->json(
@@ -121,6 +124,21 @@ class AjaxController extends Controller
     public function upload_img(Request $request)
     {
 
+    }
+
+    public function add_history_work(Request $request)
+    {
+        $type_class = $request->input('class_types');
+        $linkingMembers = new LinkingMembers();
+        $linkingMembers->category_id = $request->input('sport_institute');
+        $linkingMembers->category_type = ClassType::getIdCategory($type_class);
+        $linkingMembers->member_id = $request->input('id');
+        $linkingMembers->member_type = 3;
+        $linkingMembers->type = 1;
+        $linkingMembers->role = 1;
+        $linkingMembers->date_start_at = $request->input('date_start');
+        $linkingMembers->save();
+        return redirect()->back();
     }
 
 

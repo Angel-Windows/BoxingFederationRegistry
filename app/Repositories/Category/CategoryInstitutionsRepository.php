@@ -7,6 +7,7 @@ use App\Models\Category\CategoryMedical;
 use App\Models\Category\CategorySchool;
 use App\Models\Category\CategoryTrainer;
 use App\Models\Class\ClassType;
+use App\Models\Linking\LinkingMembers;
 use App\Repositories\Interfaces\CategoryInstitutionsRepositoryInterface;
 use App\Traits\CategoryUITrait;
 use App\Traits\DataTypeTrait;
@@ -16,6 +17,7 @@ class CategoryInstitutionsRepository implements CategoryInstitutionsRepositoryIn
 {
     use DataTypeTrait;
     use CategoryUITrait;
+
     private $is_default_length = 'fool';
     private $data = [
         'director' => [
@@ -27,15 +29,18 @@ class CategoryInstitutionsRepository implements CategoryInstitutionsRepositoryIn
         ],
     ];
 
-     public $table_model = CategoryInsurance::class;
+    public $table_model = CategoryInsurance::class;
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->category_type_id = ClassType::getIdCategory('category_sports_institutions');
         $this->data = $this->getDefaultArrayData($this->is_default_length, $this->data_inputs);
     }
+
     private $data_inputs = [
 
     ];
+
     private function get_edit($table, $id): array
     {
         return [
@@ -77,7 +82,8 @@ class CategoryInstitutionsRepository implements CategoryInstitutionsRepositoryIn
 
 
         return [
-            'error' => null
+            'error' => null,
+            'data'=>$category
         ];
     }
 
@@ -95,6 +101,46 @@ class CategoryInstitutionsRepository implements CategoryInstitutionsRepositoryIn
 
     private function created_view($table, $id): array
     {
+
+//        $members_works = LinkingMembers::leftJoin('category_trainers', 'category_trainers.id', 'linking_members.member_id')
+//            ->where('linking_members.category_id', $id)
+//            ->where('linking_members.category_type', $this->category_type_id)
+//            ->select(
+//                'linking_members.*',
+//                'category_trainers.name',
+//                'category_trainers.phone',
+//                'category_trainers.email',
+//                'category_trainers.logo',
+//            )
+//            ->get();
+
+
+        $members_works = LinkingMembers::leftJoin('category_trainers', 'category_trainers.id', 'linking_members.member_id')
+            ->where('linking_members.category_id', $id)
+            ->where('linking_members.category_type', $this->category_type_id)
+            ->select(
+                'linking_members.*',
+                'category_trainers.name',
+                'category_trainers.phone',
+                'category_trainers.email',
+                'category_trainers.logo',
+            )
+            ->get();
+
+        $works = [];
+        foreach ($members_works as $member) {
+            $works[] = [
+                'logo' => [
+                    'img' => $member->logo,
+                    'name' => $member->name
+                ],
+                $member->name,
+                $member->role,
+                $member->phone,
+                $member->email
+            ];
+        }
+
         return [
             [
                 'title' => null,
@@ -122,7 +168,22 @@ class CategoryInstitutionsRepository implements CategoryInstitutionsRepositoryIn
                         ],
                     ],
                 ],
-            ]
+            ],
+            [
+                'title' => 'Страхові агенти',
+                'class' => 'fool',
+                'data_wrapper' => [
+                    [
+                        'type' => 'todo_table',
+                        'button_add' => '',
+
+                        'data' => [
+                            'thead' => ['ПІП', 'Посада', 'Телефон', 'Пошта'],
+                            'body' => $works,
+                        ],
+                    ],
+                ],
+            ],
         ];
     }
 

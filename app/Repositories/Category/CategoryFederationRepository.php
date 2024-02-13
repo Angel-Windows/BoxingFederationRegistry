@@ -91,7 +91,7 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
     public function edit($id, $request, $type): array
     {
         $category = self::validate_category($request, $this->table_model, $id);
-      
+
         $category->director = $request->input('director') ?? '';
         $category->federation = $request->input('federation') ?? '';
         $category->edrpou = $request->input('edrpou') ?? '';
@@ -100,7 +100,8 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
 
 
         return [
-            'error' => null
+            'error' => null,
+            'data'=>$category
         ];
     }
 

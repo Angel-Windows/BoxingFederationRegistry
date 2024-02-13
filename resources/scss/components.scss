@@ -25,7 +25,8 @@
 }
 .table-auto_fool {
     display: grid;
-    grid-template-columns: minmax(333px, auto) 1fr;
+    grid-template-columns: auto 1fr;
+    //grid-template-columns: minmax(333px, auto) 1fr;
     gap: 24px;
     h3 {
         display: flex;
