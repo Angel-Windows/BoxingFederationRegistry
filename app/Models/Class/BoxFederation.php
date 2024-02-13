@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static exists()
  * @method static find($id)
  * @method static pluck(string $string, string $string1)
+ * @method static whereIn(string $string, $linking)
  */
 class BoxFederation extends Model
 {

@@ -18,7 +18,6 @@
         @endif
     </section>
     <section class="table-auto_fool">
-
             @if(isset($more_data['logo']['link']))
                 <div class="{{$more_data['logo']['class'] ?? ''}}">
                     <div class="img"><img

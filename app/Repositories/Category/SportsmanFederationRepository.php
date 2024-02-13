@@ -7,6 +7,7 @@ use App\Models\Category\CategorySportsman;
 use App\Models\Category\CategoryTrainer;
 use App\Models\Class\BoxFederation;
 use App\Models\Class\ClassType;
+use App\Models\Linking\LinkingMembers;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
 use App\Traits\CategoryUITrait;
 use App\Traits\DataTypeTrait;
@@ -55,17 +56,44 @@ class SportsmanFederationRepository implements CategoryRepositoryInterface
         ],
         'family' => [
             'size' => 'fool'
+        ], 'federation' => [
+            'tag' => 'select-box',
+        ], 'sports_institutions' => [
+            'tag' => 'select-box',
         ],
     ];
 
     private function get_edit($table, $id, $model): array
     {
-        $table['federation']['option'] = BoxFederation::pluck('name', 'id');
-        $table['sports_institutions']['option'] = CategorySportsInstitutions::pluck('name', 'id');
+
+
         $table['trainer']['option'] = CategoryTrainer::pluck('name', 'id');
-        if (!$id){
+        if (!$id) {
+            $table['sports_institutions']['option'] = CategorySportsInstitutions::pluck('name', 'id');
+            $table['federation']['option'] = BoxFederation::pluck('name', 'id');
             $table['family'] = null;
+        } else {
+            $linking = LinkingMembers::where('member_id', $model->trainer)
+                ->where('category_type', ClassType::getIdCategory('category_sports_institutions'))
+                ->pluck('category_id');
+            if ($linking) {
+                $table['sports_institutions']['option'] = CategorySportsInstitutions::whereIn('id', $linking)
+                    ->pluck('name', 'id');
+            } else {
+                $table['sports_institutions']['option'] = CategorySportsInstitutions::pluck('name', 'id');
+            }
+            $linking_federation = LinkingMembers::where('member_id', $model->trainer)
+                ->where('category_type', ClassType::getIdCategory('box_federations'))
+                ->pluck('category_id');
+            if ($linking_federation) {
+                $table['federation']['option'] = BoxFederation::whereIn('id', $linking)
+                    ->pluck('name', 'id');
+            } else {
+                $table['federation']['option'] = BoxFederation::pluck('name', 'id');
+            }
         }
+
+
         return [
             [
                 'type' => '',
@@ -92,6 +120,7 @@ class SportsmanFederationRepository implements CategoryRepositoryInterface
                                 $table['sports_institutions'],
                                 $table['achievements'],
                                 $table['rank'],
+
                             ],
                         ],
                         [
@@ -125,20 +154,7 @@ class SportsmanFederationRepository implements CategoryRepositoryInterface
                             'data' => [
                                 $table['foreign_passport'],
                             ],
-                        ],$table['family']
-//                        [
-//                            'title' => 'Сім’я',
-//                            'button' => 'add-family',
-//                            'type' => 'table',
-//                            'data' =>
-//                                [
-//
-//                                    $table['first_name'],
-//                                    $table['first_name'],
-//                                    $table['first_name'],
-//
-//                                ],
-//                        ],
+                        ], $table['family']
                     ],
             ]
         ];
@@ -149,7 +165,7 @@ class SportsmanFederationRepository implements CategoryRepositoryInterface
 
         $category = self::validate_category($request, $this->table_model, $id);
         $family_arr = [];
-        foreach ($request->input('family') as $item) {
+        foreach ($request->input('family') ?? [] as $item) {
             $family_arr[] = json_decode($item, true);
         }
         $category->birthday = $request->input('birthday');
@@ -173,14 +189,13 @@ class SportsmanFederationRepository implements CategoryRepositoryInterface
 
         return [
             'error' => null,
-            'data'=>$category
+            'data' => $category
         ];
     }
 
     private function get_value($table, $category_data): array
     {
         $new_data = $table;
-
 
 
         foreach (json_decode($category_data->family, true) as $link) {
@@ -218,61 +233,63 @@ class SportsmanFederationRepository implements CategoryRepositoryInterface
     {
         return [
             [
-                'title' => null,
-                'data_wrapper' => [
-                    [
-                        'type' => 'buttons',
-                        'data' => [
-                            $table['phone'],
-                            $table['email'],
+                [
+                    'title' => null,
+                    'data_wrapper' => [
+                        [
+                            'type' => 'buttons',
+                            'data' => [
+                                $table['phone'],
+                                $table['email'],
+                            ],
                         ],
-                    ],
-                    [
-                        'type' => 'table',
-                        'data' => [
-                            'body' => [
-                                [
-                                    $table['birthday']['placeholder'],
-                                    $table['birthday']['text'] ?? '',
-                                ], [
-                                    $table['gender']['placeholder'],
-                                    $table['gender']['text'] ?? '',
-                                ], [
-                                    $table['weight']['placeholder'],
-                                    $table['weight']['text'] ?? '',
-                                ], [
-                                    $table['height']['placeholder'],
-                                    $table['height']['text'] ?? '',
-                                ], [
-                                    $table['weight_category']['placeholder'],
-                                    $table['weight_category']['text'] ?? '',
-                                ], [
-                                    $table['address_birth']['placeholder'],
-                                    $table['address_birth']['text'] ?? '',
-                                ], [
-                                    $table['address']['placeholder'],
-                                    $table['address']['text'] ?? '',
-                                ], [
-                                    $table['federation']['placeholder'],
-                                    $table['federation']['text'] ?? '',
-                                ], [
-                                    $table['trainer']['placeholder'],
-                                    $table['trainer']['text'] ?? '',
-                                ], [
-                                    $table['sports_institutions']['placeholder'],
-                                    $table['sports_institutions']['text'] ?? '',
-                                ], [
-                                    $table['achievements']['placeholder'],
-                                    $table['achievements']['text'] ?? '',
-                                ], [
-                                    $table['rank']['placeholder'],
-                                    $table['rank']['text'] ?? '',
+                        [
+                            'type' => 'table',
+                            'data' => [
+                                'body' => [
+                                    [
+                                        $table['birthday']['placeholder'],
+                                        $table['birthday']['text'] ?? '',
+                                    ], [
+                                        $table['gender']['placeholder'],
+                                        $table['gender']['text'] ?? '',
+                                    ], [
+                                        $table['weight']['placeholder'],
+                                        $table['weight']['text'] ?? '',
+                                    ], [
+                                        $table['height']['placeholder'],
+                                        $table['height']['text'] ?? '',
+                                    ], [
+                                        $table['weight_category']['placeholder'],
+                                        $table['weight_category']['text'] ?? '',
+                                    ], [
+                                        $table['address_birth']['placeholder'],
+                                        $table['address_birth']['text'] ?? '',
+                                    ], [
+                                        $table['address']['placeholder'],
+                                        $table['address']['text'] ?? '',
+                                    ], [
+                                        $table['federation']['placeholder'],
+                                        $table['federation']['text'] ?? '',
+                                    ], [
+                                        $table['trainer']['placeholder'],
+                                        $table['trainer']['text'] ?? '',
+                                    ], [
+                                        $table['sports_institutions']['placeholder'],
+                                        $table['sports_institutions']['text'] ?? '',
+                                    ], [
+                                        $table['achievements']['placeholder'],
+                                        $table['achievements']['text'] ?? '',
+                                    ], [
+                                        $table['rank']['placeholder'],
+                                        $table['rank']['text'] ?? '',
+                                    ],
                                 ],
                             ],
                         ],
+
                     ],
-                ],
-            ], [
+                ], [
                 'title' => 'Сім’я',
                 'data_wrapper' => [
                     [
@@ -325,6 +342,7 @@ class SportsmanFederationRepository implements CategoryRepositoryInterface
                         ],
                     ],
                 ],
+            ],
             ],
         ];
     }

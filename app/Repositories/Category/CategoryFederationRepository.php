@@ -62,6 +62,7 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
         return [
             [
                 'type' => '',
+
                 'data_block' =>
                     [
                         [
@@ -101,7 +102,7 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
 
         return [
             'error' => null,
-            'data'=>$category
+            'data' => $category
         ];
     }
 
@@ -184,11 +185,27 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
 
         $works = [];
         foreach ($members_works as $member) {
-            $works[] = [$member->logo, $member->name, $member->role, $member->phone, $member->email];
+            $works[] = [
+                'logo' => [
+                    'img' => $member->logo,
+                    'name' => $member->name
+                ],
+                $member->role,
+                $member->phone,
+                $member->email
+            ];
         }
+
+        if ($works) {
+            $table['federation_members']['data_wrapper'][0]['data']['body'] = $works;
+        }else{
+            $table['federation_members'] = null;
+        }
+
         return [
-            [
+            [[
                 'title' => null,
+                'class' => 'fool',
                 'data_wrapper' => [
                     [
                         'type' => 'buttons',
@@ -220,26 +237,26 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
                         ],
                     ],
                 ],
-            ], [
-                'title' => 'Працівники федерації',
-                'data_wrapper' => [
-                    [
-                        'type' => 'todo_table',
-                        'button_add' => '',
-
-                        'data' => [
-                            'thead' => ['ПІП', '', 'Посада', 'Телефон', 'Пошта'],
-                            'body' => $works,
-                        ],
-                    ],
-                ],
-            ],
+            ], $table['federation_members']]
+//            [
+//                'title' => 'Працівники федерації',
+//                'data_wrapper' => [
+//                    [
+//                        'type' => 'todo_table',
+//                        'button_add' => '',
+//
+//                        'data' => [
+//                            'thead' => ['ПІП', '', 'Посада', 'Телефон', 'Пошта'],
+//                            'body' => $works,
+//                        ],
+//                    ],
+//                ],
+//            ],
         ];
     }
 
     public function get_data($data, $request = null): array
     {
-
         $type = $data['type'] ?? '';
         $category = $this->table_model::find($data['id']);
         $more_data = [];

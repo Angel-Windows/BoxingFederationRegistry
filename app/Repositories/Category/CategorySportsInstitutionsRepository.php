@@ -42,22 +42,28 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
 
     private function get_edit($table, $id): array
     {
-
         $members_works = LinkingMembers::leftJoin('category_trainers', 'category_trainers.id', 'linking_members.member_id')
             ->where('linking_members.category_id', $id)
             ->whereNull('linking_members.date_end_at')
             ->where('linking_members.category_type', $this->category_type_id)
             ->select(
                 'linking_members.*',
+                'category_trainers.id as category_trainers_id',
                 'category_trainers.name',
                 'category_trainers.phone',
                 'category_trainers.email',
                 'category_trainers.logo',
             )
             ->get();
-        $sportsman = CategorySportsman::where('sports_institutions', $id)
-            ->get();
+        $trainers_id = $members_works->pluck('category_trainers_id')->toArray();
 
+        $sportsman = CategorySportsman::whereIn('trainer', $trainers_id)
+            ->where('sports_institutions', $id)
+            ->orWhere(function ($query) use ($id) {
+                $query->where('sports_institutions', $id)
+                    ->whereNull('trainer');
+            })
+            ->get();
         $table['members']['data'] = [];
         $table['sportsmen']['data'] = [];
         foreach ($members_works as $member) {
@@ -134,7 +140,7 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
 
         return [
             'error' => null,
-            'data'=>$category
+            'data' => $category
         ];
     }
 
@@ -200,7 +206,7 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
             ];
         }
         return [
-            [
+            [[
                 'title' => null,
                 'data_wrapper' => [
                     [
@@ -237,31 +243,32 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
                         ],
                     ],
                 ],
-            ], [
-                'title' => 'Працівники які працюють в закладі',
-                'class' => 'fool',
-                'data_wrapper' => [
-                    [
-                        'type' => 'todo_table',
-                        'data' => [
-                            'thead' => ['ПІП', 'Посада', 'Телефон', 'Пошта'],
-                            'body' => $works,
+            ]], [
+                [
+                    'title' => 'Працівники які працюють в закладі',
+                    'class' => 'fool',
+                    'data_wrapper' => [
+                        [
+                            'type' => 'todo_table',
+                            'data' => [
+                                'thead' => ['ПІП', 'Посада', 'Телефон', 'Пошта'],
+                                'body' => $works,
+                            ],
                         ],
                     ],
-                ],
-            ], [
-                'title' => 'Спортсмени',
-                'class' => 'fool',
-                'data_wrapper' => [
-                    [
-                        'type' => 'todo_table',
-                        'data' => [
-                            'thead' => ['ПІП', 'Телефон', 'Пошта'],
-                            'body' => $sportsmens,
+                ], [
+                    'title' => 'Спортсмени',
+                    'class' => 'fool',
+                    'data_wrapper' => [
+                        [
+                            'type' => 'todo_table',
+                            'data' => [
+                                'thead' => ['ПІП', 'Телефон', 'Пошта'],
+                                'body' => $sportsmens,
+                            ],
                         ],
                     ],
-                ],
-            ],
+                ],]
         ];
     }
 

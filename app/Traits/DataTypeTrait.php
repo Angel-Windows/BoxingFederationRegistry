@@ -480,6 +480,19 @@ trait DataTypeTrait
 
             ],
         ],
+        'federation_members'=> [
+            'title' => 'Працівники федерації',
+            'data_wrapper' => [
+                [
+                    'type' => 'todo_table',
+                    'button_add' => '',
+                    'data' => [
+                        'thead' => ['ПІП',  'Посада', 'Телефон', 'Пошта'],
+                        'body' => [],
+                    ],
+                ],
+            ],
+        ],
     ];
 
     public function getDefaultArrayData($name_type = '', $data = []): array

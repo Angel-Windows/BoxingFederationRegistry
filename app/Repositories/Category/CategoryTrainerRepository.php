@@ -183,7 +183,7 @@ class CategoryTrainerRepository implements CategoryRepositoryInterface
         }
 
         return [
-            [
+            [[
                 'title' => null,
                 'data_wrapper' => [
                     [
@@ -248,7 +248,7 @@ class CategoryTrainerRepository implements CategoryRepositoryInterface
                         ],
                     ],
                 ],
-            ],
+            ],]
         ];
     }
 

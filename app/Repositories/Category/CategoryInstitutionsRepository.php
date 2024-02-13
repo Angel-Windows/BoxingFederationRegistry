@@ -83,7 +83,7 @@ class CategoryInstitutionsRepository implements CategoryInstitutionsRepositoryIn
 
         return [
             'error' => null,
-            'data'=>$category
+            'data' => $category
         ];
     }
 
@@ -142,7 +142,7 @@ class CategoryInstitutionsRepository implements CategoryInstitutionsRepositoryIn
         }
 
         return [
-            [
+            [[
                 'title' => null,
                 'data_wrapper' => [
                     [
@@ -168,8 +168,9 @@ class CategoryInstitutionsRepository implements CategoryInstitutionsRepositoryIn
                         ],
                     ],
                 ],
-            ],
+            ]],
             [
+                [
                 'title' => 'Страхові агенти',
                 'class' => 'fool',
                 'data_wrapper' => [
@@ -184,6 +185,7 @@ class CategoryInstitutionsRepository implements CategoryInstitutionsRepositoryIn
                     ],
                 ],
             ],
+                ]
         ];
     }
 

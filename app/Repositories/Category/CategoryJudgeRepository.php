@@ -182,7 +182,7 @@ class CategoryJudgeRepository implements CategoryRepositoryInterface
     private function created_view($table, $id): array
     {
         return [
-            [
+            [[
                 'title' => null,
                 'data_wrapper' => [
                     [
@@ -263,7 +263,7 @@ class CategoryJudgeRepository implements CategoryRepositoryInterface
                         ],
                     ],
                 ],
-            ],
+            ],]
         ];
     }
 
