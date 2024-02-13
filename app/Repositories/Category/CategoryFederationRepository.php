@@ -45,6 +45,10 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
         'name' => [
             'size' => 'fool',
         ],
+        'federation' => [
+            'placeholder' => 'Підпорядковані федерації',
+            'size'=>''
+        ],
     ];
 
 

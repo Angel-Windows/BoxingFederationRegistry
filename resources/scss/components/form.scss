@@ -14,6 +14,7 @@
     width: 370px;
     height: 500px;
     max-width: 370px;
+
     .img {
         position: absolute;
         top: 0;
@@ -21,12 +22,14 @@
         right: 0;
         bottom: 0;
         height: 100%;
+
         input {
             object-fit: cover;
             height: 100%;
             width: 100%;
         }
     }
+
     .buttons {
         position: absolute;
         bottom: 20px;
@@ -140,9 +143,11 @@ form {
             display: block;
             margin-top: 1em;
         }
-        &.no-active{
+
+        &.no-active {
             background: var(--grey-middle);
         }
+
         &.type__text {
             span {
                 cursor: text;
@@ -169,10 +174,12 @@ form {
                 opacity: 0;
                 font-size: 0;
             }
+
             input[type='number']::-webkit-outer-spin-button,
             input[type='number']::-webkit-inner-spin-button {
                 -webkit-appearance: none;
             }
+
             select {
                 left: 0;
                 right: 0;
@@ -256,9 +263,11 @@ form {
 
     .custom-select, .select-box {
         position: relative;
-        &.no-active{
+
+        &.no-active {
             background: red;
         }
+
         &:before {
             content: '';
             position: absolute;
@@ -313,9 +322,11 @@ form {
 
 
 }
+
 .category-register {
     max-width: 1000px;
     width: 100%;
+
     .table-auto_fool {
         grid-gap: 34px;
         display: grid;
@@ -355,5 +366,14 @@ form {
 
     .right input {
         width: auto;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .table {
+        display: block;
+        .label{
+            margin-bottom: 10px;
+        }
     }
 }

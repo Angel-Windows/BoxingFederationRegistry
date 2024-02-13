@@ -28,8 +28,9 @@ body {
 
 .home {
     background: linear-gradient(0deg, rgba(0, 0, 0, 0.70) 0%, rgba(0, 0, 0, 0.70) 100%), url("../../img/home_bg.png"), lightgray 50% / cover no-repeat;
-    background-size: 100vw;
+    //background-size: 100vw;
     background-attachment: fixed;
+    background-size: cover;
 
     .content-wrapper {
         padding-left: 68px;
@@ -45,6 +46,7 @@ body {
     .card-about-list {
 
         display: grid;
+        //grid-template-columns: repeat(5, 1fr);
         grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
         gap: 20px;
         align-items: flex-start;
@@ -147,7 +149,8 @@ body {
             .back {
                 transform: rotateY(-180deg);
                 background: white;
-                h2{
+
+                h2 {
                     color: var(--text);
                 }
             }
@@ -218,4 +221,154 @@ body {
         }
     }
 
+}
+
+@media screen and (max-width: 1000px) {
+    .home {
+        .content-wrapper {
+            padding-left: 36px;
+            padding-right: 36px;
+        }
+
+        .card-about-list {
+            .card {
+                height: 300px;
+
+                .back p {
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 770px) {
+    .home .card-about-list {
+        grid-template-columns: 1fr;
+
+        .card {
+            height: 200px;
+
+            h2 {
+                margin-top: 0;
+            }
+
+
+            .back {
+                .img {
+                    display: none;
+                }
+            }
+        }
+
+        .front {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            grid-template-rows: auto 1fr;
+
+            .carl_logo {
+                grid-column: 1;
+                grid-row: span 2;
+                margin-right: 20px;
+            }
+        }
+
+    }
+}
+
+@media screen and (max-width: 490px) {
+    .home .card-about-list {
+        grid-template-columns: 1fr;
+
+        .card {
+            height: 220px;
+
+            .card_content {
+                padding: 26px 30px;
+            }
+        }
+
+    }
+}
+
+@media screen and (max-width: 430px) {
+    .home .card-about-list {
+        .card {
+            height: 320px;
+
+            h2 {
+                margin-top: 0;
+            }
+
+        }
+
+        .front {
+            display: grid;
+            grid-template-columns:  1fr;
+            grid-template-rows: auto auto 1fr;
+
+            .carl_logo {
+                text-align: center;
+                //grid-column: span 2;
+                grid-row: 1;
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+        }
+
+    }
+}
+
+@media screen and (max-width: 420px) {
+    .home .card-about-list {
+        grid-template-columns: 1fr;
+
+        .card {
+            .front{
+                p{
+                    //display: none;
+                }
+            }
+            .back {
+                .img{
+                    display: block;
+                }
+                h2 {
+                    margin-top: 20px;
+                    //display: block;
+                }
+            }
+            .card_content {
+                padding: 26px 30px;
+            }
+        }
+
+    }
+}
+
+@media screen and (max-width: 340px) {
+    .home {
+        .content-wrapper {
+            padding-left: 26px;
+            padding-right: 26px;
+        }
+    }
+    .home .card-about-list {
+        .card {
+            height: 340px;
+
+
+            .front {
+                .carl_logo {
+                    text-align: center;
+                    grid-row: 1;
+                    margin-right: 0;
+                    margin-bottom: 20px;
+                }
+            }
+
+
+
+        }
+    }
 }

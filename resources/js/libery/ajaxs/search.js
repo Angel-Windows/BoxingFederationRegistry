@@ -10,7 +10,7 @@ export function modal_open(data, class_name = '') {
     modal_content.className = 'modal_content ' + data['class_name']
 
     let input;
-    console.log(data.class_name)
+    // console.log(data.class_name)
 
     switch (data.class_name) {
 
