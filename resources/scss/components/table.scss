@@ -3,7 +3,7 @@ table {
     &.no-width {
         td, th {
             &:last-child {
-                min-width: 215px;
+                //min-width: 215px;
             }
         }
     }
@@ -25,7 +25,7 @@ table {
 
     td, th {
         padding: 16px 20px;
-        min-width: 195px + 20px;
+        //min-width: 195px + 20px;
         max-width: 400px;
 
         &:first-child {
@@ -132,10 +132,15 @@ table {
         thead {
             display: none;
         }
+        tbody  tr.label{
+            display: grid;
+            grid-template-columns: 1fr auto;
+        }
         tr, &.no-wrap td {
             padding: 8px 0;
         }
         td, th {
+
             width: 100%;
             max-width: 100%;
             padding: 8px 0;
@@ -164,7 +169,7 @@ table {
 
                 td {
                     &:nth-child(4) {
-                        grid-column: span 2;
+                        //grid-column: span 2;
                     }
                 }
             }

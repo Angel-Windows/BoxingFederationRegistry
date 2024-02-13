@@ -195,7 +195,6 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
                 $member->phone,
                 $member->email,
                 $this->data_option['employees_federation']['position'][$member->position],
-
             ];
         }
 
