@@ -2,37 +2,31 @@
 
 namespace Database\Factories\Employees;
 
+use App\Models\Category\CategoryMedical;
 use App\Models\Category\CategorySportsInstitutions;
 use App\Traits\DataTypeTrait;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Employees\EmployeesSportsInstitutions>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Employees\EmployeesMedical>
  */
-class EmployeesSportsInstitutionsFactory extends Factory
+class EmployeesMedicalFactory extends Factory
 {
     use DataTypeTrait;
-
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-
     public $model_name = null;
 
 
     public function definition(): array
     {
-        $position = $this->data_option['employees_sports_institutions']['position'];
+        $position = $this->data_option['employees_medical']['position'];
         if (!$this->model_name) {
-            $this->model_name = CategorySportsInstitutions::all();
+            $this->model_name = CategoryMedical::all();
         }
         $rand_model = $this->model_name->random()->id;
 
         return [
             'logo' => RandPhoto(),
-            'sports_institutions_id' => $rand_model,
+            'medical_id' => $rand_model,
             'name' => $this->faker->name,
             'address' => randomAddress(),
             'phone' => getRandomPhone(),

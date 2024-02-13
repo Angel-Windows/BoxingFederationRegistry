@@ -27,22 +27,23 @@ class ModalRegisterSelectComponent extends Component
                 'box_federations'=>'Реєстрація федерації',
             ],
             'category_insurances'=>[
-                'category_insurances_member'=>'Реєстрація працівника',
+                'employees_insurances'=>'Реєстрація працівника',
                 'category_insurances'=>'Реєстрація компанії',
-
             ],
+
+            'category_sports_institutions'=>[
+                'employees_sports_institution'=>'Реєстрація працівника',
+                'category_sports_institutions'=>'Реєстрація закладу',
+            ],
+
+
             'category_medicals'=>[
-                'category_medicals_member'=>'Реєстрація працівника',
+                'employees_medical'=>'Реєстрація працівника',
                 'category_medicals'=>'Реєстрація закладу',
 
             ],
-            'category_sports_institutions'=>[
-                'category_sports_institutions_member'=>'Реєстрація працівника',
-                'category_sports_institutions'=>'Реєстрація закладу',
-
-            ],
             'category_schools'=>[
-                'category_schools_member'=>'Реєстрація працівника',
+                'employees_school'=>'Реєстрація працівника',
                 'category_schools'=>'Реєстрація закладу',
 
             ],

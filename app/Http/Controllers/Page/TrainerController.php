@@ -14,6 +14,10 @@ use App\Repositories\Category\CategorySportsInstitutionsRepository;
 use App\Repositories\Category\CategoryTrainerRepository;
 use App\Repositories\Category\SportsmanFederationRepository;
 use App\Repositories\Employees\EmployeesFederationRepository;
+use App\Repositories\Employees\EmployeesInsurancesRepository;
+use App\Repositories\Employees\EmployeesMedicalRepository;
+use App\Repositories\Employees\EmployeesSchoolRepository;
+use App\Repositories\Employees\EmployeesSportsInstitutionsRepository;
 use App\Services\MyAuthService;
 use App\Traits\CategoryUITrait;
 use App\Traits\DataTypeTrait;
@@ -116,8 +120,23 @@ class TrainerController extends Controller
                 break;
             case 'category_stores':
                 return response()->view('errors.505', [], 404);
+
+
+
+            case 'employees_school':
+                $result = (new EmployeesSchoolRepository())->edit($id, $request, $type);
+                break;
+            case 'employees_medical':
+                $result = (new EmployeesMedicalRepository())->edit($id, $request, $type);
+                break;
             case 'employees_federation':
                 $result = (new EmployeesFederationRepository())->edit($id, $request, $type);
+                break;
+            case 'employees_sports_institution':
+                $result = (new EmployeesSportsInstitutionsRepository())->edit($id, $request, $type);
+                break;
+            case 'employees_insurances':
+                $result = (new EmployeesInsurancesRepository())->edit($id, $request, $type);
                 break;
             default :
                 return response()->view('errors.404', [], 404);

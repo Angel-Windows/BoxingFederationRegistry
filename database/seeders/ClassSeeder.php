@@ -15,6 +15,9 @@ use App\Models\Category\CategoryStore;
 use App\Models\Category\CategoryTrainer;
 use App\Models\Class\BoxFederation;
 use App\Models\Employees\EmployeesFederation;
+use App\Models\Employees\EmployeesInsurance;
+use App\Models\Employees\EmployeesMedical;
+use App\Models\Employees\EmployeesSchool;
 use App\Models\Employees\EmployeesSportsInstitutions;
 use Database\Factories\Employees\EmployeesFederationFactory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -30,14 +33,6 @@ class ClassSeeder extends Seeder
         $count_seed = 25;
         $rebase = true;
         if ($count_seed > 0) {
-            if ((!EmployeesSportsInstitutions::exists() && true) || $rebase) {
-                dump('EmployeesSportsInstitutions');
-                EmployeesSportsInstitutions::truncate();
-                EmployeesSportsInstitutions::factory()->count(1)->create();
-            }
-
-
-
             if ((!CategorySchool::exists() && true) || $rebase) {
                 dump('CategorySchool');
                 CategorySchool::truncate();
@@ -94,20 +89,9 @@ class ClassSeeder extends Seeder
             }
 
 
-            //Працівники
+//            //Працівники
 
 
-            if ((!CategoryEmployessInstitutions::exists() && true) || $rebase) {
-                dump('CategoryEmployessInstitutions');
-                CategoryEmployessInstitutions::truncate();
-                CategoryEmployessInstitutions::factory()->count($count_seed)->create();
-            }
-
-            if ((!CategoryEmployessSchool::exists() && true) || $rebase) {
-                dump('CategoryEmployessSchool');
-                CategoryEmployessSchool::truncate();
-                CategoryEmployessSchool::factory()->count($count_seed)->create();
-            }
 
 
             if ((!EmployeesFederation::exists() && true) || $rebase) {
@@ -120,7 +104,21 @@ class ClassSeeder extends Seeder
                 EmployeesSportsInstitutions::truncate();
                 EmployeesSportsInstitutions::factory()->count($count_seed * 3)->create();
             }
+            if ((!EmployeesInsurance::exists() && true) || $rebase) {
+                dump('EmployeesInsurance');
+                EmployeesInsurance::truncate();
+                EmployeesInsurance::factory()->count($count_seed * 3)->create();
+            }
+            if ((!EmployeesMedical::exists() && true) || $rebase) {
+                dump('EmployeesMedical');
+                EmployeesMedical::truncate();
+                EmployeesMedical::factory()->count($count_seed * 3)->create();
+            }
+            if ((!EmployeesSchool::exists() && true) || $rebase) {
+                dump('EmployeesSchool');
+                EmployeesSchool::truncate();
+                EmployeesSchool::factory()->count($count_seed * 3)->create();
+            }
         }
-
     }
 }

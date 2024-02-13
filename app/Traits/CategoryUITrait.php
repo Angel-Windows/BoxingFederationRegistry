@@ -8,6 +8,7 @@ use App\Models\Category\CategorySportsman;
 use App\Models\Category\CategoryTrainer;
 use App\Models\Class\BoxFederation;
 use App\Models\Employees\EmployeesFederation;
+use App\Models\Employees\EmployeesMedical;
 use App\Models\Linking\LinkingMembers;
 use App\Repositories\Category\CategoryFederationRepository;
 use App\Repositories\Category\CategoryFunZonesRepository;
@@ -17,6 +18,10 @@ use App\Repositories\Category\CategorySportsInstitutionsRepository;
 use App\Repositories\Category\CategoryTrainerRepository;
 use App\Repositories\Category\SportsmanFederationRepository;
 use App\Repositories\Employees\EmployeesFederationRepository;
+use App\Repositories\Employees\EmployeesInsurancesRepository;
+use App\Repositories\Employees\EmployeesMedicalRepository;
+use App\Repositories\Employees\EmployeesSchoolRepository;
+use App\Repositories\Employees\EmployeesSportsInstitutionsRepository;
 use Faker\Factory;
 
 trait CategoryUITrait
@@ -136,7 +141,7 @@ trait CategoryUITrait
         } else {
             $category->name = $request->input('first_name') . ' ' . $request->input('last_name') . ' ' . $request->input('surname');
         }
-        if ($request->has('address')){
+        if ($request->has('street')){
             $category->address =
                 json_encode([
                     'city' => $request->input('city'),
@@ -274,8 +279,24 @@ trait CategoryUITrait
             case 'category_trainers':
                 $data_info = (new CategoryTrainerRepository())->get_data($data, $request);
                 break;
+
+
+
+
+            case 'employees_school':
+                $data_info = (new EmployeesSchoolRepository())->get_data($data, $request);
+                break;
+            case 'employees_medical':
+                $data_info = (new EmployeesMedicalRepository())->get_data($data, $request);
+                break;
             case 'employees_federation':
                 $data_info = (new EmployeesFederationRepository())->get_data($data, $request);
+                break;
+            case 'employees_sports_institution':
+                $data_info = (new EmployeesSportsInstitutionsRepository())->get_data($data, $request);
+                break;
+            case 'employees_insurances':
+                $data_info = (new EmployeesInsurancesRepository())->get_data($data, $request);
                 break;
 
             case 'category_stores':

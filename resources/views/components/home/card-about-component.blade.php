@@ -23,10 +23,17 @@
                     <button  class="button"
                              onclick="functionsArray['open_modal']('search', {'class_types': {{$item['id']}}})"
                     ><img src="{{asset('img/search.svg')}}" alt="search"><span>Пошук</span></button>
-                    <button
-                        class="button"
-                        onclick="functionsArray['open_modal']('register-box', {'category': '{{$item['link']}}'})"
-                    ><img src="{{asset('img/homeAbout/register.svg')}}" alt="register"><span>Реєстрація</span></button>
+                    @switch($item['link'])
+{{--                        @case('category_fun_zones')--}}
+                        @case('category_store')
+                        @break
+                        @default
+                            <button
+                                class="button"
+                                onclick="functionsArray['open_modal']('register-box', {'category': '{{$item['link']}}'})"
+                            ><img src="{{asset('img/homeAbout/register.svg')}}" alt="register"><span>Реєстрація</span></button>
+                    @endswitch
+
                 </div>
             </div>
         </div>
