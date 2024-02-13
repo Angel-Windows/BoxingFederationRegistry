@@ -35,7 +35,7 @@ export const inputs_input = (parent_class, is_search = true) => {
         selectInput.addEventListener('input', function () {
             if (is_search) {
                 filterOptions(selectInput, selectOptions, optionItems);
-
+                console.log(22)
             }
             selectOptions.style.display = 'block';
         });

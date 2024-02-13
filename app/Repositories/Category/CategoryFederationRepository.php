@@ -171,28 +171,31 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
     private function created_view($table, $id): array
     {
 
-        $members_works = LinkingMembers::leftJoin('category_trainers', 'category_trainers.id', 'linking_members.member_id')
-            ->where('linking_members.category_id', $id)
-            ->where('linking_members.category_type', $this->category_type_id)
-            ->select(
-                'linking_members.*',
-                'category_trainers.name',
-                'category_trainers.phone',
-                'category_trainers.email',
-                'category_trainers.logo',
-            )
-            ->get();
+//        $members_works = LinkingMembers::leftJoin('category_trainers', 'category_trainers.id', 'linking_members.member_id')
+//            ->where('linking_members.category_id', $id)
+//            ->where('linking_members.category_type', $this->category_type_id)
+//            ->select(
+//                'linking_members.*',
+//                'category_trainers.name',
+//                'category_trainers.phone',
+//                'category_trainers.email',
+//                'category_trainers.logo',
+//            )
+//            ->get();
+//
+//        $works = [];
 
-        $works = [];
-        foreach ($members_works as $member) {
+        $employees = EmployeesFederation::where('federation_id', $id)->get();
+        foreach ($employees as $member) {
             $works[] = [
                 'logo' => [
                     'img' => $member->logo,
                     'name' => $member->name
                 ],
-                $member->role,
                 $member->phone,
-                $member->email
+                $member->email,
+                $this->data_option['employees_federation']['position'][$member->position],
+
             ];
         }
 

@@ -4,11 +4,13 @@ namespace Database\Seeders\Linking;
 
 use App\Models\Class\ClassType;
 use App\Models\Linking\LinkingMembers;
+use App\Traits\DataTypeTrait;
 use Faker\Factory;
 use Illuminate\Database\Seeder;
 
 class LinkingMembersSeeder extends Seeder
 {
+    use DataTypeTrait;
     /**
      * Run the database seeds.
      */
@@ -23,7 +25,6 @@ class LinkingMembersSeeder extends Seeder
                     $category_type = ClassType::getIdCategory($item_link);
                     $count_rand = random_int(2, 14);
                     $table_link = \DB::table($item_link)->inRandomOrder()->limit($count_rand)->get();
-
                     foreach ($table_link as $item_table) {
                         $create[] = [
                             'category_id' => $item_parent->id,

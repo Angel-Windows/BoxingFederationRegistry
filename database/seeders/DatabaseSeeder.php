@@ -17,13 +17,16 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            ConfigSeeder::class,
+
             ClassTypeSeeder::class,
 
 //
             ClassSeeder::class,
 
+            ConfigSeeder::class,
+
             LinkingMembersSeeder::class,
+
         ]);
     }
 }

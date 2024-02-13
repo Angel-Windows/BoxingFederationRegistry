@@ -487,7 +487,7 @@ trait DataTypeTrait
                     'type' => 'todo_table',
                     'button_add' => '',
                     'data' => [
-                        'thead' => ['ПІП',  'Посада', 'Телефон', 'Пошта'],
+                        'thead' => ['ПІП', 'Телефон', 'Пошта',  'Посада'],
                         'body' => [],
                     ],
                 ],
