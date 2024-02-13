@@ -42,6 +42,7 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
 
     private function get_edit($table, $id): array
     {
+
         $members_works = LinkingMembers::leftJoin('category_trainers', 'category_trainers.id', 'linking_members.member_id')
             ->where('linking_members.category_id', $id)
             ->whereNull('linking_members.date_end_at')

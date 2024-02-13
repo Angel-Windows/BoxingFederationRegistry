@@ -46,10 +46,10 @@
     @default
         <form action="{{route('ajax.search-in-class')}}" style="min-width: 779px " method="post"
               class="modal_form modal-search-form">
-            <input type="hidden" name="class_types" value="3">
+            <input  type="hidden" name="class_types" value="3">
             <h3 class=" d-flex space-between">
-                <p>Сім`я</p>
-                <div class="button m-0">
+                <p>Додати сім'ю</p>
+                <div class="button m-0" onclick="functionsArray['add_family'](this)">
                     <img src="{{asset('img/icon/save.svg')}}" alt="">
                     <span>Зберегти</span>
                 </div>
@@ -57,19 +57,19 @@
             <div class="table">
                 <label class="label fool type__text act">
                     <span class="unselectable">ПІП</span>
-                    <input class="input" placeholder="ПІП">
+                    <input name="name" class="input" placeholder="ПІП">
                 </label>
-                @include('components.forms.custom-select',
+                @include('components.forms.select-box',
                                                  [
-                                                     'class_name'=> 'ff',
-                                                     'placeholder'=>'fasdf',
+                                                     'class_name'=> 'status',
+                                                     'placeholder'=>'Статус',
                                                      'value'=>'f',
-                                                     'name'=>'adfasdf',
-                                                     'option'=>[1=>'fsfdafasdfasfgvsflkcbmnsnfopiq']
+                                                     'name'=>'status',
+                                                     'option'=>['Тато', 'Мама', 'Брат', 'Сестра', 'Дідусь', 'Син', 'Дочка', 'Друг', 'Інше']
                                                  ])
                 <label class="label type__text act">
-                    <span class="unselectable">Роль</span>
-                    <input class="input" placeholder="ПІП">
+                    <span class="unselectable">Телефон</span>
+                    <input name="phone" class="input" placeholder="Телефон">
                 </label>
             </div>
         </form>

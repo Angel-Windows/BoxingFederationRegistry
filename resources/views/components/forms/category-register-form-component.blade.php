@@ -99,6 +99,54 @@
                                 </table>
                             </div>
                             @break
+                        @case('family')
+                                @php
+                                    $class = '';
+                                     if (($item_data['checkbox_type'] ?? '') == 'revert' || ($item_list['checkbox_type'] ?? '')  == 'revert' ){
+                                            $class .=  ' revert';
+                                         }
+                                @endphp
+                            <div class="history-work fool">
+                                <table class="no-wrap m-grid-3">
+                                    <tbody>
+                                    <tr class="label type__checkbox no_check d-none">
+                                        <td></td>
+                                        <td class="m-span-1"></td>
+                                        <td class="no_size m-span-1"></td>
+                                        <td class="m-span-1"></td>
+                                        <td class="m-span-1 pl-0 label_button"><label
+                                                class="pl-0 "
+                                                onclick="functionsArray['toggle_parent_active'](this, 'label', 'delete')">
+                                                <input
+                                                type="checkbox"
+                                                    name="{{$item_list['name']}}"
+                                                    value=""
+                                                    class="{{$class}}"
+                                                ></label></td>
+                                    </tr>
+                                    {{--                                    @dd($item_list['data'])--}}
+                                    @foreach($item_list['data'] ?? [] as $item_data)
+                                        <tr class="label type__checkbox no_check ">
+                                            <td>{{$item_data['name']}}</td>
+                                            <td class="m-span-1">{{$item_data['status']}}</td>
+                                            <td class="no_size m-span-1"></td>
+                                            <td class="m-span-1">{{$item_data['phone']}}</td>
+                                            <td class="m-span-1 pl-0 label_button"><label
+                                                    class="pl-0 "
+                                                    onclick="functionsArray['toggle_parent_active'](this, 'label', 'delete')">
+                                                    <input
+                                                        @if(!($item_data['checkbox_type'] ?? false)) checked @endif
+                                                        type="checkbox"
+                                                        name="{{$item_list['name']}}"
+                                                        value="{{$item_data['value']}}"
+                                                        class="{{$class}}"
+                                                    ></label></td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            @break
                         @case('table-list')
                             <div class="fool todo_table">
                                 <table class="no-wrap m-grid-3">

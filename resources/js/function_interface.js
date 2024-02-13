@@ -9,6 +9,26 @@ const checkbox_toggle = (elem) => {
     const shouldRevert = input.classList.contains('revert');
     input.checked = shouldRevert ? !elem.classList.contains('delete') : elem.classList.contains('delete');
 }
+const add_family = (elem) => {
+    const formData = elem.parentNode.parentNode;
+    let arr = {
+        name: formData.name.value,
+        status: formData.status[formData.status.value].textContent,
+        phone: formData.phone.value,
+
+    }
+
+    let type__checkbox = document.querySelector('.type__checkbox ')
+
+    const clone = type__checkbox.cloneNode(true)
+    let type__checkbox_td = clone.querySelectorAll('td')
+    type__checkbox_td[0].innerText = arr['name'];
+    type__checkbox_td[1].innerText = arr['status'];
+    type__checkbox_td[3].innerText = arr['phone'];
+    type__checkbox_td[4].querySelector('input').value = JSON.stringify(arr);
+    clone.classList.remove('d-none')
+    type__checkbox.parentNode.append(clone)
+}
 window.functionsArray = {
     'ajax_post': ajax_scripts.Post,
     'ajax_postNoForm': ajax_scripts.SendPostNoForm,
@@ -26,6 +46,9 @@ window.functionsArray = {
 
 
     'checkbox_toggle': checkbox_toggle,
+
+
+    'add_family': add_family,
 
 };
 

@@ -257,6 +257,16 @@ trait DataTypeTrait
             'placeholder' => 'Історія місць роботи',
             'data' => [],
         ],
+        'family' => [
+            'title' => 'Сім’я',
+            'name' => 'family[]',
+            'tag' => 'family',
+            'type' => 'family',
+            'class' => 'fool',
+            'button' => 'add_family',
+            'checkbox_type' => 'revert',
+            'placeholder' => 'Сім’я',
+        ],
         'rank' => [
             'name' => 'rank',
             'tag' => 'select-box',

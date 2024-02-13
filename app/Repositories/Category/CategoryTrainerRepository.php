@@ -100,8 +100,6 @@ class CategoryTrainerRepository implements CategoryRepositoryInterface
 
     public function edit($id, $request, $type): array
     {
-
-
         if ($links = LinkingMembers::whereIn('id', $request->input('history_works') ?? [])->get()) {
             $update_null = [];
             $update_now = [];
@@ -159,6 +157,7 @@ class CategoryTrainerRepository implements CategoryRepositoryInterface
                 'value' => $link->linking_members_id,
             ];
         }
+
         $this->getDefaultValue($new_data, $category_data, $this->is_default_length);
         $this->GetValueInputs($category_data->qualification, 'qualification', $new_data);
         $this->GetValueInputs($category_data->school, 'school', $new_data);

@@ -52,7 +52,10 @@ class SportsmanFederationRepository implements CategoryRepositoryInterface
         ],
         'street' => [
             'size' => 'fool'
-        ]
+        ],
+        'family' => [
+            'size' => 'fool'
+        ],
     ];
 
     private function get_edit($table, $id, $model): array
@@ -60,7 +63,9 @@ class SportsmanFederationRepository implements CategoryRepositoryInterface
         $table['federation']['option'] = BoxFederation::pluck('name', 'id');
         $table['sports_institutions']['option'] = CategorySportsInstitutions::pluck('name', 'id');
         $table['trainer']['option'] = CategoryTrainer::pluck('name', 'id');
-
+        if (!$id){
+            $table['family'] = null;
+        }
         return [
             [
                 'type' => '',
@@ -120,20 +125,20 @@ class SportsmanFederationRepository implements CategoryRepositoryInterface
                             'data' => [
                                 $table['foreign_passport'],
                             ],
-                        ],
-                        [
-                            'title' => 'Сім’я',
-                            'button' => 'add-family',
-                            'type' => 'table',
-                            'data' =>
-                                [
-
-                                    $table['first_name'],
-                                    $table['first_name'],
-                                    $table['first_name'],
-
-                                ],
-                        ],
+                        ],$table['family']
+//                        [
+//                            'title' => 'Сім’я',
+//                            'button' => 'add-family',
+//                            'type' => 'table',
+//                            'data' =>
+//                                [
+//
+//                                    $table['first_name'],
+//                                    $table['first_name'],
+//                                    $table['first_name'],
+//
+//                                ],
+//                        ],
                     ],
             ]
         ];
@@ -141,9 +146,12 @@ class SportsmanFederationRepository implements CategoryRepositoryInterface
 
     public function edit($id, $request, $type): array
     {
+
         $category = self::validate_category($request, $this->table_model, $id);
-
-
+        $family_arr = [];
+        foreach ($request->input('family') as $item) {
+            $family_arr[] = json_decode($item, true);
+        }
         $category->birthday = $request->input('birthday');
         $category->gender = $request->input('gender');
         $category->weight = $request->input('weight');
@@ -158,6 +166,7 @@ class SportsmanFederationRepository implements CategoryRepositoryInterface
         $category->address_birth = $request->input('address_birth');
         $category->passport = $request->input('passport');
         $category->foreign_passport = $request->input('foreign_passport');
+        $category->family = json_encode($family_arr);
 
         $category->save();
 
@@ -171,6 +180,18 @@ class SportsmanFederationRepository implements CategoryRepositoryInterface
     private function get_value($table, $category_data): array
     {
         $new_data = $table;
+
+
+
+        foreach (json_decode($category_data->family, true) as $link) {
+
+            $new_data['family']['data'][] = [
+                'name' => $link['name'] ?? '',
+                'status' => $link['status'] ?? '',
+                'phone' => $link['phone'] ?? '',
+                'value' => json_encode($link),
+            ];
+        }
 
         $this->getDefaultValue($new_data, $category_data, $this->is_default_length);
 
