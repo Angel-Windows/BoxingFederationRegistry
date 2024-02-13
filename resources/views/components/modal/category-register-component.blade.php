@@ -1,3 +1,4 @@
+
 <h2>Реєстрація федерації {{$type_submit}}</h2>
 <x-forms-category-register-form-component :class="$class_name"  :get="$get" :typesubmit="$type_submit">
     <div class="upload_img" id="imageButton">

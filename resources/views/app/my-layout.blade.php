@@ -27,8 +27,10 @@
 @endif
 <div class="modal_wrapper">
     <div class="bg" onclick="functionsArray['toggle_parent_active'](this, 'modal_wrapper', 'open')"></div>
-    <div class="modal_content">
+    <div class="modal_content_wrapper">
+        <div class="modal_content">
 
+        </div>
     </div>
 </div>
 @vite('resources/js/function_interface.js')

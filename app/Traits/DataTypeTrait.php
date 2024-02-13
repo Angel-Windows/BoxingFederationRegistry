@@ -525,7 +525,7 @@ trait DataTypeTrait
             'house_number' => [
                 'name' => 'house_number',
                 'tag' => 'input',
-                'type' => 'number',
+//                'type' => 'number',
                 'placeholder' => 'Номер будинку',
 
             ],

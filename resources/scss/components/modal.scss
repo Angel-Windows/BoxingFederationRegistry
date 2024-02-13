@@ -23,20 +23,35 @@
         background: var(--text);
     }
 
-    .modal_content {
-        max-height: 80vh;
+    .modal_content_wrapper {
         width: 100%;
         max-width: 1170px;
-        overflow-y: scroll;
+
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
         border-radius: 5px;
-        padding: 30px 40px;
-        //width: 494px;
-        background: var(--white, #FFF);
+        padding: 20px;
+    }
 
+    .modal_content {
+        max-height: 90vh;
+        overflow-y: scroll;
+        width: 100%;
+        background: var(--white, #FFF);
+        padding: 30px 40px;
+
+        &::-webkit-scrollbar-thumb {
+            background-color: #babac0;
+            border-radius: 16px;
+        }
+        &::-webkit-scrollbar {
+            background: none;
+            background-position: right top;
+            width: 15px;
+            background-size: 100vw;
+        }
     }
 
     h2 {
@@ -66,18 +81,22 @@
     .button {
         margin-top: 12px;
         width: 100%;
-        span{
+
+        span {
             color: var(--white);
         }
     }
-.modal_wrapper{
-    .add-form-item{
-        margin-right: 0;
-        .button {
-            margin-top: 0;
+
+    .modal_wrapper {
+        .add-form-item {
+            margin-right: 0;
+
+            .button {
+                margin-top: 0;
+            }
         }
     }
-}
+
     .upload_img {
         border-radius: 5px;
         position: relative;
@@ -93,7 +112,6 @@
             margin-right: auto;
 
 
-
             input {
                 border: none;
                 outline: none;
@@ -104,6 +122,7 @@
                 height: 100%;
                 object-fit: cover;
             }
+
             input[type='image'][src=""] {
                 width: 102%;
                 height: 102%;
@@ -111,7 +130,7 @@
                 margin: auto;
                 //margin-top: 95px;
                 background: url("/resources/img/upload_svg.svg") no-repeat center;
-                background-size:42px;
+                background-size: 42px;
                 background-position-y: 95px;
 
             }

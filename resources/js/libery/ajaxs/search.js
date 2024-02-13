@@ -7,7 +7,7 @@ let search_result_list = null;
 export function modal_open(data, class_name = '') {
     modal_wrapper.classList.add('open')
     modal_content.innerHTML = data['data'];
-    modal_content.className = 'modal_content ' + data['class_name']
+    modal_content.parentNode.className = 'modal_content_wrapper ' + data['class_name']
 
     let input;
     // console.log(data.class_name)
