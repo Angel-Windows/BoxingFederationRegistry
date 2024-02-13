@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Page;
 
 use App\Http\Controllers\Controller;
 
+use App\Models\Category\Operations\TransactionCategory;
 use App\Models\Class\ClassType;
 use App\Models\Linking\LinkingMembers;
 use App\Repositories\Category\CategoryFederationRepository;
@@ -22,7 +23,9 @@ use App\Services\MyAuthService;
 use App\Traits\CategoryUITrait;
 use App\Traits\DataTypeTrait;
 use App\Traits\FondyTrait;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Testing\Fluent\Concerns\Has;
 
 
 class TrainerController extends Controller
@@ -63,17 +66,34 @@ class TrainerController extends Controller
 
     public function register_category($class_name, $id, Request $request)
     {
-        $result = $this->get_category('register_page', $class_name, null, $request);
-        if ($result['error']) {
-            dd($result['error']);
-        }
 
+        $result = $this->get_category('register_page', $class_name, null, $request);
+//
+//        if ($result['error']) {
+//            dd($result['error']);
+//        }
         $response_url = route('payment.fondy.response-url');
         $callback_url = route('payment.fondy.callback-url');
+
+
+        do {
+            $key = \Str::random(32);
+        } while (TransactionCategory::where('key', $key)->first());
+
         $merchant_data = [
-            'id' => $id,
+            'id' => $result['data']->id,
             'type' => $class_name,
+            'key'=> $key
         ];
+
+        $transaction = new TransactionCategory();
+        $transaction->category_id = $merchant_data['id'];
+        $transaction->key = $merchant_data['key'];
+        $transaction->type = ClassType::getIdCategory($class_name);
+        $transaction->send_transaction_at = Carbon::now();
+        $transaction->save();
+
+
         $get_fondy_url = self::fondyBuy(1, $merchant_data, 'eliphas.sn@gmail.com', $response_url, $callback_url);
 
         $route = json_decode($get_fondy_url->content(), false, 512, JSON_THROW_ON_ERROR)->paymentUrl->checkout_url;

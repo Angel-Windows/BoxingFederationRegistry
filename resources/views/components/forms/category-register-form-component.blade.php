@@ -1,5 +1,5 @@
 <form method="post"
-      action="{{route('page.class.edit', ['class_name'=>$category_name, 'id'=>$id])}}"
+      action="{{route('page.class.' . $type_submit, ['class_name'=>$category_name, 'id'=>$id])}}"
       {{--      action="{{route('page.class.' . $route_type, ['class_name'=>$category_name, 'id'=>$id])}}"--}}
       id="form_edit"
       class="page-form-{{$id ? "edit" : "register" }}"

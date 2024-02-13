@@ -8,7 +8,7 @@ use Illuminate\View\Component;
 
 class CategoryRegisterComponent extends Component
 {
-    public function __construct(public $category_name,public $get_data = '')
+    public function __construct(public $category_name,public $get_data = '', public $type_submit = 'edit')
     {
     }
 
@@ -18,6 +18,7 @@ class CategoryRegisterComponent extends Component
         return view('components.modal.category-register-component')
             ->with('class_name', $this->category_name)
             ->with('get', $this->get_data)
+            ->with('type_submit', $this->type_submit)
             ;
     }
 }

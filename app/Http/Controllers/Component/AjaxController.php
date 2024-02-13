@@ -36,9 +36,10 @@ class AjaxController extends Controller
                     $menuMarkButtons = new CheckCodeComponent();
                     break;
                 case "category-register":
+
                     $category_name = $request->input('category') ?? "";
                     $get_data = $this->get_data($category_name, ['id' => null, 'type' => 'register_page'], $request);
-                    $menuMarkButtons = new CategoryRegisterComponent($category_name, $get_data);
+                    $menuMarkButtons = new CategoryRegisterComponent($category_name, $get_data, 'register');
                     break;
                 case "register-box":
                     $category_name = $request->input('category') ?? "";
@@ -46,11 +47,13 @@ class AjaxController extends Controller
                         case 'category_sportsmen':
                         case 'category_trainers':
                         case 'category_judges':
+
                             $category_name = $request->input('category') ?? "";
                             $get_data = $this->get_data($category_name, ['id' => null, 'type' => 'register_page'], $request);
                             $menuMarkButtons = new CategoryRegisterComponent($category_name, $get_data);
                             break;
                         default :
+
                             $menuMarkButtons = new ModalRegisterSelectComponent($category_name);
                             break;
                     }

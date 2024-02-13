@@ -36,7 +36,7 @@ Route::name('page.')->group(function () {
     Route::get('/class/{class_name}/{id}', [TrainerController::class, 'class_page'])->name('class');
     Route::get('/class/{class_name}/{id}/edit', [TrainerController::class, 'edit_page'])->name('class.edit_page');
     Route::post('/class/{class_name}/{id}/edit', [TrainerController::class, 'edit'])->name('class.edit');
-    Route::post('/class/{class_name}/{id}/register_category', [TrainerController::class, 'register_category'])->name('class.register_category');
+    Route::post('/class/{class_name}/{id}/register_category', [TrainerController::class, 'register_category'])->name('class.register');
 });
 Route::get('/photos/{filename}', [AjaxController::class, 'show'])->name('photo.show');
 

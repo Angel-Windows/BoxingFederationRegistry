@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category\Operations\TransactionCategory;
 use App\Traits\FondyTrait;
 use Carbon\Carbon;
 use Cloudipsp\Checkout;
@@ -41,21 +42,26 @@ class PaymentController extends Controller
 
     public function callback_url(Request $request): void
     {
+
+        $now = Carbon::now();
         $merchant_data = json_decode($request->input('merchant_data'), false, 512, JSON_THROW_ON_ERROR);
+
         $order_time = $request->input('order_time');
-        DB::table($merchant_data->type)
-            ->where('id', $merchant_data->id)
-            ->update(['end_subscription' => Carbon::parse($order_time)->addYear()]);
+        $transaction = TransactionCategory::where('key', $merchant_data->key)->first();
+        $transaction->update(['status' => 2, 'get_transaction_at'=> $now]);
+
         Log::info(json_encode([
             'type' => 'transaction',
             [
                 'payment' => 'fondy',
                 'product_id' => $request->input('product_id'),
                 'payment_id' => $request->input('payment_id'),
+                'merchant_key' => $merchant_data->key,
                 'order_id' => $request->input('order_id'),
                 'actual_amount' => $request->input('actual_amount'),
                 'response_status' => $request->input('response_status'),
                 'order_time' => $request->input('order_time'),
+                'time' => $now,
             ]
         ], JSON_THROW_ON_ERROR));
     }

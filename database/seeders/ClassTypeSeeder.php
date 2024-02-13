@@ -109,13 +109,53 @@ class ClassTypeSeeder extends Seeder
             ],
 //                Працівники
                 [
-                    'name' => 'Працівник закладу',
+                    'name' => 'Працівник федерації',
                     'genitive' => 'Працівники закладу',
                     'accusative' => 'Працівника закладу',
                     'description' => null,
                     'linking' => null,
                     'count' => 13,
-                    'link' => 'category_member_sports_institutions',
+                    'link' => 'employees_federation',
+                    'logo' => null
+                ],
+                [
+                    'name' => 'Працівник спортивного закладу',
+                    'genitive' => 'Працівники закладу',
+                    'accusative' => 'Працівника закладу',
+                    'description' => null,
+                    'linking' => null,
+                    'count' => 13,
+                    'link' => 'employees_sports_institution',
+                    'logo' => null
+                ],
+                [
+                    'name' => 'Працівник страхові компанії',
+                    'genitive' => 'Працівники закладу',
+                    'accusative' => 'Працівника закладу',
+                    'description' => null,
+                    'linking' => null,
+                    'count' => 13,
+                    'link' => 'employees_insurances',
+                    'logo' => null
+                ],
+                [
+                    'name' => 'Медичного закладу',
+                    'genitive' => 'Працівники закладу',
+                    'accusative' => 'Працівника закладу',
+                    'description' => null,
+                    'linking' => null,
+                    'count' => 13,
+                    'link' => 'employees_medical',
+                    'logo' => null
+                ],
+                [
+                    'name' => 'Навчального закладу',
+                    'genitive' => 'Працівники закладу',
+                    'accusative' => 'Працівника закладу',
+                    'description' => null,
+                    'linking' => null,
+                    'count' => 13,
+                    'link' => 'employees_school',
                     'logo' => null
                 ],
             ]
