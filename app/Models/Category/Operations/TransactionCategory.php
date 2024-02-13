@@ -11,4 +11,9 @@ use Illuminate\Database\Eloquent\Model;
 class TransactionCategory extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'status',
+        'get_transaction_at',
+    ];
 }
