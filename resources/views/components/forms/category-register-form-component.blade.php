@@ -10,7 +10,7 @@
     @csrf
     @php
         $model_table = new $get['modeles'];
-
+        $is_register_add = true;
         $hasLogoColumn =  $model_table->getConnection()->getSchemaBuilder()->hasColumn($model_table->getTable(), 'logo');
         if ($hasLogoColumn){
             $class_table = 'table-auto_fool';
@@ -259,7 +259,10 @@
                         @default
                     @endswitch
                 @endforeach
-                @if($type_submit == 'register')
+                @if(!($id ?? 0) && $is_register_add)
+                    @php
+                        $is_register_add = false;
+                    @endphp
                     <div class="right">
                         <button class="button">Перейти до оплати</button>
                         <label style="display: block">
@@ -269,7 +272,6 @@
                     </div>
                 @endif
             </div>
-
     @endforeach
 </form>
 

@@ -102,7 +102,9 @@ class CategoryJudgeRepository implements CategoryRepositoryInterface
 
     private function get_edit($table, $id): array
     {
-
+        if (!$id){
+            $table['history_works'] = null;
+        }
         return [
             [
                 'type' => '',

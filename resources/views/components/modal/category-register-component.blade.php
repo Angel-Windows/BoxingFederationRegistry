@@ -1,5 +1,5 @@
 
-<h2>{{$get['more_data']['register_name'] ?? ''}} {{$type_submit}}</h2>
+<h2>{{$get['more_data']['register_name'] ?? ''}}</h2>
 <x-forms-category-register-form-component :class="$class_name"  :get="$get" :typesubmit="$type_submit">
     <div class="upload_img" id="imageButton">
         <div class="drop">Відпустити тут</div>

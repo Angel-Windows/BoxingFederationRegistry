@@ -285,6 +285,7 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
                 'register_name'=>'Реєстрація федерації'
             ];
         }
+        $more_data['class'] = 'fool';
 
 
         switch ($type) {

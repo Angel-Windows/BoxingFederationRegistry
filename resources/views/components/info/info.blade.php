@@ -1,6 +1,6 @@
 @foreach($data_info as $key=>$item_infos)
 
-<div class="@if($key>0) fool @endif">
+<div class="@if($key>0) fool @endif  {{$more_data['class']??''}}">
     @foreach($item_infos as $item_info)
     <div class="{{$item_info['class'] ?? ''}}">
         @if(isset($item_info['title']))

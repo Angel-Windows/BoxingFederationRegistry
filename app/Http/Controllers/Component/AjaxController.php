@@ -90,6 +90,7 @@ class AjaxController extends Controller
         $data = DB::table($class_type)
             ->where('name', 'like', "%" . $search_value . "%")
             ->limit(10)
+            ->orWhere('phone', $search_value)
             ->get();
         $menuMarkButtons = new ModalModuleSearchResultListComponent($data, $class_type);
         $menuMarkButtonsView = $menuMarkButtons->render()->render();
@@ -110,6 +111,7 @@ class AjaxController extends Controller
         $data = DB::table($class_type)
             ->where('name', 'like', "%" . $search_value . "%")
             ->limit(10)
+            ->orWhere('phone', $search_value)
             ->get();
         $menuMarkButtons = new ModalModuleSearchResultListComponent($data, $class_type, $tag = '');
         $menuMarkButtonsView = $menuMarkButtons->render()->render();

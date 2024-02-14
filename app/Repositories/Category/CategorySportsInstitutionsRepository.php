@@ -66,6 +66,12 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
             ->get();
         $table['members']['data'] = [];
         $table['sportsmen']['data'] = [];
+
+
+        if (!$id){
+            $table['sportsmen'] = null;
+            $table['members'] = null;
+        }
         foreach ($members_works as $member) {
             $table['members']['data'][] = [
                 'text' => $member->name,
