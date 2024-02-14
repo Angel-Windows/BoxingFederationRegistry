@@ -29,7 +29,7 @@ class HomeController extends Controller
             $user = CategorySportsman::find( $sportsman->id);
             if($user){
 //                dd($user);
-                $user->update(['name'=> $name[1] . ' ' . $name[0] . ' ' . $name[2] ?? '']);
+                $user->update(['name'=> $name[1] . ' ' . $name[0] . ' ' . ($name[2] ?? '')]);
             }
         }
     }
