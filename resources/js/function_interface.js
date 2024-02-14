@@ -56,6 +56,14 @@ window.functionsArray = {
 
 };
 
+window.validateForm = (e) => {
+    if (e.classList.contains('submit')){
+        return false;
+    }
+    e.classList.add('submit');
+
+
+}
 window.getAjaxLink = (page) => {
     const ajax_link_meta = document.querySelector('meta[name="ajax-link"]');
     if (!ajax_link_meta)

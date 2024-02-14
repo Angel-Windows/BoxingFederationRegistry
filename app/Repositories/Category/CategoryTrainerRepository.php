@@ -41,6 +41,13 @@ class CategoryTrainerRepository implements CategoryRepositoryInterface
         ],
         'history_works' => [
             'button' => 'add_history',
+        ],
+        'qualification' => [
+            'option' => [
+                'Вища категорія',
+                'Перша категорія',
+                'Друга категорія',
+            ],
         ]
     ];
 
@@ -112,8 +119,8 @@ class CategoryTrainerRepository implements CategoryRepositoryInterface
             }
         }
 
-        if ($sportsmen = $request->input('sportsmen')){
-            CategorySportsman::whereIn('id', $sportsmen)->update(['trainer'=>null]);
+        if ($sportsmen = $request->input('sportsmen')) {
+            CategorySportsman::whereIn('id', $sportsmen)->update(['trainer' => null]);
         }
 
         LinkingMembers::whereIn('id', $update_null)->update(['date_end_at' => null]);
@@ -131,7 +138,7 @@ class CategoryTrainerRepository implements CategoryRepositoryInterface
 
         return [
             'error' => null,
-            'data'=>$category
+            'data' => $category
         ];
     }
 
@@ -181,7 +188,26 @@ class CategoryTrainerRepository implements CategoryRepositoryInterface
                 $item['end_work'],
             ];
         }
+//        dd($table['history_works']);
+        $history_works = null;
+        if ($table['history_works']['data_view'] ?? null) {
+            $history_works = [
+                'title' => 'Історія місць роботи',
+                'class' => ' fool',
+                'data_wrapper' => [
+                    [
+                        'type' => 'table',
+                        'class' => 'history-work no-wrap',
+                        'data' => [
+                            'thead' => ['Назва закладу', 'Початок', '', 'Кінець'],
 
+                            'body' =>
+                                ($table['history_works']['data_view'])
+                        ],
+                    ],
+                ],
+            ];
+        }
         return [
             [[
                 'title' => null,
@@ -226,29 +252,9 @@ class CategoryTrainerRepository implements CategoryRepositoryInterface
                         ],
                     ],
                 ],
-            ], [
-                'title' => 'Історія місць роботи',
-                'class' => ' fool',
-                'data_wrapper' => [
-                    [
-                        'type' => 'table',
-                        'class' => 'history-work no-wrap',
-                        'data' => [
-                            'thead' => ['Назва закладу', 'Початок', '', 'Кінець'],
-
-                            'body' =>
-                                $table['history_works']['data_view']
-//                                [
-//                                    $table['qualification']['placeholder'],
-//                                    $table['qualification']['value'] ?? '',
-//                                    '',
-//                                    $table['qualification']['value'] ?? '',
-//                                ]
-
-                        ],
-                    ],
-                ],
-            ],]
+            ],
+                $history_works
+            ]
         ];
     }
 
@@ -271,7 +277,7 @@ class CategoryTrainerRepository implements CategoryRepositoryInterface
         } else {
             $table = $this->data;
             $more_data = [
-                'register_name'=>'Реєстрація тренеру'
+                'register_name' => 'Реєстрація тренеру'
             ];
         }
 

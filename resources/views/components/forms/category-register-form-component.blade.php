@@ -4,6 +4,8 @@
       id="form_edit"
       class="page-form-{{$id ? "edit" : "register" }}"
       enctype="multipart/form-data"
+@if(!$id) onsubmit="return validateForm(this)" @endif
+
 >
     {{--    <button type="submit">Submit</button>--}}
     {{--        <button class="button">Submit</button>--}}

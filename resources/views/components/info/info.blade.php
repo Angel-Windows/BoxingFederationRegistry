@@ -6,6 +6,7 @@
         @if(isset($item_info['title']))
             <h3>{{$item_info['title']}}</h3>
         @endif
+        @if($item_info)
         <div class="info-wrapper {{$data_info['data-wrapper']['class'] ?? ""}}">
             @foreach($item_info['data_wrapper'] ?? [] as $item_right)
                 @switch($item_right['type'])
@@ -106,7 +107,7 @@
             @endforeach
 
         </div>
-
+            @endif
     </div>
     @endforeach
     </div>

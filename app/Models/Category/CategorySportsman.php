@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static leftJoin(string $string, string $string1, string $string2)
  * @method static where()
  * @method static whereIn()
+ * @method static select(string $string)
  */
 class CategorySportsman extends Model
 {

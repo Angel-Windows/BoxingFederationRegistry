@@ -294,6 +294,9 @@ form {
 
     .custom-select-options {
         position: absolute;
+        left: 0;
+        right: 0;
+
         list-style: none;
         padding: 0;
         margin: 0;
@@ -301,7 +304,7 @@ form {
         border: 1px solid #ccc;
         border-radius: 5px;
         display: none;
-        z-index: 1;
+        z-index: 2;
 
         max-height: 150px;
         overflow-y: auto;
@@ -323,7 +326,7 @@ form {
 
 }
 
-.category-register {
+.category-register, .register-box {
     max-width: 1000px;
     width: 100%;
 

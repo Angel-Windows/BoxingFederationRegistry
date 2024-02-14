@@ -31,17 +31,26 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
         'members' => [
             'type' => 'checkbox-list',
             'checkbox_type' => 'revert',
-            'title' => 'checkbox-list',
+            'title' => 'Працівники які працюють в закладі',
         ], 'sportsmen' => [
             'type' => 'checkbox-list',
             'checkbox_type' => 'revert',
             'title' => 'Спортсмени',
+        ], 'address' => [
+            'placeholder' => 'Місце знаходження',
         ],
+        'trainer' => [
+            'title' => "Тренери",
+            'type' => 'checkbox-list'
+        ]
     ];
 
 
     private function get_edit($table, $id): array
     {
+
+
+
         $members_works = LinkingMembers::leftJoin('category_trainers', 'category_trainers.id', 'linking_members.member_id')
             ->where('linking_members.category_id', $id)
             ->whereNull('linking_members.date_end_at')
@@ -55,9 +64,11 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
                 'category_trainers.logo',
             )
             ->get();
+
         $trainers_id = $members_works->pluck('category_trainers_id')->toArray();
 
-        $sportsman = CategorySportsman::whereIn('trainer', $trainers_id)
+        $sportsman = CategorySportsman::select('*')
+//        $sportsman = CategorySportsman::whereIn('trainer', $trainers_id)
             ->where('sports_institutions', $id)
             ->orWhere(function ($query) use ($id) {
                 $query->where('sports_institutions', $id)
@@ -68,7 +79,7 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
         $table['sportsmen']['data'] = [];
 
 
-        if (!$id){
+        if (!$id) {
             $table['sportsmen'] = null;
             $table['members'] = null;
         }
@@ -85,6 +96,14 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
                 'value' => $sportsman_item->id,
             ];
         }
+        foreach ($members_works as $item) {
+            $table['trainer']['data'][]= [
+                'text' => $item->name,
+                'subtitle' => $item->role,
+                'value' => $item->id,
+            ];
+        }
+
         return [
             [
                 'type' => '',
@@ -117,9 +136,26 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
                 'data_block' =>
                     [
                         $table['members'],
-                        $table['sportsmen'],
                     ],
             ],
+            [
+                'type' => 'checkbox-list',
+                'class' => 'fool ',
+                'checkbox_type' => 'revert',
+                'data_block' =>
+                    [
+                        $table['trainer'],
+                    ],
+            ],
+            [
+                'type' => 'checkbox-list',
+                'class' => 'fool ',
+                'checkbox_type' => 'revert',
+                'data_block' =>
+                    [
+                        $table['sportsmen'],
+                    ],
+            ]
         ];
     }
 
@@ -296,7 +332,7 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
         } else {
             $table = $this->data;
             $more_data = [
-                'register_name'=>'Реєстрація спортивного закладу'
+                'register_name' => 'Реєстрація спортивного закладу'
             ];
         }
 

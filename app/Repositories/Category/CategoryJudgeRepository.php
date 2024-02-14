@@ -25,14 +25,8 @@ class CategoryJudgeRepository implements CategoryRepositoryInterface
     private $data_inputs = [
         'history_works'=>[
             'button' => 'add_history',
-        ]
-    ];
-    private $data = [
-
+        ],
         'qualification' => [
-            'name' => 'qualification',
-            'tag' => 'select-box',
-            'placeholder' => 'Кваліфікація',
             'option' => [
                 'Юний спортивний суддя',
                 'Спортивний суддя другої категорії',
@@ -40,48 +34,7 @@ class CategoryJudgeRepository implements CategoryRepositoryInterface
                 'Спортивний суддя Національної категорії',
             ],
         ],
-        'city' => [
-            'name' => 'city',
-            'tag' => 'select-box',
-            'placeholder' => 'Місто',
-            'size' => 'fool',
-            'option' => [
-                1 => "Київ",
-                2 => "Харків",
-                3 => "Одеса",
-                4 => "Дніпро",
-                5 => "Донецьк",
-                6 => "Запоріжжя",
-                7 => "Львів",
-                8 => "Кривий Ріг",
-                9 => "Миколаїв",
-                10 => "Маріуполь",
-                11 => "Вінниця",
-                12 => "Полтава",
-                13 => "Чернігів",
-                14 => "Черкаси",
-                15 => "Житомир",
-                16 => "Суми",
-                17 => "Рівне",
-                18 => "Кам'янець-Подільський",
-                19 => "Луцьк",
-                20 => "Кременчук",
-            ],
-        ],
-
-        'school' => [
-            'name' => 'school',
-            'tag' => 'custom-select',
-            'placeholder' => 'Перелік навчальних закладів, які закінчив суддя',
-            'size' => 'fool',
-            'option' => [
-            ],
-        ],
         'rank' => [
-            'name' => 'rank',
-            'tag' => 'select-box',
-            'placeholder' => 'Державні, почесні звання, спортивні звання та розряди',
-            'size' => 'fool',
             'option' => [
                 'Заслужений тренер України',
                 'Заслужений майстер спорту України',
@@ -95,10 +48,8 @@ class CategoryJudgeRepository implements CategoryRepositoryInterface
                 'Третій юнацький розряд',
             ],
         ],
-
     ];
-
-
+    private $data;
 
     private function get_edit($table, $id): array
     {

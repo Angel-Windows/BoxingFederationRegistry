@@ -47,7 +47,7 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
         ],
         'federation' => [
             'placeholder' => 'Підпорядковані федерації',
-            'size'=>'',
+            'size' => '',
             'required' => true,
         ],
     ];
@@ -189,7 +189,7 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
 //            )
 //            ->get();
 //
-//        $works = [];
+        $works = [];
 
         $employees = EmployeesFederation::where('federation_id', $id)->get();
         foreach ($employees as $member) {
@@ -206,10 +206,9 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
 
         if ($works) {
             $table['federation_members']['data_wrapper'][0]['data']['body'] = $works;
-        }else{
+        } else {
             $table['federation_members'] = null;
         }
-
         return [
             [[
                 'title' => null,
@@ -245,7 +244,8 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
                         ],
                     ],
                 ],
-            ], $table['federation_members']]
+            ], $table['federation_members']
+            ]
 //            [
 //                'title' => 'Працівники федерації',
 //                'data_wrapper' => [
@@ -274,17 +274,14 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
             $more_data = [
                 'name' => $category->name,
                 'phone' => $category->phone,
-                'logo' => [
-                    'link' => $category->logo,
-                    'class' => 'big_img'
-                ]
+                'logo' => null
             ];
             $table = $this->get_value($this->data, $category);
 
         } else {
             $table = $this->data;
             $more_data = [
-                'register_name'=>'Реєстрація федерації'
+                'register_name' => 'Реєстрація федерації'
             ];
         }
         $more_data['class'] = 'fool';

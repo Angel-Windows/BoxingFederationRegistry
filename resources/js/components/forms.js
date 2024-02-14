@@ -1,6 +1,7 @@
 export const inputs_input = (parent_class, is_search = true) => {
     let parent = document.querySelector('.' + parent_class);
     if (!parent) parent = document;
+    console.log(parent)
     const all_inputs = parent.querySelectorAll('.input')
     all_inputs.forEach((item) => {
         item.addEventListener('focus', () => {
@@ -36,7 +37,6 @@ export const inputs_input = (parent_class, is_search = true) => {
         selectInput.addEventListener('input', function () {
             if (is_search) {
                 filterOptions(selectInput, selectOptions, optionItems);
-                console.log(22)
             }
             selectOptions.style.display = 'block';
         });
@@ -49,11 +49,14 @@ export const inputs_input = (parent_class, is_search = true) => {
 
             }
         });
-
-        document.addEventListener('click', function (e) {
+        parent.querySelector('form').addEventListener('click', function (e) {
             if (!selectInput.contains(e.target) && !selectOptions.contains(e.target)) {
                 if (selectOptions.style.display === 'block') {
-                    selectInput.value = old_value.value;
+                   if (selectInput.value !== ''){
+                       selectInput.value = old_value.value;
+                   }else {
+                       old_value.value = null;
+                   }
                     selectOptions.style.display = 'none';
                 }
             }
