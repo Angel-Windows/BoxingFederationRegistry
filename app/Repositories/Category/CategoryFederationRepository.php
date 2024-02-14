@@ -47,7 +47,8 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
         ],
         'federation' => [
             'placeholder' => 'Підпорядковані федерації',
-            'size'=>''
+            'size'=>'',
+            'required' => true,
         ],
     ];
 

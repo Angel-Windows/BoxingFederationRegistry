@@ -66,12 +66,8 @@ class TrainerController extends Controller
 
     public function register_category($class_name, $id, Request $request)
     {
-
         $result = $this->get_category('register_page', $class_name, null, $request);
-//
-//        if ($result['error']) {
-//            dd($result['error']);
-//        }
+
         $response_url = route('payment.fondy.response-url');
         $callback_url = route('payment.fondy.callback-url');
 

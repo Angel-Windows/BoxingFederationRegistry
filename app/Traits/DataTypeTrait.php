@@ -305,8 +305,8 @@ trait DataTypeTrait
             'placeholder' => 'Стать',
 //            'required'=>'true',
             'option' => [
-                'Хлопець',
-                'Дівчина',
+                'Чоловік',
+                'Жінка',
             ],
         ],
         'position' => [
