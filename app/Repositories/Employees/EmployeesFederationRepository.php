@@ -73,7 +73,7 @@ class EmployeesFederationRepository implements CategoryRepositoryInterface
     public function edit($id, $request, $type): array
     {
         $category = self::validate_category($request, $this->table_model, $id);
-
+        dd($request->input('position') ?? '');
         $category->federation_id = $request->input('federation') ?? '';
         $category->name = $request->input('name') ?? '';
         $category->phone = $request->input('phone') ?? '';
