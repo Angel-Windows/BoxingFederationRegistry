@@ -368,7 +368,14 @@ form {
         width: auto;
     }
 }
-
+.passport_edit {
+    display: grid;
+    grid-gap: 12px;
+    grid-template-columns: 170px 1fr;
+    input{
+        text-transform: uppercase;
+    }
+}
 @media screen and (max-width: 1000px) {
     .table {
         display: block;

@@ -327,15 +327,21 @@ trait CategoryUITrait
             case 'sports_institutions':
                 $result = CategorySportsInstitutions::find($value)->name ?? '';
                 break;
+
+
             default:
                 switch ($dataKey['tag']) {
                     case 'select-box':
                         $result = $dataKey['option'][$value] ?? '';
                         break;
                     case 'input':
+                    case 'foreign_passport':
+
+                    case 'passport':
                     case 'custom-select':
                         $result = $value ?? '';
                         break;
+
                     default :
                         $result = '';
                 }
@@ -350,6 +356,15 @@ trait CategoryUITrait
                     break;
                 case 'input':
                     $data[$key]['value'] = $result;
+                    break;
+                case 'foreign_passport':
+                case 'passport':
+                    $pass = json_decode($result, true);
+                    $data[$key]['text'] = strtoupper($pass['seria'] ?? '' ). ($pass['number'] ?? '');
+                    $data[$key]['value'] = strtoupper($pass['seria'] ?? '' ). ($pass['number'] ?? '');
+                    $data[$key]['name_seria'] = strtoupper($pass['seria'] ?? '');
+                    $data[$key]['name_number'] = $pass['number'] ?? '';
+
                     break;
             }
             $data[$key]['text'] = $result;

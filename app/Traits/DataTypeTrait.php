@@ -394,12 +394,18 @@ trait DataTypeTrait
 
         'passport' => [
             'name' => 'passport',
-            'tag' => 'input',
+            'tag' => 'passport',
+            'size' => 'fool',
             'placeholder' => 'Паспорт український, серія/номер',
+            'name_seria' => 'mp',
+            'name_number' => '123',
         ],
+
         'foreign_passport' => [
             'name' => 'foreign_passport',
-            'tag' => 'input',
+            'name_seria' => '',
+            'name_number' => '',
+            'tag' => 'passport',
             'placeholder' => 'Паспорт закордоний, серія/номер',
         ],
         'trainer' => [
@@ -480,14 +486,14 @@ trait DataTypeTrait
 
             ],
         ],
-        'federation_members'=> [
+        'federation_members' => [
             'title' => 'Працівники федерації',
             'data_wrapper' => [
                 [
                     'type' => 'todo_table',
                     'button_add' => '',
                     'data' => [
-                        'thead' => ['ПІП', 'Телефон', 'Пошта',  'Посада'],
+                        'thead' => ['ПІП', 'Телефон', 'Пошта', 'Посада'],
                         'body' => [],
                     ],
                 ],

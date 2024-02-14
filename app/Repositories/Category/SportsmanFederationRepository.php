@@ -141,23 +141,26 @@ class SportsmanFederationRepository implements CategoryRepositoryInterface
                         ],
                         [
                             'title' => 'Паспорт український',
-                            'type' => 'table',
-                            'data' => [
-                                $table['passport'],
-                            ],
+                            'type' => 'passport',
+                            'data' => $table['passport'],
                         ],
                         [
                             'title' => 'Паспорт закордонний',
-                            'type' => 'table',
-                            'data' => [
-                                $table['foreign_passport'],
-                            ],
-                        ], $table['family']
+                            'type' => 'passport',
+                            'class' => 'fool',
+                            'data' => $table['foreign_passport']
+                        ],
+                        $table['family']
                     ],
             ]
         ];
     }
-
+    private function passport_edit($seria, $number){
+        return json_encode([
+            'seria' => strtoupper($seria),
+            'number' => $number,
+        ]);
+    }
     public function edit($id, $request, $type): array
     {
         $category = self::validate_category($request, $this->table_model, $id);
@@ -165,6 +168,7 @@ class SportsmanFederationRepository implements CategoryRepositoryInterface
         foreach ($request->input('family') ?? [] as $item) {
             $family_arr[] = json_decode($item, true);
         }
+
         $category->birthday = $request->input('birthday');
         $category->gender = $request->input('gender');
         $category->weight = $request->input('weight');
@@ -177,8 +181,8 @@ class SportsmanFederationRepository implements CategoryRepositoryInterface
         $category->achievements = $request->input('achievements');
         $category->rank = $request->input('rank');
         $category->address_birth = $request->input('address_birth');
-        $category->passport = $request->input('passport');
-        $category->foreign_passport = $request->input('foreign_passport');
+        $category->passport = $this->passport_edit($request->input('passport_seria'), $request->input('passport_number'));
+        $category->foreign_passport = $this->passport_edit($request->input('foreign_passport_seria'), $request->input('foreign_passport_number'));
         $category->family = json_encode($family_arr);
 
         $category->save();
@@ -217,12 +221,11 @@ class SportsmanFederationRepository implements CategoryRepositoryInterface
         $this->GetValueInputs($category_data->weight_category, 'weight_category', $new_data);
         $this->GetValueInputs($category_data->address_birth, 'address_birth', $new_data);
         $this->GetValueInputs($category_data->passport, 'passport', $new_data);
+        $this->GetValueInputs($category_data->foreign_passport, 'foreign_passport', $new_data);
         $this->GetValueInputs($category_data->trainer, 'trainer', $new_data);
         $this->GetValueInputs($category_data->achievements, 'achievements', $new_data);
         $this->GetValueInputs($category_data->sports_institutions, 'sports_institutions', $new_data);
         $this->GetValueInputs($category_data->rank, 'rank', $new_data);
-
-
         return $new_data;
     }
 
@@ -265,7 +268,14 @@ class SportsmanFederationRepository implements CategoryRepositoryInterface
                                     ], [
                                         $table['address']['placeholder'],
                                         $table['address']['text'] ?? '',
-                                    ], [
+                                    ],[
+                                        $table['passport']['placeholder'],
+                                        $table['passport']['value'] ?? '',
+                                    ],[
+                                        $table['foreign_passport']['placeholder'],
+                                        $table['foreign_passport']['value'] ?? '',
+                                    ],
+                                    [
                                         $table['federation']['placeholder'],
                                         $table['federation']['text'] ?? '',
                                     ], [
@@ -363,7 +373,7 @@ class SportsmanFederationRepository implements CategoryRepositoryInterface
         } else {
             $table = $this->data;
             $more_data = [
-                'register_name'=>'Реєстрація спортсмену'
+                'register_name' => 'Реєстрація спортсмену'
             ];
         }
 

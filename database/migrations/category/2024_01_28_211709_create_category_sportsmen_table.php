@@ -25,8 +25,8 @@ return new class extends Migration
             $table->integer('weight_category')->nullable();
             $table->string('address_birth')->nullable();
             $table->json('address')->nullable();
-            $table->string('passport')->nullable();
-            $table->string('foreign_passport')->nullable();
+            $table->json('passport')->nullable();
+            $table->json('foreign_passport')->nullable();
             $table->integer('federation')->nullable();
             $table->integer('trainer')->nullable();
             $table->integer('sports_institutions')->nullable();

@@ -22,7 +22,12 @@ class CategorySportsmanFactory extends Factory
     public $federation = null;
     public $trainer = null;
     public $sports_institutions = null;
-
+    private function passportRand(){
+        return json_encode([
+            'seria'=>  strtoupper($this->faker->randomLetter() . $this->faker->randomLetter()),
+            'number'=> $this->faker->numberBetween(10000000, 99999999),
+        ]);
+    }
     public function definition(): array
     {
 
@@ -45,6 +50,7 @@ class CategorySportsmanFactory extends Factory
                 'phone' => getRandomPhone(),
             ];
         }
+
         return [
             'name' => $this->faker->name,
             'phone' => getRandomPhone(),
@@ -58,8 +64,8 @@ class CategorySportsmanFactory extends Factory
             'weight_category' => $this->faker->numberBetween(1, 10),
             'address_birth' => $this->faker->city,
             'address' => $address_address,
-            'foreign_passport' => $this->faker->numerify('CC#########'),
-            'passport' => $this->faker->numerify('#########'),
+            'foreign_passport' => $this->passportRand(),
+            'passport' => $this->passportRand(),
             'federation' => $rand_federation,
             'trainer' => $rand_trainer,
             'sports_institutions' => $rand_sports_institutions,

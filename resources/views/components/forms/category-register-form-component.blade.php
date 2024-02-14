@@ -100,12 +100,12 @@
                             </div>
                             @break
                         @case('family')
-                                @php
-                                    $class = '';
-                                     if (($item_data['checkbox_type'] ?? '') == 'revert' || ($item_list['checkbox_type'] ?? '')  == 'revert' ){
-                                            $class .=  ' revert';
-                                         }
-                                @endphp
+                            @php
+                                $class = '';
+                                 if (($item_data['checkbox_type'] ?? '') == 'revert' || ($item_list['checkbox_type'] ?? '')  == 'revert' ){
+                                        $class .=  ' revert';
+                                     }
+                            @endphp
                             <div class="history-work fool">
                                 <table class="no-wrap m-grid-3">
                                     <tbody>
@@ -118,7 +118,7 @@
                                                 class="pl-0 "
                                                 onclick="functionsArray['toggle_parent_active'](this, 'label', 'delete')">
                                                 <input
-                                                type="checkbox"
+                                                    type="checkbox"
                                                     name="{{$item_list['name']}}"
                                                     value=""
                                                     class="{{$class}}"
@@ -136,7 +136,7 @@
                                                     onclick="functionsArray['toggle_parent_active'](this, 'label', 'delete')">
                                                     <input
                                                         @if(!($item_data['checkbox_type'] ?? false)) checked @endif
-                                                        type="checkbox"
+                                                    type="checkbox"
                                                         name="{{$item_list['name']}}"
                                                         value="{{$item_data['value']}}"
                                                         class="{{$class}}"
@@ -193,6 +193,24 @@
                                 </table>
                             </div>
                             @break
+                        @case('passport')
+{{--                            @dd($item_list['data'])--}}
+                            <div class="passport_edit">
+                                <label class="label hovered type__text @if($item_list['data']['name_seria']) active @endif">
+                                    <span class="unselectable">Серія</span>
+                                    <input class="input" placeholder="" name="{{$item_list['data']['name']}}_seria"
+                                           type="text" value="{{$item_list['data']['name_seria']}}">
+                                </label>
+                                <label class="label hovered type__text  @if($item_list['data']['name_number']) active @endif">
+                                    <span class="unselectable">Номер</span>
+                                    <input class="input" placeholder="" name="{{$item_list['data']['name']}}_number"
+                                           type="number" value="{{$item_list['data']['name_number']}}">
+                                </label>
+                            </div>
+                            <style>
+
+                            </style>
+                            @break
                         @case('table')
                             <div class="table">
                                 @foreach($item_list['data'] ?? [] as $item)
@@ -210,6 +228,7 @@
                                             $value = $item['value'];
                                         }
                                     @endphp
+
                                     @switch($item['tag'] ?? '')
                                         @case('input')
 
@@ -253,6 +272,7 @@
                                                     'option'=>$item['option'] ?? []
                                                 ])
                                             @break
+
                                     @endswitch
                                 @endforeach
                             </div>
