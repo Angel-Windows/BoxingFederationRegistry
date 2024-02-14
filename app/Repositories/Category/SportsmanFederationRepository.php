@@ -100,8 +100,8 @@ class SportsmanFederationRepository implements CategoryRepositoryInterface
                         [
                             'type' => 'table',
                             'data' => [
-                                $table['first_name'],
                                 $table['last_name'],
+                                $table['first_name'],
                                 $table['surname'],
                                 $table['phone'],
                                 $table['email'],

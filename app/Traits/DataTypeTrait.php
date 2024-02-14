@@ -334,7 +334,9 @@ trait DataTypeTrait
             'tag' => 'select-box',
             'size' => 'fool',
             'placeholder' => 'Вагова категорія',
-            'option' => [
+            'option' =>[
+//            'm'=>[]
+                'Для чоловіків 19-40 років і підлітків 17-18 років (Еліта і Молодь)',
                 'Перша вага (Light Fly) 46 - 49',
                 'Найлегша вага (Fly) 49 - 52',
                 'Найлегша (Bantam Weight)    52 - 56',
