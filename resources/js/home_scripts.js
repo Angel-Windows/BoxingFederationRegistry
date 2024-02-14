@@ -1,6 +1,8 @@
 const oldActiveArray = {};
 
 const oldActiveArrayInterval = [];
+
+const timeouts = {};
 const findParent = (element, parent, func) => {
     let parentElement = null;
     const foundIndex = oldActiveArrayInterval.findIndex(item => item.id === element);
@@ -26,7 +28,9 @@ const findParent = (element, parent, func) => {
         'parentElement': parentElement
     }
 }
+
 export function addParentActive(element, parent, className = 'active', functionName, params = []) {
+
     const func = (parentElement) => {
         parentElement.classList.add(className);
         if (functionsArray[functionName] && typeof functionsArray[functionName] === 'function') {
@@ -37,15 +41,24 @@ export function addParentActive(element, parent, className = 'active', functionN
     findParent(element, parent, func)
 
 }
+
 export function removeParentActive(element, parent, className = 'active', functionName, params = []) {
+
     const func = (parentElement) => {
         parentElement.classList.remove(className);
         if (functionsArray[functionName] && typeof functionsArray[functionName] === 'function') {
             functionsArray[functionName](parentElement, className, params);
         }
     }
-    findParent(element, parent, func)
+
+    if (timeouts.parentActive) {
+        findParent(element, parent, func)
+    }
+
+    timeouts.parentActive = setTimeout(() => {
+    }, 500)
 }
+
 export function toggleParentActive(element, parent, className = 'active', functionName, params = []) {
     const func = (parentElement) => {
         parentElement.classList.toggle(className);

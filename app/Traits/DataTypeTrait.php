@@ -518,6 +518,7 @@ trait DataTypeTrait
 
             ],
             'city' => [
+                'required'=>true,
                 'name' => 'city',
                 'tag' => 'select-box',
                 'placeholder' => 'Місто',
