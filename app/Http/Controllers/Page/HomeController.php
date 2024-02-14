@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Page;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category\CategorySportsman;
+use App\Models\Category\CategoryTrainer;
 use App\Models\Class\ClassType;
 use App\Services\SmsService;
 use Illuminate\Http\Request;
@@ -22,11 +23,11 @@ class HomeController extends Controller
     }
     public function test_page()
     {
-        $sportsmans = CategorySportsman::get();
+        $sportsmans = CategoryTrainer::get();
 
         foreach ($sportsmans as $sportsman) {
             $name = explode(' ', $sportsman->name);
-            $user = CategorySportsman::find( $sportsman->id);
+            $user = CategoryTrainer::find( $sportsman->id);
             if($user){
 //                dd($user);
                 $user->update(['name'=> $name[1] . ' ' . $name[0] . ' ' . ($name[2] ?? '')]);
