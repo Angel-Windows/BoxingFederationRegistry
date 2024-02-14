@@ -7,6 +7,7 @@ use App\Models\Category\CategorySportsman;
 use App\Models\Category\CategoryTrainer;
 use App\Models\Class\BoxFederation;
 use App\Models\Class\ClassType;
+use App\Models\Federation;
 use App\Models\Linking\LinkingMembers;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
 use App\Traits\CategoryUITrait;
@@ -80,11 +81,33 @@ class SportsmanFederationRepository implements CategoryRepositoryInterface
             } else {
                 $table['sports_institutions']['option'] = CategorySportsInstitutions::pluck('name', 'id');
             }
-            $linking_federation = LinkingMembers::where('member_id', $model->trainer)
-                ->where('category_type', ClassType::getIdCategory('box_federations'))
-                ->pluck('category_id');
-            if ($linking_federation) {
-                $table['federation']['option'] = BoxFederation::whereIn('id', $linking)
+//            $linking_federation = LinkingMembers::where('member_id', $model->trainer)
+//                ->where('category_type', ClassType::getIdCategory('box_federations'))
+//                ->pluck('category_id');
+            $linking_trainer = CategoryTrainer::where('id', $model->trainer)->first();
+            $arr_federation = [];
+            $arr_federation_temp = [];
+            $max = 0;
+            $old_id = $linking_trainer->federation;
+            $arr_federation[$old_id] = $old_id;
+            do {
+                $linking_federation = BoxFederation::where('id', $old_id)
+                    ->whereNotIn('id', $arr_federation_temp)
+                    ->first();
+                $arr_federation_temp = $arr_federation;
+                if ($linking_federation->federation ?? null) {
+                    $old_id = $linking_federation->federation;
+                    $arr_federation[$old_id] = $old_id;
+                }
+
+                $max++;
+                if ($max === (BoxFederation::count() - 1)) {
+                    break;
+                }
+            } while ($linking_federation->federation ?? null);
+
+            if (count($arr_federation)) {
+                $table['federation']['option'] = BoxFederation::whereIn('id', $arr_federation)
                     ->pluck('name', 'id');
             } else {
                 $table['federation']['option'] = BoxFederation::pluck('name', 'id');
@@ -156,12 +179,15 @@ class SportsmanFederationRepository implements CategoryRepositoryInterface
             ]
         ];
     }
-    private function passport_edit($seria, $number){
+
+    private function passport_edit($seria, $number)
+    {
         return json_encode([
             'seria' => strtoupper($seria),
             'number' => $number,
         ]);
     }
+
     public function edit($id, $request, $type): array
     {
         $category = self::validate_category($request, $this->table_model, $id);
@@ -269,10 +295,10 @@ class SportsmanFederationRepository implements CategoryRepositoryInterface
                                     ], [
                                         $table['address']['placeholder'],
                                         $table['address']['text'] ?? '',
-                                    ],[
+                                    ], [
                                         $table['passport']['placeholder'],
                                         $table['passport']['value'] ?? '',
-                                    ],[
+                                    ], [
                                         $table['foreign_passport']['placeholder'],
                                         $table['foreign_passport']['value'] ?? '',
                                     ],

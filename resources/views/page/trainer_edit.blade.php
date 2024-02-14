@@ -33,7 +33,7 @@
                 <div class="upload_img big_img" id="imageButton">
                     <div class="drop">Відпустити тут</div>
                     <div class="img">
-                        <input type="image" src="{{MyAsset($get['more_data']['logo']['link'])}}" alt="" name="image">
+                        <input type="image" src="{{MyAsset($get['more_data']['logo']['link'] ?? '')}}" alt="" name="image">
                     </div>
                     <div class="buttons">
 {{--                        <button class="button one white">Зробити фото</button>--}}

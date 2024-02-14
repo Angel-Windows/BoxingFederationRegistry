@@ -11,8 +11,10 @@
 
 >
     {{--    <button type="submit">Submit</button>--}}
-    {{--        <button class="button">Submit</button>--}}
+{{--            <button class="button">Submit</button>--}}
     @csrf
+
+
     @php
         $model_table = new $get['modeles'];
         $is_register_add = true;

@@ -55,6 +55,7 @@ export const inputs_input = (parent_class, is_search = true) => {
                    if (selectInput.value !== ''){
                        selectInput.value = old_value.value;
                    }else {
+                       input_value.value = null;
                        old_value.value = null;
                    }
                     selectOptions.style.display = 'none';
