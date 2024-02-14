@@ -43,11 +43,11 @@ class AuthController extends Controller
             );
         }
 
-        SmsService::sendSms($phoneNumber, $message);
-        return response()->json(
-            [
-                'data' => [],
-            ]);
+//        SmsService::sendSms($phoneNumber, $message);
+//        return response()->json(
+//            [
+//                'data' => [],
+//            ]);
 
     }
 
