@@ -99,7 +99,7 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
 
         $category->director = $request->input('director') ?? '';
         $category->federation = $request->input('federation') ?? '';
-        $category->edrpou = $request->input('edrpou') ?? '';
+        $category->edrpou = $request->input('edrpou') ?? null;
         $category->site = $request->input('site') ?? '';
         $category->save();
 
@@ -264,6 +264,7 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
     public function get_data($data, $request = null): array
     {
         $type = $data['type'] ?? '';
+
         $category = $this->table_model::find($data['id']);
         $more_data = [];
 
@@ -280,7 +281,9 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
 
         } else {
             $table = $this->data;
-
+            $more_data = [
+                'register_name'=>'Реєстрація федерації'
+            ];
         }
 
 

@@ -243,6 +243,9 @@ class EmployeesInsurancesRepository implements CategoryRepositoryInterface
 
         } else {
             $table = $this->data;
+            $more_data = [
+                'register_name'=>'Реєстрація працівника страхової'
+            ];
 
         }
 

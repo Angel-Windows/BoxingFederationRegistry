@@ -270,6 +270,9 @@ class CategoryTrainerRepository implements CategoryRepositoryInterface
             $table = $this->get_value($this->data, $category);
         } else {
             $table = $this->data;
+            $more_data = [
+                'register_name'=>'Реєстрація тренеру'
+            ];
         }
 
 

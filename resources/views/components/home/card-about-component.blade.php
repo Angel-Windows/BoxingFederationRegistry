@@ -30,7 +30,7 @@
                         @default
                             <button
                                 class="button"
-                                onclick="functionsArray['open_modal']('register-box', {'category': '{{$item['link']}}'})"
+                                onclick="functionsArray['open_modal']('category-register', {'category': '{{$item['link']}}'})"
                             ><img src="{{asset('img/homeAbout/register.svg')}}" alt="register"><span>Реєстрація</span></button>
                     @endswitch
 

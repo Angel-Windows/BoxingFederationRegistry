@@ -242,6 +242,9 @@ class EmployeesFederationRepository implements CategoryRepositoryInterface
 
         } else {
             $table = $this->data;
+            $more_data = [
+                'register_name'=>'Реєстрація працівника федерації'
+            ];
 
         }
 
