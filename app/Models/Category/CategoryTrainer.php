@@ -17,6 +17,6 @@ use Illuminate\Database\Eloquent\Model;
 class CategoryTrainer extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', /* другие заполняемые поля */];
+    protected $fillable = ['name'];
 
 }

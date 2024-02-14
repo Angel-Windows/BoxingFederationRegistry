@@ -7,15 +7,15 @@
         height: 100%;
     }
 }
-
+.persone_img{
+    width: 370px;
+}
 .big_img {
     width: 100%;
 
     .img {
-        $min-width: 333px;
-        $max-width: 370px;
-        width: 100%;
-        max-width: $max-width;
+
+        width: 370px;
         height: 500px;
 
         img {

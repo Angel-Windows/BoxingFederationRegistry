@@ -63,9 +63,9 @@ if (!function_exists('randomAddress')) {
 }
 
 if (!function_exists('MyAsset')) {
-    function MyAsset($url): bool|string
+    function MyAsset($url, $type = 'no_img'): bool|string
     {
-        return route('config.show-img', ['filename' => $url]);
+        return route('config.show-img', ['filename' => $url, 'type'=>$type]);
     }
 }
 if (!function_exists('RandPhoto')) {

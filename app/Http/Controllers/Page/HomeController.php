@@ -23,16 +23,18 @@ class HomeController extends Controller
     }
     public function test_page()
     {
-        $sportsmans = CategoryTrainer::get();
+        $path = resource_path('img/no_img.jpg');
 
-        foreach ($sportsmans as $sportsman) {
-            $name = explode(' ', $sportsman->name);
-            $user = CategoryTrainer::find( $sportsman->id);
-            if($user){
-//                dd($user);
-                $user->update(['name'=> $name[1] . ' ' . $name[0] . ' ' . ($name[2] ?? '')]);
-            }
-        }
+//        $sportsmans = CategoryTrainer::get();
+//
+//        foreach ($sportsmans as $sportsman) {
+//            $name = explode(' ', $sportsman->name);
+//            $user = CategoryTrainer::find( $sportsman->id);
+//            if($user){
+////                dd($user);
+//                $user->update(['name'=> $name[1] . ' ' . $name[0] . ' ' . ($name[2] ?? '')]);
+//            }
+//        }
     }
 
 }
