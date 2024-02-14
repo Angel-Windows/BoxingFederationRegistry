@@ -329,6 +329,7 @@ trait DataTypeTrait
         'weight_category' => [
             'name' => 'weight_category',
             'tag' => 'select-box',
+            'size' => 'fool',
             'placeholder' => 'Вагова категорія',
             'option' => [
                 'Перша вага (Light Fly) 46 - 49',
@@ -424,6 +425,7 @@ trait DataTypeTrait
         'achievements' => [
             'name' => 'achievements',
             'tag' => 'input',
+            'size' => 'fool',
             'placeholder' => 'Історія досягнень',
         ],
         'director' => [

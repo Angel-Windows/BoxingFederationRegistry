@@ -105,8 +105,9 @@ class SportsmanFederationRepository implements CategoryRepositoryInterface
                                 $table['surname'],
                                 $table['phone'],
                                 $table['email'],
-                                $table['birthday'],
                                 $table['gender'],
+                                $table['birthday'],
+
                                 $table['weight'],
                                 $table['arm_height'],
                                 $table['height'],
