@@ -46,9 +46,9 @@ class MyAuthService
      */
     public static function CheckMiddleware(?string $phone): bool
     {
-//        if (!env('IS_REGISTER')) {
-//            return true;
-//        }
+        if (!env('IS_REGISTER')) {
+            return true;
+        }
         $user = self::getUser();
 
         if (!$phone || !$user) {

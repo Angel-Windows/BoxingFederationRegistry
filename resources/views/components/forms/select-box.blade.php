@@ -1,5 +1,7 @@
 @php
     $required = ($is_required ?? false) ? 'required' : '';
+    $titleOpt_open = false;
+
 @endphp
 <div class="select-box   {{$class_name}}">
     <label class="label type__text hovered  {{$class_name}}">
@@ -15,9 +17,29 @@
             value="{{$value}}"
             class=" input">
             <option value="">Не обрано</option>
-            @foreach($option as $key_opt=>$item_opt)
-                <option @if($key_opt == ($value ?? '')) selected @endif value="{{$key_opt}}">{{$item_opt}}</option>
-            @endforeach
+
+            @if($titleOpt_open)
+                <optgroup label="opens"> @endif
+                    @foreach($option as $key_opt=>$item_opt)
+                        @if($item_opt=== 'Title' && $titleOpt_open)  </optgroup>
+            @endif
+
+            @if($item_opt=== 'Title')
+                @php
+                    $titleOpt_open = true;
+                @endphp
+                <optgroup label="{{$key_opt}}">
+                    @else
+                        <option
+                            @if($key_opt == ($value ?? '')) selected @endif
+                        value="{{$key_opt}}"
+                        >
+                            {{$item_opt}}
+                        </option>
+                    @endif
+
+                    @endforeach
+                    @if($titleOpt_open)</optgroup>@endif
         </select>
     </label>
 </div>
