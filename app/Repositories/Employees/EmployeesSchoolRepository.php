@@ -81,7 +81,7 @@ class EmployeesSchoolRepository implements CategoryRepositoryInterface
         $category = self::validate_category($request, $this->table_model, $id);
 
         $category->school_id = $request->input('school') ?? '';
-        $category->position = $request->input('position') ?? '';
+        $category->position = $request->input('position') ?? null;
         $category->birthday = $request->input('birthday') ?? '';
         $category->save();
 

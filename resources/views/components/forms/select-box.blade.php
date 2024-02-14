@@ -1,3 +1,6 @@
+@php
+    $required = ($is_required ?? false) ? 'required' : '';
+@endphp
 <div class="select-box   {{$class_name}}">
     <label class="label type__text hovered  {{$class_name}}">
         {{--                                            @foreach($item['option'] as $key_opt=>$item_opt)--}}
@@ -6,6 +9,7 @@
         {{--                                            @endforeach--}}
         <span class="unselectable">{{$placeholder}}</span>
         <select
+            {{$required}}
             type="text"
             name="{{$name}}"
             value="{{$value}}"

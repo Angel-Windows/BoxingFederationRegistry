@@ -302,6 +302,7 @@ trait DataTypeTrait
             'name' => 'gender',
             'tag' => 'select-box',
             'placeholder' => 'Стать',
+//            'required'=>'true',
             'option' => [
                 'Хлопець',
                 'Дівчина',
@@ -310,6 +311,7 @@ trait DataTypeTrait
         'position' => [
             'name' => 'position',
             'tag' => 'select-box',
+//            'required'=>true,
             'placeholder' => 'Посада',
         ],
         'arm_height' => [

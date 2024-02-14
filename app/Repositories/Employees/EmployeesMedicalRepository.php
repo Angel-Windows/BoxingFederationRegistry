@@ -81,7 +81,7 @@ class EmployeesMedicalRepository implements CategoryRepositoryInterface
     {
         $category = self::validate_category($request, $this->table_model, $id);
         $category->medical_id = $request->input('medical') ?? null;
-        $category->position = $request->input('position') ?? '';
+        $category->position = $request->input('position') ?? null;
         $category->birthday = $request->input('birthday') ?? '';
         $category->save();
 

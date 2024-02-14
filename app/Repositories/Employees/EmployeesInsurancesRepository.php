@@ -80,7 +80,7 @@ class EmployeesInsurancesRepository implements CategoryRepositoryInterface
         $category = self::validate_category($request, $this->table_model, $id);
 
         $category->sports_institutions_id = $request->input('sports_institution') ?? '';
-        $category->position = $request->input('position') ?? '';
+        $category->position = $request->input('position') ?? null;
         $category->birthday = $request->input('birthday') ?? '';
         $category->save();
 

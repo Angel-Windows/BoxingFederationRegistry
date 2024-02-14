@@ -5,8 +5,8 @@
       class="page-form-{{$id ? "edit" : "register" }}"
       enctype="multipart/form-data"
 >
-{{--    <button type="submit">Submit</button>--}}
-{{--        <button class="button">Submit</button>--}}
+    {{--    <button type="submit">Submit</button>--}}
+    {{--        <button class="button">Submit</button>--}}
     @csrf
     @php
         $model_table = new $get['modeles'];
@@ -194,14 +194,16 @@
                             </div>
                             @break
                         @case('passport')
-{{--                            @dd($item_list['data'])--}}
+                            {{--                            @dd($item_list['data'])--}}
                             <div class="passport_edit">
-                                <label class="label hovered type__text @if($item_list['data']['name_seria']) active @endif">
+                                <label
+                                    class="label hovered type__text @if($item_list['data']['name_seria']) active @endif">
                                     <span class="unselectable">Серія</span>
                                     <input class="input" placeholder="" name="{{$item_list['data']['name']}}_seria"
                                            type="text" value="{{$item_list['data']['name_seria']}}">
                                 </label>
-                                <label class="label hovered type__text  @if($item_list['data']['name_number']) active @endif">
+                                <label
+                                    class="label hovered type__text  @if($item_list['data']['name_number']) active @endif">
                                     <span class="unselectable">Номер</span>
                                     <input class="input" placeholder="" name="{{$item_list['data']['name']}}_number"
                                            type="number" value="{{$item_list['data']['name_number']}}">
@@ -238,7 +240,8 @@
                                             @endphp
                                             <label class="label hovered type__text  {{$class}}">
                                                 <span class="unselectable">{{$item['placeholder']}}</span>
-                                                <input class="input" placeholder="" name="{{$item['name']}}"
+                                                <input class="input" @if($item['required']??null) required
+                                                       @endif placeholder="" name="{{$item['name']}}"
                                                        type="{{$type}}" value="{{$value}}">
                                             </label>
                                             @break
@@ -257,7 +260,8 @@
                                                     'value'=>$value,
                                                     'text'=>$item['text'] ?? '',
                                                     'name'=>$item['name'],
-                                                    'option'=>$item['option'] ?? []
+                                                    'option'=>$item['option'] ?? [],
+                                                    'is_required'=> $item['required'] ?? null
                                                 ])
 
                                             @break
@@ -269,7 +273,8 @@
                                                     'value'=>$value,
                                                     'text'=>$item['text'] ?? '',
                                                     'name'=>$item['name'],
-                                                    'option'=>$item['option'] ?? []
+                                                    'option'=>$item['option'] ?? [],
+                                                    'is_required'=> $item['required'] ?? null
                                                 ])
                                             @break
 
