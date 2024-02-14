@@ -294,6 +294,7 @@ trait DataTypeTrait
         ],
         'birthday' => [
             'name' => 'birthday',
+            'required' => true,
             'tag' => 'input',
             'type' => 'date',
             'placeholder' => 'Дата народження',
