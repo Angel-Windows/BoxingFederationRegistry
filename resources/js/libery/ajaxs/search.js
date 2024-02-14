@@ -32,6 +32,11 @@ export function modal_open(data, class_name = '') {
             functionsArray['inputs_input']('modal_wrapper')
             upload_img();
             break;
+        case "register-box":
+            input = modal_wrapper.querySelectorAll('.input');
+            functionsArray['inputs_input']('modal_wrapper')
+            upload_img();
+            break;
     }
 }
 upload_img();
