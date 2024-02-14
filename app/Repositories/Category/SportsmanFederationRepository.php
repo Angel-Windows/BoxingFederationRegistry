@@ -65,8 +65,6 @@ class SportsmanFederationRepository implements CategoryRepositoryInterface
 
     private function get_edit($table, $id, $model): array
     {
-
-
         $table['trainer']['option'] = CategoryTrainer::pluck('name', 'id');
         if (!$id) {
             $table['sports_institutions']['option'] = CategorySportsInstitutions::pluck('name', 'id');
@@ -162,7 +160,6 @@ class SportsmanFederationRepository implements CategoryRepositoryInterface
 
     public function edit($id, $request, $type): array
     {
-
         $category = self::validate_category($request, $this->table_model, $id);
         $family_arr = [];
         foreach ($request->input('family') ?? [] as $item) {

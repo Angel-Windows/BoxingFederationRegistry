@@ -13,7 +13,7 @@ const add_family = (elem) => {
     const formData = elem.parentNode.parentNode;
     let arr = {
         name: formData.name.value,
-        status: formData.status[formData.status.value].textContent,
+        status: formData.status[formData.status.value-0+1].textContent,
         phone: formData.phone.value,
 
     }
@@ -27,7 +27,10 @@ const add_family = (elem) => {
     type__checkbox_td[3].innerText = arr['phone'];
     type__checkbox_td[4].querySelector('input').value = JSON.stringify(arr);
     clone.classList.remove('d-none')
+    clone.querySelector('input').checked = true;
     type__checkbox.parentNode.append(clone)
+
+
 }
 window.functionsArray = {
     'ajax_post': ajax_scripts.Post,

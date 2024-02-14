@@ -166,6 +166,7 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
 
         $this->GetValueInputs($category_data->director, 'director', $new_data);
         $this->GetValueInputs($category_data->federation, 'federation', $new_data);
+        $this->GetValueInputs($category_data->edrpou, 'edrpou', $new_data);
         $this->GetValueInputs($category_data->site, 'site', $new_data);
 
 

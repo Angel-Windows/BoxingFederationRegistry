@@ -5,7 +5,7 @@
       class="page-form-{{$id ? "edit" : "register" }}"
       enctype="multipart/form-data"
 >
-{{--    <button type="submit">Submit</button>--}}
+    <button type="submit">Submit</button>
     {{--    <button class="button">Submit</button>--}}
     @csrf
     @php
