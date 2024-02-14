@@ -290,15 +290,19 @@ trait DataTypeTrait
         'arm_height' => [
             'name' => 'arm_height',
             'tag' => 'input',
+            'type' => 'number',
             'placeholder' => 'Розмах рук',
-        ], 'weight' => [
+        ],
+        'weight' => [
             'name' => 'weight',
             'tag' => 'input',
+            'type' => 'number',
             'placeholder' => 'Вага',
         ],
         'height' => [
             'name' => 'height',
             'tag' => 'input',
+            'type' => 'number',
             'placeholder' => 'Ріст',
         ],
         'weight_category' => [
