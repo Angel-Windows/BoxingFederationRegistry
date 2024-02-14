@@ -18,15 +18,18 @@ class AuthController extends Controller
      */
     public function login(Request $request): JsonResponse
     {
+
         $phoneNumber = $request->input('phone') ?? '+380956686191';
         $result_validate = $this->validatePhoneNumber($phoneNumber);
-        if (!$result_validate) {
-            return response()->json(
-                [
-                    'error',
-                    'data' => 'Number is incorrect',
-                ]);
-        }
+
+//        if (!$result_validate) {
+//            return response()->json(
+//                [
+//                    'log' => 'Number_No_correct',
+//                    'error',
+//                    'data' => 'Number is incorrect',
+//                ]);
+//        }
 
         $code = random_int(1001, 9995);
 
@@ -35,13 +38,13 @@ class AuthController extends Controller
 
         $message = 'Твой код активации: ' . $code;
 
-        if (env('APP_DEBUG')) {
+//        if (env('APP_DEBUG')) {
             return response()->json(
                 [
                     'log' => $message,
                 ]
             );
-        }
+//        }
 
 //        SmsService::sendSms($phoneNumber, $message);
 //        return response()->json(
