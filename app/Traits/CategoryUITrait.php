@@ -139,7 +139,7 @@ trait CategoryUITrait
         if ($request->has('name')) {
             $category->name = $request->input('name');
         } else {
-            $category->name = $request->input('first_name') . ' ' . $request->input('last_name') . ' ' . $request->input('surname');
+            $category->name = $request->input('last_name') . ' ' . $request->input('first_name') . ' ' . $request->input('surname');
         }
         if ($request->has('street')){
             $category->address =

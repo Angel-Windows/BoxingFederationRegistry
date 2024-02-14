@@ -37,7 +37,6 @@ class AjaxController extends Controller
                     $menuMarkButtons = new CheckCodeComponent();
                     break;
                 case "category-register":
-
                     $category_name = $request->input('category') ?? "";
                     $get_data = $this->get_data($category_name, ['id' => null, 'type' => 'register_page'], $request);
                     $menuMarkButtons = new CategoryRegisterComponent($category_name, $get_data, 'register');

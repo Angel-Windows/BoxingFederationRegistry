@@ -18,4 +18,6 @@ use Illuminate\Database\Eloquent\Model;
 class CategorySportsman extends Model
 {
     use HasFactory;
+    protected $fillable = ['name',];
+
 }

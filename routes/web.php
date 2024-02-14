@@ -25,9 +25,12 @@ Route::get('/send-welcome-email', [EmailController::class, 'sendWelcomeEmail']);
 
 Route::name('page.')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
-    Route::get('/test', static function () {
-        return view('test_page');
-    })->name('test');
+    Route::get('/test', [HomeController::class, 'test_page'])->name('test');
+//    Route::get('/test', static function () {
+//
+//
+//        return view('test_page');
+//    })->name('test');
     Route::get('/trainer', [TrainerController::class, 'index'])->name('trainer');
     Route::get('/class', static function () {
         return redirect()->route('page.home');

@@ -25,6 +25,7 @@ export const inputs_input = (parent_class, is_search = true) => {
         let old_value = item.querySelector('.old-value')
 
         selectInput.addEventListener('focus', function () {
+
             old_value.value = selectInput.value;
             if (is_search) {
                 filterOptions(selectInput, selectOptions, optionItems);
