@@ -105,7 +105,14 @@ class TrainerController extends Controller
     {
         $get_data = $this->get_data($class_name, ['id' => $id, 'type' => 'edit'], $request);
 
-        return redirect()->back();
+        return response()->json(
+            [
+                'data' => '',
+                'alert_type' => 'success',
+                'alert' => 'Успішно збережено',
+//                'log' => 222,
+            ]
+        );
 
     }
 

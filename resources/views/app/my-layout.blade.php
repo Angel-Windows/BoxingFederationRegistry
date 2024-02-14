@@ -33,6 +33,7 @@
         </div>
     </div>
 </div>
+<div class="custom-alert"></div>
 @vite('resources/js/function_interface.js')
 @yield('scripts')
 </body>

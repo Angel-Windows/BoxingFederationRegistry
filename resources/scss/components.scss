@@ -94,7 +94,32 @@ h3 {
         grid-column: span 2;
     }
 }
-
+.custom-alert{
+    position: fixed;
+    right: 20px;
+    top: 20px;
+    padding: 10px 20px;
+    border-radius: 5px 0 5px 5px;
+    color: rgba(255, 255, 255, 0.88);
+    z-index: 101;
+    transition-duration: 2s;
+    display: none;
+    &.display{
+        display: block;
+    }
+    &.success{
+        transition-duration: 0s;
+        background: lightgreen;
+    }
+    &.error{
+        transition-duration: 0s;
+        background: tomato;
+    }
+    &.warning{
+        transition-duration: 0s;
+        background: yellow;
+    }
+}
 ::-webkit-scrollbar {
     //background: var(--background-body);
 }
