@@ -13,7 +13,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        SmsService::sendSms('+380956686191', 'test');
+//        SmsService::sendSms('+380956686191', 'test');
         $card_data = ClassType::whereIsset('description');
         return view('page.home', compact('card_data'));
     }
