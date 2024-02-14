@@ -71,8 +71,8 @@ trait CategoryUITrait
         $this->GetValueInputs($category_data->email, 'email', $new_data, true);
         if ($name_type === 'fool') {
             $name = explode(' ', $category_data->name ?? '');
-            $new_data['first_name']['value'] = $name[0] ?? '';
-            $new_data['last_name']['value'] = $name[1] ?? '';
+            $new_data['last_name']['value'] = $name[0] ?? '';
+            $new_data['first_name']['value'] = $name[1] ?? '';
             $new_data['surname']['value'] = $name[2] ?? '';
         } else {
             $new_data['name']['value'] = $category_data->name ?? '';
