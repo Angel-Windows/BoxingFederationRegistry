@@ -30,7 +30,8 @@ const add_family = (elem) => {
     clone.querySelector('input').checked = true;
     type__checkbox.parentNode.append(clone)
 
-
+    // functionsArray['toggle_parent_active'](this, 'modal_wrapper', 'open')
+    document.querySelector('.modal_wrapper').classList.remove('open')
 }
 window.functionsArray = {
     'ajax_post': ajax_scripts.Post,
