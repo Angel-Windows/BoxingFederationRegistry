@@ -6,13 +6,13 @@
         <h1>Інформаційний портал федерації боксу України</h1>
     </div>
     <div>
-        @if(trim($__env->yieldContent('class_body')) !== 'home')
+{{--        @if(trim($__env->yieldContent('class_body')) !== 'home')--}}
             @if(\App\Services\MyAuthService::CheckMiddleware('+380956686191'))
                 <a href="{{route('auth.logout')}}">Вийти</a>
             @else
                 <div onclick="functionsArray['open_modal']('auth', {})">Увійти</div>
             @endif
-        @endif
+{{--        @endif--}}
 
         <p>Технічна підтримка: <a href="mailto:www@gmail.com">www@gmail.com</a></p>
         <div class="burger">

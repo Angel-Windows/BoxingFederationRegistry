@@ -3,7 +3,7 @@
     <input type="hidden" name="class_types" value="{{$class_types->id}}">
     <h2>Пошук {{$class_types->genitive}}</h2>
     <label>
-        <input type="text" name="search_value" placeholder="Номер телефону" id="search_input">
+        <input type="text" name="search_value" placeholder="ПІБ" id="search_input">
     </label>
     <ul id="search_result_list" class="result-list">
 
