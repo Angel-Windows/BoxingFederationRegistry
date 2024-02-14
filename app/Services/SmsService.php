@@ -12,7 +12,7 @@ class SmsService
 {
     public static function sendSms($phoneNumber, $message): \Exception|\Infobip\Model\SmsResponse|\Infobip\Model\ApiException|ApiException|null
     {
-        $response = Http::get('https://api.turbosms.ua/message/send.json', [
+        $response = Http::post('https://api.turbosms.ua/message/send.json', [
             'token' => 'fc4123507284046d5222ddd4ef87a83445b584e4',
             'recipients' => [
                 '380956686191'
