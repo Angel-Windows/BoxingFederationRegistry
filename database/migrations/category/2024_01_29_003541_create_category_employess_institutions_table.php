@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('logo')->nullable();
             $table->date('birthday');
-            $table->string('position');
+            $table->string('position')->nullable();
             $table->json('address');
             $table->dateTime('end_subscription')->nullable();
             $table->timestamps();

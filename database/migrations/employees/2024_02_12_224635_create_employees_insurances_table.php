@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('phone');
             $table->string('email');
             $table->date('birthday');
-            $table->integer('position');
+            $table->integer('position')->nullable();
             $table->string('logo')->nullable();
             $table->timestamps();
         });

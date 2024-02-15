@@ -32,7 +32,7 @@ class EmployeesFederationRepository implements CategoryRepositoryInterface
 
 
     private $data_inputs = [
-        'name'=>[
+        'name' => [
             'size' => 'fool',
             'placeholder' => 'ПІП'
         ]
@@ -42,6 +42,8 @@ class EmployeesFederationRepository implements CategoryRepositoryInterface
     private function get_edit($table, $id): array
     {
         $table['federation']['option'] = BoxFederation::pluck('name', 'id');
+
+//        dd($table['position']);
 //        dd($table['federation']);
         return [
             [
@@ -77,10 +79,11 @@ class EmployeesFederationRepository implements CategoryRepositoryInterface
         $category->birthday = $request->input('birthday') ?? '';
         $category->save();
 
+//        dd($request->input());
 
         return [
             'error' => null,
-            'data'=>$category
+            'data' => $category
         ];
     }
 
@@ -94,7 +97,12 @@ class EmployeesFederationRepository implements CategoryRepositoryInterface
         $this->GetValueInputs($category_data->city, 'city', $new_data);
         $this->GetValueInputs($category_data->federation_id, 'federation', $new_data);
         $this->GetValueInputs($category_data->birthday, 'birthday', $new_data);
-        $this->GetValueInputs($this->data_option['employees_federation']['position'][$category_data->position], 'position', $new_data);
+
+        $this->GetValueInputs($category_data->position, 'position', $new_data);
+//        dd($category_data->position, $new_data['position']);
+//        if ($category_data->position)
+//        if ($category_data->position)
+//            $this->GetValueInputs($this->data_option['employees_federation']['position'][$category_data->position], 'position', $new_data);
 
 
         return $new_data;
@@ -163,7 +171,7 @@ class EmployeesFederationRepository implements CategoryRepositoryInterface
         } else {
             $table = $this->data;
             $more_data = [
-                'register_name'=>'Реєстрація працівника федерації'
+                'register_name' => 'Реєстрація працівника федерації'
             ];
 
         }

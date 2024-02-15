@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('school');
             $table->date('birthday');
             $table->json('address');
-            $table->string('position');
+            $table->string('position')->nullable();
             $table->dateTime('end_subscription')->nullable();
             $table->timestamps();
         });
