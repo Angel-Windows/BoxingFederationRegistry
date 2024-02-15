@@ -7,8 +7,8 @@
         <form action="{{route('ajax.add_history_work')}}" style="min-width: 779px " method="post"
               class="modal_form modal-search-form">
             @csrf
-            <input type="hidden" name="class_types" value="{{$request->input('class_types')}}">
-            <input type="hidden" name="id" value="{{$request->input('id')}}">
+            <input required type="hidden" name="class_types" value="{{$request->input('class_types')}}">
+            <input required type="hidden" name="id" value="{{$request->input('id')}}">
             <h3 class=" d-flex space-between">
                 <p>Додати місце роботи</p>
                 <button class="button m-0">
@@ -19,6 +19,7 @@
             <div class="table">
                 @include('components.forms.select-box',
                                                 [
+                                                    'is_required' => true,
                                                     'class_name'=> 'fool',
                                                     'placeholder'=>'Посада',
                                                     'value'=>1,
@@ -28,6 +29,7 @@
                                                 ])
                 @include('components.forms.custom-select',
                                                 [
+                                                    'is_required' => true,
                                                     'class_name'=> '',
                                                     'placeholder'=>'Спортивні заклади',
                                                     'value'=>null,
