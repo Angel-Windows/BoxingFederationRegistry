@@ -43,7 +43,7 @@ class CategoryMedicalsRepository implements CategoryInstitutionsRepositoryInterf
             'checkbox_type' => 'revert',
             'class' => 'fool',
             'size' => 'fool',
-            'title' => 'Страхові агенти',
+            'title' => 'Адміністратори',
         ],
         'address' => [
             'size' => 'fool',
@@ -54,8 +54,7 @@ class CategoryMedicalsRepository implements CategoryInstitutionsRepositoryInterf
             'required' => true,
         ],
         'members_table' => [
-            'title' => 'Працівники медичного закладу',
-
+            'title' => 'Адміністратори',
         ]
     ];
 

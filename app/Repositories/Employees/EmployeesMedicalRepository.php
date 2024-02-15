@@ -56,8 +56,9 @@ class EmployeesMedicalRepository implements CategoryRepositoryInterface
             $table['members'] = null;
         }
         $table['medical']['option'] = CategoryMedical::pluck('name', 'id');
-        if ($id) {
-            $table['medical']['text'] = $table['medical']['option'][$table['medical']['value']];
+        $value = $table['medical']['value'] ?? null;
+        if ($id && $value) {
+            $table['medical']['text'] = $table['medical']['option'][$value];
         }
         return [
             [
