@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Category;
 
+use App\Http\Controllers\Page\TrainerController;
 use App\Models\Category\CategorySportsman;
 use App\Models\Category\CategoryTrainer;
 use App\Models\Class\BoxFederation;
@@ -11,6 +12,7 @@ use App\Models\Linking\LinkingMembers;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
 use App\Traits\CategoryUITrait;
 use App\Traits\DataTypeTrait;
+use Carbon\Carbon;
 use DB;
 
 class CategoryFederationRepository implements CategoryRepositoryInterface
@@ -111,13 +113,18 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
 
         }
         $ids_members = [];
+        $ids_members_trainer = [];
         if ($request->members ?? null) {
             foreach ($request->members as $item) {
-                $ids_members[json_decode($item)[1]] = json_decode($item)[1];
+                if (json_decode($item)[0] == 'sportsman')
+                    $ids_members[json_decode($item)[0]] = json_decode($item)[1];
+                else
+                    $ids_members_trainer[json_decode($item)[0]] = json_decode($item)[1];
             }
 //            $dda = CategorySportsman::whereIn('id', $ids_members)->get();
-//            dd($dda);
             CategorySportsman::whereIn('id', $ids_members)
+                ->update(['federation' => null]);
+            CategoryTrainer::whereIn('id', $ids_members_trainer)
                 ->update(['federation' => null]);
 
         }
@@ -158,15 +165,15 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
             ->select('id')
             ->pluck('id');
 
-//        $trainers = CategoryTrainer::whereIn('id', $trainerIds)
-//            ->select(
-//                'id',
-//                'logo',
-//                'name',
-//                'email',
-//                'phone',
-//                DB::raw("'trainer' as type_elem")
-//            )->get();
+        $trainers = CategoryTrainer::whereIn('id', $trainerIds)
+            ->select(
+                'id',
+                'logo',
+                'name',
+                'email',
+                'phone',
+                DB::raw("'trainer' as type_elem")
+            )->get();
 
         $sportsman = CategorySportsman::where('federation', $category_data->id)
             ->where(function ($query) use ($trainerIds) {
@@ -181,8 +188,9 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
                 'phone',
                 DB::raw("'sportsman' as type_elem")
             )->get();
+        $combinedResults = $trainers->concat($sportsman);
 
-        foreach ($sportsman as $combinedResult) {
+        foreach ($combinedResults as $combinedResult) {
             $new_data['members']['data'][] = [
                 'logo' => [
                     'img' => $combinedResult->logo,
@@ -190,7 +198,7 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
                 ],
                 $combinedResult->phone,
                 $combinedResult->email,
-                $combinedResult->type_elem == 'trainer' ? 'Тренер' : 'Спортсмен',
+                $combinedResult->type_elem == 'sportsman' ? 'Спортсмен' : 'Тренер',
                 'value' => json_encode([$combinedResult->type_elem, $combinedResult->id]),
             ];
         }

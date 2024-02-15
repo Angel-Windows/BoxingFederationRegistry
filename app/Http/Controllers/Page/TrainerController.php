@@ -33,6 +33,9 @@ use Illuminate\Http\Request;
 use Illuminate\Testing\Fluent\Concerns\Has;
 
 
+/**
+ * @method static whereIn(string $string, array $ids_members_trainer)
+ */
 class TrainerController extends Controller
 {
     use FondyTrait;

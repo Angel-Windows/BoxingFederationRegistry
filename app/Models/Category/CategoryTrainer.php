@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static exists()
  * @method static pluck(string $string, string $string1)
  * @method static where(string $string, $id)
+ * @method static whereIn(string $string, $trainerIds)
  * @property mixed $gov
  * @property mixed $rank
  */
