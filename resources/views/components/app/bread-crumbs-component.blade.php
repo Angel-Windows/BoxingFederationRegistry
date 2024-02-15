@@ -3,3 +3,4 @@
         <li><a href="{{route($item_bread['route'])}}">{{$item_bread['text']}}</a></li>
     @endforeach
 </ul>
+

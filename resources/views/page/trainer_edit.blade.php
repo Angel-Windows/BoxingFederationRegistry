@@ -1,5 +1,8 @@
 @extends('app.my-layout')
-@section('title', 'Trainer')
+@php
+    $page_name = Route::current()->parameters()['class_name'] ?? "";
+@endphp
+@section('title', ClassType::getFind('link', $page_name)->name)
 @section('class_body', 'trainer')
 @section('styles')
     @vite('resources/scss/page/trainer.scss')
