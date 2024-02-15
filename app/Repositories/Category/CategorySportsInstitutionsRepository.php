@@ -389,7 +389,7 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
                 'phone' => $category->phone,
                 'logo' => [
                     'link' => $category->logo,
-                    'class' => 'big_img'
+                    'class' => 'mini_img'
                 ]
             ];
             $table = $this->get_value($this->data, $category);
@@ -399,7 +399,7 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
                 'register_name' => 'Реєстрація навчального закладу',
                 'logo' => [
                     'link' => null,
-                    'class' => 'big_img'
+                    'class' => 'mini_img'
                 ]
             ];
         }

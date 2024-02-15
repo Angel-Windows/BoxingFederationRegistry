@@ -223,7 +223,7 @@ class CategoryInsurancesRepository implements CategoryInstitutionsRepositoryInte
                 'phone' => $category->phone,
                 'logo' => [
                     'link' => $category->logo,
-                    'class' => 'big_img'
+                    'class' => 'mini_img'
                 ]
             ];
             $table = $this->get_value($this->data, $category);
@@ -234,7 +234,7 @@ class CategoryInsurancesRepository implements CategoryInstitutionsRepositoryInte
                 'register_name' => 'Реєстрація страхової компанії',
                 'logo' => [
                     'link' => null,
-                    'class' => 'big_img'
+                    'class' => 'mini_img'
                 ]
             ];
         }

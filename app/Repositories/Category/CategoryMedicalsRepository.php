@@ -222,7 +222,7 @@ class CategoryMedicalsRepository implements CategoryInstitutionsRepositoryInterf
                 'phone' => $category->phone,
                 'logo' => [
                     'link' => $category->logo,
-                    'class' => 'big_img'
+                    'class' => 'mini_img'
                 ]
             ];
             $table = $this->get_value($this->data, $category);
@@ -233,7 +233,7 @@ class CategoryMedicalsRepository implements CategoryInstitutionsRepositoryInterf
                 'register_name' => 'Реєстрація медичної компанії',
                 'logo' => [
                     'link' => null,
-                    'class' => 'big_img'
+                    'class' => 'mini_img'
                 ]
             ];
         }

@@ -32,8 +32,16 @@
 {{--                    <div class="img"><img src="{{asset('img/users_img/9284da0c7ca70f123c97200aa73fa3dc.png')}}" alt="">--}}
 {{--                    </div>--}}
 {{--                </div>--}}
+                @php
+                    $class_img = '';
+                    if ($get['more_data']['logo']){
+                        $class_img .= $get['more_data']['logo']['class'];
 
-                <div class="upload_img big_img" id="imageButton">
+                    }else{
+                    $class_img = 'big_img';
+                    }
+                @endphp
+                <div class="upload_img {{$class_img}}" id="imageButton">
                     <div class="drop">Відпустити тут</div>
                     <div class="img">
                         <input type="image" src="{{MyAsset($get['more_data']['logo']['link'] ?? '')}}" alt="" name="image">
