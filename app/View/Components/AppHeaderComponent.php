@@ -1,13 +1,13 @@
 <?php
 
-namespace App\View\Components\app;
+namespace App\View\Components;
 
 use App\Models\Class\ClassType;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class HeaderComponent extends Component
+class AppHeaderComponent extends Component
 {
     /**
      * Create a new component instance.
