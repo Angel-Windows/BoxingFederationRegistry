@@ -1,13 +1,12 @@
 @foreach($data_info as $key=>$item_infos)
-<div class="@if($key>1) fool @endif  {{$more_data['class']??''}}">
+<div class="@if($key>0) fool @endif  {{$more_data['class']??''}}">
     @foreach($item_infos as $item_info)
     <div class="{{$item_info['class'] ?? ''}}">
         @if(isset($item_info['title']))
             <h3>{{$item_info['title']}}</h3>
         @endif
         @if($item_info)
-        <div class="info-wrapper ">
-{{--        <div class="info-wrapper {{$data_info['data-wrapper']['class'] ?? ""}}">--}}
+        <div class="info-wrapper {{$data_info['data-wrapper']['class'] ?? ""}}">
             @foreach($item_info['data_wrapper'] ?? [] as $item_right)
                 @switch($item_right['type'])
                     @case('buttons')
