@@ -126,8 +126,8 @@ export function search_in_class(data) {
     search_result_list.innerHTML = data['data']
 }
 export function search_in_class_no_form(data) {
-
-    search_result_list.innerHTML = data['data']
+    // console.log(data)
+    // search_result_list.innerHTML = data['data']
 }
 
 function check_code() {

@@ -17,6 +17,7 @@
                 </button>
             </h3>
             <div class="table">
+{{--                @dd($data['employees_sports_institutions']['position'])--}}
                 @include('components.forms.select-box',
                                                 [
                                                     'is_required' => true,
