@@ -19,7 +19,7 @@
     </section>
     <section class="table-auto_fool">
 {{--            @if(true)--}}
-            @if(isset($more_data['logo']))
+            @if($more_data['logo'] ?? null)
                 <div class="{{$more_data['logo']['class'] ?? ''}} persone_img">
                     <div class="img"><img
                             src="{{ MyAsset($more_data['logo']['link'] ?? '') }}"

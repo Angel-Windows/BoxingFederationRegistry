@@ -300,10 +300,7 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
             $more_data = [
                 'name' => $category->name,
                 'phone' => $category->phone,
-                'logo' => [
-                    'link' => $category->logo,
-                    'class' => 'big_img'
-                ]
+                'logo' => null
             ];
             $table = $this->get_value($this->data, $category);
 
