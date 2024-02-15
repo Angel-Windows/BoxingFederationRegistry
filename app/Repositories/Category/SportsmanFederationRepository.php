@@ -104,7 +104,11 @@ class SportsmanFederationRepository implements CategoryRepositoryInterface
             $table['sports_institutions']['option'] = CategorySportsInstitutions::pluck('name', 'id');
             $table['federation']['option'] = BoxFederation::pluck('name', 'id');
             $table['family'] = null;
-        } else {
+        } elseif (!$model->trainer){
+            $table['sports_institutions']['option'] = CategorySportsInstitutions::pluck('name', 'id');
+            $table['federation']['option'] = BoxFederation::pluck('name', 'id');
+        }else {
+
             $linking = LinkingMembers::where('member_id', $model->trainer)
                 ->where('category_type', ClassType::getIdCategory('category_sports_institutions'))
                 ->pluck('category_id');
