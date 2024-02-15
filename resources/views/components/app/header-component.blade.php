@@ -29,7 +29,7 @@
             @endif
         </div>
 
-        <div class="modal_wrapper_two open ">
+        <div class="modal_wrapper_two ">
             <div class="bg" onclick="functionsArray['toggle_parent_active'](this, 'modal_wrapper_two', 'open')"></div>
             <div class="burger_menu">
                 <div class="burger_content">
