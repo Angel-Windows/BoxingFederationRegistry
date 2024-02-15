@@ -1,10 +1,10 @@
 <header class="header content-wrapper">
-    <div>
+    <a href="{{route('page.home')}}">
         <div class="logo img">
             <img src="{{ asset('img/logo.svg') }}" alt="FBU Logo">
         </div>
         <h1>Інформаційний портал федерації боксу України</h1>
-    </div>
+    </a>
     <div>
 {{--        @if(trim($__env->yieldContent('class_body')) !== 'home')--}}
             @if(\App\Services\MyAuthService::CheckMiddleware('+380956686191'))

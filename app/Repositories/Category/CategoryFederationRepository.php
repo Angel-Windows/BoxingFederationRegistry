@@ -33,6 +33,7 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
     private $data_inputs = [
         'employees' => [
             'type' => 'table-list',
+            'name' => 'employees[]',
             'checkbox_type' => 'revert',
             'title' => 'Працівники федерації',
         ],
@@ -40,6 +41,8 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
             'type' => 'table-list',
 //            'type' => 'checkbox-list',
             'checkbox_type' => 'revert',
+            'name' => 'members[]',
+
             'title' => 'Члени федерації',
         ],
         'name' => [
@@ -55,13 +58,12 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
 
     private function get_edit($table, $id): array
     {
-
 //        dd($this->data);
         if (!$id) {
             $table['employees'] = null;
             $table['members'] = null;
         }
-
+//        dd($table['employees']);
         $table['federation']['option'] = BoxFederation::where('id', '<>', $id)->pluck('name', 'id');
 
         return [
@@ -97,6 +99,28 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
     public function edit($id, $request, $type): array
     {
         $category = self::validate_category($request, $this->table_model, $id);
+//        dd($request->input());
+        $ids_employees = [];
+        if ($request->employees ?? null) {
+            foreach ($request->employees as $item) {
+                $ids_employees[json_decode($item)[1]] = json_decode($item)[1];
+            }
+            EmployeesFederation::where('federation_id', $request->id)
+                ->whereIn('id', $ids_employees)
+                ->update(['federation_id' => null]);
+
+        }
+        $ids_members = [];
+        if ($request->members ?? null) {
+            foreach ($request->members as $item) {
+                $ids_members[json_decode($item)[1]] = json_decode($item)[1];
+            }
+//            $dda = CategorySportsman::whereIn('id', $ids_members)->get();
+//            dd($dda);
+            CategorySportsman::whereIn('id', $ids_members)
+                ->update(['federation' => null]);
+
+        }
 
         $category->director = $request->input('director') ?? '';
         $category->federation = $request->input('federation') ?? '';
@@ -138,9 +162,10 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
                 'email',
                 'phone',
                 DB::raw("'trainer' as type_elem")
-            );
+            )->pluck('id', 'id');
 
         $sportsman = CategorySportsman::where('federation', $category_data->id)
+            ->whereIn('trainer', $trainers)
             ->select(
                 'id',
                 'logo',
@@ -148,10 +173,9 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
                 'email',
                 'phone',
                 DB::raw("'sportsman' as type_elem")
-            );
-        $combinedResults = $trainers->union($sportsman)->get();
-//        dd($combinedResults);
-        foreach ($combinedResults as $combinedResult) {
+            )->get();
+
+        foreach ($sportsman as $combinedResult) {
             $new_data['members']['data'][] = [
                 'logo' => [
                     'img' => $combinedResult->logo,
@@ -163,6 +187,7 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
                 'value' => json_encode([$combinedResult->type_elem, $combinedResult->id]),
             ];
         }
+//        dd($combinedResults);
         $this->getDefaultValue($new_data, $category_data, $this->is_default_length);
 
         $this->GetValueInputs($category_data->director, 'director', $new_data);
@@ -190,19 +215,20 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
 //            ->get();
 //
         $works = [];
-
         $employees = EmployeesFederation::where('federation_id', $id)->get();
         foreach ($employees as $member) {
             $works[] = [
                 'logo' => [
                     'img' => $member->logo,
-                    'name' => $member->name
+                    'name' => $member->name,
+                    'value' => $member->id,
                 ],
                 $member->phone,
                 $member->email,
                 $this->data_option['employees_federation']['position'][$member->position],
             ];
         }
+
 
         if ($works) {
             $table['federation_members']['data_wrapper'][0]['data']['body'] = $works;

@@ -11,7 +11,7 @@
 
 >
     {{--    <button type="submit">Submit</button>--}}
-{{--            <button class="button">Submit</button>--}}
+            <button class="button">Submit</button>
     @csrf
 
 
@@ -51,13 +51,16 @@
                     @endif
                     @switch($item_list['type'] ?? '')
                         @case('checkbox-list')
+
                             {{--                            @dd(2)--}}
                             <div class="checkbox-list fool">
                                 @foreach($item_list['data'] ?? [] as $user_ids=>$item_data)
                                     @php
                                         $class = '';
+                                        $checkbox_type  = false;
                                          if (($item_data['checkbox_type'] ?? '') == 'revert' || ($item_list['checkbox_type'] ?? '')  == 'revert' ){
                                                 $class .=  ' revert';
+                                                $checkbox_type  = true;
                                              }
                                     @endphp
                                     <div class="label type__checkbox no_check inline-flex">
@@ -70,7 +73,7 @@
                                         <label
                                             onclick="functionsArray['toggle_parent_active'](this, 'label', 'delete', 'checkbox_toggle')">
                                             <input type="checkbox"
-                                                   @if(!($item_data['checkbox_type'] ?? false)) checked @endif
+                                                   @if(!$checkbox_type) checked @endif
                                                    name="{{$item_list['name'] ?? ''}}[]"
                                                    value="{{$item_data['value'] ?? ''}}"
                                                    class="{{$class}}"
@@ -168,8 +171,10 @@
                                     {{--                                        @endif--}}
                                     <tbody>
                                     @foreach($item_list['data'] ?? [] as $item_body)
+
                                         <tr class="label type__checkbox no_check ">
                                             @foreach($item_body as $key=>$item_td)
+
                                                 @switch($key)
                                                     @case('logo')
                                                         <td>
@@ -184,10 +189,15 @@
                                                         </td>
                                                         @break
                                                     @case('value')
+
                                                         <td class="m-span-1 pl-0 label_button"><label
                                                                 class="pl-0 "
-                                                                onclick="functionsArray['toggle_parent_active'](this, 'label', 'delete')"><input
-                                                                    type="checkbox"></label></td>
+                                                                onclick="functionsArray['toggle_parent_active'](this, 'label', 'delete')">
+                                                                <input
+                                                                    type="checkbox"
+                                                                    name="{{$item_list['name']}}"
+                                                                    value="{{$item_td}}"
+                                                                ></label></td>
                                                         @break
                                                     @default
                                                         <td>
