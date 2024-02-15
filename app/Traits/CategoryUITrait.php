@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use App\Models\Category\CategoryMedical;
 use App\Models\Category\CategorySchool;
 use App\Models\Category\CategorySportsInstitutions;
 use App\Models\Category\CategorySportsman;
@@ -15,6 +16,8 @@ use App\Repositories\Category\CategoryFunZonesRepository;
 use App\Repositories\Category\CategoryInstitutionsRepository;
 use App\Repositories\Category\CategoryInsurancesRepository;
 use App\Repositories\Category\CategoryJudgeRepository;
+use App\Repositories\Category\CategoryMedicalsRepository;
+use App\Repositories\Category\CategorySchoolRepository;
 use App\Repositories\Category\CategorySportsInstitutionsRepository;
 use App\Repositories\Category\CategoryTrainerRepository;
 use App\Repositories\Category\SportsmanFederationRepository;
@@ -263,10 +266,10 @@ trait CategoryUITrait
                 $data_info = (new CategoryInsurancesRepository())->get_data($data, $request);
                 break;
             case 'category_medicals':
-                $data_info = (new CategoryInstitutionsRepository())->get_data($data, 'medical');
+                $data_info = (new CategoryMedicalsRepository())->get_data($data, $request);
                 break;
             case 'category_schools':
-                $data_info = (new CategoryInstitutionsRepository())->get_data($data, 'school');
+                $data_info = (new CategorySchoolRepository())->get_data($data, $request);
                 break;
             case 'category_sports_institutions':
                 $data_info = (new CategorySportsInstitutionsRepository())->get_data($data, $request);

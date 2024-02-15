@@ -12,6 +12,8 @@ use App\Repositories\Category\CategoryFunZonesRepository;
 use App\Repositories\Category\CategoryInstitutionsRepository;
 use App\Repositories\Category\CategoryInsurancesRepository;
 use App\Repositories\Category\CategoryJudgeRepository;
+use App\Repositories\Category\CategoryMedicalsRepository;
+use App\Repositories\Category\CategorySchoolRepository;
 use App\Repositories\Category\CategorySportsInstitutionsRepository;
 use App\Repositories\Category\CategoryTrainerRepository;
 use App\Repositories\Category\SportsmanFederationRepository;
@@ -39,7 +41,6 @@ class TrainerController extends Controller
     {
 
         $get_data = $this->get_data($class_name, ['id' => $id, 'type' => 'preview']);
-
         return view('page.trainer')
             ->with('modeles', $get_data['modeles'])
             ->with('data_info', $get_data['table'])
@@ -137,10 +138,10 @@ class TrainerController extends Controller
                 $result = (new CategoryInsurancesRepository())->edit($id, $request, $type);
                 break;
             case 'category_medicals':
-                $result = (new CategoryInstitutionsRepository())->edit_page($id, 'medical');
+                $result = (new CategoryMedicalsRepository())->edit($id, $request, $type);
                 break;
             case 'category_schools':
-                $result = (new CategoryInstitutionsRepository())->edit_page($id, 'school');
+                $result = (new CategorySchoolRepository())->edit($id, $request, $type);
                 break;
             case 'category_stores':
                 return response()->view('errors.505', [], 404);

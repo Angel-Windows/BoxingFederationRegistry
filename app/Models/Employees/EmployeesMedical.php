@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @method static exists()
  * @method static truncate()
+ * @method static where(string $string, $id)
  */
 class EmployeesMedical extends Model
 {

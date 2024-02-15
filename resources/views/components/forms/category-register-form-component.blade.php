@@ -25,6 +25,7 @@
         }
     @endphp
     <section class="{{$class_table ?? ''}} edit ">
+{{--    <section class="{{$class_table ?? ''}} edit ">--}}
         @if($hasLogoColumn)
             {{ $slot }}
             {{--            <div class="big_img">--}}
@@ -33,7 +34,8 @@
             {{--            </div>--}}
         @endif
         @foreach($table as $table_item)
-            <div class="{{$table_item['class'] ?? ''}}">
+            <div >
+{{--            <div class="{{$table_item['class'] ?? ''}}">--}}
                 @foreach($table_item['data_block'] as $item_list)
                     @if(isset($item_list['title']))
                         <h3>

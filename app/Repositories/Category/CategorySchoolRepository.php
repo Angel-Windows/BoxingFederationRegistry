@@ -11,6 +11,7 @@ use App\Models\Class\BoxFederation;
 use App\Models\Class\ClassType;
 use App\Models\Employees\EmployeesFederation;
 use App\Models\Employees\EmployeesInsurance;
+use App\Models\Employees\EmployeesSchool;
 use App\Models\Employees\EmployeesSportsInstitutions;
 use App\Models\Linking\LinkingMembers;
 use App\Repositories\Interfaces\CategoryInstitutionsRepositoryInterface;
@@ -18,7 +19,7 @@ use App\Traits\CategoryUITrait;
 use App\Traits\DataTypeTrait;
 
 
-class CategoryInsurancesRepository implements CategoryInstitutionsRepositoryInterface
+class CategorySchoolRepository implements CategoryInstitutionsRepositoryInterface
 {
     use DataTypeTrait;
     use CategoryUITrait;
@@ -58,14 +59,17 @@ class CategoryInsurancesRepository implements CategoryInstitutionsRepositoryInte
     private function get_edit($table, $id): array
     {
         if ($table['employees']['model']) {
-            $table['employees']['data'][] = [
-                $table['employees']['model']->name,
-                $this->city_arr[json_decode($table['employees']['model']->address)->city],
-                $table['employees']['model']->phone,
-                $table['employees']['model']->email,
-                'value' => $table['employees']['model']->id,
+            foreach ($table['employees']['model'] as $item) {
 
-            ];
+                $table['employees']['data'][] = [
+                    $item->name,
+                    $this->city_arr[json_decode($item->address)->city],
+                    $item->phone,
+                    $item->email,
+                    'value' => $item->id,
+                ];
+            }
+//            dd($table['employees']['data']);
         } else {
             $table['employees'] = null;
         }
@@ -77,7 +81,6 @@ class CategoryInsurancesRepository implements CategoryInstitutionsRepositoryInte
         return [
             [
                 'type' => '',
-
                 'data_block' =>
                     [
                         [
@@ -103,9 +106,9 @@ class CategoryInsurancesRepository implements CategoryInstitutionsRepositoryInte
     public function edit($id, $request, $type): array
     {
         if ($request->has('employees')) {
-            EmployeesInsurance::where('insurances_id', $id)
+            $d = EmployeesSchool::where('school_id', $id)
                 ->whereIn('id', $request->input('employees'))
-                ->update(['insurances_id'=>null]);
+                ->update(['school_id' => null]);
         }
 
         $category = self::validate_category($request, $this->table_model, $id);
@@ -132,7 +135,7 @@ class CategoryInsurancesRepository implements CategoryInstitutionsRepositoryInte
         $this->GetValueInputs($category_data->federation, 'federation', $new_data);
         $this->GetValueInputs($category_data->edrpou, 'edrpou', $new_data);
         $this->GetValueInputs($category_data->site, 'site', $new_data);
-        $new_data['employees']['model'] = EmployeesInsurance::where('insurances_id', $category_data->id)->first();
+        $new_data['employees']['model'] = EmployeesSchool::where('school_id', $category_data->id)->get();
 
         return $new_data;
     }
@@ -143,7 +146,9 @@ class CategoryInsurancesRepository implements CategoryInstitutionsRepositoryInte
 
 //
         $works = [];
-        $employees = EmployeesInsurance::where('insurances_id', $id)->get();
+        $employees = EmployeesSchool::where('school_id', $id)->get();
+
+//        dd($employees);
 //        dd($employees);
         foreach ($employees as $member) {
             $works[] = [
@@ -154,7 +159,7 @@ class CategoryInsurancesRepository implements CategoryInstitutionsRepositoryInte
                 ],
                 $member->phone,
                 $member->email,
-                $this->data_option['employees_insurances']['position'][$member->position],
+                $this->data_option['employees_school']['position'][$member->position] ?? '',
             ];
         }
 
@@ -186,16 +191,7 @@ class CategoryInsurancesRepository implements CategoryInstitutionsRepositoryInte
                                 ], [
                                     $table['address']['placeholder'],
                                     $table['address']['text'] ?? '',
-                                ], [
-                                    $table['federation']['placeholder'],
-                                    $table['federation']['text'] ?? '',
-                                ], [
-                                    $table['edrpou']['placeholder'],
-                                    $table['edrpou']['text'] ?? '',
-                                ], [
-                                    $table['site']['placeholder'],
-                                    $table['site']['text'] ?? '',
-                                ],
+                                ]
                             ],
                         ],
                     ],
