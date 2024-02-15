@@ -133,13 +133,14 @@ class AjaxController extends Controller
         $type_class = $request->input('class_types');
         $linkingMembers = new LinkingMembers();
         $linkingMembers->category_id = $request->input('sport_institute');
-        $linkingMembers->category_type = ClassType::getIdCategory($type_class);
+        $linkingMembers->category_type = ClassType::getIdCategory('category_sports_institutions');
         $linkingMembers->member_id = $request->input('id');
         $linkingMembers->member_type = 3;
         $linkingMembers->type = 1;
         $linkingMembers->role = 1;
         $linkingMembers->date_start_at = $request->input('date_start');
         $linkingMembers->save();
+
         return redirect()->back();
     }
 

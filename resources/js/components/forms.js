@@ -1,7 +1,7 @@
 export const inputs_input = (parent_class, is_search = true) => {
     let parent = document.querySelector('.' + parent_class);
     if (!parent) parent = document;
-    console.log(parent)
+    // console.log(parent)
     const all_inputs = parent.querySelectorAll('.input')
     all_inputs.forEach((item) => {
         item.addEventListener('focus', () => {

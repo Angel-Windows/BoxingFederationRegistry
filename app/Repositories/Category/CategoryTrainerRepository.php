@@ -156,6 +156,7 @@ class CategoryTrainerRepository implements CategoryRepositoryInterface
                 'linking_members.id as linking_members_id',
             )
             ->get();
+//        dd($linking);
         foreach ($linking as $link) {
             $new_data['history_works']['data'][] = [
                 'name' => $link->category_sports_institutions_name,
@@ -164,6 +165,7 @@ class CategoryTrainerRepository implements CategoryRepositoryInterface
                 'value' => $link->linking_members_id,
             ];
         }
+
 
         $this->getDefaultValue($new_data, $category_data, $this->is_default_length);
         $this->GetValueInputs($category_data->qualification, 'qualification', $new_data);

@@ -10,7 +10,6 @@ export function modal_open(data, class_name = '') {
     modal_content.parentNode.className = 'modal_content_wrapper ' + data['class_name']
 
     let input;
-    console.log(data.class_name)
 
     switch (data.class_name) {
         case "search":
@@ -72,7 +71,6 @@ function upload_img() {
     const dragText = imageWrapper.querySelector('.drop');
     const fileInput = imageWrapper.querySelector("input[type='file']");
     const button_open_file = imageWrapper.querySelector('.button_open_file')
-    console.log(dragText)
 
     button_open_file.addEventListener('click', () => {
         fileInput.click()
@@ -133,5 +131,4 @@ export function search_in_class_no_form(data) {
 }
 
 function check_code() {
-    console.log('')
 }

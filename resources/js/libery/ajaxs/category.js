@@ -10,7 +10,7 @@ export function modal_write_phone_code(data) {
     if (data['type'] === 'Success'){
         location.reload();
     }else {
-        console.log(data.type)
+        // console.log(data.type)
     }
 }
 
