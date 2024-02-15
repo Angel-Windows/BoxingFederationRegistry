@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Page;
 
 use App\Http\Controllers\Controller;
 
+use App\Models\Category\CategoryTrainer;
 use App\Models\Category\Operations\TransactionCategory;
 use App\Models\Class\ClassType;
 
@@ -16,6 +17,7 @@ use App\Repositories\Category\CategoryMedicalsRepository;
 use App\Repositories\Category\CategorySchoolRepository;
 use App\Repositories\Category\CategorySportsInstitutionsRepository;
 
+use App\Repositories\Category\CategoryTrainerRepository;
 use App\Repositories\Category\SportsmanFederationRepository;
 use App\Repositories\Employees\EmployeesFederationRepository;
 use App\Repositories\Employees\EmployeesInsurancesRepository;
@@ -77,7 +79,7 @@ class TrainerController extends Controller
         do {
             $key = \Str::random(32);
         } while (TransactionCategory::where('key', $key)->first());
-
+        dd($result);
         $merchant_data = [
             'id' => $result['data']->id,
             'type' => $class_name,
@@ -125,7 +127,7 @@ class TrainerController extends Controller
                 $result = (new SportsmanFederationRepository())->edit($id, $request, $type);
                 break;
             case 'category_trainers':
-                $result = (new CategorySportsInstitutionsRepository())->edit($id, $request, $type);
+                $result = (new CategoryTrainerRepository())->edit($id, $request, $type);
                 break;
             case 'category_judges':
                 $result = (new CategoryJudgeRepository())->edit($id, $request, $type);
@@ -136,6 +138,9 @@ class TrainerController extends Controller
                 break;
             case 'category_insurances':
                 $result = (new CategoryInsurancesRepository())->edit($id, $request, $type);
+                break;
+            case 'category_sports_institutions':
+                $result = (new CategorySportsInstitutionsRepository())->edit($id, $request, $type);
                 break;
             case 'category_medicals':
                 $result = (new CategoryMedicalsRepository())->edit($id, $request, $type);
