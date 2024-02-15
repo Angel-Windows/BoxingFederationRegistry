@@ -3,6 +3,7 @@
 namespace App\Repositories\Category;
 
 
+use App\Models\Category\CategoryInsurance;
 use App\Models\Class\BoxFederation;
 use App\Models\Class\ClassType;
 use App\Models\Employees\EmployeesInsurance;
@@ -18,7 +19,7 @@ class CategoryInsurancesRepository implements CategoryInstitutionsRepositoryInte
 
     private $is_default_length = '';
     public $category_type_id;
-    public $table_model = BoxFederation::class;
+    public $table_model = CategoryInsurance::class;
     public $data;
 
     public function __construct()

@@ -26,7 +26,7 @@ class CategoryMedicalsRepository implements CategoryInstitutionsRepositoryInterf
 
     private $is_default_length = '';
     public $category_type_id;
-    public $table_model = BoxFederation::class;
+    public $table_model = CategoryMedical::class;
     public $data;
 
     public function __construct()

@@ -26,7 +26,7 @@ class CategorySchoolRepository implements CategoryInstitutionsRepositoryInterfac
 
     private $is_default_length = '';
     public $category_type_id;
-    public $table_model = BoxFederation::class;
+    public $table_model = CategorySchool::class;
     public $data;
 
     public function __construct()
@@ -236,7 +236,7 @@ class CategorySchoolRepository implements CategoryInstitutionsRepositoryInterfac
         } else {
             $table = $this->data;
             $more_data = [
-                'register_name' => 'Реєстрація федерації',
+                'register_name' => 'Реєстрація спортивного закладу',
                 'logo' => [
                     'link' => null,
                     'class' => 'big_img'
