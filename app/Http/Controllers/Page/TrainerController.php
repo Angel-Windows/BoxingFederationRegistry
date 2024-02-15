@@ -10,6 +10,7 @@ use App\Models\Linking\LinkingMembers;
 use App\Repositories\Category\CategoryFederationRepository;
 use App\Repositories\Category\CategoryFunZonesRepository;
 use App\Repositories\Category\CategoryInstitutionsRepository;
+use App\Repositories\Category\CategoryInsurancesRepository;
 use App\Repositories\Category\CategoryJudgeRepository;
 use App\Repositories\Category\CategorySportsInstitutionsRepository;
 use App\Repositories\Category\CategoryTrainerRepository;
@@ -133,7 +134,7 @@ class TrainerController extends Controller
                 $result = (new CategoryFunZonesRepository())->edit($id, $request, $type);
                 break;
             case 'category_insurances':
-                $result = (new CategoryInstitutionsRepository())->edit_page($id, 'insurance');
+                $result = (new CategoryInsurancesRepository())->edit($id, $request, $type);
                 break;
             case 'category_medicals':
                 $result = (new CategoryInstitutionsRepository())->edit_page($id, 'medical');

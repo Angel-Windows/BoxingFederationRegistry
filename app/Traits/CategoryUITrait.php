@@ -13,6 +13,7 @@ use App\Models\Linking\LinkingMembers;
 use App\Repositories\Category\CategoryFederationRepository;
 use App\Repositories\Category\CategoryFunZonesRepository;
 use App\Repositories\Category\CategoryInstitutionsRepository;
+use App\Repositories\Category\CategoryInsurancesRepository;
 use App\Repositories\Category\CategoryJudgeRepository;
 use App\Repositories\Category\CategorySportsInstitutionsRepository;
 use App\Repositories\Category\CategoryTrainerRepository;
@@ -259,7 +260,7 @@ trait CategoryUITrait
                 break;
 
             case 'category_insurances':
-                $data_info = (new CategoryInstitutionsRepository())->get_data($data, 'insurance');
+                $data_info = (new CategoryInsurancesRepository())->get_data($data, $request);
                 break;
             case 'category_medicals':
                 $data_info = (new CategoryInstitutionsRepository())->get_data($data, 'medical');
