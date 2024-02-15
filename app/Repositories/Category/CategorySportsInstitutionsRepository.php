@@ -5,6 +5,7 @@ namespace App\Repositories\Category;
 use App\Models\Category\CategorySportsInstitutions;
 use App\Models\Category\CategorySportsman;
 use App\Models\Category\CategoryTrainer;
+use App\Models\Class\BoxFederation;
 use App\Models\Class\ClassType;
 use App\Models\Linking\LinkingMembers;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
@@ -42,7 +43,10 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
         'trainer' => [
             'title' => "Тренери",
             'type' => 'checkbox-list'
-        ]
+        ],
+        'director' => [
+            'placeholder' => "Директор",
+        ],
     ];
 
 
@@ -67,14 +71,15 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
 
         $trainers_id = $members_works->pluck('category_trainers_id')->toArray();
 
-        $sportsman = CategorySportsman::select('*')
-//        $sportsman = CategorySportsman::whereIn('trainer', $trainers_id)
+//        $sportsman = CategorySportsman::select('*')
+        $sportsman = CategorySportsman::whereIn('trainer', $trainers_id)
             ->where('sports_institutions', $id)
             ->orWhere(function ($query) use ($id) {
                 $query->where('sports_institutions', $id)
                     ->whereNull('trainer');
             })
             ->get();
+
         $table['members']['data'] = [];
         $table['sportsmen']['data'] = [];
 
@@ -189,6 +194,10 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
     private function get_value($table, $category_data): array
     {
         $new_data = $table;
+
+
+
+//        dd($this->get_arr_federation());
         $this->getDefaultValue($new_data, $category_data, $this->is_default_length);
 
         $this->GetValueInputs($category_data->category, 'category', $new_data);
@@ -202,8 +211,6 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
 
     private function created_view($table, $id): array
     {
-
-
         $members_works = LinkingMembers::leftJoin('category_trainers', 'category_trainers.id', 'linking_members.member_id')
             ->whereNull('linking_members.date_end_at')
             ->where('linking_members.category_id', $id)
