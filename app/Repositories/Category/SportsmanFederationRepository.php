@@ -452,6 +452,10 @@ class SportsmanFederationRepository implements CategoryRepositoryInterface
         } else {
             $table = $this->data;
             $more_data = [
+                'logo' => [
+                    'link' => null,
+                    'class' => 'big_img'
+                ],
                 'register_name' => 'Реєстрація спортсмену'
             ];
         }
