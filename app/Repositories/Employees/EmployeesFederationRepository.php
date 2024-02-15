@@ -41,7 +41,6 @@ class EmployeesFederationRepository implements CategoryRepositoryInterface
 
     private function get_edit($table, $id): array
     {
-       
         $table['federation']['option'] = BoxFederation::pluck('name', 'id');
         return [
             [
@@ -87,13 +86,12 @@ class EmployeesFederationRepository implements CategoryRepositoryInterface
     private function get_value($table, $category_data): array
     {
         $new_data = $table;
-        $federation = BoxFederation::where('id',$category_data->federation_id)->first()->name;
 
 
         $this->getDefaultValue($new_data, $category_data, $this->is_default_length);
 
         $this->GetValueInputs($category_data->city, 'city', $new_data);
-        $this->GetValueInputs($federation, 'federation', $new_data);
+        $this->GetValueInputs($category_data->federation_id, 'federation', $new_data);
         $this->GetValueInputs($category_data->birthday, 'birthday', $new_data);
         $this->GetValueInputs($this->data_option['employees_federation']['position'][$category_data->position], 'position', $new_data);
 

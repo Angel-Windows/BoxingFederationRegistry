@@ -2,18 +2,9 @@
 
 namespace App\Repositories\Category;
 
-use App\Models\Category\CategoryInsurance;
-use App\Models\Category\CategoryMedical;
 use App\Models\Category\CategorySchool;
-use App\Models\Category\CategorySportsman;
-use App\Models\Category\CategoryTrainer;
-use App\Models\Class\BoxFederation;
 use App\Models\Class\ClassType;
-use App\Models\Employees\EmployeesFederation;
-use App\Models\Employees\EmployeesInsurance;
 use App\Models\Employees\EmployeesSchool;
-use App\Models\Employees\EmployeesSportsInstitutions;
-use App\Models\Linking\LinkingMembers;
 use App\Repositories\Interfaces\CategoryInstitutionsRepositoryInterface;
 use App\Traits\CategoryUITrait;
 use App\Traits\DataTypeTrait;
@@ -69,7 +60,6 @@ class CategorySchoolRepository implements CategoryInstitutionsRepositoryInterfac
                     'value' => $item->id,
                 ];
             }
-//            dd($table['employees']['data']);
         } else {
             $table['employees'] = null;
         }
