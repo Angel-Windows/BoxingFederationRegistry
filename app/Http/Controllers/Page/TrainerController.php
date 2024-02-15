@@ -79,7 +79,6 @@ class TrainerController extends Controller
         do {
             $key = \Str::random(32);
         } while (TransactionCategory::where('key', $key)->first());
-        dd($result);
         $merchant_data = [
             'id' => $result['data']->id,
             'type' => $class_name,
