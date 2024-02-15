@@ -33,6 +33,10 @@ const add_family = (elem) => {
     // functionsArray['toggle_parent_active'](this, 'modal_wrapper', 'open')
     document.querySelector('.modal_wrapper').classList.remove('open')
 }
+
+
+
+
 window.functionsArray = {
     'ajax_post': ajax_scripts.Post,
     'ajax_postNoForm': ajax_scripts.SendPostNoForm,
@@ -44,6 +48,7 @@ window.functionsArray = {
     'toggle_parent_active': home_scripts.toggleParentActive,
     'add_class': home_scripts.add_class,
     'remove_class': home_scripts.remove_class,
+    'button_temp_input': home_scripts.button_temp_input,
     'hideOverflowingElements_start': home_scripts.hideOverflowingElements_start,
     'open_modal': modals_scripts.open_modal,
 
@@ -55,8 +60,9 @@ window.functionsArray = {
 
 
     'add_family': add_family,
+}
 
-};
+
 
 window.validateForm = (e) => {
     if (e.classList.contains('submit')){

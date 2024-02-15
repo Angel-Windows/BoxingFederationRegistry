@@ -5,13 +5,13 @@
       action="{{route('page.class.' . $route_class, ['class_name'=>$category_name, 'id'=>$id])}}"
       {{--      action="{{route('page.class.' . $route_type, ['class_name'=>$category_name, 'id'=>$id])}}"--}}
       id="form_edit"
-      class="page-form-" . {{$route_class}}
+      class="page-form-{{$route_class}} form-tag-class"
       enctype="multipart/form-data"
-@if(!$id) onsubmit="return validateForm(this)" @endif
+      @if(!$id) onsubmit="return validateForm(this)" @endif
 
 >
     {{--    <button type="submit">Submit</button>--}}
-{{--            <button class="button">Submit</button>--}}
+    {{--            <button class="button">Submit</button>--}}
     @csrf
 
 
@@ -25,7 +25,7 @@
         }
     @endphp
     <section class="{{$class_table ?? ''}} edit ">
-{{--    <section class="{{$class_table ?? ''}} edit ">--}}
+        {{--    <section class="{{$class_table ?? ''}} edit ">--}}
         @if($hasLogoColumn)
             {{ $slot }}
             {{--            <div class="big_img">--}}
@@ -34,7 +34,7 @@
             {{--            </div>--}}
         @endif
         @foreach($table as $table_item)
-{{--            <div >--}}
+            {{--            <div >--}}
             <div class="{{$table_item['class'] ?? ''}}">
                 @foreach($table_item['data_block'] ?? [] as $item_list)
                     @if(isset($item_list['title']))
@@ -309,7 +309,8 @@
                         $is_register_add = false;
                     @endphp
                     <div class="right">
-                        <button class="button">Перейти до оплати</button>
+                        <button class="button" onclick="functionsArray['button_temp_input'](this)">Перейти до оплати
+                        </button>
                         <label style="display: block">
                             <input required style="display: inline-block" type="checkbox">
                             <span>Приймаю всі <a href="">умови користування</a> і також <a href="">політику конфіденційності</a></span>

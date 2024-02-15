@@ -275,7 +275,6 @@ trait DataTypeTrait
             'name' => 'gender',
             'tag' => 'select-box',
             'placeholder' => 'Стать',
-//            'required'=>'true',
             'option' => [
                 'Чоловік',
                 'Жінка',
@@ -284,7 +283,7 @@ trait DataTypeTrait
         'position' => [
             'name' => 'position',
             'tag' => 'select-box',
-//            'required'=>true,
+            'required'=>true,
             'placeholder' => 'Посада',
         ],
         'arm_height' => [
@@ -310,7 +309,7 @@ trait DataTypeTrait
             'tag' => 'select-box',
             'size' => 'fool',
             'placeholder' => 'Вагова категорія',
-            'option' =>[
+            'option' => [
 //            'm'=>[]
                 'Для чоловіків 19-40 років і підлітків 17-18 років (Еліта і Молодь)' => 'Title',
 
@@ -527,7 +526,7 @@ trait DataTypeTrait
 
             ],
             'city' => [
-                'required'=>true,
+                'required' => true,
                 'name' => 'city',
                 'tag' => 'select-box',
                 'placeholder' => 'Місто',
@@ -554,6 +553,14 @@ trait DataTypeTrait
                 'tag' => 'input',
                 'placeholder' => 'Номер квартири',
             ],
+            'email' => [
+                'name' => 'email',
+                'tag' => 'input',
+                'type' => 'email',
+                'placeholder' => 'E-mail',
+                'logo' => 'img/mail.svg',
+                'required' => true,
+            ],
         ]);
         if ($name_type === 'fool') {
             $return = array_merge($return, [
@@ -578,12 +585,7 @@ trait DataTypeTrait
                     'placeholder' => 'Номер телефону',
                     'logo' => 'img/phone.svg'
                 ],
-                'email' => [
-                    'name' => 'email',
-                    'tag' => 'input',
-                    'placeholder' => 'E-mail',
-                    'logo' => 'img/mail.svg'
-                ],
+
             ]);
         } else {
             $return = array_merge($return, [
@@ -597,12 +599,6 @@ trait DataTypeTrait
                     'tag' => 'input',
                     'placeholder' => 'Номер телефону',
                     'logo' => 'img/phone.svg'
-                ],
-                'email' => [
-                    'name' => 'email',
-                    'tag' => 'input',
-                    'placeholder' => 'E-mail',
-                    'logo' => 'img/mail.svg'
                 ],
             ]);
 

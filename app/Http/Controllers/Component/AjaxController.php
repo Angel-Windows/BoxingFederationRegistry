@@ -76,7 +76,7 @@ class AjaxController extends Controller
             [
                 'data' => $menuMarkButtonsView,
                 'class_name' => $request->input('modal'),
-                'log' => $request->input('category') ?? "",
+//                'log' => $request->input('category') ?? "",
             ]
         );
     }

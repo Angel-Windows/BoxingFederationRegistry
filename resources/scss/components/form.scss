@@ -7,11 +7,13 @@
     }
 
 }
-.upload_img .buttons button.button{
+
+.upload_img .buttons button.button {
     border-radius: 5px;
 }
+
 .upload_img {
-//.page-form-edit .upload_img {
+    //.page-form-edit .upload_img {
     position: relative;
     background: lightgrey;
     width: 370px;
@@ -195,7 +197,7 @@ form {
                 background-image: none;
             }
 
-            &.hovered:hover, &.active {
+            &.hovered:hover, &.hovered:active, &.hovered:focus, &.active, &.temp_active, {
                 span {
                     transform: translateY(0);
                     font-size: 13px;
@@ -374,18 +376,22 @@ form {
         width: auto;
     }
 }
+
 .passport_edit {
     display: grid;
     grid-gap: 12px;
     grid-template-columns: 170px 1fr;
-    input{
+
+    input {
         text-transform: uppercase;
     }
 }
+
 @media screen and (max-width: 1000px) {
     .table {
         display: block;
-        .label{
+
+        .label {
             margin-bottom: 10px;
         }
     }

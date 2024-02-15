@@ -46,7 +46,7 @@ export const inputs_input = (parent_class, is_search = true) => {
                 input_value.value = e.target.dataset.value
                 selectInput.value = e.target.textContent;
                 selectOptions.style.display = 'none';
-
+                item.classList.add('active')
             }
         });
         parent.querySelector('form').addEventListener('click', function (e) {

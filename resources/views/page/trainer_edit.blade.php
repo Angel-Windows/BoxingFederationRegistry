@@ -11,7 +11,6 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             functionsArray['inputs_input']();
-            console.log()
         });
     </script>
 @endsection

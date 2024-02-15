@@ -76,6 +76,35 @@ export function remove_class(parent, className = 'active', functionName, params 
 
 }
 
+let is_click = true;
+export const button_temp_input = (elem) => {
+    const func = (parentElement) => {
+        const inputs = parentElement.querySelectorAll('.hovered');
+        inputs.forEach((item)=>{
+            item.classList.add('temp_active');
+        })
+        if (is_click){
+            if (timeouts.parentActive) {
+                clearTimeout(timeouts.parentActive);
+                timeouts.parentActive = null
+            }else {
+                setTimeout(()=>{
+                    elem.click();
+                },300)
+            }
+        }
+        is_click = !is_click;
+        timeouts.parentActive = setTimeout(() => {
+            parentElement.querySelectorAll('.temp_active')
+            inputs.forEach((item)=>{
+                item.classList.remove('temp_active');
+            })
+            timeouts.parentActive = null
+        }, 1000)
+    }
+
+    findParent(elem, 'form-tag-class', func)
+}
 export const removeOldActive = (elem, className, arrayParams) => {
     const index = arrayParams[0];
     if (oldActiveArray[index] && oldActiveArray[index] !== elem) {
