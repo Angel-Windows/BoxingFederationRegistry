@@ -134,10 +134,10 @@ class EmployeesFederationRepository implements CategoryRepositoryInterface
                                     $table['birthday']['value'] ?? '',
                                 ], [
                                     $table['city']['placeholder'],
-                                    $table['city']['value'] ?? '',
+                                    $table['city']['text'] ?? '',
                                 ], [
                                     $table['position']['placeholder'],
-                                    $table['position']['value'] ?? '',
+                                    $table['position']['text'] ?? '',
                                 ]
                             ],
                         ],
