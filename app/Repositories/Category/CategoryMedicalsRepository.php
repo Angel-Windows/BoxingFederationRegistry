@@ -153,9 +153,6 @@ class CategoryMedicalsRepository implements CategoryInstitutionsRepositoryInterf
 
     private function created_view($table, $id): array
     {
-
-
-//
         $works = [];
         $employees = EmployeesMedical::where('medical_id', $id)->get();
 
@@ -164,7 +161,6 @@ class CategoryMedicalsRepository implements CategoryInstitutionsRepositoryInterf
                 'logo' => [
                     'img' => $member->logo,
                     'name' => $member->name,
-//                    'value' => $member->id,
                 ],
                 $member->phone,
                 $member->email,

@@ -29,13 +29,7 @@ class CategoryFunZonesRepository implements CategoryRepositoryInterface
     private $data_inputs = [
 
     ];
-    private $data = [
-        'birthday' => [
-            'name' => 'email',
-            'tag' => 'input',
-            'placeholder' => 'Дата народження',
-        ],
-    ];
+    private $data;
 
 
     private function get_edit($table, $id): array
@@ -67,15 +61,9 @@ class CategoryFunZonesRepository implements CategoryRepositoryInterface
 
     public function edit($id, $request, $type): array
     {
-
-
         $category = self::validate_category($request, $this->table_model, $id);
-
-        $category->qualification = $request->input('qualification');
-        $category->rank = $request->input('rank');
-        $category->gov = $request->input('gov');
+        $category->birthday = $request->input('birthday') ?? null;
         $category->save();
-
 
         return [
             'error' => null,
@@ -88,7 +76,6 @@ class CategoryFunZonesRepository implements CategoryRepositoryInterface
         $new_data = $table;
 
         $this->getDefaultValue($new_data, $category_data, $this->is_default_length);
-
         $this->GetValueInputs($category_data->birthday, 'birthday', $new_data);
 
 
@@ -99,33 +86,34 @@ class CategoryFunZonesRepository implements CategoryRepositoryInterface
     {
         return [
             [
-                'title' => null,
-                'data_wrapper' => [
-                    [
-                        'type' => 'buttons',
-                        'data' => [
-                            $table['phone'],
-                            $table['email'],
-                        ],
-                    ],
-                    [
-                        'type' => 'table',
-                        'data' => [
-                            'body' => [
-                                [
-                                    $table['birthday']['placeholder'],
-                                    $table['birthday']['text'] ?? '',
-                                ],
-                                [
-                                    $table['address']['placeholder'],
-                                    $table['address']['text'] ?? '',
+                [
+                    'title' => null,
+                    'class' => '',
+                    'size' => '',
+                    'data_wrapper' => [
+                        [
+                            'type' => 'buttons',
+                            'data' => [
+                                $table['phone'],
+                                $table['email'],
+                            ],
+                        ], [
+                            'type' => 'table',
+                            'data' => [
+                                'body' => [
+                                    [
+                                        $table['birthday']['placeholder'],
+                                        $table['birthday']['text'] ?? '',
+                                    ], [
+                                        $table['address']['placeholder'],
+                                        $table['address']['text'] ?? '',
+                                    ]
                                 ],
                             ],
                         ],
                     ],
                 ],
-            ],
-
+            ]
         ];
     }
 

@@ -139,7 +139,7 @@ class ClassTypeSeeder extends Seeder
                     'logo' => null
                 ],
                 [
-                    'name' => 'Медичного закладу',
+                    'name' => 'Працівник медичного закладу',
                     'genitive' => 'Працівники закладу',
                     'accusative' => 'Працівника закладу',
                     'description' => null,
@@ -149,7 +149,7 @@ class ClassTypeSeeder extends Seeder
                     'logo' => null
                 ],
                 [
-                    'name' => 'Навчального закладу',
+                    'name' => 'Працівник навчального закладу',
                     'genitive' => 'Працівники закладу',
                     'accusative' => 'Працівника закладу',
                     'description' => null,

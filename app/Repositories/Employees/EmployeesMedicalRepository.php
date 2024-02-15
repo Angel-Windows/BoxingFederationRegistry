@@ -38,10 +38,14 @@ class EmployeesMedicalRepository implements CategoryRepositoryInterface
 
 
     private $data_inputs = [
-        'name'=>[
-            'size' => 'fool',
+        'name' => [
+            'size' => '',
             'placeholder' => 'ПІП'
-        ]
+        ],
+        'medical' => [
+            'size' => '',
+            'placeholder' => 'Назва медичного закладу'
+        ],
     ];
 
 
@@ -51,7 +55,10 @@ class EmployeesMedicalRepository implements CategoryRepositoryInterface
             $table['employees'] = null;
             $table['members'] = null;
         }
-        $table['medical']['option'] = CategoryMedical::where('id', '<>', $id)->pluck('name', 'id');
+        $table['medical']['option'] = CategoryMedical::pluck('name', 'id');
+        if ($id) {
+            $table['medical']['text'] = $table['medical']['option'][$table['medical']['value']];
+        }
         return [
             [
                 'type' => '',
@@ -64,12 +71,13 @@ class EmployeesMedicalRepository implements CategoryRepositoryInterface
                                 $table['name'],
                                 $table['phone'],
                                 $table['email'],
+                                $table['position'],
+                                $table['birthday'],
                                 $table['city'],
                                 $table['street'],
                                 $table['house_number'],
                                 $table['apartment_number'],
-                                $table['position'],
-                                $table['birthday'],
+
                             ],
                         ],
                     ],
@@ -88,7 +96,7 @@ class EmployeesMedicalRepository implements CategoryRepositoryInterface
 
         return [
             'error' => null,
-            'data'=>$category
+            'data' => $category
         ];
     }
 
@@ -97,58 +105,12 @@ class EmployeesMedicalRepository implements CategoryRepositoryInterface
         $new_data = $table;
 
 
-        $employees = EmployeesFederation::where('federation_id', $category_data->id)->get();
-//        dd($employees);
-        foreach ($employees as $item) {
-            $new_data['employees']['data'][] = [
-                'logo' => [
-                    'img' => $item->logo,
-                    'name' => $item->name
-                ],
-                $item->phone,
-                $item->email,
-                $item->type_elem == 'trainer' ? 'Тренер' : 'Спортсмен',
-                'value' => json_encode([$item->type_elem, $item->id]),
-            ];
-        }
-        $trainers = CategoryTrainer::where('federation', $category_data->id)
-            ->select(
-                'id',
-                'logo',
-                'name',
-                'email',
-                'phone',
-                DB::raw("'trainer' as type_elem")
-            );
-
-        $sportsman = CategorySportsman::where('federation', $category_data->id)
-            ->select(
-                'id',
-                'logo',
-                'name',
-                'email',
-                'phone',
-                DB::raw("'sportsman' as type_elem")
-            );
-        $combinedResults = $trainers->union($sportsman)->get();
-//        dd($combinedResults);
-        foreach ($combinedResults as $combinedResult) {
-            $new_data['members']['data'][] = [
-                'logo' => [
-                    'img' => $combinedResult->logo,
-                    'name' => $combinedResult->name
-                ],
-                $combinedResult->phone,
-                $combinedResult->email,
-                $combinedResult->type_elem == 'trainer' ? 'Тренер' : 'Спортсмен',
-                'value' => json_encode([$combinedResult->type_elem, $combinedResult->id]),
-            ];
-        }
         $this->getDefaultValue($new_data, $category_data, $this->is_default_length);
 
-        $this->GetValueInputs($category_data->director, 'director', $new_data);
+        $this->GetValueInputs($category_data->medical_id, 'medical', $new_data);
+        $this->GetValueInputs($category_data->position, 'position', $new_data);
         $this->GetValueInputs($category_data->federation, 'federation', $new_data);
-        $this->GetValueInputs($category_data->site, 'site', $new_data);
+        $this->GetValueInputs($category_data->birthday, 'birthday', $new_data);
 
 
         return $new_data;
@@ -157,70 +119,40 @@ class EmployeesMedicalRepository implements CategoryRepositoryInterface
     private function created_view($table, $id): array
     {
 
-        $members_works = LinkingMembers::leftJoin('category_trainers', 'category_trainers.id', 'linking_members.member_id')
-            ->where('linking_members.category_id', $id)
-            ->where('linking_members.category_type', $this->category_type_id)
-            ->select(
-                'linking_members.*',
-                'category_trainers.name',
-                'category_trainers.phone',
-                'category_trainers.email',
-                'category_trainers.logo',
-            )
-            ->get();
-
-        $works = [];
-        foreach ($members_works as $member) {
-            $works[] = [$member->logo, $member->name, $member->role, $member->phone, $member->email];
-        }
         return [
             [
-                'title' => null,
-                'data_wrapper' => [
-                    [
-                        'type' => 'buttons',
-                        'data' => [
-                            $table['phone'],
-                            $table['email'],
-                        ],
-                    ], [
-                        'type' => 'table',
-                        'data' => [
-                            'body' => [
-                                [
-                                    $table['director']['placeholder'],
-                                    $table['director']['text'] ?? '',
-                                ], [
-                                    $table['address']['placeholder'],
-                                    $table['address']['text'] ?? '',
-                                ], [
-                                    $table['federation']['placeholder'],
-                                    $table['federation']['text'] ?? '',
-                                ], [
-                                    $table['edrpou']['placeholder'],
-                                    $table['edrpou']['text'] ?? '',
-                                ], [
-                                    $table['site']['placeholder'],
-                                    $table['site']['text'] ?? '',
+                [
+                    'title' => null,
+                    'class' => '',
+                    'size' => '',
+                    'data_wrapper' => [
+                        [
+                            'type' => 'buttons',
+                            'data' => [
+                                $table['phone'],
+                                $table['email'],
+                            ],
+                        ], [
+                            'type' => 'table',
+                            'data' => [
+                                'body' => [
+                                    [
+                                        $table['birthday']['placeholder'],
+                                        $table['birthday']['text'] ?? '',
+                                    ], [
+                                        $table['address']['placeholder'],
+                                        $table['address']['value'] ?? '',
+                                    ], [
+                                        $table['position']['placeholder'],
+                                        $table['position']['text'] ?? '',
+                                    ]
                                 ],
                             ],
                         ],
                     ],
-                ],
-            ], [
-                'title' => 'Працівники федерації',
-                'data_wrapper' => [
-                    [
-                        'type' => 'todo_table',
-                        'button_add' => '',
+                ]
+            ]
 
-                        'data' => [
-                            'thead' => ['ПІП', '', 'Посада', 'Телефон', 'Пошта'],
-                            'body' => $works,
-                        ],
-                    ],
-                ],
-            ],
         ];
     }
 
@@ -245,7 +177,7 @@ class EmployeesMedicalRepository implements CategoryRepositoryInterface
         } else {
             $table = $this->data;
             $more_data = [
-                'register_name'=>'Реєстрація працівника медичного закладу'
+                'register_name' => 'Реєстрація працівника медичного закладу'
             ];
 
         }

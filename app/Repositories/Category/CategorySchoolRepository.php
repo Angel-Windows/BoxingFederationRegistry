@@ -44,6 +44,10 @@ class CategorySchoolRepository implements CategoryInstitutionsRepositoryInterfac
             'size' => '',
             'required' => true,
         ],
+        'members_table' => [
+            'title' => 'Адміністратори',
+
+        ]
     ];
 
 
@@ -86,7 +90,13 @@ class CategorySchoolRepository implements CategoryInstitutionsRepositoryInterfac
                                 $table['apartment_number'],
                             ],
                         ],
+                    ],
+            ], [
+                'type' => '',
+                'class' => 'fool',
 
+                'data_block' =>
+                    [
                         $table['employees'],
                     ],
             ],
@@ -155,53 +165,43 @@ class CategorySchoolRepository implements CategoryInstitutionsRepositoryInterfac
 
 
         if ($works) {
-            $table['federation_members']['data_wrapper'][0]['data']['body'] = $works;
+            $table['members_table']['data_wrapper'][0]['data']['body'] = $works;
         } else {
-            $table['federation_members'] = null;
+            $table['members_table'] = null;
         }
         return [
-            [[
-                'title' => null,
-                'class' => '',
-                'size' => '',
-                'data_wrapper' => [
-                    [
-                        'type' => 'buttons',
-                        'data' => [
-                            $table['phone'],
-                            $table['email'],
-                        ],
-                    ], [
-                        'type' => 'table',
-                        'data' => [
-                            'body' => [
-                                [
-                                    $table['director']['placeholder'],
-                                    $table['director']['text'] ?? '',
-                                ], [
-                                    $table['address']['placeholder'],
-                                    $table['address']['text'] ?? '',
-                                ]
+            [
+                [
+                    'title' => null,
+                    'class' => '',
+                    'size' => '',
+                    'data_wrapper' => [
+                        [
+                            'type' => 'buttons',
+                            'data' => [
+                                $table['phone'],
+                                $table['email'],
+                            ],
+                        ], [
+                            'type' => 'table',
+                            'data' => [
+                                'body' => [
+                                    [
+                                        $table['director']['placeholder'],
+                                        $table['director']['text'] ?? '',
+                                    ], [
+                                        $table['address']['placeholder'],
+                                        $table['address']['text'] ?? '',
+                                    ]
+                                ],
                             ],
                         ],
                     ],
                 ],
-            ], $table['federation_members']
-            ]
-//            [
-//                'title' => 'Працівники федерації',
-//                'data_wrapper' => [
-//                    [
-//                        'type' => 'todo_table',
-//                        'button_add' => '',
-//
-//                        'data' => [
-//                            'thead' => ['ПІП', '', 'Посада', 'Телефон', 'Пошта'],
-//                            'body' => $works,
-//                        ],
-//                    ],
-//                ],
-//            ],
+            ],
+            [
+                $table['members_table']
+            ],
         ];
     }
 

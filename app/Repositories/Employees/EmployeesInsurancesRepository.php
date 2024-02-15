@@ -54,8 +54,6 @@ class EmployeesInsurancesRepository implements CategoryRepositoryInterface
         $table['insurance']['option'] = CategoryInsurance::pluck('name', 'id');
         if ($id){
             $table['insurance']['text'] = $table['insurance']['option'][$table['insurance']['value']] ;
-
-
         }
 
         return [
@@ -104,53 +102,6 @@ class EmployeesInsurancesRepository implements CategoryRepositoryInterface
         $new_data = $table;
 
 
-        $employees = EmployeesFederation::where('federation_id', $category_data->id)->get();
-//        dd($employees);
-        foreach ($employees as $item) {
-            $new_data['employees']['data'][] = [
-                'logo' => [
-                    'img' => $item->logo,
-                    'name' => $item->name
-                ],
-                $item->phone,
-                $item->email,
-                $item->type_elem == 'trainer' ? 'Тренер' : 'Спортсмен',
-                'value' => json_encode([$item->type_elem, $item->id]),
-            ];
-        }
-        $trainers = CategoryTrainer::where('federation', $category_data->id)
-            ->select(
-                'id',
-                'logo',
-                'name',
-                'email',
-                'phone',
-                DB::raw("'trainer' as type_elem")
-            );
-
-        $sportsman = CategorySportsman::where('federation', $category_data->id)
-            ->select(
-                'id',
-                'logo',
-                'name',
-                'email',
-                'phone',
-                DB::raw("'sportsman' as type_elem")
-            );
-        $combinedResults = $trainers->union($sportsman)->get();
-//        dd($combinedResults);
-        foreach ($combinedResults as $combinedResult) {
-            $new_data['members']['data'][] = [
-                'logo' => [
-                    'img' => $combinedResult->logo,
-                    'name' => $combinedResult->name
-                ],
-                $combinedResult->phone,
-                $combinedResult->email,
-                $combinedResult->type_elem == 'trainer' ? 'Тренер' : 'Спортсмен',
-                'value' => json_encode([$combinedResult->type_elem, $combinedResult->id]),
-            ];
-        }
         $this->getDefaultValue($new_data, $category_data, $this->is_default_length);
 
         $this->GetValueInputs($category_data->insurances_id, 'insurance', $new_data);

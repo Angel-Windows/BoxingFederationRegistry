@@ -47,6 +47,7 @@ class AjaxController extends Controller
                         case 'category_sportsmen':
                         case 'category_trainers':
                         case 'category_judges':
+                        case 'category_fun_zones':
 
                             $category_name = $request->input('category') ?? "";
                             $get_data = $this->get_data($category_name, ['id' => null, 'type' => 'register_page'], $request);

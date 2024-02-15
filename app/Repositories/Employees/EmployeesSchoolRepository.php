@@ -3,14 +3,9 @@
 namespace App\Repositories\Employees;
 
 use App\Models\Category\CategorySchool;
-use App\Models\Category\CategorySportsInstitutions;
-use App\Models\Category\CategorySportsman;
-use App\Models\Category\CategoryTrainer;
-use App\Models\Class\BoxFederation;
+
 use App\Models\Class\ClassType;
-use App\Models\Employees\EmployeesFederation;
 use App\Models\Employees\EmployeesSchool;
-use App\Models\Employees\EmployeesSportsInstitutions;
 use App\Models\Linking\LinkingMembers;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
 use App\Traits\CategoryUITrait;
@@ -39,6 +34,10 @@ class EmployeesSchoolRepository implements CategoryRepositoryInterface
         'name' => [
             'size' => 'fool',
             'placeholder' => 'ПІП'
+        ],
+        'members_table' => [
+            'title' => 'Працівники навчального закладу',
+
         ]
     ];
 
@@ -49,8 +48,12 @@ class EmployeesSchoolRepository implements CategoryRepositoryInterface
             $table['employees'] = null;
             $table['members'] = null;
         }
-        $table['school']['option'] = CategorySchool::where('id', '<>', $id)->pluck('name', 'id');
+        $table['school']['option'] = CategorySchool::pluck('name', 'id');
+        $value = $table['school']['value'] ?? null;
 
+        if ($id && $value) {
+            $table['school']['text'] = ($table['school']['option'][$value]);
+        }
         return [
             [
                 'type' => '',
@@ -63,12 +66,13 @@ class EmployeesSchoolRepository implements CategoryRepositoryInterface
                                 $table['name'],
                                 $table['phone'],
                                 $table['email'],
+                                $table['position'],
+                                $table['birthday'],
                                 $table['city'],
                                 $table['street'],
                                 $table['house_number'],
                                 $table['apartment_number'],
-                                $table['position'],
-                                $table['birthday'],
+
                             ],
                         ],
                     ],
@@ -79,7 +83,6 @@ class EmployeesSchoolRepository implements CategoryRepositoryInterface
     public function edit($id, $request, $type): array
     {
         $category = self::validate_category($request, $this->table_model, $id);
-
         $category->school_id = $request->input('school') ?? '';
         $category->position = $request->input('position') ?? null;
         $category->birthday = $request->input('birthday') ?? '';
@@ -88,7 +91,7 @@ class EmployeesSchoolRepository implements CategoryRepositoryInterface
 
         return [
             'error' => null,
-            'data'=>$category
+            'data' => $category
         ];
     }
 
@@ -96,60 +99,11 @@ class EmployeesSchoolRepository implements CategoryRepositoryInterface
     {
         $new_data = $table;
 
-
-        $employees = EmployeesFederation::where('federation_id', $category_data->id)->get();
-//        dd($employees);
-        foreach ($employees as $item) {
-            $new_data['employees']['data'][] = [
-                'logo' => [
-                    'img' => $item->logo,
-                    'name' => $item->name
-                ],
-                $item->phone,
-                $item->email,
-                $item->type_elem == 'trainer' ? 'Тренер' : 'Спортсмен',
-                'value' => json_encode([$item->type_elem, $item->id]),
-            ];
-        }
-        $trainers = CategoryTrainer::where('federation', $category_data->id)
-            ->select(
-                'id',
-                'logo',
-                'name',
-                'email',
-                'phone',
-                DB::raw("'trainer' as type_elem")
-            );
-
-        $sportsman = CategorySportsman::where('federation', $category_data->id)
-            ->select(
-                'id',
-                'logo',
-                'name',
-                'email',
-                'phone',
-                DB::raw("'sportsman' as type_elem")
-            );
-        $combinedResults = $trainers->union($sportsman)->get();
-//        dd($combinedResults);
-        foreach ($combinedResults as $combinedResult) {
-            $new_data['members']['data'][] = [
-                'logo' => [
-                    'img' => $combinedResult->logo,
-                    'name' => $combinedResult->name
-                ],
-                $combinedResult->phone,
-                $combinedResult->email,
-                $combinedResult->type_elem == 'trainer' ? 'Тренер' : 'Спортсмен',
-                'value' => json_encode([$combinedResult->type_elem, $combinedResult->id]),
-            ];
-        }
         $this->getDefaultValue($new_data, $category_data, $this->is_default_length);
 
-        $this->GetValueInputs($category_data->director, 'director', $new_data);
-        $this->GetValueInputs($category_data->federation, 'federation', $new_data);
-        $this->GetValueInputs($category_data->site, 'site', $new_data);
-
+        $this->GetValueInputs($category_data->position, 'position', $new_data);
+        $this->GetValueInputs($category_data->school_id, 'school', $new_data);
+        $this->GetValueInputs($category_data->birthday, 'birthday', $new_data);
 
         return $new_data;
     }
@@ -157,70 +111,40 @@ class EmployeesSchoolRepository implements CategoryRepositoryInterface
     private function created_view($table, $id): array
     {
 
-        $members_works = LinkingMembers::leftJoin('category_trainers', 'category_trainers.id', 'linking_members.member_id')
-            ->where('linking_members.category_id', $id)
-            ->where('linking_members.category_type', $this->category_type_id)
-            ->select(
-                'linking_members.*',
-                'category_trainers.name',
-                'category_trainers.phone',
-                'category_trainers.email',
-                'category_trainers.logo',
-            )
-            ->get();
-
-        $works = [];
-        foreach ($members_works as $member) {
-            $works[] = [$member->logo, $member->name, $member->role, $member->phone, $member->email];
-        }
         return [
             [
-                'title' => null,
-                'data_wrapper' => [
-                    [
-                        'type' => 'buttons',
-                        'data' => [
-                            $table['phone'],
-                            $table['email'],
-                        ],
-                    ], [
-                        'type' => 'table',
-                        'data' => [
-                            'body' => [
-                                [
-                                    $table['director']['placeholder'],
-                                    $table['director']['text'] ?? '',
-                                ], [
-                                    $table['address']['placeholder'],
-                                    $table['address']['text'] ?? '',
-                                ], [
-                                    $table['federation']['placeholder'],
-                                    $table['federation']['text'] ?? '',
-                                ], [
-                                    $table['edrpou']['placeholder'],
-                                    $table['edrpou']['text'] ?? '',
-                                ], [
-                                    $table['site']['placeholder'],
-                                    $table['site']['text'] ?? '',
+                [
+                    'title' => null,
+                    'class' => '',
+                    'size' => '',
+                    'data_wrapper' => [
+                        [
+                            'type' => 'buttons',
+                            'data' => [
+                                $table['phone'],
+                                $table['email'],
+                            ],
+                        ], [
+                            'type' => 'table',
+                            'data' => [
+                                'body' => [
+                                    [
+                                        $table['birthday']['placeholder'],
+                                        $table['birthday']['text'] ?? '',
+                                    ], [
+                                        $table['address']['placeholder'],
+                                        $table['address']['value'] ?? '',
+                                    ], [
+                                        $table['position']['placeholder'],
+                                        $table['position']['text'] ?? '',
+                                    ]
                                 ],
                             ],
                         ],
                     ],
-                ],
-            ], [
-                'title' => 'Працівники федерації',
-                'data_wrapper' => [
-                    [
-                        'type' => 'todo_table',
-                        'button_add' => '',
+                ]
+            ]
 
-                        'data' => [
-                            'thead' => ['ПІП', '', 'Посада', 'Телефон', 'Пошта'],
-                            'body' => $works,
-                        ],
-                    ],
-                ],
-            ],
         ];
     }
 
@@ -245,7 +169,7 @@ class EmployeesSchoolRepository implements CategoryRepositoryInterface
         } else {
             $table = $this->data;
             $more_data = [
-                'register_name'=>'Реєстрація працівника школи'
+                'register_name' => 'Реєстрація працівника школи'
             ];
 
         }
