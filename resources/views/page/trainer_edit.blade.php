@@ -2,7 +2,7 @@
 @php
     $page_name = Route::current()->parameters()['class_name'] ?? "";
 @endphp
-@section('title', ClassType::getFind('link', $page_name)->name)
+@section('title',(( \App\Models\Class\ClassType::getFind('link', $page_name)->name)?? '') . ' Редагування')
 @section('class_body', 'trainer')
 @section('styles')
     @vite('resources/scss/page/trainer.scss')
