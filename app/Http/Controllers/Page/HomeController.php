@@ -16,9 +16,14 @@ class HomeController extends Controller
     public function index()
     {
 
-
-
         $card_data = ClassType::whereIsset('description');
+
+
+
+        foreach ($card_data as $all_datum) {
+            $all_datum->count = DB::table($all_datum->link)->count();
+        }
+
         return view('page.home', compact('card_data'));
     }
     public function test_page()
