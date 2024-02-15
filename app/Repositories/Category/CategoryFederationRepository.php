@@ -154,18 +154,25 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
                 'value' => json_encode([$item->type_elem, $item->id]),
             ];
         }
-        $trainers = CategoryTrainer::where('federation', $category_data->id)
-            ->select(
-                'id',
-                'logo',
-                'name',
-                'email',
-                'phone',
-                DB::raw("'trainer' as type_elem")
-            )->pluck('id', 'id');
+        $trainerIds = CategoryTrainer::where('federation', $category_data->id)
+            ->select('id')
+            ->pluck('id');
+
+//        $trainers = CategoryTrainer::whereIn('id', $trainerIds)
+//            ->select(
+//                'id',
+//                'logo',
+//                'name',
+//                'email',
+//                'phone',
+//                DB::raw("'trainer' as type_elem")
+//            )->get();
 
         $sportsman = CategorySportsman::where('federation', $category_data->id)
-            ->whereIn('trainer', $trainers)
+            ->where(function ($query) use ($trainerIds) {
+                $query->whereIn('trainer', $trainerIds)
+                    ->orWhereNull('trainer');
+            })
             ->select(
                 'id',
                 'logo',

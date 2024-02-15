@@ -119,7 +119,7 @@ class EmployeesFederationRepository implements CategoryRepositoryInterface
                             'body' => [
                                 [
                                     $table['federation']['placeholder'],
-                                    $table['federation']['value'] ?? '',
+                                    $table['federation']['text'] ?? '',
                                 ], [
                                     $table['birthday']['placeholder'],
                                     $table['birthday']['value'] ?? '',
