@@ -34,8 +34,8 @@
             {{--            </div>--}}
         @endif
         @foreach($table as $table_item)
-            <div >
-{{--            <div class="{{$table_item['class'] ?? ''}}">--}}
+{{--            <div >--}}
+            <div class="{{$table_item['class'] ?? ''}}">
                 @foreach($table_item['data_block'] as $item_list)
                     @if(isset($item_list['title']))
                         <h3>

@@ -35,10 +35,14 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
             'name' => 'members[]',
             'type' => 'checkbox-list',
             'checkbox_type' => 'revert',
+            'size' => 'fool',
+            'class' => 'fool',
             'title' => 'Працівники які працюють в закладі',
         ], 'sportsmen' => [
             'name' => 'sportsmen',
             'type' => 'checkbox-list',
+            'size' => 'fool',
+            'class' => 'fool',
             'checkbox_type' => 'revert',
             'title' => 'Спортсмени',
         ], 'address' => [
@@ -47,6 +51,8 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
         'trainer' => [
             'title' => "Тренери",
             'type' => 'checkbox-list',
+            'size' => 'fool',
+            'class' => 'fool',
             'checkbox_type' => 'revert',
         ],
         'director' => [
