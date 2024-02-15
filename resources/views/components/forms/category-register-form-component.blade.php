@@ -11,7 +11,7 @@
 
 >
     {{--    <button type="submit">Submit</button>--}}
-            <button class="button">Submit</button>
+{{--            <button class="button">Submit</button>--}}
     @csrf
 
 
