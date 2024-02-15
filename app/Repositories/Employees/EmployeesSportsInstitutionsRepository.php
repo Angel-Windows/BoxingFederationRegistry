@@ -43,6 +43,8 @@ class EmployeesSportsInstitutionsRepository implements CategoryRepositoryInterfa
 
     private function get_edit($table, $id): array
     {
+
+
         if (!$id) {
             $table['employees'] = null;
             $table['members'] = null;
@@ -78,7 +80,7 @@ class EmployeesSportsInstitutionsRepository implements CategoryRepositoryInterfa
     {
         $category = self::validate_category($request, $this->table_model, $id);
 
-        $category->sports_institutions_id = $request->input('sports_institution') ?? '';
+        $category->sports_institutions_id = $request->input('sports_institutions') ?? null;
         $category->position = $request->input('position') ?? null;
         $category->birthday = $request->input('birthday') ?? '';
         $category->save();
@@ -100,7 +102,7 @@ class EmployeesSportsInstitutionsRepository implements CategoryRepositoryInterfa
         $this->GetValueInputs( $category_data->sports_institutions_id, 'sports_institutions', $new_data);
 
         $this->GetValueInputs($category_data->birthday, 'birthday', $new_data);
-        $this->GetValueInputs($this->data_option['employees_sports_institutions']['position'][$category_data->position], 'position', $new_data);
+        $this->GetValueInputs( $category_data->position, 'position', $new_data);
 
         return $new_data;
     }
@@ -134,7 +136,7 @@ class EmployeesSportsInstitutionsRepository implements CategoryRepositoryInterfa
                                     $table['address']['value'] ?? '',
                                 ], [
                                     $table['position']['placeholder'],
-                                    $table['position']['value'] ?? '',
+                                    $table['position']['text'] ?? '',
                                 ]
                             ],
                         ],

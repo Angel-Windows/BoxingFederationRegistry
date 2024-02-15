@@ -144,7 +144,7 @@ trait CategoryUITrait
         } else {
             $category->name = $request->input('last_name') . ' ' . $request->input('first_name') . ' ' . $request->input('surname');
         }
-        if ($request->has('street')){
+        if ($request->has('street')) {
             $category->address =
                 json_encode([
                     'city' => $request->input('city'),
@@ -284,8 +284,6 @@ trait CategoryUITrait
                 break;
 
 
-
-
             case 'employees_school':
                 $data_info = (new EmployeesSchoolRepository())->get_data($data, $request);
                 break;
@@ -342,6 +340,7 @@ trait CategoryUITrait
 
                     case 'passport':
                     case 'custom-select':
+
                         $result = $value ?? '';
                         break;
 
@@ -355,7 +354,9 @@ trait CategoryUITrait
             switch ($dataKey['tag']) {
                 case 'select-box':
                 case 'custom-select':
+
                     $data[$key]['value'] = $value;
+
                     break;
                 case 'input':
                     $data[$key]['value'] = $result;
@@ -363,8 +364,8 @@ trait CategoryUITrait
                 case 'foreign_passport':
                 case 'passport':
                     $pass = json_decode($result, true);
-                    $data[$key]['text'] = strtoupper($pass['seria'] ?? '' ). ($pass['number'] ?? '');
-                    $data[$key]['value'] = strtoupper($pass['seria'] ?? '' ). ($pass['number'] ?? '');
+                    $data[$key]['text'] = strtoupper($pass['seria'] ?? '') . ($pass['number'] ?? '');
+                    $data[$key]['value'] = strtoupper($pass['seria'] ?? '') . ($pass['number'] ?? '');
                     $data[$key]['name_seria'] = strtoupper($pass['seria'] ?? '');
                     $data[$key]['name_number'] = $pass['number'] ?? '';
 
@@ -372,6 +373,7 @@ trait CategoryUITrait
             }
             $data[$key]['text'] = $result;
         }
+
 
         return $result;
     }

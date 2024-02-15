@@ -78,8 +78,8 @@ class EmployeesInsurancesRepository implements CategoryRepositoryInterface
     public function edit($id, $request, $type): array
     {
         $category = self::validate_category($request, $this->table_model, $id);
-
-        $category->sports_institutions_id = $request->input('sports_institution') ?? '';
+//        dd($request->input());
+        $category->insurances_id = $request->input('insurance') ?? null;
         $category->position = $request->input('position') ?? null;
         $category->birthday = $request->input('birthday') ?? '';
         $category->save();

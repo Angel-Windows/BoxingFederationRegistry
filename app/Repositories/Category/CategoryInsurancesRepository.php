@@ -40,12 +40,22 @@ class CategoryInsurancesRepository implements CategoryInstitutionsRepositoryInte
         ],
         'address' => [
             'size' => 'fool',
+            'placeholder' => 'Адреса',
         ],
         'director' => [
             'placeholder' => 'Керівник',
-            'size' => '',
+            'size' => 'fool',
             'required' => true,
         ],
+        'name' => [
+            'placeholder' => 'Назва страхової компанії',
+            'size' => 'fool',
+            'required' => true,
+        ],
+        'members_table'=> [
+            'title' => 'Страхові агенти',
+
+        ]
     ];
 
 
@@ -53,20 +63,23 @@ class CategoryInsurancesRepository implements CategoryInstitutionsRepositoryInte
     {
 
         if (isset($table['employees']['model'])) {
-            $table['employees']['data'][] = [
-                $table['employees']['model']->name,
-                $this->city_arr[json_decode($table['employees']['model']->address)->city],
-                $table['employees']['model']->phone,
-                $table['employees']['model']->email,
-                'value' => $table['employees']['model']->id,
+            foreach ($table['employees']['model'] as $item){
+                $table['employees']['data'][] = [
+                    $item->name,
+                    $this->city_arr[json_decode($item->address)->city],
+                    $item->phone,
+                    $item->email,
+                    'value' => $item->id,
 
-            ];
+                ];
+            }
+
         } else {
             $table['employees'] = null;
         }
         if (!$id) {
             $table['employees'] = null;
-            $table['members'] = null;
+            $table['members_table'] = null;
         }
 
         return [
@@ -89,6 +102,11 @@ class CategoryInsurancesRepository implements CategoryInstitutionsRepositoryInte
                             ],
                         ],
 
+                    ],
+            ],[
+                'class' => 'fool',
+                'data_block' =>
+                    [
                         $table['employees'],
                     ],
             ],
@@ -100,7 +118,7 @@ class CategoryInsurancesRepository implements CategoryInstitutionsRepositoryInte
         if ($request->has('employees')) {
             EmployeesInsurance::where('insurances_id', $id)
                 ->whereIn('id', $request->input('employees'))
-                ->update(['insurances_id'=>null]);
+                ->update(['insurances_id' => null]);
         }
 
         $category = self::validate_category($request, $this->table_model, $id);
@@ -124,10 +142,7 @@ class CategoryInsurancesRepository implements CategoryInstitutionsRepositoryInte
         $this->getDefaultValue($new_data, $category_data, $this->is_default_length);
 
         $this->GetValueInputs($category_data->director, 'director', $new_data);
-        $this->GetValueInputs($category_data->federation, 'federation', $new_data);
-        $this->GetValueInputs($category_data->edrpou, 'edrpou', $new_data);
-        $this->GetValueInputs($category_data->site, 'site', $new_data);
-        $new_data['employees']['model'] = EmployeesInsurance::where('insurances_id', $category_data->id)->first();
+        $new_data['employees']['model'] = EmployeesInsurance::where('insurances_id', $category_data->id)->get();
 
         return $new_data;
     }
@@ -135,8 +150,6 @@ class CategoryInsurancesRepository implements CategoryInstitutionsRepositoryInte
     private function created_view($table, $id): array
     {
 
-
-//
         $works = [];
         $employees = EmployeesInsurance::where('insurances_id', $id)->get();
 //        dd($employees);
@@ -155,51 +168,48 @@ class CategoryInsurancesRepository implements CategoryInstitutionsRepositoryInte
 
 
         if ($works) {
-            $table['federation_members']['data_wrapper'][0]['data']['body'] = $works;
+            $table['members_table']['data_wrapper'][0]['data']['body'] = $works;
         } else {
-            $table['federation_members'] = null;
+            $table['members_table'] = null;
         }
         return [
-            [[
-                'title' => null,
-                'class' => '',
-                'size' => '',
-                'data_wrapper' => [
-                    [
-                        'type' => 'buttons',
-                        'data' => [
-                            $table['phone'],
-                            $table['email'],
-                        ],
-                    ], [
-                        'type' => 'table',
-                        'data' => [
-                            'body' => [
-                                [
-                                    $table['director']['placeholder'],
-                                    $table['director']['text'] ?? '',
-                                ], [
-                                    $table['address']['placeholder'],
-                                    $table['address']['text'] ?? '',
-                                ], [
-                                    $table['federation']['placeholder'],
-                                    $table['federation']['text'] ?? '',
-                                ], [
-                                    $table['edrpou']['placeholder'],
-                                    $table['edrpou']['text'] ?? '',
-                                ], [
-                                    $table['site']['placeholder'],
-                                    $table['site']['text'] ?? '',
-                                ],
+            [
+                [
+                    'title' => null,
+                    'class' => '',
+                    'size' => '',
+                    'data_wrapper' => [
+                        [
+                            'type' => 'buttons',
+                            'data' => [
+                                $table['phone'],
+                                $table['email'],
+                            ],
+                        ], [
+                            'type' => 'table',
+                            'data' => [
+                                'body' => [
+                                    [
+                                        $table['director']['placeholder'],
+                                        $table['director']['text'] ?? '',
+                                    ], [
+                                        $table['address']['placeholder'],
+                                        $table['address']['text'] ?? '',
+
+                                    ],
+                                ]
                             ],
                         ],
                     ],
-                ],
-            ], $table['federation_members']
+
+                ]
+            ], [
+                $table['members_table']
             ]
         ];
     }
 
+//
     public function get_data($data, $request = null): array
     {
         $type = $data['type'] ?? '';
@@ -221,7 +231,7 @@ class CategoryInsurancesRepository implements CategoryInstitutionsRepositoryInte
         } else {
             $table = $this->data;
             $more_data = [
-                'register_name' => 'Реєстрація федерації',
+                'register_name' => 'Реєстрація страхової компанії',
                 'logo' => [
                     'link' => null,
                     'class' => 'big_img'

@@ -370,7 +370,7 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
                             'type' => 'todo_table',
                             'data' => [
                                 'thead' => ['ПІП', 'Телефон', 'Пошта'],
-                                'body' => $table['sportsmen']['data'],
+                                'body' => $table['sportsmen']['data'] ?? [],
                             ],
                         ],
                     ],

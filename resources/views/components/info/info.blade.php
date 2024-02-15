@@ -8,7 +8,7 @@
         @if($item_info)
         <div class="info-wrapper {{$data_info['data-wrapper']['class'] ?? ""}}">
             @foreach($item_info['data_wrapper'] ?? [] as $item_right)
-                @switch($item_right['type'])
+                @switch($item_right['type'] ?? '')
                     @case('buttons')
                         <ul class="buttons">
                             @foreach($item_right['data'] as $item_data)

@@ -237,7 +237,7 @@ class CategoryMedicalsRepository implements CategoryInstitutionsRepositoryInterf
         } else {
             $table = $this->data;
             $more_data = [
-                'register_name' => 'Реєстрація федерації',
+                'register_name' => 'Реєстрація медичної компанії',
                 'logo' => [
                     'link' => null,
                     'class' => 'big_img'
