@@ -84,33 +84,73 @@ class SportsmanFederationRepository implements CategoryRepositoryInterface
 //            $linking_federation = LinkingMembers::where('member_id', $model->trainer)
 //                ->where('category_type', ClassType::getIdCategory('box_federations'))
 //                ->pluck('category_id');
-            $linking_trainer = CategoryTrainer::where('id', $model->trainer)->first();
+            // Получаем категорию тренера по его ID
+            $linking_trainer = CategoryTrainer::find($model->trainer);
+
             $arr_federation = [];
-            $arr_federation_temp = [];
+
+            $old_id = $linking_trainer ? $linking_trainer->federation : null;
+
+            if ($old_id) {
+                $arr_federation[$old_id] = $old_id;
+            }
+
+
             $max = 0;
-            $old_id = $linking_trainer->federation;
-            $arr_federation[$old_id] = $old_id;
-            do {
+            $linking_federation = null;
+            while ($max < BoxFederation::count() - 1) {
+
                 $linking_federation = BoxFederation::where('id', $old_id)
-                    ->whereNotIn('id', $arr_federation_temp)
+                    ->whereNotIn('id', $arr_federation)
                     ->first();
-                $arr_federation_temp = $arr_federation;
-                if ($linking_federation->federation ?? null) {
+
+                if ($linking_federation) {
                     $old_id = $linking_federation->federation;
                     $arr_federation[$old_id] = $old_id;
+                } else {
+                    break;
                 }
 
                 $max++;
-                if ($max === (BoxFederation::count() - 1)) {
+            }
+
+            $table['federation']['option'] = BoxFederation::whereIn('id', $arr_federation)
+                ->pluck('name', 'id')->all();
+
+            if (empty($table['federation']['option'])) {
+                $table['federation']['option'] = BoxFederation::pluck('name', 'id')->all();
+            }
+            $linking_trainer = CategoryTrainer::find($model->trainer);
+
+            $arr_federation = [];
+
+            $old_id = $linking_trainer ? $linking_trainer->federation : null;
+
+            if ($old_id) {
+                $arr_federation[$old_id] = $old_id;
+            }
+
+            $max = 0;
+            $linking_federation = null; // Инициализируем переменную
+            while ($max < BoxFederation::count() - 1) {
+                $linking_federation = BoxFederation::where('id', $old_id)
+                    ->whereNotIn('id', $arr_federation)
+                    ->first();
+
+                if ($linking_federation) {
+                    $old_id = $linking_federation->federation;
+                    $arr_federation[$old_id] = $old_id;
+                } else {
                     break;
                 }
-            } while ($linking_federation->federation ?? null);
 
-            if (count($arr_federation)) {
-                $table['federation']['option'] = BoxFederation::whereIn('id', $arr_federation)
-                    ->pluck('name', 'id');
-            } else {
-                $table['federation']['option'] = BoxFederation::pluck('name', 'id');
+                $max++;
+            }
+            $table['federation']['option'] = BoxFederation::whereIn('id', $arr_federation)
+                ->pluck('name', 'id')->all();
+
+            if (empty($table['federation']['option'])) {
+                $table['federation']['option'] = BoxFederation::pluck('name', 'id')->all();
             }
         }
 
