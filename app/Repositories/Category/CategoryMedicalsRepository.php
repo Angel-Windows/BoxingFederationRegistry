@@ -53,6 +53,10 @@ class CategoryMedicalsRepository implements CategoryInstitutionsRepositoryInterf
             'size' => '',
             'required' => true,
         ],
+        'members_table' => [
+            'title' => 'Працівники медичного закладу',
+
+        ]
     ];
 
 
@@ -97,7 +101,13 @@ class CategoryMedicalsRepository implements CategoryInstitutionsRepositoryInterf
                                 $table['apartment_number'],
                             ],
                         ],
+                    ],
+            ],[
+                'type' => '',
+                'class' => 'fool',
 
+                'data_block' =>
+                    [
                         $table['employees'],
                     ],
             ],
@@ -149,14 +159,12 @@ class CategoryMedicalsRepository implements CategoryInstitutionsRepositoryInterf
         $works = [];
         $employees = EmployeesMedical::where('medical_id', $id)->get();
 
-//        dd($employees);
-//        dd($employees);
         foreach ($employees as $member) {
             $works[] = [
                 'logo' => [
                     'img' => $member->logo,
                     'name' => $member->name,
-                    'value' => $member->id,
+//                    'value' => $member->id,
                 ],
                 $member->phone,
                 $member->email,
@@ -166,53 +174,43 @@ class CategoryMedicalsRepository implements CategoryInstitutionsRepositoryInterf
 
 
         if ($works) {
-            $table['federation_members']['data_wrapper'][0]['data']['body'] = $works;
+            $table['members_table']['data_wrapper'][0]['data']['body'] = $works;
         } else {
-            $table['federation_members'] = null;
+            $table['members_table'] = null;
         }
         return [
-            [[
-                'title' => null,
-                'class' => '',
-                'size' => '',
-                'data_wrapper' => [
-                    [
-                        'type' => 'buttons',
-                        'data' => [
-                            $table['phone'],
-                            $table['email'],
-                        ],
-                    ], [
-                        'type' => 'table',
-                        'data' => [
-                            'body' => [
-                                [
-                                    $table['director']['placeholder'],
-                                    $table['director']['text'] ?? '',
-                                ], [
-                                    $table['address']['placeholder'],
-                                    $table['address']['text'] ?? '',
-                                ]
+            [
+                [
+                    'title' => null,
+                    'class' => '',
+                    'size' => '',
+                    'data_wrapper' => [
+                        [
+                            'type' => 'buttons',
+                            'data' => [
+                                $table['phone'],
+                                $table['email'],
+                            ],
+                        ], [
+                            'type' => 'table',
+                            'data' => [
+                                'body' => [
+                                    [
+                                        $table['director']['placeholder'],
+                                        $table['director']['text'] ?? '',
+                                    ], [
+                                        $table['address']['placeholder'],
+                                        $table['address']['text'] ?? '',
+                                    ]
+                                ],
                             ],
                         ],
                     ],
                 ],
-            ], $table['federation_members']
+            ],
+            [
+                $table['members_table']
             ]
-//            [
-//                'title' => 'Працівники федерації',
-//                'data_wrapper' => [
-//                    [
-//                        'type' => 'todo_table',
-//                        'button_add' => '',
-//
-//                        'data' => [
-//                            'thead' => ['ПІП', '', 'Посада', 'Телефон', 'Пошта'],
-//                            'body' => $works,
-//                        ],
-//                    ],
-//                ],
-//            ],
         ];
     }
 
