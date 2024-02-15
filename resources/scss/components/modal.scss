@@ -46,6 +46,7 @@
             background-color: #babac0;
             border-radius: 16px;
         }
+
         &::-webkit-scrollbar {
             background: none;
             background-position: right top;
@@ -87,15 +88,19 @@
         }
     }
 
-    .modal_wrapper {
+
         .add-form-item {
             margin-right: 0;
+
+            .modal_content {
+                overflow-y: visible;
+            }
 
             .button {
                 margin-top: 0;
             }
         }
-    }
+
 
     .upload_img {
         border-radius: 5px;
