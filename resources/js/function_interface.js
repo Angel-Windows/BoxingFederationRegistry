@@ -42,6 +42,8 @@ window.functionsArray = {
     'add_parent_active': home_scripts.addParentActive,
     'remove_parent_active': home_scripts.removeParentActive,
     'toggle_parent_active': home_scripts.toggleParentActive,
+    'add_class': home_scripts.add_class,
+    'remove_class': home_scripts.remove_class,
     'hideOverflowingElements_start': home_scripts.hideOverflowingElements_start,
     'open_modal': modals_scripts.open_modal,
 

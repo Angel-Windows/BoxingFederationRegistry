@@ -1,11 +1,13 @@
 import {inputs_input} from "@/components/forms.js";
 
 const modal_wrapper = document.querySelector('.modal_wrapper');
+const modal_wrapper_two = document.querySelector('.modal_wrapper_two');
 const modal_content = modal_wrapper.querySelector('.modal_content');
 let search_result_list = null;
 
 export function modal_open(data, class_name = '') {
     modal_wrapper.classList.add('open')
+    modal_wrapper_two.classList.remove('open')
     modal_content.innerHTML = data['data'];
     modal_content.parentNode.className = 'modal_content_wrapper ' + data['class_name']
 

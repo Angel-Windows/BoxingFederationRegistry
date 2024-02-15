@@ -1,10 +1,11 @@
+
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding-top: 15px;
     padding-bottom: 15px;
-    border-bottom:  1px solid var(--grey-middle, #E9E8EE);
+    border-bottom: 1px solid var(--grey-middle, #E9E8EE);
     margin-bottom: 30px;
 
     p {
@@ -12,6 +13,7 @@
         font-weight: 400;
 
     }
+
     h1 {
         color: var(--text);
         font-family: Roboto, sans-serif;
@@ -26,9 +28,6 @@
         font-weight: 900;
     }
 
-    .burger {
-        display: none;
-    }
 
     & > * {
         display: flex;
@@ -40,6 +39,7 @@
         display: flex;
         align-items: center;
         text-decoration: none;
+
         p {
             max-width: 170px;
         }
@@ -74,6 +74,14 @@
 }
 
 @media screen and (max-width: 1000px) {
+    .auth-button {
+        display: none;
+    }
+    .burger_content {
+        .auth-button {
+            display: block;
+        }
+    }
     header {
         .burger {
             display: block;
@@ -88,5 +96,91 @@
                 display: none;
             }
         }
+    }
+}
+
+.auth-button {
+    text-decoration: none;
+    font-size: 17px;
+    color: white;
+}
+
+.burger {
+    display: none;
+}
+
+.close_modal {
+    //padding: 32px 0 27px;
+}
+
+.modal_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 32px 33px 27px;
+}
+
+.burger_menu {
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    max-width: 480px;
+    width: 100%;
+    z-index: 100;
+    padding-left: 66px;
+    box-sizing: border-box;
+
+    .auth-button {
+        color: black;
+    }
+
+    .accordion-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.5s ease;
+        padding-bottom: 0;
+    }
+
+    .accordion-header {
+        color: black;
+        padding: 12px 0 23px;
+    }
+
+    .accordion-item {
+        padding: 0 36px;
+
+        &.active {
+            background: var(--grey-middle, #E9E8EE);
+
+            .accordion-content {
+                max-height: 1000px;
+                padding-bottom: 20px;
+            }
+
+        }
+    }
+
+}
+
+.burger_content {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    background: white;
+    height: 100%;
+}
+
+.accordion {
+    overflow-y: scroll;
+    &::-webkit-scrollbar-thumb {
+        background-color: #babac0;
+        border-radius: 16px;
+    }
+
+    &::-webkit-scrollbar {
+        background: none;
+        background-position: right top;
+        width: 5px;
+        background-size: 100vw;
     }
 }

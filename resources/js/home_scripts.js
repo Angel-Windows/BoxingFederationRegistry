@@ -68,6 +68,13 @@ export function toggleParentActive(element, parent, className = 'active', functi
     }
     findParent(element, parent, func)
 }
+export function add_class(element, parent, className = 'active', functionName, params = []) {
+    document.querySelector('.' + parent).classList.add(className)
+}
+export function remove_class(parent, className = 'active', functionName, params = []) {
+    document.querySelector('.' + parent).classList.remove(className)
+
+}
 
 export const removeOldActive = (elem, className, arrayParams) => {
     const index = arrayParams[0];

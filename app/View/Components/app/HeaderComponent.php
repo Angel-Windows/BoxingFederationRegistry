@@ -2,6 +2,7 @@
 
 namespace App\View\Components\app;
 
+use App\Models\Class\ClassType;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
@@ -21,6 +22,7 @@ class HeaderComponent extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.app.header-component');
+        $card_data = ClassType::whereIsset('description');
+        return view('components.app.header-component', compact('card_data'));
     }
 }
