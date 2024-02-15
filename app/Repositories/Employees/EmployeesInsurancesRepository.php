@@ -52,8 +52,9 @@ class EmployeesInsurancesRepository implements CategoryRepositoryInterface
             $table['members'] = null;
         }
         $table['insurance']['option'] = CategoryInsurance::pluck('name', 'id');
-        if ($id){
-            $table['insurance']['text'] = $table['insurance']['option'][$table['insurance']['value']] ;
+        $value = $table['insurance']['value'] ?? null;
+        if ($id && $value){
+            $table['insurance']['text'] = $table['insurance']['option'][$value] ;
         }
 
         return [
