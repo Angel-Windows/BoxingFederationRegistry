@@ -107,6 +107,7 @@ class CategoryTrainerRepository implements CategoryRepositoryInterface
 
     public function edit($id, $request, $type): array
     {
+//        dd($request->input());
         if ($links = LinkingMembers::whereIn('id', $request->input('history_works') ?? [])->get()) {
             $update_null = [];
             $update_now = [];

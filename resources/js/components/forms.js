@@ -1,4 +1,22 @@
+import Inputmask from 'inputmask';
+const x = () => {
+    const phoneInput = document.querySelector("input[name='phone']");
+
+    console.log(phoneInput);
+    if (phoneInput) {
+        const maskOptions = {
+            mask: '+380 (99) 9999-999'
+        };
+        const phoneMask = new Inputmask(maskOptions);
+
+        phoneMask.mask(phoneInput);
+    }
+
+}
 export const inputs_input = (parent_class, is_search = true) => {
+    x()
+
+
     let parent = document.querySelector('.' + parent_class);
     if (!parent) parent = document;
     // console.log(parent)
