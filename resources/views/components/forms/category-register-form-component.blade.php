@@ -18,7 +18,7 @@
     @php
         $model_table = new $get['modeles'];
         $is_register_add = true;
-        $hasLogoColumn =  $more_data['logo'];
+        $hasLogoColumn =  $more_data['logo'] ?? null;
 //        $hasLogoColumn =  $model_table->getConnection()->getSchemaBuilder()->hasColumn($model_table->getTable(), 'logo');
         if ($hasLogoColumn){
             $class_table = 'table-auto_fool';

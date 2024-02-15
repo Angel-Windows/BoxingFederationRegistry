@@ -93,59 +93,13 @@ class EmployeesSportsInstitutionsRepository implements CategoryRepositoryInterfa
     {
         $new_data = $table;
 
-
-        $employees = EmployeesFederation::where('federation_id', $category_data->id)->get();
-//        dd($employees);
-        foreach ($employees as $item) {
-            $new_data['employees']['data'][] = [
-                'logo' => [
-                    'img' => $item->logo,
-                    'name' => $item->name
-                ],
-                $item->phone,
-                $item->email,
-                $item->type_elem == 'trainer' ? 'Тренер' : 'Спортсмен',
-                'value' => json_encode([$item->type_elem, $item->id]),
-            ];
-        }
-        $trainers = CategoryTrainer::where('federation', $category_data->id)
-            ->select(
-                'id',
-                'logo',
-                'name',
-                'email',
-                'phone',
-                DB::raw("'trainer' as type_elem")
-            );
-
-        $sportsman = CategorySportsman::where('federation', $category_data->id)
-            ->select(
-                'id',
-                'logo',
-                'name',
-                'email',
-                'phone',
-                DB::raw("'sportsman' as type_elem")
-            );
-        $combinedResults = $trainers->union($sportsman)->get();
-//        dd($combinedResults);
-        foreach ($combinedResults as $combinedResult) {
-            $new_data['members']['data'][] = [
-                'logo' => [
-                    'img' => $combinedResult->logo,
-                    'name' => $combinedResult->name
-                ],
-                $combinedResult->phone,
-                $combinedResult->email,
-                $combinedResult->type_elem == 'trainer' ? 'Тренер' : 'Спортсмен',
-                'value' => json_encode([$combinedResult->type_elem, $combinedResult->id]),
-            ];
-        }
         $this->getDefaultValue($new_data, $category_data, $this->is_default_length);
 
-        $this->GetValueInputs($category_data->director, 'director', $new_data);
-        $this->GetValueInputs($category_data->federation, 'federation', $new_data);
-        $this->GetValueInputs($category_data->site, 'site', $new_data);
+
+        $this->GetValueInputs( $category_data->sports_institutions_id, 'sports_institutions', $new_data);
+        $this->GetValueInputs($category_data->birthday, 'birthday', $new_data);
+        $this->GetValueInputs($this->data_option['employees_sports_institutions']['position'][$category_data->position], 'position', $new_data);
+
 
 
         return $new_data;
@@ -153,26 +107,11 @@ class EmployeesSportsInstitutionsRepository implements CategoryRepositoryInterfa
 
     private function created_view($table, $id): array
     {
-
-        $members_works = LinkingMembers::leftJoin('category_trainers', 'category_trainers.id', 'linking_members.member_id')
-            ->where('linking_members.category_id', $id)
-            ->where('linking_members.category_type', $this->category_type_id)
-            ->select(
-                'linking_members.*',
-                'category_trainers.name',
-                'category_trainers.phone',
-                'category_trainers.email',
-                'category_trainers.logo',
-            )
-            ->get();
-
-        $works = [];
-        foreach ($members_works as $member) {
-            $works[] = [$member->logo, $member->name, $member->role, $member->phone, $member->email];
-        }
         return [
-            [
+            [[
                 'title' => null,
+                'class' => '',
+                'size' => '',
                 'data_wrapper' => [
                     [
                         'type' => 'buttons',
@@ -185,44 +124,31 @@ class EmployeesSportsInstitutionsRepository implements CategoryRepositoryInterfa
                         'data' => [
                             'body' => [
                                 [
-                                    $table['director']['placeholder'],
-                                    $table['director']['text'] ?? '',
+                                    $table['sports_institutions']['placeholder'],
+                                    $table['sports_institutions']['text'] ?? '',
+                                ], [
+                                    $table['birthday']['placeholder'],
+                                    $table['birthday']['value'] ?? '',
                                 ], [
                                     $table['address']['placeholder'],
-                                    $table['address']['text'] ?? '',
+                                    $table['address']['value'] ?? '',
                                 ], [
-                                    $table['federation']['placeholder'],
-                                    $table['federation']['text'] ?? '',
-                                ], [
-                                    $table['edrpou']['placeholder'],
-                                    $table['edrpou']['text'] ?? '',
-                                ], [
-                                    $table['site']['placeholder'],
-                                    $table['site']['text'] ?? '',
-                                ],
+                                    $table['position']['placeholder'],
+                                    $table['position']['value'] ?? '',
+                                ]
                             ],
                         ],
                     ],
                 ],
-            ], [
-                'title' => 'Працівники федерації',
-                'data_wrapper' => [
-                    [
-                        'type' => 'todo_table',
-                        'button_add' => '',
+            ]
+            ]
 
-                        'data' => [
-                            'thead' => ['ПІП', '', 'Посада', 'Телефон', 'Пошта'],
-                            'body' => $works,
-                        ],
-                    ],
-                ],
-            ],
         ];
     }
 
     public function get_data($data, $request = null): array
     {
+
 
         $type = $data['type'] ?? '';
         $category = $this->table_model::find($data['id']);
@@ -242,7 +168,7 @@ class EmployeesSportsInstitutionsRepository implements CategoryRepositoryInterfa
         } else {
             $table = $this->data;
             $more_data = [
-                'register_name'=>'Реєстрація працівника спортивного закладу'
+                'register_name'=>'Реєстрація працівника федерації'
             ];
 
         }

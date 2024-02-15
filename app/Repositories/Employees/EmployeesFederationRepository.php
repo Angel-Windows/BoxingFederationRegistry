@@ -41,13 +41,8 @@ class EmployeesFederationRepository implements CategoryRepositoryInterface
 
     private function get_edit($table, $id): array
     {
-        $position = $this->data_option['employees_federation']['position'];
-//        dd($this->data);
-        if (!$id) {
-            $table['employees'] = null;
-            $table['members'] = null;
-        }
-        $table['federation']['option'] = BoxFederation::where('id', '<>', $id)->pluck('name', 'id');
+       
+        $table['federation']['option'] = BoxFederation::pluck('name', 'id');
         return [
             [
                 'type' => '',
@@ -92,60 +87,15 @@ class EmployeesFederationRepository implements CategoryRepositoryInterface
     private function get_value($table, $category_data): array
     {
         $new_data = $table;
+        $federation = BoxFederation::where('id',$category_data->federation_id)->first()->name;
 
 
-        $employees = EmployeesFederation::where('federation_id', $category_data->id)->get();
-//        dd($employees);
-        foreach ($employees as $item) {
-            $new_data['employees']['data'][] = [
-                'logo' => [
-                    'img' => $item->logo,
-                    'name' => $item->name
-                ],
-                $item->phone,
-                $item->email,
-                $item->type_elem == 'trainer' ? 'Тренер' : 'Спортсмен',
-                'value' => json_encode([$item->type_elem, $item->id]),
-            ];
-        }
-        $trainers = CategoryTrainer::where('federation', $category_data->id)
-            ->select(
-                'id',
-                'logo',
-                'name',
-                'email',
-                'phone',
-                DB::raw("'trainer' as type_elem")
-            );
-
-        $sportsman = CategorySportsman::where('federation', $category_data->id)
-            ->select(
-                'id',
-                'logo',
-                'name',
-                'email',
-                'phone',
-                DB::raw("'sportsman' as type_elem")
-            );
-        $combinedResults = $trainers->union($sportsman)->get();
-//        dd($combinedResults);
-        foreach ($combinedResults as $combinedResult) {
-            $new_data['members']['data'][] = [
-                'logo' => [
-                    'img' => $combinedResult->logo,
-                    'name' => $combinedResult->name
-                ],
-                $combinedResult->phone,
-                $combinedResult->email,
-                $combinedResult->type_elem == 'trainer' ? 'Тренер' : 'Спортсмен',
-                'value' => json_encode([$combinedResult->type_elem, $combinedResult->id]),
-            ];
-        }
         $this->getDefaultValue($new_data, $category_data, $this->is_default_length);
 
-        $this->GetValueInputs($category_data->director, 'director', $new_data);
-        $this->GetValueInputs($category_data->federation, 'federation', $new_data);
-        $this->GetValueInputs($category_data->site, 'site', $new_data);
+        $this->GetValueInputs($category_data->city, 'city', $new_data);
+        $this->GetValueInputs($federation, 'federation', $new_data);
+        $this->GetValueInputs($category_data->birthday, 'birthday', $new_data);
+        $this->GetValueInputs($this->data_option['employees_federation']['position'][$category_data->position], 'position', $new_data);
 
 
         return $new_data;
@@ -153,26 +103,11 @@ class EmployeesFederationRepository implements CategoryRepositoryInterface
 
     private function created_view($table, $id): array
     {
-
-        $members_works = LinkingMembers::leftJoin('category_trainers', 'category_trainers.id', 'linking_members.member_id')
-            ->where('linking_members.category_id', $id)
-            ->where('linking_members.category_type', $this->category_type_id)
-            ->select(
-                'linking_members.*',
-                'category_trainers.name',
-                'category_trainers.phone',
-                'category_trainers.email',
-                'category_trainers.logo',
-            )
-            ->get();
-
-        $works = [];
-        foreach ($members_works as $member) {
-            $works[] = [$member->logo, $member->name, $member->role, $member->phone, $member->email];
-        }
         return [
-            [
+            [[
                 'title' => null,
+                'class' => '',
+                'size' => '',
                 'data_wrapper' => [
                     [
                         'type' => 'buttons',
@@ -185,41 +120,28 @@ class EmployeesFederationRepository implements CategoryRepositoryInterface
                         'data' => [
                             'body' => [
                                 [
-                                    $table['director']['placeholder'],
-                                    $table['director']['text'] ?? '',
-                                ], [
-                                    $table['address']['placeholder'],
-                                    $table['address']['text'] ?? '',
-                                ], [
                                     $table['federation']['placeholder'],
-                                    $table['federation']['text'] ?? '',
+                                    $table['federation']['value'] ?? '',
                                 ], [
-                                    $table['edrpou']['placeholder'],
-                                    $table['edrpou']['text'] ?? '',
+                                    $table['birthday']['placeholder'],
+                                    $table['birthday']['value'] ?? '',
                                 ], [
-                                    $table['site']['placeholder'],
-                                    $table['site']['text'] ?? '',
-                                ],
+                                    $table['city']['placeholder'],
+                                    $table['city']['value'] ?? '',
+                                ], [
+                                    $table['position']['placeholder'],
+                                    $table['position']['value'] ?? '',
+                                ]
                             ],
                         ],
                     ],
                 ],
-            ], [
-                'title' => 'Працівники федерації',
-                'data_wrapper' => [
-                    [
-                        'type' => 'todo_table',
-                        'button_add' => '',
+            ]
+            ]
 
-                        'data' => [
-                            'thead' => ['ПІП', '', 'Посада', 'Телефон', 'Пошта'],
-                            'body' => $works,
-                        ],
-                    ],
-                ],
-            ],
         ];
     }
+
 
     public function get_data($data, $request = null): array
     {
