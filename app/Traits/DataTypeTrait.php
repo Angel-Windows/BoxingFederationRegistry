@@ -420,6 +420,12 @@ trait DataTypeTrait
             'size' => 'fool',
             'placeholder' => 'Історія досягнень',
         ],
+        'school_list' => [
+            'name' => 'school_list',
+            'tag' => 'input',
+            'size' => 'fool',
+            'placeholder' => 'Перелік навчальних закладів, які закінчив суддя',
+        ],
         'director' => [
             'name' => 'director',
             'tag' => 'input',

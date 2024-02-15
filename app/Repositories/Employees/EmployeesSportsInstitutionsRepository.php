@@ -47,8 +47,9 @@ class EmployeesSportsInstitutionsRepository implements CategoryRepositoryInterfa
             $table['employees'] = null;
             $table['members'] = null;
         }
-        $table['sports_institution']['option'] = CategorySportsInstitutions::where('id', '<>', $id)->pluck('name', 'id');
-        return [
+
+        $table['sports_institutions']['option'] = CategorySportsInstitutions::pluck('name', 'id');
+        return  [
             [
                 'type' => '',
                 'data_block' =>
@@ -56,7 +57,7 @@ class EmployeesSportsInstitutionsRepository implements CategoryRepositoryInterfa
                         [
                             'type' => 'table',
                             'data' => [
-                                $table['sports_institution'],
+                                $table['sports_institutions'],
                                 $table['name'],
                                 $table['phone'],
                                 $table['email'],
@@ -97,10 +98,9 @@ class EmployeesSportsInstitutionsRepository implements CategoryRepositoryInterfa
 
 
         $this->GetValueInputs( $category_data->sports_institutions_id, 'sports_institutions', $new_data);
+
         $this->GetValueInputs($category_data->birthday, 'birthday', $new_data);
         $this->GetValueInputs($this->data_option['employees_sports_institutions']['position'][$category_data->position], 'position', $new_data);
-
-
 
         return $new_data;
     }

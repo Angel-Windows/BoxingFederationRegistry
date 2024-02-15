@@ -71,14 +71,15 @@ class CategoryJudgeRepository implements CategoryRepositoryInterface
                                 $table['email'],
                                 $table['qualification'],
                                 $table['city'],
-                                $table['address'],
+                                $table['street'],
                                 $table['house_number'],
                                 $table['apartment_number'],
                                 $table['rank'],
                                 $table['gov'],
+                                $table['school_list'],
                             ],
                         ],
-                        $table['history_works'],
+//                        $table['history_works'],
                     ],
             ],
         ];
@@ -87,11 +88,10 @@ class CategoryJudgeRepository implements CategoryRepositoryInterface
     public function edit($id, $request, $type): array
     {
         $category = self::validate_category($request, $this->table_model, $id);
-
         $category->qualification = $request->input('qualification');
 
-        $category->rank = $request->input('rank');
-        $category->gov = $request->input('gov');
+        $category->school = $request->input('school_list') ?? '';
+        $category->rank = $request->input('rank') ?? '';
         $category->save();
 
 
@@ -107,7 +107,7 @@ class CategoryJudgeRepository implements CategoryRepositoryInterface
         $this->getDefaultValue($new_data, $category_data, $this->is_default_length);
 
         $this->GetValueInputs($category_data->qualification, 'qualification', $new_data);
-        $this->GetValueInputs($category_data->school, 'school', $new_data);
+        $this->GetValueInputs($category_data->school, 'school_list', $new_data);
         $this->GetValueInputs($category_data->rank, 'rank', $new_data);
         $this->GetValueInputs($category_data->gov, 'gov', $new_data);
 
@@ -162,61 +162,63 @@ class CategoryJudgeRepository implements CategoryRepositoryInterface
                                 ], [
                                     $table['gov']['placeholder'],
                                     $table['gov']['text'] ?? '',
-                                ], [
-                                    $table['school']['placeholder'],
-                                    $table['school']['text'] ?? '',
+                                ],  [
+                                    $table['school_list']['placeholder'],
+                                    $table['school_list']['text'] ?? '',
                                 ],
                             ],
                         ],
                     ],
                 ],
-            ], [
-                'title' => 'Історія місць роботи',
-                'class'=>'fool',
-                'data_wrapper' => [
-                    [
-                        'type' => 'table',
-                        'class' => 'history-work no-wrap',
-                        'data' => [
-                            'thead' => ['Назва закладу', 'Початок', '', 'Кінець'],
-
-                            'body' => [
-                                [
-                                    $table['qualification']['placeholder'],
-                                    $table['qualification']['value'] ?? '',
-                                    '',
-                                    $table['qualification']['value'] ?? '',
-                                ], [
-                                    $table['qualification']['placeholder'],
-                                    $table['qualification']['value'] ?? '',
-                                    '',
-                                    $table['qualification']['value'] ?? '',
-                                ], [
-                                    $table['address']['placeholder'],
-                                    $table['address']['value'] ?? '',
-                                    '',
-                                    $table['address']['value'] ?? '',
-                                ], [
-                                    $table['rank']['placeholder'],
-                                    $table['rank']['value'] ?? '',
-                                    '',
-                                    $table['rank']['value'] ?? '',
-                                ], [
-                                    $table['gov']['placeholder'],
-                                    $table['gov']['value'] ?? '',
-                                    '',
-                                    $table['gov']['value'] ?? '',
-                                ], [
-                                    $table['school']['placeholder'],
-                                    $table['school']['value'] ?? '',
-                                    '',
-                                    $table['school']['value'] ?? '',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-            ],]
+            ],
+//                [
+//                'title' => 'Історія місць роботи',
+//                'class'=>'fool',
+//                'data_wrapper' => [
+//                    [
+//                        'type' => 'table',
+//                        'class' => 'history-work no-wrap',
+//                        'data' => [
+//                            'thead' => ['Назва закладу', 'Початок', '', 'Кінець'],
+//
+//                            'body' => [
+//                                [
+//                                    $table['qualification']['placeholder'],
+//                                    $table['qualification']['value'] ?? '',
+//                                    '',
+//                                    $table['qualification']['value'] ?? '',
+//                                ], [
+//                                    $table['qualification']['placeholder'],
+//                                    $table['qualification']['value'] ?? '',
+//                                    '',
+//                                    $table['qualification']['value'] ?? '',
+//                                ], [
+//                                    $table['address']['placeholder'],
+//                                    $table['address']['value'] ?? '',
+//                                    '',
+//                                    $table['address']['value'] ?? '',
+//                                ], [
+//                                    $table['rank']['placeholder'],
+//                                    $table['rank']['value'] ?? '',
+//                                    '',
+//                                    $table['rank']['value'] ?? '',
+//                                ], [
+//                                    $table['gov']['placeholder'],
+//                                    $table['gov']['value'] ?? '',
+//                                    '',
+//                                    $table['gov']['value'] ?? '',
+//                                ], [
+//                                    $table['school']['placeholder'],
+//                                    $table['school']['value'] ?? '',
+//                                    '',
+//                                    $table['school']['value'] ?? '',
+//                                ],
+//                            ],
+//                        ],
+//                    ],
+//                ],
+//            ],
+                ]
         ];
     }
 

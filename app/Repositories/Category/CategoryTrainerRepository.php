@@ -180,6 +180,21 @@ class CategoryTrainerRepository implements CategoryRepositoryInterface
 
     private function created_view($table, $id): array
     {
+        $sportsman = CategorySportsman::where('trainer', $id)
+            ->get();
+        $table['federation']['option'] = BoxFederation::pluck('name', 'id');
+
+
+        $table['sportsmen']['data'] = [];
+
+
+//        dd($table['history_works']);
+
+        foreach ($sportsman as $sportsman_item) {
+            $table['sportsmen']['data'][] = $sportsman_item->name;
+        }
+
+
         foreach ($table['history_works']['data'] as $item) {
             $table['history_works']['data_view'][] = [
                 $item['name'],

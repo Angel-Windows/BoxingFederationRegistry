@@ -11,7 +11,7 @@
 
 >
     {{--    <button type="submit">Submit</button>--}}
-{{--            <button class="button">Submit</button>--}}
+            <button class="button">Submit</button>
     @csrf
 
 
@@ -36,7 +36,7 @@
         @foreach($table as $table_item)
 {{--            <div >--}}
             <div class="{{$table_item['class'] ?? ''}}">
-                @foreach($table_item['data_block'] as $item_list)
+                @foreach($table_item['data_block'] ?? [] as $item_list)
                     @if(isset($item_list['title']))
                         <h3>
                             <p>{{$item_list['title']}}</p>

@@ -45,7 +45,7 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
             'class' => 'fool',
             'checkbox_type' => 'revert',
             'title' => 'Спортсмени',
-        ], 'address' => [
+        ], 'street' => [
             'placeholder' => 'Місце знаходження',
         ],
         'trainer' => [
@@ -63,34 +63,6 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
 
     private function get_edit($table, $id): array
     {
-        $members_works = EmployeesSportsInstitutions::where('sports_institutions_id', $id)->get();
-
-
-        $trainers = LinkingMembers::leftJoin('category_trainers', 'category_trainers.id', 'linking_members.member_id')
-            ->where('linking_members.category_id', $id)
-            ->whereNull('linking_members.date_end_at')
-            ->where('linking_members.category_type', $this->category_type_id)
-            ->select(
-                'linking_members.*',
-                'category_trainers.id as category_trainers_id',
-                'category_trainers.name',
-                'category_trainers.phone',
-                'category_trainers.email',
-                'category_trainers.logo',
-            )
-            ->get();
-
-        $trainers_id = $trainers->pluck('category_trainers_id')->toArray();
-
-//        $sportsman = CategorySportsman::select('*')
-        $sportsman = CategorySportsman::whereIn('trainer', $trainers_id)
-            ->where('sports_institutions', $id)
-            ->orWhere(function ($query) use ($id) {
-                $query->where('sports_institutions', $id)
-                    ->whereNull('trainer');
-            })
-            ->get();
-//        dd($members_works, $sportsman, $trainers_id);
         $table['members']['data'] = [];
         $table['sportsmen']['data'] = [];
 
@@ -99,28 +71,86 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
             $table['sportsmen'] = null;
             $table['members'] = null;
         }
+        if ($id){
+            $members_works = EmployeesSportsInstitutions::where('sports_institutions_id', $id)->get();
+            $trainers = LinkingMembers::leftJoin('category_trainers', 'category_trainers.id', 'linking_members.member_id')
+                ->where('linking_members.category_id', $id)
+                ->whereNull('linking_members.date_end_at')
+                ->where('linking_members.category_type', $this->category_type_id)
+                ->select(
+                    'linking_members.*',
+                    'category_trainers.id as category_trainers_id',
+                    'category_trainers.name',
+                    'category_trainers.phone',
+                    'category_trainers.email',
+                    'category_trainers.logo',
+                )
+                ->get();
 
-        foreach ($members_works as $member) {
-            $table['members']['data'][] = [
-                'text' => $member->name,
-                'subtitle' => $this->data_option['employees_sports_institutions']['position'][$member->position],
-                'value' => $member->member_id,
+            $trainers_id = $trainers->pluck('category_trainers_id')->toArray();
+
+            $sportsman = CategorySportsman::whereIn('trainer', $trainers_id)
+                ->where('sports_institutions', $id)
+                ->orWhere(function ($query) use ($id) {
+                    $query->where('sports_institutions', $id)
+                        ->whereNull('trainer');
+                })
+                ->get();
+
+
+            foreach ($members_works as $member) {
+                $table['members']['data'][] = [
+                    'text' => $member->name,
+                    'subtitle' => $this->data_option['employees_sports_institutions']['position'][$member->position],
+                    'value' => $member->member_id,
+                ];
+            }
+            foreach ($sportsman as $sportsman_item) {
+                $table['sportsmen']['data'][] = [
+                    'text' => $sportsman_item->name,
+                    'value' => $sportsman_item->id,
+                ];
+            }
+            foreach ($trainers as $item) {
+                $table['trainer']['data'][] = [
+                    'text' => $item->name,
+                    'subtitle' => $item->role,
+                    'value' => $item->id,
+                ];
+            }
+
+
+
+            $members_data = [
+                'type' => 'checkbox-list',
+                'class' => 'fool ',
+                'checkbox_type' => 'revert',
+                'data_block' =>
+                    [
+                        $table['members'],
+                    ],
+            ];
+            $trainers_data = [
+                'type' => 'checkbox-list',
+                'class' => 'fool ',
+                'checkbox_type' => 'revert',
+                'data_block' =>
+                    [
+                        $table['trainer'],
+                    ],
+            ];
+
+            $sportsman_data = [
+                'type' => 'checkbox-list',
+                'class' => 'fool ',
+                'checkbox_type' => 'revert',
+                'data_block' =>
+                    [
+                        $table['sportsmen'],
+                    ],
             ];
         }
-//        dd($table['members']);
-        foreach ($sportsman as $sportsman_item) {
-            $table['sportsmen']['data'][] = [
-                'text' => $sportsman_item->name,
-                'value' => $sportsman_item->id,
-            ];
-        }
-        foreach ($trainers as $item) {
-            $table['trainer']['data'][] = [
-                'text' => $item->name,
-                'subtitle' => $item->role,
-                'value' => $item->id,
-            ];
-        }
+
 
         return [
             [
@@ -139,7 +169,7 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
                                 $table['director'],
                                 $table['site'],
                                 $table['city'],
-                                $table['address'],
+                                $table['street'],
                                 $table['house_number'],
                                 $table['apartment_number'],
                             ],
@@ -147,39 +177,18 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
 
                     ],
 
-            ], [
-                'type' => 'checkbox-list',
-                'class' => 'fool ',
-                'checkbox_type' => 'revert',
-                'data_block' =>
-                    [
-                        $table['members'],
-                    ],
             ],
-            [
-                'type' => 'checkbox-list',
-                'class' => 'fool ',
-                'checkbox_type' => 'revert',
-                'data_block' =>
-                    [
-                        $table['trainer'],
-                    ],
-            ],
-            [
-                'type' => 'checkbox-list',
-                'class' => 'fool ',
-                'checkbox_type' => 'revert',
-                'data_block' =>
-                    [
-                        $table['sportsmen'],
-                    ],
-            ]
+            $members_data ?? null,
+            $trainers_data ?? null,
+            $sportsman_data ?? null,
+
         ];
     }
 
 
     public function edit($id, $request, $type): array
     {
+
         if ($request->has('trainer')) {
             $now = Carbon::now()->format('Y-m-d');
             LinkingMembers::where('category_id', $id)
@@ -199,6 +208,7 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
                 ->update(['sports_institutions' => null])
             ;
         }
+
         $members = $request->input('members') ?? [];
         $sportsmen = $request->input('sportsmen') ?? [];
 
@@ -212,8 +222,11 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
 
         $category = self::validate_category($request, $this->table_model, $id);
 
-        $category->type = $request->input('name');
-        $category->category = self::convertAddressRequest($request);
+        $category->director = $request->input('director') ?? null;
+        $category->edrpou = $request->input('edrpou') ?? null;
+        $category->type = $request->input('type') ?? null;
+        $category->site = $request->input('site') ?? null;
+        $category->category = $request->input('category') ?? null;
         $category->save();
 
 
@@ -230,7 +243,6 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
 
 //        dd($this->get_arr_federation());
         $this->getDefaultValue($new_data, $category_data, $this->is_default_length);
-
         $this->GetValueInputs($category_data->category, 'category', $new_data);
         $this->GetValueInputs($category_data->type, 'type', $new_data);
         $this->GetValueInputs($category_data->edrpou, 'edrpou', $new_data);
@@ -254,14 +266,39 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
 //                'category_trainers.logo',
 //            )
 //            ->get();
-
-        $members_works = EmployeesSportsInstitutions::where('id', $id)->get();
-        $sportsmens_data = CategorySportsman::leftJoin('category_sports_institutions', 'category_sports_institutions.id', 'category_sportsmen.id')
-            ->where('category_sportsmen.category_sports_institutions', $id)
+        $trainers = LinkingMembers::leftJoin('category_trainers', 'category_trainers.id', 'linking_members.member_id')
+            ->where('linking_members.category_id', $id)
+            ->whereNull('linking_members.date_end_at')
+            ->where('linking_members.category_type', $this->category_type_id)
             ->select(
-                'category_sportsmen.*',
+                'linking_members.*',
+                'category_trainers.id as category_trainers_id',
+                'category_trainers.name',
+                'category_trainers.phone',
+                'category_trainers.email',
+                'category_trainers.logo',
             )
             ->get();
+        $trainers_id = $trainers->pluck('category_trainers_id')->toArray();
+        $members_works = EmployeesSportsInstitutions::where('sports_institutions_id', $id)->get();
+        $sportsman = CategorySportsman::whereIn('trainer', $trainers_id)
+            ->where('sports_institutions', $id)
+            ->orWhere(function ($query) use ($id) {
+                $query->where('sports_institutions', $id)
+                    ->whereNull('trainer');
+            })
+            ->get();
+        foreach ($sportsman as $sportsman_item) {
+            $table['sportsmen']['data'][] = [
+                'logo' => [
+                    'img' => $sportsman_item->logo,
+                    'name' => $sportsman_item->name
+                ],
+                $sportsman_item->phone,
+                $sportsman_item->email
+            ];
+
+        }
         $works = [];
         foreach ($members_works as $member) {
             $works[] = [
@@ -269,22 +306,9 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
                     'img' => $member->logo,
                     'name' => $member->name
                 ],
-                $member->name,
-                $member->role,
+                $this->data_option['employees_sports_institutions']['position'][$member->position],
                 $member->phone,
                 $member->email,
-            ];
-        }
-        $sportsmens = [];
-        foreach ($sportsmens_data as $sportsmen) {
-            $sportsmens[] = [
-                'logo' => [
-                    'img' => $sportsmen->logo,
-                    'name' => $sportsmen->name
-                ],
-                $sportsmen->name,
-                $sportsmen->phone,
-                $sportsmen->email
             ];
         }
         return [
@@ -346,7 +370,7 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
                             'type' => 'todo_table',
                             'data' => [
                                 'thead' => ['ПІП', 'Телефон', 'Пошта'],
-                                'body' => $sportsmens,
+                                'body' => $table['sportsmen']['data'],
                             ],
                         ],
                     ],

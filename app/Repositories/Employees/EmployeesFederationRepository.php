@@ -42,6 +42,7 @@ class EmployeesFederationRepository implements CategoryRepositoryInterface
     private function get_edit($table, $id): array
     {
         $table['federation']['option'] = BoxFederation::pluck('name', 'id');
+//        dd($table['federation']);
         return [
             [
                 'type' => '',

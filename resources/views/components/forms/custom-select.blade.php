@@ -2,6 +2,7 @@
     $required = $is_required ?? ''
 
 @endphp
+
 <div class="custom-select type__text hovered {{$class_name}}">
     <label class="label type__text  {{$class_name}}">
         <span class="unselectable">{{$placeholder}}</span>
@@ -11,6 +12,7 @@
                value="{{$text??''}}"
                class="custom-select-input input">
     </label>
+
     <input {{$required}} name="{{$name}}" type="hidden" class="input-value" value="{{$value}}">
     <input type="hidden" class="old-value" value="{{$text ?? ''}}">
     <ul class="custom-select-options">
