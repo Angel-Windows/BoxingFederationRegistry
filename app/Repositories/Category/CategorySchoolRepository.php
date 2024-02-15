@@ -58,7 +58,7 @@ class CategorySchoolRepository implements CategoryInstitutionsRepositoryInterfac
 
     private function get_edit($table, $id): array
     {
-        if ($table['employees']['model']) {
+        if (isset($table['employees']['model'])) {
             foreach ($table['employees']['model'] as $item) {
 
                 $table['employees']['data'][] = [
@@ -236,7 +236,11 @@ class CategorySchoolRepository implements CategoryInstitutionsRepositoryInterfac
         } else {
             $table = $this->data;
             $more_data = [
-                'register_name' => 'Реєстрація федерації'
+                'register_name' => 'Реєстрація федерації',
+                'logo' => [
+                    'link' => null,
+                    'class' => 'big_img'
+                ]
             ];
         }
 

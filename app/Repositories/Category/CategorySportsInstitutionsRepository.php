@@ -372,7 +372,11 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
         } else {
             $table = $this->data;
             $more_data = [
-                'register_name' => 'Реєстрація спортивного закладу'
+                'register_name' => 'Реєстрація спортивного закладу',
+                'logo' => [
+                    'link' => null,
+                    'class' => 'big_img'
+                ]
             ];
         }
 

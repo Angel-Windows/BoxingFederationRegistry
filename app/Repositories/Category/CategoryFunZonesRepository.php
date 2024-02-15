@@ -16,6 +16,7 @@ class CategoryFunZonesRepository implements CategoryRepositoryInterface
 {
     use DataTypeTrait;
     use CategoryUITrait;
+
     private $is_default_length = 'fool';
     public $table_model = CategoryFunZone::class;
 
@@ -24,6 +25,7 @@ class CategoryFunZonesRepository implements CategoryRepositoryInterface
         $this->category_type_id = ClassType::getIdCategory('category_sports_institutions');
         $this->data = $this->getDefaultArrayData($this->is_default_length, $this->data_inputs);
     }
+
     private $data_inputs = [
 
     ];
@@ -77,7 +79,7 @@ class CategoryFunZonesRepository implements CategoryRepositoryInterface
 
         return [
             'error' => null,
-            'data'=>$category
+            'data' => $category
         ];
     }
 
@@ -88,7 +90,6 @@ class CategoryFunZonesRepository implements CategoryRepositoryInterface
         $this->getDefaultValue($new_data, $category_data, $this->is_default_length);
 
         $this->GetValueInputs($category_data->birthday, 'birthday', $new_data);
-
 
 
         return $new_data;
@@ -147,7 +148,11 @@ class CategoryFunZonesRepository implements CategoryRepositoryInterface
         } else {
             $table = $this->data;
             $more_data = [
-                'register_name'=>'Реєстрація ФанЗони'
+                'register_name' => 'Реєстрація ФанЗони',
+                'logo' => [
+                    'link' => null,
+                    'class' => 'big_img'
+                ]
             ];
         }
 

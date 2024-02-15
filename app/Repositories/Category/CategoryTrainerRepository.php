@@ -277,7 +277,11 @@ class CategoryTrainerRepository implements CategoryRepositoryInterface
         } else {
             $table = $this->data;
             $more_data = [
-                'register_name' => 'Реєстрація тренеру'
+                'register_name' => 'Реєстрація тренеру',
+                'logo' => [
+                    'link' => null,
+                    'class' => 'big_img'
+                ]
             ];
         }
 

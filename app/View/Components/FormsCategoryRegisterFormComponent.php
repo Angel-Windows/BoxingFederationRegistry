@@ -2,12 +2,7 @@
 
 namespace App\View\Components;
 
-use App\Repositories\Category\CategoryFederationRepository;
-use App\Repositories\Category\CategoryFunZonesRepository;
-use App\Repositories\Category\CategoryInstitutionsRepository;
-use App\Repositories\Category\CategoryJudgeRepository;
-use App\Repositories\Category\CategorySportsInstitutionsRepository;
-use App\Repositories\Category\SportsmanFederationRepository;
+
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;

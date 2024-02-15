@@ -239,7 +239,11 @@ class CategoryJudgeRepository implements CategoryRepositoryInterface
         } else {
             $table = $this->data;
             $more_data = [
-                'register_name'=>'Реєстрація судді'
+                'register_name'=>'Реєстрація судді',
+                'logo' => [
+                    'link' => null,
+                    'class' => 'big_img'
+                ]
             ];
         }
 

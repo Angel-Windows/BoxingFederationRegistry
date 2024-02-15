@@ -13,7 +13,6 @@ use App\Models\Employees\EmployeesMedical;
 use App\Models\Linking\LinkingMembers;
 use App\Repositories\Category\CategoryFederationRepository;
 use App\Repositories\Category\CategoryFunZonesRepository;
-use App\Repositories\Category\CategoryInstitutionsRepository;
 use App\Repositories\Category\CategoryInsurancesRepository;
 use App\Repositories\Category\CategoryJudgeRepository;
 use App\Repositories\Category\CategoryMedicalsRepository;

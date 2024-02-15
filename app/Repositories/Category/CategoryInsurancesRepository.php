@@ -2,17 +2,10 @@
 
 namespace App\Repositories\Category;
 
-use App\Models\Category\CategoryInsurance;
-use App\Models\Category\CategoryMedical;
-use App\Models\Category\CategorySchool;
-use App\Models\Category\CategorySportsman;
-use App\Models\Category\CategoryTrainer;
+
 use App\Models\Class\BoxFederation;
 use App\Models\Class\ClassType;
-use App\Models\Employees\EmployeesFederation;
 use App\Models\Employees\EmployeesInsurance;
-use App\Models\Employees\EmployeesSportsInstitutions;
-use App\Models\Linking\LinkingMembers;
 use App\Repositories\Interfaces\CategoryInstitutionsRepositoryInterface;
 use App\Traits\CategoryUITrait;
 use App\Traits\DataTypeTrait;
@@ -57,7 +50,8 @@ class CategoryInsurancesRepository implements CategoryInstitutionsRepositoryInte
 
     private function get_edit($table, $id): array
     {
-        if ($table['employees']['model']) {
+
+        if (isset($table['employees']['model'])) {
             $table['employees']['data'][] = [
                 $table['employees']['model']->name,
                 $this->city_arr[json_decode($table['employees']['model']->address)->city],
@@ -202,20 +196,6 @@ class CategoryInsurancesRepository implements CategoryInstitutionsRepositoryInte
                 ],
             ], $table['federation_members']
             ]
-//            [
-//                'title' => 'Працівники федерації',
-//                'data_wrapper' => [
-//                    [
-//                        'type' => 'todo_table',
-//                        'button_add' => '',
-//
-//                        'data' => [
-//                            'thead' => ['ПІП', '', 'Посада', 'Телефон', 'Пошта'],
-//                            'body' => $works,
-//                        ],
-//                    ],
-//                ],
-//            ],
         ];
     }
 
@@ -240,7 +220,11 @@ class CategoryInsurancesRepository implements CategoryInstitutionsRepositoryInte
         } else {
             $table = $this->data;
             $more_data = [
-                'register_name' => 'Реєстрація федерації'
+                'register_name' => 'Реєстрація федерації',
+                'logo' => [
+                    'link' => null,
+                    'class' => 'big_img'
+                ]
             ];
         }
 
