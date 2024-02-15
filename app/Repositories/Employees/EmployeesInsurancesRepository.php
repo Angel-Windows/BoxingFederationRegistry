@@ -37,9 +37,11 @@ class EmployeesInsurancesRepository implements CategoryRepositoryInterface
 
     private $data_inputs = [
         'name'=>[
-            'size' => 'fool',
             'placeholder' => 'ПІП'
-        ]
+        ], 'insurance'=>[
+            'size' => '',
+            'placeholder' => 'Назва страхової компанії'
+        ],
     ];
 
 
@@ -49,7 +51,13 @@ class EmployeesInsurancesRepository implements CategoryRepositoryInterface
             $table['employees'] = null;
             $table['members'] = null;
         }
-        $table['insurance']['option'] = CategoryInsurance::where('id', '<>', $id)->pluck('name', 'id');
+        $table['insurance']['option'] = CategoryInsurance::pluck('name', 'id');
+        if ($id){
+            $table['insurance']['text'] = $table['insurance']['option'][$table['insurance']['value']] ;
+
+
+        }
+
         return [
             [
                 'type' => '',
@@ -62,12 +70,13 @@ class EmployeesInsurancesRepository implements CategoryRepositoryInterface
                                 $table['name'],
                                 $table['phone'],
                                 $table['email'],
+                                $table['position'],
+                                $table['birthday'],
                                 $table['city'],
                                 $table['street'],
                                 $table['house_number'],
                                 $table['apartment_number'],
-                                $table['position'],
-                                $table['birthday'],
+
                             ],
                         ],
                     ],
@@ -78,7 +87,6 @@ class EmployeesInsurancesRepository implements CategoryRepositoryInterface
     public function edit($id, $request, $type): array
     {
         $category = self::validate_category($request, $this->table_model, $id);
-//        dd($request->input());
         $category->insurances_id = $request->input('insurance') ?? null;
         $category->position = $request->input('position') ?? null;
         $category->birthday = $request->input('birthday') ?? '';
@@ -145,9 +153,10 @@ class EmployeesInsurancesRepository implements CategoryRepositoryInterface
         }
         $this->getDefaultValue($new_data, $category_data, $this->is_default_length);
 
-        $this->GetValueInputs($category_data->director, 'director', $new_data);
+        $this->GetValueInputs($category_data->insurances_id, 'insurance', $new_data);
+        $this->GetValueInputs($category_data->position, 'position', $new_data);
         $this->GetValueInputs($category_data->federation, 'federation', $new_data);
-        $this->GetValueInputs($category_data->site, 'site', $new_data);
+        $this->GetValueInputs($category_data->birthday, 'birthday', $new_data);
 
 
         return $new_data;
@@ -156,25 +165,11 @@ class EmployeesInsurancesRepository implements CategoryRepositoryInterface
     private function created_view($table, $id): array
     {
 
-        $members_works = LinkingMembers::leftJoin('category_trainers', 'category_trainers.id', 'linking_members.member_id')
-            ->where('linking_members.category_id', $id)
-            ->where('linking_members.category_type', $this->category_type_id)
-            ->select(
-                'linking_members.*',
-                'category_trainers.name',
-                'category_trainers.phone',
-                'category_trainers.email',
-                'category_trainers.logo',
-            )
-            ->get();
-
-        $works = [];
-        foreach ($members_works as $member) {
-            $works[] = [$member->logo, $member->name, $member->role, $member->phone, $member->email];
-        }
         return [
-            [
+            [[
                 'title' => null,
+                'class' => '',
+                'size' => '',
                 'data_wrapper' => [
                     [
                         'type' => 'buttons',
@@ -187,39 +182,22 @@ class EmployeesInsurancesRepository implements CategoryRepositoryInterface
                         'data' => [
                             'body' => [
                                 [
-                                    $table['director']['placeholder'],
-                                    $table['director']['text'] ?? '',
+                                    $table['birthday']['placeholder'],
+                                    $table['birthday']['text'] ?? '',
                                 ], [
                                     $table['address']['placeholder'],
-                                    $table['address']['text'] ?? '',
+                                    $table['address']['value'] ?? '',
                                 ], [
-                                    $table['federation']['placeholder'],
-                                    $table['federation']['text'] ?? '',
-                                ], [
-                                    $table['edrpou']['placeholder'],
-                                    $table['edrpou']['text'] ?? '',
-                                ], [
-                                    $table['site']['placeholder'],
-                                    $table['site']['text'] ?? '',
-                                ],
+                                    $table['position']['placeholder'],
+                                    $table['position']['text'] ?? '',
+                                ]
                             ],
                         ],
                     ],
                 ],
-            ], [
-                'title' => 'Працівники федерації',
-                'data_wrapper' => [
-                    [
-                        'type' => 'todo_table',
-                        'button_add' => '',
+            ]
+            ]
 
-                        'data' => [
-                            'thead' => ['ПІП', '', 'Посада', 'Телефон', 'Пошта'],
-                            'body' => $works,
-                        ],
-                    ],
-                ],
-            ],
         ];
     }
 
