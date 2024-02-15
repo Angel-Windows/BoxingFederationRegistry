@@ -41,7 +41,7 @@
 
                 <label class="label type__text act">
                     <span class="unselectable">Дата початку</span>
-                    <input name='date_start' type="date" class="input" placeholder="ПІП">
+                    <input required name='date_start' type="date" class="input" placeholder="ПІП">
                 </label>
             </div>
         </form>
@@ -60,7 +60,7 @@
             <div class="table">
                 <label class="label fool type__text act">
                     <span class="unselectable">ПІП</span>
-                    <input name="name" class="input" placeholder="ПІП">
+                    <input required name="name" class="input" placeholder="ПІП">
                 </label>
                 @include('components.forms.select-box',
                                                  [
@@ -72,7 +72,7 @@
                                                  ])
                 <label class="label type__text act">
                     <span class="unselectable">Телефон</span>
-                    <input name="phone" class="input" placeholder="Телефон">
+                    <input required name="phone" class="input" placeholder="Телефон">
                 </label>
             </div>
         </form>
