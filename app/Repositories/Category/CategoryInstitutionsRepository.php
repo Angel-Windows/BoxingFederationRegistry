@@ -7,6 +7,7 @@ use App\Models\Category\CategoryMedical;
 use App\Models\Category\CategorySchool;
 use App\Models\Category\CategoryTrainer;
 use App\Models\Class\ClassType;
+use App\Models\Employees\EmployeesSportsInstitutions;
 use App\Models\Linking\LinkingMembers;
 use App\Repositories\Interfaces\CategoryInstitutionsRepositoryInterface;
 use App\Traits\CategoryUITrait;
@@ -19,15 +20,7 @@ class CategoryInstitutionsRepository implements CategoryInstitutionsRepositoryIn
     use CategoryUITrait;
 
     private $is_default_length = 'fool';
-    private $data = [
-        'director' => [
-            'name' => 'director',
-            'tag' => 'input',
-            'placeholder' => 'Кваліфікація',
-            'option' => [
-            ],
-        ],
-    ];
+    private $data;
 
     public $table_model = CategoryInsurance::class;
 
@@ -38,14 +31,32 @@ class CategoryInstitutionsRepository implements CategoryInstitutionsRepositoryIn
     }
 
     private $data_inputs = [
-
+        'employees' => [
+            'type' => 'table-list',
+            "name" => "employees[]",
+            "checkbox_type" => "revert",
+            "tag" => "checkbox-list",
+            "placeholder" => "Працівники федерації",
+            'title' => 'Страхові агенти'
+        ]
     ];
 
     private function get_edit($table, $id): array
     {
+        foreach ($table['employees']['model'] as $employee) {
+            $table['employees']['data'][] = [
+                $employee->name,
+                $this->city_arr[json_decode($employee->address)->city],
+                $employee->phone,
+                "value" => $employee->id,
+            ];
+        }
+
+//        dd($table['employees']);
         return [
             [
                 'type' => '',
+
                 'data_block' =>
                     [
                         [
@@ -65,14 +76,41 @@ class CategoryInstitutionsRepository implements CategoryInstitutionsRepositoryIn
                                 $table['gov'],
                             ],
                         ],
+                        $table['employees'],
                     ],
             ],
         ];
+
+//        return [
+//            [
+//                'type' => '',
+//                'data_block' =>
+//                    [
+//                        [
+//                            'type' => 'table',
+//                            'data' => [
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//                            ],
+//                        ],
+//                    ],
+//            ],
+//        ];
     }
 
     public function edit($id, $request, $type): array
     {
-
+        dd($request->input());
         $category = self::validate_category($request, $this->table_model, $id);
 
         $category->qualification = $request->input('qualification');
@@ -89,8 +127,11 @@ class CategoryInstitutionsRepository implements CategoryInstitutionsRepositoryIn
 
     private function get_value($table, $category_data): array
     {
-        $new_data = $table;
 
+
+        $new_data = $table;
+        $new_data['employees']['model'] = EmployeesSportsInstitutions::where('sports_institutions_id', $category_data->id)->get();
+//        dd($new_data['employees']);
         $this->getDefaultValue($new_data, $category_data, $this->is_default_length);
 
         $this->GetValueInputs($category_data->director, 'director', $new_data);
@@ -171,25 +212,25 @@ class CategoryInstitutionsRepository implements CategoryInstitutionsRepositoryIn
             ]],
             [
                 [
-                'title' => 'Страхові агенти',
-                'class' => 'fool',
-                'data_wrapper' => [
-                    [
-                        'type' => 'todo_table',
-                        'button_add' => '',
+                    'title' => 'Страхові агенти',
+                    'class' => 'fool',
+                    'data_wrapper' => [
+                        [
+                            'type' => 'todo_table',
+                            'button_add' => '',
 
-                        'data' => [
-                            'thead' => ['ПІП', 'Посада', 'Телефон', 'Пошта'],
-                            'body' => $works,
+                            'data' => [
+                                'thead' => ['ПІП', 'Посада', 'Телефон', 'Пошта'],
+                                'body' => $works,
+                            ],
                         ],
                     ],
                 ],
-            ],
-                ]
+            ]
         ];
     }
 
-    public function get_data($data, $db_name): array
+    public function get_data($data, $request = null, $db_name = ''): array
     {
         $type = $data['type'] ?? '';
         switch ($db_name) {
@@ -219,7 +260,7 @@ class CategoryInstitutionsRepository implements CategoryInstitutionsRepositoryIn
         } else {
             $table = $this->data;
             $more_data = [
-                'register_name'=>'Реєстрація страхової компанії'
+                'register_name' => 'Реєстрація страхової компанії'
             ];
         }
 

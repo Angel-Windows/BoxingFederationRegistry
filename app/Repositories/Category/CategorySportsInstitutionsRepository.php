@@ -236,18 +236,20 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
 
     private function created_view($table, $id): array
     {
-        $members_works = LinkingMembers::leftJoin('category_trainers', 'category_trainers.id', 'linking_members.member_id')
-            ->whereNull('linking_members.date_end_at')
-            ->where('linking_members.category_id', $id)
-            ->where('linking_members.category_type', $this->category_type_id)
-            ->select(
-                'linking_members.*',
-                'category_trainers.name',
-                'category_trainers.phone',
-                'category_trainers.email',
-                'category_trainers.logo',
-            )
-            ->get();
+//        $members_works = LinkingMembers::leftJoin('category_trainers', 'category_trainers.id', 'linking_members.member_id')
+//            ->whereNull('linking_members.date_end_at')
+//            ->where('linking_members.category_id', $id)
+//            ->where('linking_members.category_type', $this->category_type_id)
+//            ->select(
+//                'linking_members.*',
+//                'category_trainers.name',
+//                'category_trainers.phone',
+//                'category_trainers.email',
+//                'category_trainers.logo',
+//            )
+//            ->get();
+
+        $members_works = EmployeesSportsInstitutions::where('id', $id)->get();
         $sportsmens_data = CategorySportsman::leftJoin('category_sports_institutions', 'category_sports_institutions.id', 'category_sportsmen.id')
             ->where('category_sportsmen.category_sports_institutions', $id)
             ->select(

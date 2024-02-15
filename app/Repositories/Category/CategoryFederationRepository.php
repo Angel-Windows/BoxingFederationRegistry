@@ -65,7 +65,7 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
         }
 //        dd($table['employees']);
         $table['federation']['option'] = BoxFederation::where('id', '<>', $id)->pluck('name', 'id');
-
+        dd($table['employees']);
         return [
             [
                 'type' => '',

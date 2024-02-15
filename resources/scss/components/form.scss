@@ -7,8 +7,11 @@
     }
 
 }
-
-.page-form-edit .upload_img {
+.upload_img .buttons button.button{
+    border-radius: 5px;
+}
+.upload_img {
+//.page-form-edit .upload_img {
     position: relative;
     background: lightgrey;
     width: 370px;

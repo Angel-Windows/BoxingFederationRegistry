@@ -132,7 +132,7 @@ trait DataTypeTrait
         'Листопад',
         'Грудень'
     ];
-    private $city_arr = [
+    public $city_arr = [
         "Київ",
         "Харків",
         "Одеса",
