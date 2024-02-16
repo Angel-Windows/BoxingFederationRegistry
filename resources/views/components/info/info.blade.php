@@ -10,11 +10,22 @@
             @foreach($item_info['data_wrapper'] ?? [] as $item_right)
                 @switch($item_right['type'] ?? '')
                     @case('buttons')
+
                         <ul class="buttons">
                             @foreach($item_right['data'] as $item_data)
-                                <li class="button white"><img src="{{asset($item_data['logo'] ?? '')}}"
-                                                              alt="phone-icon"><span>{{$item_data['value'] ?? ''}}</span>
-                                </li>
+                                @php
+                                    $link_button = '';
+                                    if (($item_data['name'] ?? '') === 'phone'){
+                                         $link_button = "tel:" . ($item_data['value'] ?? '');
+                                    }else{
+                                         $link_button = "mailto:" . ($item_data['value'] ?? '');
+                                    }
+                                @endphp
+                                <a href="{{$link_button}}" class="button white">
+                                    <img src="{{asset($item_data['logo'] ?? '')}}"
+                                                              alt="phone-icon">
+                                    <span>{{$item_data['value'] ?? ''}}</span>
+                                </a>
                             @endforeach
                         </ul>
                         @break
