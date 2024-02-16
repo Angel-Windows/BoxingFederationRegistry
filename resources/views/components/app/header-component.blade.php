@@ -32,7 +32,7 @@
         <div class="modal_wrapper_two ">
             <div class="bg" onclick="functionsArray['toggle_parent_active'](this, 'modal_wrapper_two', 'open')"></div>
             <div class="burger_menu">
-                <div class="burger_content">
+                <div class="burger_content unselectable">
                     <div class="modal_header">
                         @if(\App\Services\MyAuthService::CheckMiddleware('+380956686191'))
                             <a class="auth-button" href="{{route('auth.logout')}}">Вийти</a>

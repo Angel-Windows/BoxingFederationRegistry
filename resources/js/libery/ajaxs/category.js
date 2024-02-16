@@ -1,5 +1,7 @@
 export function form_edit_category() {
-    console.log(23)
+    setTimeout(()=>{
+        location.reload();
+    },300)
 }
 
 export function modal_write_phone(data) {
