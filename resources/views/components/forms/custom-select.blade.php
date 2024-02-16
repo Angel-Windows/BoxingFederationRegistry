@@ -4,7 +4,7 @@
 @endphp
 
 <div class="custom-select type__text hovered {{$class_name}}">
-    <label class="label type__text  {{$class_name}}">
+    <label class="label hovered type__text  {{$class_name}}">
         <span class="unselectable">{{$placeholder}}</span>
 
         <input type="text"

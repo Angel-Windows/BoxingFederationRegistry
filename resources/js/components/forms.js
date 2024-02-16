@@ -16,10 +16,19 @@ export const inputs_input = (parent_class, is_search = true) => {
     phone_input_mask()
 
 
-    let parent = document.querySelector('.' + parent_class);
+    let parent = document.querySelector('.' + parent_class)
     if (!parent) parent = document;
+
+    const labels =  parent.querySelectorAll('.label.hovered')
+
     const all_inputs = parent.querySelectorAll('.input')
 
+    labels.forEach((item)=>{
+        item.addEventListener('click', ()=>{
+            item.classList.add('active')
+        })
+    })
+    console.log(labels, all_inputs)
 
     if(all_inputs.length){
         all_inputs.forEach((item) => {

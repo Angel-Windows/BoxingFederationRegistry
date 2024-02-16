@@ -42,7 +42,7 @@
                                                     'option'=>\App\Models\Category\CategorySportsInstitutions::pluck('name', 'id')
                                                 ])
 
-                <label class="label type__text act">
+                <label class="label hovered type__text act">
                     <span class="unselectable">Дата початку</span>
                     <input required name='date_start' type="date" class="input" placeholder="ПІП">
                 </label>
@@ -76,7 +76,7 @@
                                                      'name'=>'status',
                                                      'option'=>['Тато', 'Мама', 'Брат', 'Сестра', 'Дідусь', 'Син', 'Дочка', 'Друг', 'Інше']
                                                  ])
-                <label class="label type__text act">
+                <label class="label hovered type__text act">
                     <span class="unselectable">Телефон</span>
                     <input required name="phone" class="input" placeholder="Телефон">
                 </label>
