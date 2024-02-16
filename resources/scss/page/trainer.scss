@@ -133,7 +133,15 @@
 
     @media (max-width: 736px) {
         .buttons {
-            display: none;
+            //display: none;
+        }
+        form{
+            .buttons {
+                display: block;
+            }
+        }
+        .nav .buttons{
+            display: block;
         }
     }
 }

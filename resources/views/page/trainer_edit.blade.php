@@ -27,13 +27,13 @@
                 <img
                     src="{{asset('img/homeAbout/register.svg')}}"
                     alt="register-icon"
-                >Відмінити
+                ><span>Відмінити</span>
             </a>
             <button
                 onclick="functionsArray['ajax_postFormFind']('form_edit', 'form_edit_category')"
                 class="button"
             ><img
-                    src="{{asset('img/icon/save.svg')}}" alt="register-icon">Зберегти
+                    src="{{asset('img/icon/save.svg')}}" alt="register-icon"><span>Зберегти</span>
             </button>
         </div>
     </section>
