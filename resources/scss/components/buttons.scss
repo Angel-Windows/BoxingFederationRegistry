@@ -9,6 +9,11 @@
         background: var(--text_bg, #36363D);
         color: var(--white, #FFF);
 
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+
         &.one{
             display: block;
         }
