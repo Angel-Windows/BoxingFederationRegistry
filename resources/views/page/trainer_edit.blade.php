@@ -27,7 +27,7 @@
                 <img
                     src="{{asset('img/homeAbout/register.svg')}}"
                     alt="register-icon"
-                ><span>Відмінити</span>
+                ><span>Повернутись</span>
             </a>
             <button
                 onclick="functionsArray['ajax_postFormFind']('form_edit', 'form_edit_category')"

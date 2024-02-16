@@ -1,16 +1,23 @@
 let timeoutFunc = null;
+let isReloading = false;
 
 export function form_edit_category() {
-    // Проверяем, была ли уже выполнена перезагрузка страницы
-    if (!localStorage.getItem('reloadDone')) {
+    if (!localStorage.getItem('reloadDone') && !isReloading) {
+        isReloading = true;
+
         if (timeoutFunc) {
             clearTimeout(timeoutFunc);
             timeoutFunc = null;
         }
 
         timeoutFunc = setTimeout(() => {
-            localStorage.setItem('reloadDone', true); // Устанавливаем флаг, что перезагрузка выполнена
+            localStorage.setItem('reloadDone', true);
             location.reload();
+
+
+            localStorage.removeItem('reloadDone');
+
+            isReloading = false;
         }, 1000);
     }
 }
