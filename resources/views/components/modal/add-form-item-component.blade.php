@@ -5,29 +5,32 @@
 @switch($request->input('type_action'))
     @case('add_history')
         <form action="{{route('ajax.add_history_work')}}" style="min-width: 779px " method="post"
-              class="modal_form modal-search-form">
+              class="modal_form modal-search-form"
+                id="history_work_form"
+            >
             @csrf
             <input required type="hidden" name="class_types" value="{{$request->input('class_types')}}">
             <input required type="hidden" name="id" value="{{$request->input('id')}}">
             <h3 class=" d-flex space-between">
                 <p>Додати місце роботи</p>
-                <button class="button m-0">
+                <button type="button" class="button m-0" onclick="addHistoryWork()">
                     <img src="{{asset('img/icon/save.svg')}}" alt="">
                     <span type="submit">Зберегти</span>
+{{--                    <span type="submit">Зберегти</span>--}}
                 </button>
             </h3>
             <div class="table">
 {{--                @dd($data['employees_sports_institutions']['position'])--}}
-                @include('components.forms.select-box',
-                                                [
-                                                    'is_required' => true,
-                                                    'class_name'=> 'fool',
-                                                    'placeholder'=>'Посада',
-                                                    'value'=>1,
-                                                    'text'=>'',
-                                                    'name'=>'position',
-                                                    'option'=>$data['employees_sports_institutions']['position']
-                                                ])
+{{--                @include('components.forms.select-box',--}}
+{{--                                                [--}}
+{{--                                                    'is_required' => true,--}}
+{{--                                                    'class_name'=> 'fool',--}}
+{{--                                                    'placeholder'=>'Посада',--}}
+{{--                                                    'value'=>1,--}}
+{{--                                                    'text'=>'',--}}
+{{--                                                    'name'=>'position',--}}
+{{--                                                    'option'=>$data['employees_sports_institutions']['position']--}}
+{{--                                                ])--}}
                 @include('components.forms.custom-select',
                                                 [
                                                     'is_required' => true,
@@ -46,6 +49,9 @@
             </div>
         </form>
         @break
+
+
+
     @default
         <form action="{{route('ajax.search-in-class')}}" style="min-width: 779px " method="post"
               class="modal_form modal-search-form">

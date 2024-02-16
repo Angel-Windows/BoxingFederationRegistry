@@ -108,6 +108,20 @@ class CategoryTrainerRepository implements CategoryRepositoryInterface
     public function edit($id, $request, $type): array
     {
 //        dd($request->input());
+        if ($request->has('history_work_new')) {
+           foreach ($request->input('history_work_new') as $item){
+               $convert_json = json_decode($item, true);
+               $linking = new LinkingMembers();
+               $linking->category_id = $convert_json['sport_institute'];
+               $linking->member_id = $id;
+               $linking->category_type = 5;
+               $linking->member_type = 3;
+               $linking->type = 1;
+               $linking->role = $convert_json['role'] ?? 1;
+               $linking->date_start_at = $convert_json['date_start'];
+               $linking->save();
+           }
+        }
         if ($links = LinkingMembers::whereIn('id', $request->input('history_works') ?? [])->get()) {
             $update_null = [];
             $update_now = [];

@@ -10,6 +10,7 @@
         <input type="text"
                autocomplete="off"
                value="{{$text??''}}"
+               name = "{{$name}}_text"
                class="custom-select-input input">
     </label>
 

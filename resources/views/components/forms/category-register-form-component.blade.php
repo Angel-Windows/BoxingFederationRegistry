@@ -11,7 +11,7 @@
 
 >
     {{--    <button type="submit">Submit</button>--}}
-{{--                <button class="button">Submit</button>--}}
+                <button class="button">Submit</button>
     @csrf
 
     @php
@@ -87,9 +87,24 @@
                             </div>
                             @break
                         @case('history_works')
-                            <div class="history-work fool">
+                            <div class="history-work fool ">
                                 <table class="no-wrap m-grid-3">
                                     <tbody>
+{{--                                    <tr class="label type__checkbox no_check ">--}}
+                                    <tr class="label type__checkbox no_check  d-none">
+                                        <td class="item_name"></td>
+                                        <td class="m-span-1 start_work"></td>
+                                        <td class="no_size m-span-1">-</td>
+                                        <td class="m-span-1 end_work"></td>
+                                        <td class="m-span-1 pl-0 label_button"><label
+                                                class="pl-0 "
+                                                onclick="functionsArray['remove_parent'](this)">
+                                                <input
+                                                    type="checkbox"
+                                                    name="history_work_new[]"
+                                                    value=""
+                                                ></label></td>
+                                    </tr>
                                     {{--                                    @dd($item_list['data'])--}}
                                     @foreach($item_list['data'] ?? [] as $item_data)
                                         <tr class="label type__checkbox no_check ">
