@@ -430,3 +430,29 @@ form {
         }
     }
 }
+
+@media screen and (max-width: 550px) {
+    .content .nav .buttons .button{
+        margin-left: 0;
+        margin-right: 16px;
+    }
+    .nav{
+        display: block;
+        .buttons{
+            span{
+                display: block;
+            }
+        }
+    }
+}
+@media screen and (max-width: 420px) {
+    .nav{
+        display: block;
+        .buttons{
+
+            span{
+                display: none;
+            }
+        }
+    }
+}
