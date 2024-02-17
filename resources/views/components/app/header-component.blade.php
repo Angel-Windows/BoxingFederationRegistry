@@ -11,7 +11,7 @@
 
             if ($more_data){
 //                dd($more_data);
-                $phone = $more_data['phone'];
+                $phone = $more_data['phone'] ?? 'err';
             }
 
 @endphp
