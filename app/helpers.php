@@ -10,9 +10,17 @@ if (!function_exists('customFunction')) {
 if (!function_exists('getRandomPhone')) {
     function getRandomPhone($max_count = 1)
     {
+        $new_phoned = '+380 (34) 1234-132';
+        $operators = ['93', '95', '97', '99'];
+        $operator = $operators[random_int(0, (count($operators) - 1))];
+        $phones1  = random_int(1000, 9999);
+        $phones2  = random_int(100, 999);
+
+        return "+380 ($operator) $phones1-$phones2";
+
         $phones = [];
         $count_phones = random_int(1, $max_count);
-        $operators = ['93', '95', '97', '99'];
+
         do {
             $phones[] = $operators[random_int(0, (count($operators) - 1))] . random_int(1000000, 9999999);
 
