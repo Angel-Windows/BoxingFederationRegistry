@@ -10,8 +10,8 @@
       @if(!$id) onsubmit="return validateForm(this)" @endif
 
 >
-    {{--    <button type="submit">Submit</button>--}}
-                <button class="button">Submit</button>
+{{--        <button type="submit">Submit</button>--}}
+{{--        <button class="button">Submit</button>--}}
     @csrf
 
     @php
