@@ -14,7 +14,6 @@
     </script>
 @endsection
 @section('content')
-    {{--    <video id="video" autoplay></video>--}}
     <x-home-card-about-component :data="$card_data"/>
     <x-home.sponsor-list-component/>
 @endsection

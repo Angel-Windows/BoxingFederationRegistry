@@ -15,4 +15,7 @@ use Illuminate\Database\Eloquent\Model;
 class CategoryInsurance extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'logo',
+    ];
 }

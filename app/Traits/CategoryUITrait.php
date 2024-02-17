@@ -127,8 +127,8 @@ trait CategoryUITrait
         }
 
         $error = [];
-
-        if (array_key_exists('logo', $category->getAttributes())) {
+        if (in_array('logo', $category->getFillable())) {
+//        if (array_key_exists('logo', $category->getAttributes())) {
             $img_patch = self::upload_img($request);
             if ($img_patch['errors']) {
                 $error['logo'][] = $img_patch['errors'];
@@ -138,7 +138,6 @@ trait CategoryUITrait
             }
 
         }
-
         if ($request->has('name')) {
             $category->name = $request->input('name');
         } else {
@@ -156,14 +155,13 @@ trait CategoryUITrait
 
         $category->phone = $request->input('phone') ?? '';
         $category->email = $request->input('email');
-
+//        dd(23);
         return $category;
     }
 
     public static function upload_img($request): array
     {
         $photo = $request->file('photo');
-
         if (!$photo) {
             return [
                 'errors' => true,

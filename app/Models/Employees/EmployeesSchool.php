@@ -13,4 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 class EmployeesSchool extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'logo',
+    ];
 }

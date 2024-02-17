@@ -12,4 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 class CategoryStore extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'logo',
+    ];
 }

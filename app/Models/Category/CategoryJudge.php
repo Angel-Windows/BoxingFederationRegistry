@@ -13,4 +13,8 @@ use Illuminate\Database\Eloquent\Model;
 class CategoryJudge extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'logo',
+    ];
 }

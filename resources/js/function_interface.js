@@ -73,6 +73,143 @@ const remove_parent = (item) => {
     parent.parentNode.removeChild(parent);
 }
 
+let timer_selfie_img = null;
+window.selfie_image = () => {
+
+    const imagePreview = document.querySelector("input[type='image']");
+    const default_upload_buttons = document.querySelector('.default_upload_buttons');
+    const selfie_upload_buttons = document.querySelector('.selfie_upload_buttons');
+    const takePhotoButton = document.getElementById('selfie_image_button');
+    const switchCameraButton = document.getElementById('selfie_image_button_change');
+    const switchCameraCancel = document.getElementById('selfie_image_button_cancel');
+    const fileInput = document.getElementById('file-input');
+    let videoStream = null;
+    let video = null;
+
+    if (timer_selfie_img){
+        clearTimeout(timer_selfie_img)
+        timer_selfie_img = null;
+    }
+
+
+    default_upload_buttons.classList.toggle('no-display');
+    selfie_upload_buttons.classList.toggle('no-display');
+    timer_selfie_img = setTimeout(()=>{
+        stopCamera();
+    }, 15000)
+    async function getVideoStream(deviceId) {
+        try {
+            const constraints = {video: {deviceId: {exact: deviceId}}};
+            videoStream = await navigator.mediaDevices.getUserMedia(constraints);
+            return videoStream;
+        } catch (error) {
+            console.error('Ошибка:', error);
+        }
+    }
+
+    function stopCamera() {
+
+        default_upload_buttons.classList.remove('no-display');
+        selfie_upload_buttons.classList.add('no-display');
+        video.classList.add('no-display')
+        if (videoStream !== null) {
+            videoStream.getTracks().forEach(track => track.stop());
+            videoStream = null;
+        }
+        clearTimeout(timer_selfie_img)
+        timer_selfie_img = null;
+    }
+
+    switchCameraCancel.addEventListener('click', () => {
+
+        stopCamera();
+    });
+
+    window.addEventListener('beforeunload', stopCamera);
+
+    takePhotoButton.addEventListener('click', async () => {
+        try {
+            if (videoStream === null) {
+                console.error('Нет доступа к камере.');
+                return;
+            }
+
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            const dataUrl = canvas.toDataURL('image/png');
+            const blob = dataURItoBlob(dataUrl);
+            const file = new File([blob], 'photo.png', {type: 'image/png'});
+
+            const fileList = new DataTransfer();
+            fileList.items.add(file);
+
+
+            imagePreview.src = URL.createObjectURL(blob);
+
+            fileInput.files = fileList.files;
+            stopCamera();
+        } catch (error) {
+            console.error('Ошибка:', error);
+        }
+    });
+
+    function dataURItoBlob(dataUrl) {
+        const byteString = atob(dataUrl.split(',')[1]);
+        const mimeString = dataUrl.split(',')[0].split(':')[1].split(';')[0];
+        const ab = new ArrayBuffer(byteString.length);
+        const ia = new Uint8Array(ab);
+        for (let i = 0; i < byteString.length; i++) {
+            ia[i] = byteString.charCodeAt(i);
+        }
+        return new Blob([ab], {type: mimeString});
+    }
+
+    switchCameraButton.addEventListener('click', async () => {
+        try {
+            if (videoStream !== null) {
+                videoStream.getTracks().forEach(track => track.stop());
+            }
+
+            const devices = await navigator.mediaDevices.enumerateDevices();
+
+            const videoDevices = devices.filter(device => device.kind === 'videoinput');
+
+            const currentCameraIndex = videoDevices.findIndex(device => device.deviceId === video.srcObject.getVideoTracks()[0].getSettings().deviceId);
+
+            const nextCameraIndex = (currentCameraIndex + 1) % videoDevices.length;
+
+            videoStream = await getVideoStream(videoDevices[nextCameraIndex].deviceId);
+
+            video.srcObject = videoStream;
+        } catch (error) {
+            console.error('Ошибка:', error);
+        }
+    });
+
+    (async () => {
+        try {
+            const videoStream = await getVideoStream();
+
+            video = document.createElement('video');
+            video.srcObject = videoStream;
+            video.autoplay = true;
+            const parent = document.querySelector('.upload_img');
+            console.log(parent);
+            if (parent) {
+                console.log(video);
+                parent.appendChild(video);
+            }
+
+        } catch (error) {
+            console.error('Ошибка:', error);
+        }
+    })();
+};
+
+
 window.functionsArray = {
     'ajax_post': ajax_scripts.Post,
     'ajax_postNoForm': ajax_scripts.SendPostNoForm,
@@ -97,6 +234,7 @@ window.functionsArray = {
 
     'add_family': add_family,
     'remove_parent': remove_parent,
+
 }
 
 

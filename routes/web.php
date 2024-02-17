@@ -26,6 +26,7 @@ Route::get('/send-welcome-email', [EmailController::class, 'sendWelcomeEmail']);
 Route::name('page.')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/test', [HomeController::class, 'test_page'])->name('test');
+    Route::post('/test', [HomeController::class, 'test_page_edit'])->name('test');
 //    Route::get('/test', static function () {
 //
 //

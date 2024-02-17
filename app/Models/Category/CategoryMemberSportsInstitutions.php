@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class CategoryMemberSportsInstitutions extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'logo',
+    ];
 }

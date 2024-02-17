@@ -15,4 +15,7 @@ use Illuminate\Database\Eloquent\Model;
 class CategoryMedical extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'logo',
+    ];
 }

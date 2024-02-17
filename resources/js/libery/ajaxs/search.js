@@ -1,6 +1,9 @@
 import {inputs_input} from "@/components/forms.js";
 
-const modal_wrapper = document.querySelector('.modal_wrapper');
+let modal_wrapper = document.querySelector('.modal_wrapper');
+if (!modal_wrapper){
+    modal_wrapper = document;
+}
 const modal_wrapper_two = document.querySelector('.modal_wrapper_two');
 const modal_content = modal_wrapper.querySelector('.modal_content');
 let search_result_list = null;
@@ -72,7 +75,7 @@ function upload_img() {
         return false;
     }
 
-    const imagePreview = imageWrapper.querySelector('input');
+    const imagePreview = imageWrapper.querySelector("input[type='image']");
     const dragText = imageWrapper.querySelector('.drop');
     const fileInput = imageWrapper.querySelector("input[type='file']");
     const button_open_file = imageWrapper.querySelector('.button_open_file')

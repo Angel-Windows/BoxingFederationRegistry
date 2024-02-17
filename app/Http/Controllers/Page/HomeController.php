@@ -19,27 +19,44 @@ class HomeController extends Controller
         $card_data = ClassType::whereIsset('description');
 
 
-
         foreach ($card_data as $all_datum) {
             $all_datum->count = DB::table($all_datum->link)->count();
         }
 
         return view('page.home', compact('card_data'));
     }
+
     public function test_page()
     {
-        $path = resource_path('img/no_img.jpg');
+        return view('test_page')//            ->with()
+            ;
+    }
 
-//        $sportsmans = CategoryTrainer::get();
-//
-//        foreach ($sportsmans as $sportsman) {
-//            $name = explode(' ', $sportsman->name);
-//            $user = CategoryTrainer::find( $sportsman->id);
-//            if($user){
-////                dd($user);
-//                $user->update(['name'=> $name[1] . ' ' . $name[0] . ' ' . ($name[2] ?? '')]);
-//            }
-//        }
+    public function test_page_edit(Request $request)
+    {
+        $photo = $request->file('photo');
+
+        if (!$photo) {
+            return [
+                'errors' => true,
+                'patch' => null,
+            ];
+        }
+        $validator = \Validator::make(['photo' => $photo], [
+            'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:20048',
+        ]);
+
+        if ($validator->fails()) {
+            return [
+                'errors' => $validator->errors()->all(),
+                'patch' => "",
+            ];
+        }
+
+        return [
+            'errors' => false,
+            'patch' => $photo->store('photos'),
+        ];
     }
 
 }

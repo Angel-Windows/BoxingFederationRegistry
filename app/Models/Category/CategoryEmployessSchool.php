@@ -12,4 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 class CategoryEmployessSchool extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'logo',
+    ];
 }
