@@ -389,8 +389,8 @@ trait DataTypeTrait
             'tag' => 'passport',
             'size' => 'fool',
             'placeholder' => 'Паспорт український, серія/номер',
-            'name_seria' => 'mp',
-            'name_number' => '123',
+            'name_seria' => '',
+            'name_number' => '',
         ],
 
         'foreign_passport' => [

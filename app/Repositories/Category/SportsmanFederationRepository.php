@@ -460,7 +460,7 @@ class SportsmanFederationRepository implements CategoryRepositoryInterface
                     'link' => null,
                     'class' => 'big_img'
                 ],
-                'register_name' => 'Реєстрація спортсмену'
+                'register_name' => 'Реєстрація спортсмена'
             ];
         }
 

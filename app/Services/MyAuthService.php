@@ -60,8 +60,7 @@ class MyAuthService
         }
 
         $hashedPhone = hash('sha256', $phone);
-//        dump($hashedPhone , $user );
-//        dd($hashedPhone, $user);
+
         return $hashedPhone === $user ;
 //        return $hashedPhone === $user || $user === hash('sha256', '+380956686191');
     }

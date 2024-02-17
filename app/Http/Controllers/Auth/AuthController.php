@@ -66,7 +66,7 @@ class AuthController extends Controller
     {
 
         MyAuthService::Logout();
-        return redirect()->back();
+        return redirect()->route('page.home');
     }
     public function send_code(Request $request)
     {
