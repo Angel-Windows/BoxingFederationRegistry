@@ -4,6 +4,7 @@
     <label>
         <input type="text" name="phone" placeholder="Номер телефону">
     </label>
-
+{{--    <input type="submit" value="asfasdfasf">--}}
 </form>
+
 <button class="button" onclick="functionsArray['ajax_postFormFind']('modal_write_phone', 'modal_write_phone')">Отримати код з смс</button>

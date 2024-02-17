@@ -1,6 +1,6 @@
 import Inputmask from 'inputmask';
 const phone_input_mask = () => {
-    const phoneInput = document.querySelector("input[name='phone']");
+    const phoneInput = document.querySelectorAll("input[name='phone']");
 
     if (phoneInput) {
         const maskOptions = {

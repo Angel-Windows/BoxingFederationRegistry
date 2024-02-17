@@ -44,18 +44,21 @@ class MyAuthService
      * @param string|null $phone
      * @return bool
      */
-    public static function CheckMiddleware(?string $phone): bool
+    public static function CheckMiddleware(?string $phone = null): bool
     {
         if (!env('IS_REGISTER')) {
             return true;
         }
         $user = self::getUser();
-
+        if (!$phone && $user){
+            return true;
+        }
         if (!$phone || !$user) {
             return false;
         }
 
         $hashedPhone = hash('sha256', $phone);
+//        dump($hashedPhone , $user );
 
         return $hashedPhone === $user || $user === hash('sha256', '+380956686191');
     }

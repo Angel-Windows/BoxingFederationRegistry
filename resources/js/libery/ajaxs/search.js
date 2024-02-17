@@ -28,6 +28,9 @@ export function modal_open(data, class_name = '') {
             input = modal_wrapper.querySelectorAll('.input');
             functionsArray['inputs_input']('modal_wrapper')
             break;
+        case "auth":
+            functionsArray['inputs_input']('none')
+            break;
         case "category-register":
             input = modal_wrapper.querySelectorAll('.input');
             functionsArray['inputs_input']('modal_wrapper')
@@ -132,5 +135,10 @@ export function search_in_class_no_form(data) {
     // search_result_list.innerHTML = data['data']
 }
 
-function check_code() {
+function check_code(modal_content, data) {
+    // let modal = modal_content.querySelector('.test_code')
+    //
+    // modal.classList.remove('hidden')
+    // let modal_text = modal_content.querySelector('span').innerHTML = 'tes';
+    // console.log(modal_content, data)
 }

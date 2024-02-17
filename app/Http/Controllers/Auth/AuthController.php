@@ -20,8 +20,9 @@ class AuthController extends Controller
     {
 
         $phoneNumber = $request->input('phone') ?? '+380956686191';
-        $result_validate = $this->validatePhoneNumber($phoneNumber);
 
+//        $result_validate = $this->validatePhoneNumber($phoneNumber);
+//        dd($result_validate);
 //        if (!$result_validate) {
 //            return response()->json(
 //                [
@@ -41,7 +42,8 @@ class AuthController extends Controller
 //        if (env('APP_DEBUG')) {
             return response()->json(
                 [
-                    'log' => $message,
+//                    'log' => $message,
+//                    'modal_add' => ''
                 ]
             );
 //        }

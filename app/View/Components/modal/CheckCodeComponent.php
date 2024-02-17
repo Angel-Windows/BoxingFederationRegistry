@@ -4,6 +4,7 @@ namespace App\View\Components\modal;
 
 use Closure;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\View\Component;
 
 class CheckCodeComponent extends Component
@@ -21,6 +22,12 @@ class CheckCodeComponent extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.modal.check-code-component');
+        $code = null;
+        if (env("IS_REGISTER_CODE")){
+            $code = Cache::get('code_verification') ?? null;
+        }
+
+        return view('components.modal.check-code-component')
+            ->with('code', $code);
     }
 }

@@ -12,7 +12,8 @@
     <title>@yield('title' ?? 'Boxes')</title>
 </head>
 <body class="@yield('class_body')">
-<x-app-header-component/>
+<x-app-header-component :data="$more_data??[]"/>
+
 <div class="content-wrapper">
     @if(trim($__env->yieldContent('class_body')) !== 'home')
         <x-app-bread-crumbs-component/>

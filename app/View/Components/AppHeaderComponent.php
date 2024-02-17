@@ -12,7 +12,7 @@ class AppHeaderComponent extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct(public $data = [])
     {
         //
     }
@@ -23,6 +23,8 @@ class AppHeaderComponent extends Component
     public function render(): View|Closure|string
     {
         $card_data = ClassType::whereIsset('description');
-        return view('components.app.header-component', compact('card_data'));
+        return view('components.app.header-component', compact('card_data'))
+            ->with('more_data', $this->data);
+
     }
 }
