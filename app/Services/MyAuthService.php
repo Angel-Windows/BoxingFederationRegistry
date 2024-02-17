@@ -50,6 +50,8 @@ class MyAuthService
             return true;
         }
         $user = self::getUser();
+
+
         if (!$phone && $user){
             return true;
         }
@@ -59,8 +61,9 @@ class MyAuthService
 
         $hashedPhone = hash('sha256', $phone);
 //        dump($hashedPhone , $user );
-
-        return $hashedPhone === $user || $user === hash('sha256', '+380956686191');
+//        dd($hashedPhone, $user);
+        return $hashedPhone === $user ;
+//        return $hashedPhone === $user || $user === hash('sha256', '+380956686191');
     }
 
     public static function CheckMiddlewareRoute($data): bool
