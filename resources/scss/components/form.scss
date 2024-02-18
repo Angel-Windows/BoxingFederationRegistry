@@ -19,7 +19,8 @@
     width: 370px;
     height: 500px;
     max-width: 370px;
-    video{
+
+    video {
         position: absolute;
         top: 0;
         bottom: 0;
@@ -31,6 +32,7 @@
 
         object-fit: cover;
     }
+
     .img {
         position: absolute;
         top: 0;
@@ -52,6 +54,7 @@
         left: 20px;
         margin-bottom: 0 !important;
         z-index: 4;
+
         .button {
             border-radius: 50%;
             padding: 9px;
@@ -181,7 +184,6 @@ form {
             }
 
 
-
             input, select {
                 position: absolute;
                 transition-duration: 0.3s;
@@ -284,9 +286,10 @@ form {
     }
 
     .custom-select, .select-box {
-        .label span{
+        .label span {
             padding-right: 20px;
         }
+
         position: relative;
 
         &.no-active {
@@ -367,8 +370,11 @@ form {
         .buttons {
 
             position: absolute;
-            right: 26px;
-            left: 26px;
+            //right: 26px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 192px;
             bottom: 10px;
 
             button {
@@ -406,10 +412,12 @@ form {
         text-transform: uppercase;
     }
 }
-.content .nav{
-    .buttons{
+
+.content .nav {
+    .buttons {
         margin-bottom: 0;
-        .button{
+
+        .button {
             margin-right: 0;
             margin-left: 16px;
         }
@@ -427,7 +435,7 @@ form {
             }
         }
 
-        .table {
+        .table , .passport_edit{
             display: block;
 
 
@@ -437,15 +445,29 @@ form {
         }
     }
 }
+
 @media screen and (max-width: 800px) {
-    .nav{
-        .buttons{
+    .category-register .table-auto_fool{
+        display: block;
+    }
+    .category-register .upload_img {
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 30px;
+
+        .img {
+            width: 100%;
+            max-width: 100%;
+        }
+    }
+    .nav {
+        .buttons {
             margin-bottom: 0;
             //.button{
             //    margin-right: 0;
             //    margin-left: 16px;
             //}
-            span{
+            span {
                 display: none;
             }
         }
@@ -453,25 +475,28 @@ form {
 }
 
 @media screen and (max-width: 550px) {
-    .content .nav .buttons .button{
+    .content .nav .buttons .button {
         margin-left: 0;
         margin-right: 16px;
     }
-    .nav{
+    .nav {
         display: block;
-        .buttons{
-            span{
+
+        .buttons {
+            span {
                 display: block;
             }
         }
     }
 }
-@media screen and (max-width: 420px) {
-    .nav{
-        display: block;
-        .buttons{
 
-            span{
+@media screen and (max-width: 420px) {
+    .nav {
+        display: block;
+
+        .buttons {
+
+            span {
                 display: none;
             }
         }

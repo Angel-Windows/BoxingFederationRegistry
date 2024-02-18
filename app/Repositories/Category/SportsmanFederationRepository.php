@@ -382,7 +382,7 @@ class SportsmanFederationRepository implements CategoryRepositoryInterface
                 'data_wrapper' => [
                     [
                         'type' => 'table',
-                        'class' => 'no-width no-wrap',
+                        'class' => 'no-width no-wrap family',
                         'data' => [
                             'thead' => ['ПІП', 'Статус', 'Телефон'],
                             'body' =>
