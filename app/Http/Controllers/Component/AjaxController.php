@@ -143,7 +143,7 @@ class AjaxController extends Controller
 
             } else {
 
-                $menuMarkButtons = new ModalModuleSearchResultListComponent($data, $class_type);
+                $menuMarkButtons = new ModalModuleSearchResultListComponent($data, $class_table);
             }
 
             $menuMarkButtonsView = $menuMarkButtons->render()->render();
