@@ -11,7 +11,7 @@ class ModalModuleSearchResultListComponent extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public $data = [], public $class_type = "", public $tag_name = "a")
+    public function __construct(public $data = [], public $class_type = "", public $tag_name = "a", public $data_employs = [])
     {
         //
     }
@@ -25,6 +25,7 @@ class ModalModuleSearchResultListComponent extends Component
             ->with('data', $this->data)
             ->with('class_type', $this->class_type)
             ->with('tag_name', $this->tag_name)
+            ->with('data_employs', $this->data_employs)
             ;
     }
 }

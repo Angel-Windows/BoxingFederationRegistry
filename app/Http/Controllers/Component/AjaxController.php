@@ -19,6 +19,7 @@ use App\View\Components\ModalRegisterSelectComponent;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class AjaxController extends Controller
 {
@@ -90,19 +91,75 @@ class AjaxController extends Controller
 
         $search_value = $request->input('search_value') ?? "";
         $class_type_id = $request->input('class_types') ?? "";
-        $class_type = ClassType::where('id', $class_type_id)->first()->link;
-        $data = DB::table($class_type)
-            ->where('name', 'like', "%" . $search_value . "%")
-            ->limit(10)
-            ->orWhere('phone', $search_value)
-            ->get();
-        $menuMarkButtons = new ModalModuleSearchResultListComponent($data, $class_type);
-        $menuMarkButtonsView = $menuMarkButtons->render()->render();
+        $class_type = ClassType::where('id', $class_type_id)->first();
+
+        if ($class_type) {
+            $class_table = $class_type->link;
+
+            $data = DB::table($class_table)
+                ->where(function ($query) use ($search_value) {
+                    $query->where('name', 'like', "%" . $search_value . "%")
+                        ->orWhere('phone', $search_value);
+                })
+                ->limit(20)
+                ->get();
+
+
+            $data_class = [
+                'box_federations' => [
+                    'employees_federations'
+                ],
+                'category_insurances' => [
+                    'employees_insurances'
+                ],
+
+                'category_sports_institutions' => [
+                    'employees_sports_institutions'
+                ],
+
+                'category_medicals' => [
+                    'employees_medicals'
+                ],
+                'category_schools' => [
+                    'employees_schools'
+                ],
+            ];
+            $employees_table = $data_class[$class_table][0] ?? null;
+
+            if (Schema::hasTable($employees_table)) {
+                $data_employees = [
+                    'table' => $employees_table,
+                    'data' => DB::table($employees_table)
+                        ->where(function ($query) use ($search_value) {
+                            $query->where('name', 'like', "%" . $search_value . "%")
+                                ->orWhere('phone', $search_value);
+                        })
+                        ->limit(20)
+                        ->get()
+                ];
+                // Объединение результатов поиска
+
+                $menuMarkButtons = new ModalModuleSearchResultListComponent($data, $class_table, 'a', $data_employees);
+
+            } else {
+
+                $menuMarkButtons = new ModalModuleSearchResultListComponent($data, $class_type);
+            }
+
+            $menuMarkButtonsView = $menuMarkButtons->render()->render();
+            return response()->json(
+                [
+                    'data' => $menuMarkButtonsView,
+//                'log' => 222,
+                ]
+            );
+        }
+
 
         return response()->json(
             [
-                'data' => $menuMarkButtonsView,
-//                'log' => 222,
+                'data' => [],
+                'log' => 'Error not Find',
             ]
         );
     }

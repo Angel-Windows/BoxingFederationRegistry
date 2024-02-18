@@ -36,16 +36,13 @@ class ModalRegisterSelectComponent extends Component
                 'category_sports_institutions'=>'Реєстрація закладу',
             ],
 
-
             'category_medicals'=>[
                 'employees_medical'=>'Реєстрація працівника',
                 'category_medicals'=>'Реєстрація закладу',
-
             ],
             'category_schools'=>[
                 'employees_school'=>'Реєстрація працівника',
                 'category_schools'=>'Реєстрація закладу',
-
             ],
             'category_sportsmen'=>[
                 'category_sportsmen'=>'Реєстрація спортсмена',

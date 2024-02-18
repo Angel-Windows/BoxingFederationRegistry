@@ -178,8 +178,14 @@
 }
 .modal-search-form {
     .result-list {
+        max-height: 300px;
+        overflow-y: scroll;
         padding: 12px 19px;
-
+        h4{
+            margin-top: 10px;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
         li {
             color: var(--text);
             font-family: Roboto, sans-serif;

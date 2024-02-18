@@ -251,54 +251,69 @@ trait CategoryUITrait
     {
         switch ($class_name) {
             case 'category_sportsmen':
+            case 'category_sportsmens':
                 $data_info = (new SportsmanFederationRepository())->get_data($data, $request);
                 break;
 
 
+            case 'category_fun_zone':
             case 'category_fun_zones':
                 $data_info = (new CategoryFunZonesRepository())->get_data($data, $request);
                 break;
 
             case 'category_insurances':
+            case 'category_insurance':
                 $data_info = (new CategoryInsurancesRepository())->get_data($data, $request);
                 break;
             case 'category_medicals':
+            case 'category_medical':
                 $data_info = (new CategoryMedicalsRepository())->get_data($data, $request);
                 break;
             case 'category_schools':
+            case 'category_school':
                 $data_info = (new CategorySchoolRepository())->get_data($data, $request);
                 break;
             case 'category_sports_institutions':
+            case 'category_sports_institution':
                 $data_info = (new CategorySportsInstitutionsRepository())->get_data($data, $request);
                 break;
             case 'category_judges':
+            case 'category_judge':
                 $data_info = (new CategoryJudgeRepository())->get_data($data, $request);
                 break;
             case 'box_federations':
+            case 'box_federation':
                 $data_info = (new CategoryFederationRepository())->get_data($data, $request);
                 break;
             case 'category_trainers':
+            case 'category_trainer':
                 $data_info = (new CategoryTrainerRepository())->get_data($data, $request);
                 break;
 
 
             case 'employees_school':
+            case 'employees_schools':
                 $data_info = (new EmployeesSchoolRepository())->get_data($data, $request);
                 break;
             case 'employees_medical':
+            case 'employees_medicals':
                 $data_info = (new EmployeesMedicalRepository())->get_data($data, $request);
                 break;
             case 'employees_federation':
+            case 'employees_federations':
                 $data_info = (new EmployeesFederationRepository())->get_data($data, $request);
                 break;
             case 'employees_sports_institution':
+            case 'employees_sports_institutions':
                 $data_info = (new EmployeesSportsInstitutionsRepository())->get_data($data, $request);
                 break;
             case 'employees_insurances':
+            case 'employees_insurance':
                 $data_info = (new EmployeesInsurancesRepository())->get_data($data, $request);
                 break;
 
             case 'category_stores':
+            case 'category_store':
                 return response()->view('errors.404', [], 404);
             default :
                 return response()->view('errors.404', [], 405);

@@ -32,10 +32,13 @@ class AppBreadCrumbsComponent extends Component
         ]
         ];
         if ($page_name) {
-
+            $get_data = ClassType::getFind('link', $page_name)
+                ?? ClassType::getFind('link', substr($page_name,0,-1))
+                ?? ClassType::getFind('link', $page_name . 's')
+            ;
             $arr_bread[] = [
                 'route' => 'page.home',
-                'text' => ClassType::getFind('link', $page_name)->name,
+                'text' => $get_data->name ?? '',
             ];
             switch ($page_name) {
                 case 'trainer':
