@@ -72,7 +72,36 @@ const remove_parent = (item) => {
     const parent = item.parentNode.parentNode;
     parent.parentNode.removeChild(parent);
 }
+let timer_submit = {};
+window.submit_form = (e, type) => {
+    if (timer_submit[type]) {
+        clearTimeout(timer_submit[type])
+        timer_submit[type] = null;
+    }
+    switch (type) {
+        case "modal_write_phone":
+            const modal_write_phone = document.querySelector('#modal_write_phone');
+            const err = modal_write_phone.querySelector(".err");
+            const input = modal_write_phone.querySelector("input[name='phone']");
 
+            let is_not_symbol = input.value.indexOf('_') === -1;
+
+
+            if (is_not_symbol && !!input.value) {
+                functionsArray['ajax_postFormFind']('modal_write_phone', 'modal_write_phone');
+            } else {
+                err.classList.remove('no-display');
+                timer_submit[type] = setTimeout(() => {
+                    err.classList.add('no-display');
+                    timer_submit[type] = null;
+                }, 5000)
+
+            }
+            break;
+    }
+    e.preventDefault();
+    return false;
+}
 let timer_selfie_img = null;
 window.selfie_image = () => {
 
@@ -86,7 +115,7 @@ window.selfie_image = () => {
     let videoStream = null;
     let video = null;
 
-    if (timer_selfie_img){
+    if (timer_selfie_img) {
         clearTimeout(timer_selfie_img)
         timer_selfie_img = null;
     }
@@ -94,9 +123,10 @@ window.selfie_image = () => {
 
     default_upload_buttons.classList.toggle('no-display');
     selfie_upload_buttons.classList.toggle('no-display');
-    timer_selfie_img = setTimeout(()=>{
+    timer_selfie_img = setTimeout(() => {
         stopCamera();
     }, 15000)
+
     async function getVideoStream(deviceId) {
         try {
             const constraints = {video: {deviceId: {exact: deviceId}}};
@@ -253,5 +283,8 @@ window.getAjaxLink = (page) => {
     const ajax_link = ajax_link_meta.getAttribute('content');
     return ajax_link + '/' + page;
 }
+
+
+
 //
 // color a & curl parrot.live

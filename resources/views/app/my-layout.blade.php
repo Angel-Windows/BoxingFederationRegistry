@@ -29,13 +29,28 @@
 <div class="modal_wrapper">
     <div class="bg" onclick="functionsArray['toggle_parent_active'](this, 'modal_wrapper', 'open')"></div>
     <div class="modal_content_wrapper">
+        <div class="close_modal" onclick="functionsArray['remove_class']('modal_wrapper', 'open')">
+            <img src="{{asset('img/close_modal.svg')}}" alt=""></div>
         <div class="modal_content">
 
         </div>
     </div>
 </div>
+
 <div class="custom-alert"></div>
 @vite('resources/js/function_interface.js')
 @yield('scripts')
+
+@if(Session::get('success_register'))
+    @php
+        Session::put('success_register', null)
+    @endphp
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            functionsArray['open_modal']('success-register', {});
+        });
+    </script>
+@endif
+
 </body>
 </html>

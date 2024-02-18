@@ -93,7 +93,6 @@ trait DataTypeTrait
             'position' => [
                 'Голова правління ',
                 'Генеральний директор',
-                'Генеральний директор',
                 'Директор',
                 'Менеджер',
                 'Адміністратор',
@@ -561,6 +560,13 @@ trait DataTypeTrait
                 'logo' => 'img/mail.svg',
                 'required' => true,
             ],
+            'phone' => [
+                'name' => 'phone',
+                'tag' => 'input',
+                'placeholder' => 'Номер телефону',
+                'logo' => 'img/phone.svg',
+                'required' => true,
+            ],
         ]);
         if ($name_type === 'fool') {
             $return = array_merge($return, [
@@ -579,12 +585,7 @@ trait DataTypeTrait
                     'tag' => 'input',
                     'placeholder' => 'По батькові',
                 ],
-                'phone' => [
-                    'name' => 'phone',
-                    'tag' => 'input',
-                    'placeholder' => 'Номер телефону',
-                    'logo' => 'img/phone.svg'
-                ],
+
 
             ]);
         } else {
@@ -594,14 +595,7 @@ trait DataTypeTrait
                     'tag' => 'input',
                     'placeholder' => 'Назва закладу',
                 ],
-                'phone' => [
-                    'name' => 'phone',
-                    'tag' => 'input',
-                    'placeholder' => 'Номер телефону',
-                    'logo' => 'img/phone.svg'
-                ],
             ]);
-
         }
         $merge = array_merge_recursive($return, $this->DataTypeInputs);
 

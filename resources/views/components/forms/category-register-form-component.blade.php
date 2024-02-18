@@ -308,7 +308,8 @@
                                                     'text'=>$item['text'] ?? '',
                                                     'name'=>$item['name'],
                                                     'option'=>$item['option'] ?? [],
-                                                    'is_required'=> $item['required'] ?? null
+                                                    'is_required'=> $item['required'] ?? null,
+                                                    'first_data'=>$item['first_data'] ?? null,
                                                 ])
                                             @break
 

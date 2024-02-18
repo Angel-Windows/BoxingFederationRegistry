@@ -47,6 +47,18 @@ class ModalRegisterSelectComponent extends Component
                 'category_schools'=>'Реєстрація закладу',
 
             ],
+            'category_sportsmen'=>[
+                'category_sportsmen'=>'Реєстрація спортсмена',
+            ],
+            'category_trainers'=>[
+                'category_trainers'=>'Реєстрація тренера',
+            ],
+            'category_judges'=>[
+                'category_judges'=>'Реєстрація судді',
+            ],
+            'category_fun_zones'=>[
+                'category_fun_zones'=>'Реєстрація ФанЗони',
+            ],
         ];
         return view('components.modal-register-select-component')
             ->with('category_name', $this->category_name)

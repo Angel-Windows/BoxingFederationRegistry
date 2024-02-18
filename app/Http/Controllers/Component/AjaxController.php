@@ -12,6 +12,7 @@ use App\View\Components\modal\CheckCodeComponent;
 use App\View\Components\modal\ModalNofFoundComponent;
 use App\View\Components\modal\RegisterComponent;
 use App\View\Components\modal\SearchComponent;
+use App\View\Components\modal\SuccessRegisterComponent;
 use App\View\Components\ModalAddFormItemComponent;
 use App\View\Components\ModalModuleSearchResultListComponent;
 use App\View\Components\ModalRegisterSelectComponent;
@@ -36,6 +37,9 @@ class AjaxController extends Controller
                 case "check-code":
                     $menuMarkButtons = new CheckCodeComponent();
                     break;
+                case "success-register":
+                    $menuMarkButtons = new SuccessRegisterComponent();
+                    break;
                 case "category-register":
                     $category_name = $request->input('category') ?? "";
                     $get_data = $this->get_data($category_name, ['id' => null, 'type' => 'register_page'], $request);
@@ -49,10 +53,10 @@ class AjaxController extends Controller
                         case 'category_judges':
                         case 'category_fun_zones':
 
-                            $category_name = $request->input('category') ?? "";
-                            $get_data = $this->get_data($category_name, ['id' => null, 'type' => 'register_page'], $request);
-                            $menuMarkButtons = new CategoryRegisterComponent($category_name, $get_data);
-                            break;
+//                            $category_name = $request->input('category') ?? "";
+//                            $get_data = $this->get_data($category_name, ['id' => null, 'type' => 'register_page'], $request);
+//                            $menuMarkButtons = new CategoryRegisterComponent($category_name, $get_data);
+//                            break;
                         default :
 
                             $menuMarkButtons = new ModalRegisterSelectComponent($category_name);

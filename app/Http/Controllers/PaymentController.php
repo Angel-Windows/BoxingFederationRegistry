@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Cloudipsp\Configuration;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 
 class PaymentController extends Controller
 {
@@ -34,6 +35,7 @@ class PaymentController extends Controller
     public function response_url(Request $request): \Illuminate\Http\RedirectResponse
     {
         $merchant_data = json_decode($request->input('merchant_data'), false, 512, JSON_THROW_ON_ERROR);
+        Session::put('success_register', true);
         return redirect()->route('page.class', [
             'class_name' => $merchant_data->type,
             'id' => $merchant_data->id

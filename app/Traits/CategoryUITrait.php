@@ -312,10 +312,15 @@ trait CategoryUITrait
         if (!$dataKey) {
             return '';
         }
-
         switch ($key) {
             case "federation":
-                $result = BoxFederation::find($value)->name ?? '';
+                if ($value == 0){
+
+                    $result = 'Всі';
+                }else{
+                    $result = BoxFederation::find($value)->name ?? '';
+                }
+
                 break;
             case "trainer":
                 $result = CategoryTrainer::find($value)->name ?? '';

@@ -48,12 +48,17 @@ class CategoryFederationRepository implements CategoryRepositoryInterface
             'title' => 'Члени федерації',
         ],
         'name' => [
+            'placeholder' => 'Назва федерації',
             'size' => 'fool',
         ],
         'federation' => [
             'placeholder' => 'Підпорядковані федерації',
             'size' => '',
             'required' => true,
+            'first_data' => [
+                'text' => 'Всі',
+                'value' => 0
+            ]
         ],
     ];
 

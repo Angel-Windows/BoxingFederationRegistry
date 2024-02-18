@@ -157,7 +157,25 @@
 
     }
 }
+.success-register{
+    .modal_content{
+        display: flex;
 
+        height: 790px;
+    }
+    .text{
+        margin: auto;
+        height: 344px;
+        width: 380px;
+    }
+    p{
+        margin: 39px 0;
+    }
+    .button{
+        text-align: center;
+        display: block;
+    }
+}
 .modal-search-form {
     .result-list {
         padding: 12px 19px;
