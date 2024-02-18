@@ -175,6 +175,12 @@
         display: block;
     }
 }
+.modal_wrapper .modal_content_wrapper {
+    &.search {
+        width: 576px;
+    }
+}
+
 .modal-search-form {
     .result-list {
         max-height: 300px;
