@@ -12,12 +12,14 @@ body {
     color: var(--white, #FFF);
 }
 
+body::-webkit-scrollbar {
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.70) 0%, rgba(0, 0, 0, 0.70) 100%), url("../../img/home_bg.png");
+}
 ::-webkit-scrollbar {
     //background: url("../../img/home_bg.png");
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.70) 0%, rgba(0, 0, 0, 0.70) 100%), url("../../img/home_bg.png");
     background-position: right top;
     width: 15px;
-    background-size: 100vw;
+    background-size: 100vw;;
 }
 
 ::-webkit-scrollbar-thumb {

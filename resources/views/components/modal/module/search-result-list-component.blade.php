@@ -2,8 +2,9 @@
     @switch($tag_name)
         @case('a')
             <li>
-                <a href="{{route('page.class', ['class_name'=>$class_type, 'id'=>$item->id])}}">{{$item->id}}
-                    . {{$item->name}}</a>
+                <a href="{{route('page.class', ['class_name'=>$class_type, 'id'=>$item->id])}}">
+{{--                    {{$item->id}}. --}}
+                    {{$item->name}}</a>
             </li>
             @break
         @case('li')
@@ -17,8 +18,9 @@
         @switch($tag_name)
             @case('a')
                 <li>
-                    <a href="{{route('page.class', ['class_name'=>$data_employs['table'], 'id'=>$item->id])}}">{{$item->id}}
-                        . {{$item->name}}</a>
+                    <a href="{{route('page.class', ['class_name'=>$data_employs['table'], 'id'=>$item->id])}}">
+{{--                        {{$item->id}}. --}}
+                        {{$item->name}}</a>
                 </li>
                 @break
             @case('li')
