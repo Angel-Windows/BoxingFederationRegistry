@@ -10,6 +10,7 @@
 .persone_img{
     width: 370px;
 }
+
 .mini_img{
     width: 320px;
     height: 206px;
@@ -131,10 +132,21 @@
         }
     }
 
-    @media (max-width: 736px) {
-        .buttons {
-            //display: none;
+    @media (max-width: 1000px) {
+        .persone_img {
+            margin-bottom: 30px;
+            width: 100%;
+            max-width: 100%;
+            .img{
+                width: 100%;
+                max-width: 100%;
+            }
         }
+    }
+
+
+    @media (max-width: 736px) {
+
         form{
             .buttons {
                 display: block;
@@ -144,4 +156,10 @@
             display: block;
         }
     }
+    @media (max-width: 622px) {
+        .phone_list {
+            display: none;
+        }
+    }
 }
+

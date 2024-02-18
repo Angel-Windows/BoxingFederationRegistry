@@ -174,7 +174,13 @@ form {
                 padding: 0;
                 transform: translateY(50%);
                 color: var(--grey, #AAA8B8);
+
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
             }
+
+
 
             input, select {
                 position: absolute;
@@ -278,6 +284,9 @@ form {
     }
 
     .custom-select, .select-box {
+        .label span{
+            padding-right: 20px;
+        }
         position: relative;
 
         &.no-active {
@@ -411,6 +420,7 @@ form {
         .upload_img {
             width: 100%;
             max-width: 100%;
+            margin-bottom: 30px;
             .img{
                 width: 100%;
                 max-width: 100%;

@@ -16,7 +16,7 @@
         @if(MyAuthService::CheckMiddlewareRoute($more_data))
             <div class="buttons">
                 <a href="{{request()->url() . '/edit'}}" class="button"><img
-                        src="{{asset('img/homeAbout/register.svg')}}" alt="register-icon">Редагувати</a>
+                        src="{{asset('img/homeAbout/register.svg')}}" alt="register-icon"><span>Редагувати</span></a>
             </div>
         @endif
     </section>

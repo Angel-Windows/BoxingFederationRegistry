@@ -11,7 +11,7 @@
                 @switch($item_right['type'] ?? '')
                     @case('buttons')
 
-                        <ul class="buttons">
+                        <ul class="buttons phone_list">
                             @foreach($item_right['data'] as $item_data)
                                 @php
                                     $link_button = '';

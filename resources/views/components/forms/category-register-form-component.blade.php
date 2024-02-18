@@ -328,7 +328,7 @@
                         </button>
                         <label style="display: block">
                             <input required style="display: inline-block" type="checkbox">
-                            <span>Приймаю всі <a href="">умови користування</a> і також <a href="">політику конфіденційності</a></span>
+                            <span style="font-size: 14px">Приймаю всі <a href="">умови користування</a> і також <a href="">політику конфіденційності</a></span>
                         </label>
                     </div>
                 @endif
