@@ -30,7 +30,7 @@ class PaymentController extends Controller
     public function response_url(Request $request)
     {
         $merchant_data = json_decode($request->input('merchant_data'));
-        $register_ids = Session::get();
+        $register_ids = Session::get('register_ids');
         $merchant_type = $merchant_data->type ?? '';
         $merchant_id = $merchant_data->id ?? null;
 
