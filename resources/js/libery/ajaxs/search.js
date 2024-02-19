@@ -1,4 +1,4 @@
-import {inputs_input} from "@/components/forms.js";
+// import {inputs_input} from "@/components/forms.js";
 
 let modal_wrapper = document.querySelector('.modal_wrapper');
 if (!modal_wrapper){
@@ -44,6 +44,17 @@ export function modal_open(data, class_name = '') {
             functionsArray['inputs_input']('modal_wrapper')
             upload_img();
             break;
+    }
+}
+export function select_trainer(data, class_name = '') {
+    const sports_institutions_select = document.querySelector('select[name="sports_institutions"]');
+    const federation_select = document.querySelector('select[name="federation"]');
+
+    if (data.sports_institutions){
+        sports_institutions_select.innerHTML = data.sports_institutions
+    }
+    if (data.federation){
+        federation_select.innerHTML = data.federation
     }
 }
 upload_img();

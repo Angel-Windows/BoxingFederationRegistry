@@ -3,10 +3,14 @@
 namespace App\Http\Controllers\Component;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category\CategorySportsInstitutions;
+use App\Models\Category\CategoryTrainer;
+use App\Models\Class\BoxFederation;
 use App\Models\Class\ClassType;
 use App\Models\Linking\LinkingMembers;
 use App\Traits\CategoryUITrait;
 use App\Traits\DataTypeTrait;
+use App\View\Components\form\OptionListComponent;
 use App\View\Components\modal\CategoryRegisterComponent;
 use App\View\Components\modal\CheckCodeComponent;
 use App\View\Components\modal\ModalNofFoundComponent;
@@ -20,10 +24,44 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use function Termwind\render;
 
 class AjaxController extends Controller
 {
     use CategoryUITrait;
+
+    private function get_arr_federation($trainer_id)
+    {
+        $linking_trainer = CategoryTrainer::find($trainer_id);
+        if (!$linking_trainer) return [];
+        $arr_federation = [];
+
+        $old_id = $linking_trainer ? $linking_trainer->federation : null;
+
+        if ($old_id) {
+            $arr_federation[$old_id] = $old_id;
+        }
+        $max = 0;
+        $linking_federation = null;
+        while ($max < BoxFederation::count() - 1) {
+            $linking_federation = BoxFederation::where('id', $old_id)
+                ->whereNotIn('id', $arr_federation)
+                ->first();
+
+            if ($linking_federation) {
+                $old_id = $linking_federation->federation;
+                $arr_federation[$old_id] = $old_id;
+            } else {
+                break;
+            }
+
+            $max++;
+        }
+
+
+        return $arr_federation;
+
+    }
 
     public function open_modal(Request $request)
     {
@@ -187,6 +225,73 @@ class AjaxController extends Controller
     public function upload_img(Request $request)
     {
 
+    }
+
+    public function select_trainer(Request $request)
+    {
+        $trainer_id = $request->input('trainer_id') ?? null;
+        $federation_id = $request->input('federation_id') ?? null;
+        $sports_institutions_id = $request->input('sports_institutions_id') ?? null;
+
+        if (!$trainer_id) {
+            return response()->json(
+                [
+                    'data' => 'err',
+                    'alert_type' => 'error',
+                    'alert' => 'Тренер не знайдений',
+                ]
+            );
+        }
+
+        $linking = LinkingMembers::where('member_id', $trainer_id)
+            ->where('category_type', ClassType::getIdCategory('category_sports_institutions'))
+            ->pluck('category_id');
+        if (count($linking)) {
+            $institutions = CategorySportsInstitutions::whereIn('id', $linking)
+                ->pluck('name', 'id');
+        } else {
+            $institutions = CategorySportsInstitutions::pluck('name', 'id');
+        }
+
+        $data_sports_institutions = [];
+        $data_federations = [];
+        foreach ($institutions as $key => $item) {
+            $data_sports_institutions[] = [
+                'text' => $item,
+                'value' => $key,
+            ];
+        }
+
+
+        $arr_federation = $this->get_arr_federation($trainer_id);
+        if ($arr_federation) {
+            $federation_db = BoxFederation::whereIn('id', $arr_federation)
+                ->pluck('name', 'id')->all();
+
+            if (empty($federation_db)) {
+                $federation_db = BoxFederation::pluck('name', 'id')->all();
+            }
+        }else{
+            $federation_db = BoxFederation::pluck('name', 'id')->all();
+        }
+
+        foreach ($federation_db as $key => $item) {
+            $data_federations[] = [
+                'text' => $item,
+                'value' => $key,
+            ];
+        }
+
+
+        $sports_institutions_list = (new OptionListComponent($data_sports_institutions, $sports_institutions_id))->render()->render();
+        $federation_list = (new OptionListComponent($data_federations, $federation_id))->render()->render();
+        return response()->json(
+            [
+                'data' => '',
+                'sports_institutions' => $sports_institutions_list,
+                'federation' => $federation_list,
+            ]
+        );
     }
 
     public function add_history_work(Request $request)
