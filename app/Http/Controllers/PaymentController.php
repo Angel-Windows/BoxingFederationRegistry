@@ -33,12 +33,16 @@ class PaymentController extends Controller
         $register_ids = Session::get('register_ids');
         $merchant_type = $merchant_data->type ?? '';
         $merchant_id = $merchant_data->id ?? null;
-
-        if (!empty($merchant_type) && isset($register_ids[$merchant_type])) {
-            $register_ids[$merchant_type][] = $merchant_id;
-        } else {
+        if ( Session::has('register_ids')){
+            if (!empty($merchant_type) && isset($register_ids[$merchant_type])) {
+                $register_ids[$merchant_type][] = $merchant_id;
+            } else {
+                $register_ids[$merchant_type] = [$merchant_id];
+            }
+        }else{
             $register_ids[$merchant_type] = [$merchant_id];
         }
+
 
         Session::put('register_ids', $register_ids);
 
