@@ -1,3 +1,3 @@
 <footer class="footer content-wrapper">
-  <h2>©2011-2023 Boxing family </h2>
+  <h2>©DocRadar 2024</h2>
 </footer>
