@@ -59,12 +59,13 @@ class MyAuthService
 
         if ($class_name && $id){
            if ( Session::has('register_ids')){
-               $register_ids = Session::get('register_ids')[$class_name];
-               if (in_array($id, $register_ids)){
-                   return true;
+               $register_ids = Session::get('register_ids')[$class_name] ?? null;
+               if ($register_ids){
+                   if (in_array($id, $register_ids)){
+                       return true;
+                   }
                }
            }
-
         }
 
 
