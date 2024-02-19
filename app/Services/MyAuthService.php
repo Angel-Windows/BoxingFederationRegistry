@@ -44,17 +44,27 @@ class MyAuthService
      * @param string|null $phone
      * @return bool
      */
-    public static function CheckMiddleware(?string $phone = null): bool
+    public static function CheckMiddleware(?string $phone = null, $class_name = null, $id = null): bool
     {
         if (!env('IS_REGISTER')) {
             return true;
         }
+
         $user = self::getUser();
 
 
         if (!$phone && $user){
             return true;
         }
+
+        if ($class_name && $id){
+            $register_ids = Session::get('register_ids')[$class_name];
+            if (in_array($id, $register_ids)){
+                return true;
+            }
+        }
+
+
         if (!$phone || !$user) {
             return false;
         }
@@ -68,8 +78,10 @@ class MyAuthService
     public static function CheckMiddlewareRoute($data): bool
     {
         $more_data = $data['phone'] ?? null;
+        $class_name = $data['class_name'] ?? null;
+        $id = $data['id'] ?? null;
         if ($more_data) {
-            return self::CheckMiddleware($more_data);
+            return self::CheckMiddleware($more_data, $class_name, $id);
         }
         return false;
     }

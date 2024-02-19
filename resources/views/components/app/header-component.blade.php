@@ -1,6 +1,8 @@
 @php
     use App\Services\MyAuthService;
         $phone = null;
+        $class_name =  null;
+                $id =  null;
             $class_header_color = 'white';
 
             if(trim($__env->yieldContent('class_body')) !== 'home'){
@@ -12,6 +14,8 @@
             if ($more_data){
 //                dd($more_data);
                 $phone = $more_data['phone'] ?? 'err';
+                $class_name = $more_data['class_name'] ?? null;
+                $id = $more_data['id'] ?? null;
             }
 
 @endphp
@@ -23,7 +27,7 @@
         <h1>Інформаційний портал федерації боксу України</h1>
     </a>
     <div>
-        @if(\App\Services\MyAuthService::CheckMiddleware($phone))
+        @if(\App\Services\MyAuthService::CheckMiddleware($phone, $class_name, $id))
             <a class="auth-button {{$class_header_color}}" href="{{route('auth.logout')}}">Вийти</a>
         @else
             <div class="auth-button {{$class_header_color}}" onclick="functionsArray['open_modal']('auth', {})">Увійти
@@ -46,7 +50,7 @@
             <div class="burger_menu">
                 <div class="burger_content unselectable">
                     <div class="modal_header">
-                        @if(\App\Services\MyAuthService::CheckMiddleware($phone))
+                        @if(\App\Services\MyAuthService::CheckMiddleware($phone, $class_name, $id))
                             <a class="auth-button" href="{{route('auth.logout')}}">Вийти</a>
                         @else
                             <div class="auth-button" onclick="functionsArray['open_modal']('auth', {})">Увійти</div>

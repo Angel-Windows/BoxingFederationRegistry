@@ -5,13 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Category\Operations\TransactionCategory;
 use App\Traits\FondyTrait;
 use Carbon\Carbon;
-use Cloudipsp\Checkout;
 use Cloudipsp\Exception\ApiException;
-use Cloudipsp\P2pcredit;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Cloudipsp\Configuration;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
@@ -32,10 +27,22 @@ class PaymentController extends Controller
         return self::fondyBuy(1, 'eliphas.sn@gmail.com');
     }
 
-    public function response_url(Request $request): \Illuminate\Http\RedirectResponse
+    public function response_url(Request $request)
     {
-        $merchant_data = json_decode($request->input('merchant_data'), false, 512, JSON_THROW_ON_ERROR);
-        Session::put('success_register', true);
+        $merchant_data = json_decode($request->input('merchant_data'));
+        $register_ids = Session::get();
+        $merchant_type = $merchant_data->type ?? '';
+        $merchant_id = $merchant_data->id ?? null;
+
+        if (!empty($merchant_type) && isset($register_ids[$merchant_type])) {
+            $register_ids[$merchant_type][] = $merchant_id;
+        } else {
+            $register_ids[$merchant_type] = [$merchant_id];
+        }
+
+        Session::put('register_ids', $register_ids);
+
+
         return redirect()->route('page.class', [
             'class_name' => $merchant_data->type,
             'id' => $merchant_data->id
@@ -49,7 +56,7 @@ class PaymentController extends Controller
 
         $order_time = $request->input('order_time');
         $transaction = TransactionCategory::where('key', $merchant_data->key)->first();
-        $transaction->update(['status' => 2, 'get_transaction_at'=> $now]);
+        $transaction->update(['status' => 2, 'get_transaction_at' => $now]);
 
         Log::channel('transactions')->info(json_encode([
             'type' => 'transaction',
