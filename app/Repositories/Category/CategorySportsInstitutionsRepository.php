@@ -396,7 +396,8 @@ class CategorySportsInstitutionsRepository implements CategoryRepositoryInterfac
         } else {
             $table = $this->data;
             $more_data = [
-                'register_name' => 'Реєстрація навчального закладу',
+                'register_name' => 'Реєстрація спортивного закладу',
+//                'register_name' => 'Реєстрація навчального закладу',
                 'logo' => [
                     'link' => null,
                     'class' => 'mini_img'

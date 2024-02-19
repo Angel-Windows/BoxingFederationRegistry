@@ -169,7 +169,7 @@ class EmployeesSchoolRepository implements CategoryRepositoryInterface
         } else {
             $table = $this->data;
             $more_data = [
-                'register_name' => 'Реєстрація працівника школи'
+                'register_name' => 'Реєстрація працівника навчального закладу'
             ];
 
         }

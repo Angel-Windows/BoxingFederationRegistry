@@ -170,7 +170,7 @@ class EmployeesSportsInstitutionsRepository implements CategoryRepositoryInterfa
         } else {
             $table = $this->data;
             $more_data = [
-                'register_name'=>'Реєстрація працівника федерації'
+                'register_name'=>'Реєстрація працівника спортивного закладу'
             ];
 
         }

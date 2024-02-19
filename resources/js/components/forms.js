@@ -18,10 +18,6 @@ const select_trainer_ajax = (input_value) => {
     const federation_id = document.querySelector('select[name="federation"]');
     const sports_institutions_id = document.querySelector('select[name="sports_institutions"]');
 
-
-
-    console.log(federation_id.value, sports_institutions_id.value);
-
     functionsArray['ajax_postNoForm'](getAjaxLink("select_trainer"), {
         'trainer_id': input_value.value,
         'federation_id': federation_id.value,
