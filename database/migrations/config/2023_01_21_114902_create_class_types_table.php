@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('genitive');
+            $table->string('dative');
             $table->string('accusative');
             $table->text('description')->nullable();
             $table->json('linking')->nullable();

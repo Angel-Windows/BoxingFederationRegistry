@@ -18,6 +18,7 @@ class ClassTypeSeeder extends Seeder
         ClassType::insert([[
                 'name' => 'Федерації боксу',
                 'genitive' => 'федерації боксу',
+                'dative' => 'Федерацій боксу',
                 'accusative' => 'федерацію боксу',
                 'description' => 'Тут ви знайдете інформацію про всі існуючі в Україні федерації боксу та їх працівників',
                 'count' => 375,
@@ -27,7 +28,8 @@ class ClassTypeSeeder extends Seeder
                 'logo' => 'img/homeAbout/box.svg',
             ], [
                 'name' => 'Спортсмени',
-                'genitive' => 'спортсмену',
+                'genitive' => 'Спортсменів',
+                'dative' => 'спортсмену',
                 'accusative' => 'sss',
                 'description' => 'Ви можете переглядати інформацію про всіх спортсменів, їх контакти та інші данні',
                 'linking' => null,
@@ -36,7 +38,8 @@ class ClassTypeSeeder extends Seeder
                 'logo' => 'img/homeAbout/sportsmen.svg'
             ], [
                 'name' => 'Тренери',
-                'genitive' => 'тренера',
+                'genitive' => 'Тренерів',
+                'dative' => 'тренера',
                 'accusative' => 'sss',
                 'description' => 'Ви можете переглядати інформацію про всіх тренерів, кого вони тренують, заклад в якому працюють та їх контакти',
                 'linking' => null,
@@ -45,7 +48,8 @@ class ClassTypeSeeder extends Seeder
                 'logo' => 'img/homeAbout/trainer.svg'
             ], [
                 'name' => 'Судді',
-                'genitive' => 'судді',
+                'genitive' => 'Суддів',
+                'dative' => 'судді',
                 'accusative' => 'sss',
                 'description' => 'Ви можете переглядати інформацію про всіх суддів, їх контакти та інші данні',
                 'linking' => null,
@@ -54,7 +58,8 @@ class ClassTypeSeeder extends Seeder
                 'logo' => 'img/homeAbout/referee.svg'
             ], [
                 'name' => 'Спортивні заклади',
-                'genitive' => 'спортивного закладу',
+                'genitive' => 'Спортивних закладів',
+                'dative' => 'спортивного закладу',
                 'accusative' => 'sss',
                 'description' => 'Ви можете переглядати інформацію про всі спортивні заклади, їх контакти та інші данні',
                 'linking' => json_encode(['category_trainers', 'category_judges']),
@@ -63,7 +68,8 @@ class ClassTypeSeeder extends Seeder
                 'logo' => 'img/homeAbout/sports_grounds.svg'
             ], [
                 'name' => 'Страхові компанії',
-                'genitive' => 'страхової компанії',
+                'genitive' => 'Страхових компаній',
+                'dative' => 'страхової компанії',
                 'accusative' => 'sss',
                 'description' => 'Ви можете переглянути інформацію про страхові компанії, які є партнерами Федерації боксу України',
                 'linking' => null,
@@ -72,7 +78,8 @@ class ClassTypeSeeder extends Seeder
                 'logo' => 'img/homeAbout/insurance_companies.svg'
             ], [
                 'name' => 'Медичні заклади',
-                'genitive' => 'медичного закладу',
+                'genitive' => 'Медичних закладів',
+                'dative' => 'медичного закладу',
                 'accusative' => 'sss',
                 'description' => 'Ви можете переглянути інформацію про медичні заклади, які є партнерами Федерації боксу України',
                 'linking' => null,
@@ -81,7 +88,8 @@ class ClassTypeSeeder extends Seeder
                 'logo' => 'img/homeAbout/medical_institutions.svg'
             ], [
                 'name' => 'Навчальні заклади',
-                'genitive' => 'навчального закладу',
+                'genitive' => 'Навчальних закладів',
+                'dative' => 'навчального закладу',
                 'accusative' => 'sss',
                 'description' => 'Ви можете переглянути інформацію про навчальні заклади, які є партнерами Федерації боксу України',
                 'linking' => null,
@@ -90,7 +98,8 @@ class ClassTypeSeeder extends Seeder
                 'logo' => 'img/homeAbout/schools.svg'
             ], [
                 'name' => 'Магазин/Аукціон',
-                'genitive' => 'магазину / аукціону',
+                'genitive' => 'Магазинів/Аукціонів',
+                'dative' => 'магазину / аукціону',
                 'accusative' => 'sss',
                 'description' => "Тут ви можете придбати речі, що прямо пов'язані з боксом, або прийняти участь в аукціоні",
                 'linking' => null,
@@ -99,7 +108,8 @@ class ClassTypeSeeder extends Seeder
                 'logo' => 'img/homeAbout/auction.svg'
             ], [
                 'name' => 'ФанЗона',
-                'genitive' => 'фанЗони',
+                'genitive' => 'Фанів',
+                'dative' => 'фанЗони',
                 'accusative' => 'sss',
                 'description' => "Тут ви можете зареєструватись як фан боксу та отримувати знижки та інші заохочення від Федерації боксу України",
                 'linking' => null,
@@ -111,6 +121,7 @@ class ClassTypeSeeder extends Seeder
                 [
                     'name' => 'Працівник федерації',
                     'genitive' => 'Працівники закладу',
+                    'dative' => 'Працівники закладу',
                     'accusative' => 'Працівника закладу',
                     'description' => null,
                     'linking' => null,
@@ -121,6 +132,7 @@ class ClassTypeSeeder extends Seeder
                 [
                     'name' => 'Працівник спортивного закладу',
                     'genitive' => 'Працівники закладу',
+                    'dative' => 'Працівники закладу',
                     'accusative' => 'Працівника закладу',
                     'description' => null,
                     'linking' => null,
@@ -131,6 +143,7 @@ class ClassTypeSeeder extends Seeder
                 [
                     'name' => 'Працівник страхові компанії',
                     'genitive' => 'Працівники закладу',
+                    'dative' => 'Працівники закладу',
                     'accusative' => 'Працівника закладу',
                     'description' => null,
                     'linking' => null,
@@ -141,6 +154,7 @@ class ClassTypeSeeder extends Seeder
                 [
                     'name' => 'Працівник медичного закладу',
                     'genitive' => 'Працівники закладу',
+                    'dative' => 'Працівники закладу',
                     'accusative' => 'Працівника закладу',
                     'description' => null,
                     'linking' => null,
@@ -151,6 +165,7 @@ class ClassTypeSeeder extends Seeder
                 [
                     'name' => 'Працівник навчального закладу',
                     'genitive' => 'Працівники закладу',
+                    'dative' => 'Працівники закладу',
                     'accusative' => 'Працівника закладу',
                     'description' => null,
                     'linking' => null,
