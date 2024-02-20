@@ -29,6 +29,7 @@ class PaymentController extends Controller
 
     public function response_url(Request $request)
     {
+        $now = Carbon::now();
         $merchant_data = json_decode($request->input('merchant_data'));
         $register_ids = Session::get('register_ids');
         $merchant_type = $merchant_data->type ?? '';
@@ -43,7 +44,20 @@ class PaymentController extends Controller
             $register_ids[$merchant_type] = [$merchant_id];
         }
 
-
+        Log::channel('transactions')->info(json_encode([
+            'type' => 'transaction response',
+            [
+                'payment' => 'fondy',
+                'product_id' => $request->input('product_id'),
+                'payment_id' => $request->input('payment_id'),
+                'merchant_key' => $merchant_data->key,
+                'order_id' => $request->input('order_id'),
+                'actual_amount' => $request->input('actual_amount'),
+                'response_status' => $request->input('response_status'),
+                'order_time' => $request->input('order_time'),
+                'callback_time' => $now,
+            ]
+        ], JSON_THROW_ON_ERROR));
         Session::put('register_ids', $register_ids);
 
 

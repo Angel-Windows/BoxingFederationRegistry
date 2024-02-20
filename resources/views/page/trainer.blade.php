@@ -29,7 +29,7 @@
                         alt=""></div>
             </div>
         @endif
-        @if($transaction)
+        @if($transaction || MyAuthService::CheckMiddlewareRoute($more_data))
             @include('components.info.info')
         @else
             <div>
