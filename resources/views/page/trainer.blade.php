@@ -21,18 +21,26 @@
         @endif
     </section>
     <section class="table-auto_fool">
-{{--            @if(true)--}}
-            @if($more_data['logo'] ?? null)
-                <div class="{{$more_data['logo']['class'] ?? ''}} persone_img">
-                    <div class="img"><img
-                            src="{{ MyAsset($more_data['logo']['link'] ?? '') }}"
-                            alt=""></div>
-                </div>
-            @endif
+        {{--            @if(true)--}}
+        @if($more_data['logo'] ?? null)
+            <div class="{{$more_data['logo']['class'] ?? ''}} persone_img">
+                <div class="img"><img
+                        src="{{ MyAsset($more_data['logo']['link'] ?? '') }}"
+                        alt=""></div>
+            </div>
+        @endif
+        @if($transaction)
             @include('components.info.info')
-            {{--                @foreach($data_info as $item_wrapper)--}}
-            {{--                   --}}
-            {{--                @endforeach--}}
+        @else
+            <div>
+                <div class="info-wrapper">
+                    <h3>Не оплачено</h3>
+                </div>
+            </div>
+        @endif
+        {{--                @foreach($data_info as $item_wrapper)--}}
+        {{--                   --}}
+        {{--                @endforeach--}}
         {{--        @endif--}}
         {{--        @if(isset($data_info['bottom_panel']))--}}
         {{--            <div class="grid-sp-2">--}}

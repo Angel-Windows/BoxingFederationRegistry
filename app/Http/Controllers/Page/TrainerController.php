@@ -44,6 +44,17 @@ class TrainerController extends Controller
 
     public function class_page($class_name, $id)
     {
+        $category_id = ClassType::getIdCategory($class_name) ?? null;
+        if ($category_id){
+            $transaction = TransactionCategory::where('category_id', $id)
+                ->where('type', $category_id)
+                ->where('status', 2)
+                ->where('get_transaction_at', '>' ,now()->subYear())
+                ->first();
+        }
+        else{
+            $transaction = null;
+        }
 
         $get_data = $this->get_data($class_name, ['id' => $id, 'type' => 'preview']);
         $get_data['more_data']['class_name'] = $class_name;
@@ -51,7 +62,9 @@ class TrainerController extends Controller
         return view('page.trainer')
             ->with('modeles', $get_data['modeles'])
             ->with('data_info', $get_data['table'])
-            ->with('more_data', $get_data['more_data']);
+            ->with('more_data', $get_data['more_data'])
+            ->with('transaction', $transaction)
+            ;
     }
 
 
