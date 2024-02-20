@@ -16,4 +16,11 @@
 @section('content')
     <x-home-card-about-component :data="$card_data"/>
     <x-home.sponsor-list-component/>
+    <style>
+        /*.your-slider .slick-slide{*/
+        /*        padding: 20px;*/
+        /*        margin: 0 20px;*/
+        /*        background: red;*/
+        /*}*/
+    </style>
 @endsection

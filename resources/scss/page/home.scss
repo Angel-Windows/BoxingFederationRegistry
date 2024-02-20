@@ -1,3 +1,6 @@
+@import "slick-carousel/slick/slick.css";
+@import "slick-carousel/slick/slick-theme.css";
+
 $card-about-list--padding: 30px;
 body {
     //--background-body: red;
@@ -15,6 +18,7 @@ body {
 body::-webkit-scrollbar {
     background: linear-gradient(0deg, rgba(0, 0, 0, 0.70) 0%, rgba(0, 0, 0, 0.70) 100%), url("../../img/home_bg.png");
 }
+
 ::-webkit-scrollbar {
     //background: url("../../img/home_bg.png");
     background-position: right top;
@@ -184,14 +188,18 @@ body::-webkit-scrollbar {
         }
     }
 
-    .sponsor-list {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 10px;
-        overflow-x: auto;
-        overflow-y: hidden;
+    .sponsor-list2 {
+        //display: grid;
+        //grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        //gap: 10px;
+        //overflow-x: auto;
+        //overflow-y: hidden;
+        .slick-slide {
+            padding: 0 20px;
+        }
 
         .card {
+            //.slick-slide{
             padding: 27px 49px;
             border-radius: 4px;
             border: 1px solid rgba(255, 255, 255, 0.20);
@@ -326,20 +334,23 @@ body::-webkit-scrollbar {
         grid-template-columns: 1fr;
 
         .card {
-            .front{
-                p{
+            .front {
+                p {
                     //display: none;
                 }
             }
+
             .back {
-                .img{
+                .img {
                     display: block;
                 }
+
                 h2 {
                     margin-top: 20px;
                     //display: block;
                 }
             }
+
             .card_content {
                 padding: 26px 30px;
             }
@@ -368,7 +379,6 @@ body::-webkit-scrollbar {
                     margin-bottom: 20px;
                 }
             }
-
 
 
         }

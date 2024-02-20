@@ -3,7 +3,69 @@ import * as  home_scripts from './home_scripts.js';
 import * as  modals_scripts from './components/modal.js';
 import * as forms_script from "./components/forms.js";
 import window from "inputmask/lib/global/window.js";
+import $ from 'jquery';
+import 'slick-carousel';
 
+$(document).ready(function() {
+    $('.your-slider').slick({
+        infinite: true,
+        speed: 3000,
+        arrows: false,
+        pauseOnHover: false,
+        pauseOnFocus: false,
+        slidesToScroll: 1,
+        slidesToShow: 7,
+        autoplay: true,
+        autoplaySpeed: 0,
+        draggable: false,
+        swipe: false,
+        responsive: [
+            {
+                breakpoint: 1670,
+                settings: {
+                    slidesToShow: 6,
+                    infinite: true,
+                    dots: true
+                }
+            },
+            {
+                breakpoint: 1420,
+                settings: {
+                    slidesToShow: 5,
+                    infinite: true,
+                    dots: true
+                }
+            },
+            {
+                breakpoint: 1170,
+                settings: {
+                    slidesToShow: 4,
+                }
+            },
+            {
+                breakpoint: 920,
+                settings: {
+                    slidesToShow: 3,
+                }
+            },
+            {
+                breakpoint: 670,
+                settings: {
+                    slidesToShow: 2,
+                }
+            },
+            {
+                breakpoint: 420,
+                settings: {
+                    slidesToShow: 1,
+                }
+            }
+            // You can unslick at a given breakpoint now by adding:
+            // settings: "unslick"
+            // instead of a settings object
+        ]
+    });
+});
 const checkbox_toggle = (elem) => {
     const input = elem.querySelector('input');
 
