@@ -177,7 +177,7 @@
 }
 .modal_wrapper .modal_content_wrapper {
     &.search {
-        width: 576px;
+        max-width: 576px;
     }
 }
 
