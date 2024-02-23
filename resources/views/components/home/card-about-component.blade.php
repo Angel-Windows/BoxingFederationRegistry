@@ -25,7 +25,7 @@
                     ><img src="{{asset('img/search.svg')}}" alt="search"><span>Пошук</span></button>
                     @switch($item['link'])
 {{--                        @case('category_fun_zones')--}}
-                        @case('category_store')
+                        @case('category_stores')
                         @break
                         @default
                             <button
