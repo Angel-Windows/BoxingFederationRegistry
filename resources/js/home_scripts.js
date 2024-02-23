@@ -115,23 +115,26 @@ export const removeOldActive = (elem, className, arrayParams) => {
 
 function hideOverflowingElements() {
     const container = document.querySelector('.sponsor-list');
-    const cards = container.querySelectorAll('.card');
+    if (container){
+        const cards = container.querySelectorAll('.card');
 
-    const containerWidth = container.clientWidth;
-    let totalWidth = 0;
-    container.style.height = cards[0].offsetHeight + 'px';
-    cards.forEach((card) => {
-        totalWidth += card.offsetWidth;
-        if (totalWidth > containerWidth) {
-            if (!card.classList.contains('hidden')) {
-                card.classList.add('hidden');
+        const containerWidth = container.clientWidth;
+        let totalWidth = 0;
+        container.style.height = cards[0].offsetHeight + 'px';
+        cards.forEach((card) => {
+            totalWidth += card.offsetWidth;
+            if (totalWidth > containerWidth) {
+                if (!card.classList.contains('hidden')) {
+                    card.classList.add('hidden');
+                }
+            } else {
+                if (card.classList.contains('hidden')) {
+                    card.classList.remove('hidden');
+                }
             }
-        } else {
-            if (card.classList.contains('hidden')) {
-                card.classList.remove('hidden');
-            }
-        }
-    });
+        });
+    }
+
 }
 
 export const hideOverflowingElements_start = () => {
