@@ -171,7 +171,11 @@ class EmployeesFederationRepository implements CategoryRepositoryInterface
         } else {
             $table = $this->data;
             $more_data = [
-                'register_name' => 'Реєстрація працівника федерації'
+                'register_name' => 'Реєстрація працівника федерації',
+                'logo' => [
+                    'link' => null,
+                    'class' => 'big_img'
+                ]
             ];
 
         }

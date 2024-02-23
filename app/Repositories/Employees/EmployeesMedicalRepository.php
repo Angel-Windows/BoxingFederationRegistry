@@ -178,7 +178,11 @@ class EmployeesMedicalRepository implements CategoryRepositoryInterface
         } else {
             $table = $this->data;
             $more_data = [
-                'register_name' => 'Реєстрація працівника медичного закладу'
+                'register_name' => 'Реєстрація працівника медичного закладу',
+                'logo' => [
+                    'link' => null,
+                    'class' => 'big_img'
+                ]
             ];
 
         }
