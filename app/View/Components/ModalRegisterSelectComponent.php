@@ -23,7 +23,7 @@ class ModalRegisterSelectComponent extends Component
     {
         $buttons = [
             'box_federations'=>[
-                'employees_federation'=>'Реєстрація працівника',
+                'employees_federations'=>'Реєстрація працівника',
                 'box_federations'=>'Реєстрація федерації',
             ],
             'category_insurances'=>[
@@ -32,16 +32,16 @@ class ModalRegisterSelectComponent extends Component
             ],
 
             'category_sports_institutions'=>[
-                'employees_sports_institution'=>'Реєстрація працівника',
+                'employees_sports_institutions'=>'Реєстрація працівника',
                 'category_sports_institutions'=>'Реєстрація закладу',
             ],
 
             'category_medicals'=>[
-                'employees_medical'=>'Реєстрація працівника',
+                'employees_medicals'=>'Реєстрація працівника',
                 'category_medicals'=>'Реєстрація закладу',
             ],
             'category_schools'=>[
-                'employees_school'=>'Реєстрація працівника',
+                'employees_schools'=>'Реєстрація працівника',
                 'category_schools'=>'Реєстрація закладу',
             ],
             'category_sportsmen'=>[

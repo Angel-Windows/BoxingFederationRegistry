@@ -126,7 +126,7 @@ class ClassTypeSeeder extends Seeder
                     'description' => null,
                     'linking' => null,
                     'count' => 13,
-                    'link' => 'employees_federation',
+                    'link' => 'employees_federations',
                     'logo' => null
                 ],
                 [
@@ -137,7 +137,7 @@ class ClassTypeSeeder extends Seeder
                     'description' => null,
                     'linking' => null,
                     'count' => 13,
-                    'link' => 'employees_sports_institution',
+                    'link' => 'employees_sports_institutions',
                     'logo' => null
                 ],
                 [
@@ -159,7 +159,7 @@ class ClassTypeSeeder extends Seeder
                     'description' => null,
                     'linking' => null,
                     'count' => 13,
-                    'link' => 'employees_medical',
+                    'link' => 'employees_medicals',
                     'logo' => null
                 ],
                 [
@@ -170,7 +170,7 @@ class ClassTypeSeeder extends Seeder
                     'description' => null,
                     'linking' => null,
                     'count' => 13,
-                    'link' => 'employees_school',
+                    'link' => 'employees_schools',
                     'logo' => null
                 ],
             ]

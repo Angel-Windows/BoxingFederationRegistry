@@ -175,12 +175,15 @@ class TrainerController extends Controller
             case 'employees_school':
                 $result = (new EmployeesSchoolRepository())->edit($id, $request, $type);
                 break;
+            case 'employees_medicals':
             case 'employees_medical':
                 $result = (new EmployeesMedicalRepository())->edit($id, $request, $type);
                 break;
+            case 'employees_federations':
             case 'employees_federation':
                 $result = (new EmployeesFederationRepository())->edit($id, $request, $type);
                 break;
+            case 'employees_sports_institutions':
             case 'employees_sports_institution':
                 $result = (new EmployeesSportsInstitutionsRepository())->edit($id, $request, $type);
                 break;

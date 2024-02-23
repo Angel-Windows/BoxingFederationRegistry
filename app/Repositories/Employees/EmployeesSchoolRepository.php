@@ -24,7 +24,7 @@ class EmployeesSchoolRepository implements CategoryRepositoryInterface
 
     public function __construct()
     {
-        $this->category_type_id = ClassType::getIdCategory('employees_school');
+        $this->category_type_id = ClassType::getIdCategory('employees_schools');
         $this->data = $this->getDefaultArrayData($this->is_default_length, $this->data_inputs);
         $this->data['position']['option'] = $this->data_option['employees_school']['position'];
     }
