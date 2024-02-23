@@ -67,7 +67,8 @@ function search(data = {}) {
 }
 function searchNoForm(data = {}) {
     const search_input = document.querySelector('.modal_wrapper .custom-select-input');
-    inputs_input('modal_wrapper', false);
+    functionsArray['inputs_input']('modal_wrapper', false);
+
     search_result_list = document.querySelector('.modal_wrapper .custom-select-options');
     const url = getAjaxLink("search-in-class-no-form");
     search_input.addEventListener('input', (e) => {
