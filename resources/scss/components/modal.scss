@@ -50,7 +50,7 @@
         &::-webkit-scrollbar {
             background: none;
             background-position: right top;
-            width: 15px;
+            width: 7px;
             background-size: 100vw;
         }
     }
@@ -90,6 +90,7 @@
 
 
         .add-form-item {
+            max-width: 779px;
             margin-right: 0;
 
             .modal_content {

@@ -4,7 +4,7 @@
 
 @switch($request->input('type_action'))
     @case('add_history')
-        <form action="{{route('ajax.add_history_work')}}" style="min-width: 779px " method="post"
+        <form action="{{route('ajax.add_history_work')}}" style="max-width: 779px " method="post"
               class="modal_form modal-search-form"
                 id="history_work_form"
             >
@@ -53,7 +53,7 @@
 
 
     @default
-        <form action="{{route('ajax.search-in-class')}}" style="min-width: 779px " method="post"
+        <form action="{{route('ajax.search-in-class')}}" style="max-width: 779px " method="post"
               class="modal_form modal-search-form">
             <input  type="hidden" name="class_types" value="3">
             <h3 class=" d-flex space-between">
