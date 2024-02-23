@@ -61,9 +61,12 @@ upload_img();
 function search(data = {}) {
     const search_input = document.querySelector('#search_input');
     search_result_list = document.querySelector('#search_result_list');
-    search_input.addEventListener('input', (e) => {
-        functionsArray['ajax_findPostForm'](e.target, "search_in_class")
-    });
+    if (search_input){
+        search_input.addEventListener('input', (e) => {
+            functionsArray['ajax_findPostForm'](e.target, "search_in_class")
+        });
+    }
+
 }
 function searchNoForm(data = {}) {
     const search_input = document.querySelector('.modal_wrapper .custom-select-input');
@@ -71,13 +74,14 @@ function searchNoForm(data = {}) {
 
     search_result_list = document.querySelector('.modal_wrapper .custom-select-options');
     const url = getAjaxLink("search-in-class-no-form");
-    search_input.addEventListener('input', (e) => {
-        functionsArray['ajax_postNoForm'](url, {
-            'search_value': 'a',
-            'class_types': 3,
-
-        }, 'search_in_class_no_form')
-    });
+    if (search_input){
+        search_input.addEventListener('input', (e) => {
+            functionsArray['ajax_postNoForm'](url, {
+                'search_value': 'a',
+                'class_types': 3,
+            }, 'search_in_class_no_form')
+        });
+    }
 }
 
 function upload_img() {

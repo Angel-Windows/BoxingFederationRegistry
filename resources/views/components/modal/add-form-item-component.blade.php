@@ -78,7 +78,7 @@
                                                  ])
                 <label class="label hovered type__text act">
                     <span class="unselectable">Телефон</span>
-                    <input required name="phone" class="input" placeholder="Телефон">
+                    <input required name="phone" class="input">
                 </label>
             </div>
         </form>

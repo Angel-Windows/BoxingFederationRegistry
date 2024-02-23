@@ -6,7 +6,9 @@ import window from "inputmask/lib/global/window.js";
 import $ from 'jquery';
 import 'slick-carousel';
 
-$(document).ready(function() {
+let timeout_func = {};
+let CustomAlert = null;
+$(document).ready(function () {
     $('.your-slider').slick({
         infinite: true,
         speed: 3000,
@@ -66,6 +68,51 @@ $(document).ready(function() {
         ]
     });
 });
+
+const getCustomAlert = () => {
+    return CustomAlert ||
+        (CustomAlert = document.querySelector('.custom-alert'));
+}
+window.custom_alert = (data) => {
+    let alert_type_class;
+
+    switch (data.alert_type) {
+        case 'warning':
+            alert_type_class = 'warning';
+            break
+        case 'error':
+            alert_type_class = 'error';
+            break
+        case 'success':
+        default :
+            alert_type_class = 'success';
+    } // Select Type
+
+    {
+        getCustomAlert().innerHTML = data.alert
+        getCustomAlert().className = 'custom-alert display';
+        getCustomAlert().classList.add(alert_type_class);
+
+        if (timeout_func.custom_alert_class) {
+            clearTimeout(timeout_func.custom_alert_class)
+            timeout_func.custom_alert_class = null;
+        }
+        if (timeout_func.custom_alert) {
+            clearTimeout(timeout_func.custom_alert)
+            timeout_func.custom_alert = null;
+        }
+        timeout_func.custom_alert_class = setTimeout(() => {
+            getCustomAlert().classList.remove(alert_type_class);
+            timeout_func.custom_alert_class = null;
+        }, 1000)
+
+        timeout_func.custom_alert = setTimeout(() => {
+            getCustomAlert().className = 'custom-alert';
+            timeout_func.custom_alert = null;
+        }, 3000)
+    } // Timeout Func
+}
+
 const checkbox_toggle = (elem) => {
     const input = elem.querySelector('input');
 
@@ -74,11 +121,41 @@ const checkbox_toggle = (elem) => {
 }
 const add_family = (elem) => {
     const formData = elem.parentNode.parentNode;
-    let arr = {
-        name: formData.name.value,
-        status: formData.status[formData.status.value - 0 + 1].textContent,
-        phone: formData.phone.value,
 
+    for (let pole of formData) {
+        if (!pole.value) {
+            custom_alert({
+                alert_type: 'warning',
+                alert: 'Необхідно ввести всі поля'
+            })
+            return false;
+        }
+    }
+
+
+    let arr = {
+        name: formData.name.value.trim(),
+        status: formData.status[formData.status.value - 0 + 1].textContent.trim(),
+        phone: formData.phone.value.trim(),
+
+    }
+    {
+        console.log(arr.status);
+        const family_list = document.querySelector('.history-work');
+        if (family_list) {
+            const family_td = family_list.querySelectorAll('td');
+            if (family_td) {
+                for (const item of family_td) {
+                    if (item.innerHTML.trim() === arr.status && (arr.status === 'Мама' || arr.status === 'Тато')) {
+                        custom_alert({
+                            alert_type: 'warning',
+                            alert: `Категорія "${arr.status}" уже есть в списке`,
+                        });
+                        return false;
+                    }
+                }
+            }
+        }
     }
 
     let type__checkbox = document.querySelector('.type__checkbox ')
@@ -95,6 +172,11 @@ const add_family = (elem) => {
 
     // functionsArray['toggle_parent_active'](this, 'modal_wrapper', 'open')
     document.querySelector('.modal_wrapper').classList.remove('open')
+
+    custom_alert({
+        alert_type: 'success',
+        alert: 'Успішно додано'
+    })
 }
 
 

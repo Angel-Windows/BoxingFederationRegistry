@@ -3,15 +3,12 @@ import * as  category from "./ajaxs/category.js";
 
 let timeout_func = {};
 let CsrfToken = null;
-let CustomAlert = null;
+
 const getCsrfToken = () => {
     return CsrfToken ||
         (CsrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
 }
-const getCustomAlert = () => {
-    return CustomAlert ||
-        (CustomAlert = document.querySelector('.custom-alert'));
-}
+
 
 export function SendPostNoForm(url, data = [], function_name = "") {
     return fetch(url, {
@@ -106,40 +103,4 @@ const functionsArray = {
     ...category,
     ...search,
 };
-const custom_alert = (data) => {
-    let alert_type_class;
-    switch (data.alert_type) {
-        case 'warning':
-            alert_type_class = 'warning';
-            break
-        case 'error':
-            alert_type_class = 'error';
-            break
-        case 'success':
-        default :
-            alert_type_class = 'success';
-    }
-    // timeout_func
-    getCustomAlert().innerHTML = data.alert
-    getCustomAlert().className = 'custom-alert display';
-    getCustomAlert().classList.add(alert_type_class);
 
-    if (timeout_func.custom_alert_class){
-        clearTimeout(timeout_func.custom_alert_class)
-        timeout_func.custom_alert_class = null;
-    }
-    if (timeout_func.custom_alert){
-        clearTimeout(timeout_func.custom_alert)
-        timeout_func.custom_alert = null;
-    }
-    timeout_func.custom_alert_class = setTimeout(()=>{
-        getCustomAlert().classList.remove(alert_type_class);
-        timeout_func.custom_alert_class = null;
-    },1000)
-
-    timeout_func.custom_alert = setTimeout(()=>{
-        getCustomAlert().className = 'custom-alert';
-        timeout_func.custom_alert = null;
-    },3000)
-
-}
