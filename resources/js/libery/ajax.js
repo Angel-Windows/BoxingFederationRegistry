@@ -27,7 +27,7 @@ export function SendPostNoForm(url, data = [], function_name = "") {
                 return response.json();
             } else {
                 const queryString = Object.keys(data).map(key => key + '=' + data[key]).join('&');
-                window.location.href = url + '?' + queryString;
+                // window.location.href = url + '?' + queryString;
                 throw new Error('Network response was not ok.');
             }
         })
