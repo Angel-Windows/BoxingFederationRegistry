@@ -45,7 +45,7 @@ class ClassTypeSeeder extends Seeder
                 'linking' => null,
                 'count' => 33,
                 'link' => 'category_trainers',
-                'logo' => 'img/homeAbout/trainer.svg'
+                'logo' => 'img/homeAbout/trainers.svg'
             ], [
                 'name' => 'Судді',
                 'genitive' => 'Суддів',
