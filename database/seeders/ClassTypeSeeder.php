@@ -29,7 +29,7 @@ class ClassTypeSeeder extends Seeder
             ], [
                 'name' => 'Спортсмени',
                 'genitive' => 'Спортсменів',
-                'dative' => 'спортсмену',
+                'dative' => 'спортсмена',
                 'accusative' => 'sss',
                 'description' => 'Ви можете переглядати інформацію про всіх спортсменів, їх контакти та інші данні',
                 'linking' => null,
