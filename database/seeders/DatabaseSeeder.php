@@ -21,11 +21,11 @@ class DatabaseSeeder extends Seeder
             ClassTypeSeeder::class,
 
 //
-            ClassSeeder::class,
+//            ClassSeeder::class,
 
             ConfigSeeder::class,
 
-            LinkingMembersSeeder::class,
+//            LinkingMembersSeeder::class,
 
         ]);
     }
