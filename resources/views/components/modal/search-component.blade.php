@@ -6,7 +6,7 @@
         case 'category_sportsmen':
             $placeholder = 'Введіть ПІБ ' . $class_types->dative;
             break;
-        case 'category_insurance_companies':
+        case 'category_insurances':
             $placeholder = 'Введіть назву компанії';
             break;
         case 'box_federations':
