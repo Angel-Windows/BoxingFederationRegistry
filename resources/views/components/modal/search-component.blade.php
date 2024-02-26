@@ -6,12 +6,19 @@
         case 'category_sportsmen':
             $placeholder = 'Введіть ПІБ ' . $class_types->dative;
             break;
+        case 'category_insurance_companies':
+            $placeholder = 'Введіть назву компанії';
+            break;
+        case 'box_federations':
+            $placeholder = 'Введіть назву федерації';
+            break;
         default:
-            $placeholder = 'Введіть назву ' . 'закладу';
+            $placeholder = 'Введіть назву закладу';
 //            $placeholder = 'Введіть назву ' . $class_types->dative;
     }
 @endphp
-<form action="{{route('ajax.search-in-class')}}" method="post" class="modal_form modal-search-form" onsubmit="return false">
+<form action="{{route('ajax.search-in-class')}}" method="post" class="modal_form modal-search-form"
+      onsubmit="return false">
     @csrf
     <input type="hidden" name="class_types" value="{{$class_types->id}}">
     <h2>Пошук {{$class_types->dative}}</h2>
