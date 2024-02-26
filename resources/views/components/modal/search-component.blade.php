@@ -7,7 +7,8 @@
             $placeholder = 'Введіть ПІБ ' . $class_types->dative;
             break;
         default:
-            $placeholder = 'Введіть назву ' . $class_types->dative;
+            $placeholder = 'Введіть назву ' . 'закладу';
+//            $placeholder = 'Введіть назву ' . $class_types->dative;
     }
 @endphp
 <form action="{{route('ajax.search-in-class')}}" method="post" class="modal_form modal-search-form" onsubmit="return false">
