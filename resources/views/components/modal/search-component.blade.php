@@ -9,6 +9,9 @@
         case 'category_insurances':
             $placeholder = 'Введіть назву компанії';
             break;
+        case 'category_fun_zones':
+            $placeholder = 'Введіть ПІБ фана';
+            break;
         case 'box_federations':
             $placeholder = 'Введіть назву федерації';
             break;
