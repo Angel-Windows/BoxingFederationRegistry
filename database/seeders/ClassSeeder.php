@@ -30,8 +30,8 @@ class ClassSeeder extends Seeder
      */
     public function run(): void
     {
-        $count_seed = 0;
-        $rebase = false;
+        $count_seed = 100;
+        $rebase = true;
         if ($count_seed > 0) {
             if ((!CategorySchool::exists() && true) || $rebase) {
                 dump('CategorySchool');

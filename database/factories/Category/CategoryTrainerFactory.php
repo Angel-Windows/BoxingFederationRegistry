@@ -3,6 +3,7 @@
 namespace Database\Factories\Category;
 
 use App\Models\Class\BoxFederation;
+use App\Traits\DataTypeTrait;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -10,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class CategoryTrainerFactory extends Factory
 {
+    use DataTypeTrait;
     public $federation = null;
     public function definition(): array
     {
@@ -23,7 +25,7 @@ class CategoryTrainerFactory extends Factory
             'name' => $this->faker->firstName() . " " . $this->faker->lastName() . " " . $this->faker->firstName(),
             'phone' => getRandomPhone(1),
             'email' => $this->faker->email(),
-            'qualification' => $this->faker->text(50),
+            'qualification' => array_rand($this->DataTypeInputs['trainer_qualification']['option']),
             'federation' => $rand_federation,
             'address' => $address,
             'rank' => $this->faker->text(random_int(30, 50)),

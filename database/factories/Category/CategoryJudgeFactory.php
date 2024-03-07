@@ -2,6 +2,7 @@
 
 namespace Database\Factories\Category;
 
+use App\Traits\DataTypeTrait;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -9,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class CategoryJudgeFactory extends Factory
 {
+    use DataTypeTrait;
     /**
      * Define the model's default state.
      *
@@ -23,7 +25,7 @@ class CategoryJudgeFactory extends Factory
             'email' => $this->faker->unique()->safeEmail,
             'logo' => RandPhoto(),
             'address' => $address,
-            'qualification' => $this->faker->word,
+            'qualification' => array_rand($this->DataTypeInputs['judge_qualification']['option']),
             'rank' => $this->faker->word,
             'gov' => $this->faker->word,
             'school' => $this->faker->company,
